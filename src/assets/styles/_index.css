@@ -1,0 +1,7 @@
+@import "./commom.css";
+
+:root {
+  --point-color: #6656ff;
+  --disable-text: #959292;
+  --enable-text: #000000;
+}
