@@ -1,0 +1,7 @@
+.login_box {
+  height: 0;
+  overflow: hidden;
+}
+.login_box.active {
+  height: 100%;
+}
