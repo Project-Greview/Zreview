@@ -1,0 +1,40 @@
+@font-face {
+  src: url('Pretendard/Pretendard-Thin.ttf') format('truetype');
+  font-family: 'pretendard';
+  font-weight: 200;
+}
+@font-face {
+  src: url('Pretendard/Pretendard-ExtraLight.ttf') format('truetype');
+  font-family: 'pretendard';
+  font-weight: 300;
+}
+@font-face {
+  src: url('Pretendard/Pretendard-Light.ttf') format('truetype');
+  font-family: 'pretendard';
+  font-weight: 400;
+}
+@font-face {
+  src: url('Pretendard/Pretendard-Regular.ttf') format('truetype');
+  font-family: 'pretendard';
+  font-weight: 500;
+}
+@font-face {
+  src: url('Pretendard/Pretendard-Medium.ttf') format('truetype');
+  font-family: 'pretendard';
+  font-weight: 600;
+}
+@font-face {
+  src: url('Pretendard/Pretendard-Bold.ttf') format('truetype');
+  font-family: 'pretendard';
+  font-weight: 700;
+}
+@font-face {
+  src: url('Pretendard/Pretendard-ExtraBold.ttf') format('truetype');
+  font-family: 'pretendard';
+  font-weight: 800;
+}
+@font-face {
+  src: url('Pretendard/Pretendard-Black.ttf') format('truetype');
+  font-family: 'pretendard';
+  font-weight: 900;
+}
