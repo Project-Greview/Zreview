@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 // SVG
 import { ReactComponent as ArrowLeft } from "../../assets/image/icon/arrow-left.svg";
+import SearchInput from "../../components/SearchInput";
 // PROPS TYPE
 type HeaderProps = {
   type: number;
@@ -13,7 +14,10 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
   return (
     <div className={`header fixed width_100p`}>
       {type === 1 ? (
-        ""
+        <div>
+          <div className="bars_menu"></div>
+          <SearchInput />
+        </div>
       ) : type === 2 ? (
         ""
       ) : (

@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import Splash from "../components/Splash";
 import Login from "../pages/Login";
 import Registration from "../pages/Registration";
+import Main from "../pages/Main";
 
 const Routers = createBrowserRouter([
   {
@@ -24,6 +25,14 @@ const Routers = createBrowserRouter([
           {
             path: "registration",
             element: <Registration />,
+          },
+          {
+            path: "main",
+            element: (
+              <UserRouter>
+                <Main />
+              </UserRouter>
+            ),
           },
         ],
       },

@@ -16,7 +16,9 @@ const Login: React.FC<LoginProps> = () => {
   };
 
   // LOGIN
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    navigate("/main");
+  };
   return (
     <div
       className="con flex flex_dir_c flex_jc_c flex_ai_c mar_top_50"
@@ -44,9 +46,7 @@ const Login: React.FC<LoginProps> = () => {
       <div className="btn_box flex">
         <div
           className="buttons flex flex_jc_c flex_ai_c width_100p cursor_p"
-          onClick={
-            !isReady ? () => handleOnLoginBox() : () => console.log("로그인")
-          }
+          onClick={!isReady ? () => handleOnLoginBox() : () => handleLogin()}
         >
           {!isReady ? "시작하기" : "로그인"}
         </div>
