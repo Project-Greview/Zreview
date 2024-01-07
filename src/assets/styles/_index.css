@@ -9,6 +9,7 @@
 :root {
   /* COLOR */
   --point-color: #6656ff;
+  --disable-color: #959292;
   --disable-text: #959292;
   --white-color: #ffffff;
   --enable-text: #000000;

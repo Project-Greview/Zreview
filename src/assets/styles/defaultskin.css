@@ -15,3 +15,19 @@
 .input_default:focus {
   outline: none;
 }
+
+/* BUTTON */
+.btn_box {
+  border-radius: 5px;
+  overflow: hidden;
+}
+.btn_box .buttons {
+  transition: background 0.3s;
+}
+.btn_box.disable .buttons {
+  background: var(--disable-color);
+}
+.btn_box .buttons {
+  background: var(--point-color);
+  color: var(--white-color);
+}
