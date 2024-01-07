@@ -1,0 +1,17 @@
+/* INPUT */
+.input_default {
+  height: 4.7rem;
+  padding: 1.3rem 2rem;
+  margin-top: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  font-size: 1.6rem;
+}
+.input_default::placeholder {
+  font-weight: 500;
+  color: #aaaaaa;
+  letter-spacing: 1.1px;
+}
+.input_default:focus {
+  outline: none;
+}

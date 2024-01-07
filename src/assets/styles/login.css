@@ -9,22 +9,6 @@
   height: 12.5rem;
   margin-top: 3.5rem;
 }
-.login_box .input_default {
-  height: 4.7rem;
-  padding: 1.3rem 2rem;
-  margin-top: 1.5rem;
-  border-radius: 5px;
-  border: 1px solid var(--border-color);
-  font-size: 1.6rem;
-}
-.login_box .input_default::placeholder {
-  font-weight: 500;
-  color: #aaaaaa;
-  letter-spacing: 1.1px;
-}
-.login_box .input_default:focus {
-  outline: none;
-}
 .login_box ~ .btn_box {
   width: 67%;
   margin-top: 2.5rem;
@@ -43,4 +27,10 @@
 .registraion_info > .buttons {
   font-weight: 800;
   color: var(--point-color);
+}
+@media screen and (max-width: 450px) {
+  .login_box.active,
+  .login_box ~ .btn_box {
+    width: 80%;
+  }
 }

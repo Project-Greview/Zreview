@@ -1,17 +1,24 @@
 @import "../fonts/pretendard.css";
 
 @import "./commom.css";
+@import "./defaultskin.css";
+@import "./header.css";
 @import "./login.css";
+@import "./registration.css";
 
 :root {
+  /* COLOR */
   --point-color: #6656ff;
   --disable-text: #959292;
   --white-color: #ffffff;
   --enable-text: #000000;
   --border-color: #ebebeb;
+  /* SIZE */
+  --haeder-height: 4.9rem;
 }
 * {
   font-family: "pretendard";
+  font-weight: 600;
 }
 .con {
   max-width: 50rem;
