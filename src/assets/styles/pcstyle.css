@@ -1,0 +1,6 @@
+.pc_section {
+  height: 100vh;
+}
+.pc_section.section_1 {
+  background: #353535;
+}
