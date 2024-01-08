@@ -14,15 +14,19 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
   return (
     <div className={`header fixed width_100p`}>
       {type === 1 ? (
-        <div>
-          <div className="bars_menu"></div>
+        <div className="main flex flex_jc_sb flex_ai_c">
+          <div className="bars_menu relative">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <SearchInput />
         </div>
       ) : type === 2 ? (
         ""
       ) : (
         <div
-          className="flex flex_jc_sb fle_ai_c"
+          className="flex flex_jc_sb flex_ai_c"
           style={{ boxShadow: "0 0.5rem 1rem #eeeeee" }}
         >
           <div className="back_btn flex flex_ai_c" onClick={() => navigate(-1)}>
