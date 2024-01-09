@@ -16,7 +16,6 @@ const SearchInput: React.FC<SearchInputProps> = () => {
   const handleChangeSearcType = () => {
     setType((type) => !type);
   };
-  console.log(type);
   return (
     <div className="search_keyword_box relative">
       <div

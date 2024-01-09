@@ -16,6 +16,7 @@
   --border-color: #ebebeb;
   /* SIZE */
   --haeder-height: 4.9rem;
+  --bottom-navigation: 8rem;
 }
 * {
   font-family: "pretendard";

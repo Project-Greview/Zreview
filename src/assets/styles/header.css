@@ -1,5 +1,7 @@
 .header {
   height: var(--haeder-height);
+  top: 0;
+  left: 0;
 }
 .header > div {
   height: inherit;

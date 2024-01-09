@@ -33,3 +33,27 @@
 }
 
 /* SEARCH KEYWORD */
+
+/* BOTTOM NAVIGATION */
+.navigate {
+  height: var(--bottom-navigation);
+  left: 0;
+  bottom: 0;
+  border-top: 1px solid #d0cfcf;
+}
+.navigate ul {
+  height: inherit;
+}
+.navigate ul li {
+  flex-basis: calc(100% / 5);
+  height: inherit;
+  margin: 0 1rem;
+}
+.navigate ul li p {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.navigate ul li.active p {
+  color: var(--point-color);
+}

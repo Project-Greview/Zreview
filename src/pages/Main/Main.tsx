@@ -1,5 +1,7 @@
 // MODULE
 
+// COMPONENT
+import KakaoMap from "../../components/KakaoMap";
 import Header from "../../components/Header";
 
 // PROPS TYPE
@@ -9,6 +11,7 @@ const Main: React.FC<MainProps> = () => {
   return (
     <>
       <Header type={1} title={""} />
+      <KakaoMap />
     </>
   );
 };

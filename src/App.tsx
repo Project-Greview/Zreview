@@ -8,6 +8,7 @@ import "./assets/styles/_index.css";
 import Layout from "./components/Layout";
 import Splash from "./components/Splash";
 import PCView from "./pages/PCView";
+import Navigation from "./components/Navigation";
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const App: React.FC = () => {
       {isMobile ? (
         <Suspense fallback={<Splash />}>
           <Layout />
+          <Navigation />
         </Suspense>
       ) : (
         <PCView />
