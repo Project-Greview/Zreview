@@ -21,6 +21,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           className={`flex flex_dir_c flex_jc_c flex_ai_c ${
             activeNum === 1 ? "active" : ""
           }`}
+          onClick={() => navigate("/main")}
         >
           <HomeIcon color={activeNum === 1 ? "#6656ff" : "#959292"} />
           <p>지도</p>
@@ -29,6 +30,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           className={`flex flex_dir_c flex_jc_c flex_ai_c ${
             activeNum === 2 ? "active" : ""
           }`}
+          onClick={() => navigate("/mylocation")}
         >
           <MyAreaIcon color={activeNum === 2 ? "#6656ff" : "#959292"} />
           <p>동네탐색</p>

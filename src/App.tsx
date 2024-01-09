@@ -4,8 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 // STYLE
 import "./assets/styles/_index.css";
+// HOOK
+import { getLocationPathname } from "utils/location";
 // COMPONENT
 import Layout from "./components/Layout";
+import Header from "./components/Header";
 import Splash from "./components/Splash";
 import PCView from "./pages/PCView";
 import Navigation from "./components/Navigation";
@@ -29,16 +32,22 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (!isMobile && location.pathname !== "/") {
-      console.log("a");
       navigate("/");
     }
   }, [isMobile]);
+
+  const activeNum = getLocationPathname(location.pathname);
   return (
     <>
       {isMobile ? (
         <Suspense fallback={<Splash />}>
+          <Header type={1} title={""} />
           <Layout />
-          <Navigation />
+          {activeNum === 1 || activeNum === 2 || activeNum === 4 ? (
+            <Navigation />
+          ) : (
+            ""
+          )}
         </Suspense>
       ) : (
         <PCView />

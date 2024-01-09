@@ -10,5 +10,7 @@ export function getLocationPathname(path) {
     return 4;
   } else if (path === "mypage") {
     return 5;
+  } else {
+    return 0;
   }
 }
