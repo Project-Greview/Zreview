@@ -3,10 +3,21 @@
 }
 .write_form .location_select {
 }
+.write_form .location_select .section_title {
+  font-size: 1.4rem;
+}
 .write_form .location_select input {
   display: none;
 }
 .write_form .location_select input ~ label {
   padding: 0.5rem 3.4rem;
+  border-radius: 30px;
+  border: 1px solid var(--disable-color);
   font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--disable-color);
+}
+.write_form .location_select input:checked ~ label {
+  border-color: var(--point-color);
+  color: var(--point-color);
 }
