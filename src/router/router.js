@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Registration from "../pages/Registration";
 import Main from "../pages/Main";
 import SearchLocation from "../pages/SearchLocation";
+import WriteReview from "../pages/WriteReview";
 
 const Routers = createBrowserRouter([
   {
@@ -24,17 +25,25 @@ const Routers = createBrowserRouter([
       {
         path: "main",
         element: (
-          // <UserRouter>
-          <Main />
-          // </UserRouter>
+          <UserRouter>
+            <Main />
+          </UserRouter>
         ),
       },
       {
         path: "mylocation",
         element: (
-          // <UserRouter>
-          <SearchLocation />
-          // </UserRouter>
+          <UserRouter>
+            <SearchLocation />
+          </UserRouter>
+        ),
+      },
+      {
+        path: "write",
+        element: (
+          <UserRouter>
+            <WriteReview />
+          </UserRouter>
         ),
       },
     ],

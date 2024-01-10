@@ -39,6 +39,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           className={`flex flex_dir_c flex_jc_c flex_ai_c ${
             activeNum === 3 ? "active" : ""
           }`}
+          onClick={() => navigate("/write")}
         >
           <WriteIcon color={activeNum === 3 ? "#6656ff" : "#959292"} />
           <p>리뷰쓰기</p>

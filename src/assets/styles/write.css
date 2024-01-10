@@ -1,0 +1,12 @@
+.write_form {
+  padding: 0 2rem;
+}
+.write_form .location_select {
+}
+.write_form .location_select input {
+  display: none;
+}
+.write_form .location_select input ~ label {
+  padding: 0.5rem 3.4rem;
+  font-size: 1.6rem;
+}

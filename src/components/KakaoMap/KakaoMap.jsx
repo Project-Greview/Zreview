@@ -36,7 +36,7 @@ const KakaoMap = () => {
       ref={kakaoMaps}
       style={{
         width: "100%",
-        height: `calc(100vh - 13rem)`,
+        height: `calc(100vh - 11  rem)`,
         marginTop: 50,
       }}
     ></div>

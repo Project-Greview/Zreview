@@ -5,6 +5,7 @@
 @import "./header.css";
 @import "./login.css";
 @import "./registration.css";
+@import "./write.css";
 
 :root {
   /* COLOR */
@@ -16,7 +17,7 @@
   --border-color: #ebebeb;
   /* SIZE */
   --haeder-height: 4.9rem;
-  --bottom-navigation: 8rem;
+  --bottom-navigation: 6rem;
 }
 * {
   font-family: "pretendard";
