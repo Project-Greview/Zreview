@@ -37,6 +37,10 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
           </label>
           <div className="btn flex flex_jc_c flex_ai_c">확인</div>
         </div>
+        <div className="line"></div>
+        <div className="score_section">
+          <div className="section_title">별점을 선택해주세요</div>
+        </div>
       </div>
     </div>
   );
