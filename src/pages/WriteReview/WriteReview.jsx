@@ -8,6 +8,12 @@ import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.
 
 const WriteReview = () => {
   const [score, setScore] = useState(3);
+  const [contents, setContents] = useState("");
+
+  const onChangeContents = (e) => {
+    e.preventDefault();
+    setContents(e.target.value);
+  };
   return (
     <div className="inner_section">
       <div className="write_form">
@@ -42,15 +48,28 @@ const WriteReview = () => {
         <div className="line"></div>
         <div className="score_section">
           <div className="section_title">별점을 선택해주세요</div>
-          <Rating
-            emptySymbol={<ScoreIcon />}
-            fullSymbol={<ScoreIcon />}
-            fractions={2}
-            start={0}
-            stop={5}
-            initialRating={score}
-            onChange={(rate) => setScore(rate)}
-          />
+          <div className="star_section">
+            <Rating
+              emptySymbol={<ScoreIcon color="rgba(0,0,0,0)" />}
+              fullSymbol={<ScoreIcon color="#6656ff" />}
+              fractions={2}
+              start={0}
+              stop={5}
+              initialRating={score}
+              onChange={(rate) => setScore(rate)}
+            />
+          </div>
+        </div>
+        <div className="line"></div>
+        <div className="input_section">
+          <textarea
+            name=""
+            id=""
+            rows="10"
+            value={contents}
+            onChange={onChangeContents}
+            placeholder="리뷰를 작성해주세요 (100자 이내)"
+          ></textarea>
         </div>
       </div>
     </div>
