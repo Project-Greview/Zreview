@@ -1,11 +1,13 @@
 // MODULE
 import { useEffect, useState } from "react";
+import Rating from "react-rating";
 // SVG
 import { ReactComponent as SearcIcon } from "../../assets/image/icon/keyword_search.svg";
+import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.svg";
 // PROPS TYPE
-type WriteReviewProps = {};
 
-const WriteReview: React.FC<WriteReviewProps> = () => {
+const WriteReview = () => {
+  const [score, setScore] = useState(3);
   return (
     <div className="inner_section">
       <div className="write_form">
@@ -30,7 +32,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
           <input
             type="text"
             className="keyword_input "
-            placeholder="장소명을 입력해주세요"
+            placeholder="장소명을 입력하세요"
           />
           <label htmlFor="" className="absolute">
             <SearcIcon />
@@ -40,6 +42,15 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
         <div className="line"></div>
         <div className="score_section">
           <div className="section_title">별점을 선택해주세요</div>
+          <Rating
+            emptySymbol={<ScoreIcon />}
+            fullSymbol={<ScoreIcon />}
+            fractions={2}
+            start={0}
+            stop={5}
+            initialRating={score}
+            onChange={(rate) => setScore(rate)}
+          />
         </div>
       </div>
     </div>
