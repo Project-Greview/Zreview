@@ -9,6 +9,7 @@ type InputProps = {
   onBlur: any;
   type: string;
   maxLength: number;
+  placeholder: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -19,6 +20,7 @@ const Input: React.FC<InputProps> = ({
   onBlur,
   type,
   maxLength,
+  placeholder,
 }) => {
   return (
     <>
@@ -32,6 +34,7 @@ const Input: React.FC<InputProps> = ({
         onBlur={onBlur}
         className={`input_default`}
         maxLength={maxLength}
+        placeholder={placeholder}
       />
       <label htmlFor={id}></label>
     </>

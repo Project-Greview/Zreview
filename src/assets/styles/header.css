@@ -43,13 +43,14 @@
 .header > .main .search_keyword_box input {
   width: 100%;
   padding: 0.5rem 4.5rem 0.5rem 5rem;
-  /* border-radius: 3rem;
-  border: 0.2rem solid #f4f4f4; */
   border: none;
   font-size: 1.6rem;
 }
 .header > .main .search_keyword_box input::placeholder {
   color: #f1f0f0;
+}
+.header > .main .search_keyword_box input:focus-visible {
+  outline: none;
 }
 .header > .main .search_keyword_box .search_btn {
   top: 25%;

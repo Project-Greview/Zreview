@@ -14,7 +14,6 @@ const StarScore: React.FC<StarScoreProps> = ({ max }) => {
   const hadnleCheckedScore = (index: number) => {
     setScore(index);
   };
-  console.log(score);
   const rendering = () => {
     const stars = [];
     for (let i = 1; i <= max; i++) {

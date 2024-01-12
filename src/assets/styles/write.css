@@ -27,7 +27,7 @@
   color: var(--point-color);
 }
 .write_form .search_section {
-  margin-top: 2rem;
+  margin: 2rem 0 1.8rem;
 }
 .write_form .search_section > * {
   height: 3.4rem;
@@ -58,20 +58,21 @@
 .write_form .line {
   width: 100%;
   height: 2px;
-  margin: 2.8rem 0;
+  margin: 1rem 0;
   background: rgba(237, 237, 237, 0.5);
 }
 .write_form .score_section {
+  margin-top: 1.5rem;
 }
 .write_form .score_section .star_section {
   margin: 1rem 0;
 }
-.write_form .score_section .star_section {
+.write_form .score_section .star_section > div {
+  height: 2.4rem;
+  margin-right: 0.9rem;
 }
-/* .write_form .score_section .star_section span > span {
-  margin: 0 0.2rem;
-} */
 .write_form .input_section {
+  margin-top: 1rem;
 }
 .write_form .input_section textarea {
   width: 100%;
@@ -87,4 +88,31 @@
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--placeholder-color);
+  letter-spacing: -0.3px;
+}
+.write_form .hashtag_section {
+  margin-top: 1.5rem;
+}
+.write_form .hashtag_section .input_box {
+  flex-basis: 76%;
+}
+.write_form .hashtag_section .input_box .input_default {
+  width: 100%;
+  height: 4.1rem;
+  padding-left: 17%;
+  margin-top: 0;
+}
+.write_form .hashtag_section .input_box .input_default::placeholder {
+  font-size: 1.4rem;
+  color: var(--placeholder-color);
+  letter-spacing: -0.3px;
+}
+.write_form .hashtag_section .btn_box {
+  width: 22%;
+}
+.write_form .hashtag_section .btn_box .btn {
+  height: 4.1rem;
+  background: var(--point-color);
+  border-radius: 5px;
+  color: var(--white-color);
 }
