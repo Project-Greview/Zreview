@@ -1,16 +1,18 @@
 // MODULE
-import { useEffect, useState } from "react";
-import Rating from "react-rating";
+import { useEffect, useState, ChangeEvent } from "react";
 // SVG
 import { ReactComponent as SearcIcon } from "../../assets/image/icon/keyword_search.svg";
 import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.svg";
-// PROPS TYPE
 
-const WriteReview = () => {
+import StarScore from "./ScoreStar";
+// PROPS TYPE
+type WriteReviewProps = {};
+
+const WriteReview: React.FC<WriteReviewProps> = () => {
   const [score, setScore] = useState(3);
   const [contents, setContents] = useState("");
 
-  const onChangeContents = (e) => {
+  const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setContents(e.target.value);
   };
@@ -48,16 +50,9 @@ const WriteReview = () => {
         <div className="line"></div>
         <div className="score_section">
           <div className="section_title">별점을 선택해주세요</div>
-          <div className="star_section">
-            <Rating
-              emptySymbol={<ScoreIcon color="rgba(0,0,0,0)" />}
-              fullSymbol={<ScoreIcon color="#6656ff" />}
-              fractions={2}
-              start={0}
-              stop={5}
-              initialRating={score}
-              onChange={(rate) => setScore(rate)}
-            />
+          <div className="star_section flex">
+            {/* <ScoreIcon /> */}
+            <StarScore max={5} />
           </div>
         </div>
         <div className="line"></div>
@@ -65,7 +60,6 @@ const WriteReview = () => {
           <textarea
             name=""
             id=""
-            rows="10"
             value={contents}
             onChange={onChangeContents}
             placeholder="리뷰를 작성해주세요 (100자 이내)"

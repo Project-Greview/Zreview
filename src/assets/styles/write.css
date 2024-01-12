@@ -66,9 +66,11 @@
 .write_form .score_section .star_section {
   margin: 1rem 0;
 }
-.write_form .score_section .star_section span > span {
-  margin: 0 0.2rem;
+.write_form .score_section .star_section {
 }
+/* .write_form .score_section .star_section span > span {
+  margin: 0 0.2rem;
+} */
 .write_form .input_section {
 }
 .write_form .input_section textarea {
