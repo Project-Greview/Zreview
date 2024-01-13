@@ -1,5 +1,7 @@
 // MODULE
 import { useRef, useState, useEffect } from "react";
+// COMPONENT
+import HashTag from "../../components/HashTag";
 
 declare global {
   interface Window {
@@ -37,15 +39,18 @@ const KakaoMap: React.FC = () => {
     getKakao();
   }, [kakaoMaps]);
   return (
-    <div
-      id="map"
-      ref={kakaoMaps}
-      style={{
-        width: "100%",
-        height: `calc(100vh - 11rem)`,
-        marginTop: 50,
-      }}
-    ></div>
+    <>
+      <HashTag />
+      <div
+        id="map"
+        ref={kakaoMaps}
+        style={{
+          width: "100%",
+          height: `calc(100vh - 11rem)`,
+          marginTop: 50,
+        }}
+      ></div>
+    </>
   );
 };
 
