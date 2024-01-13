@@ -6,7 +6,7 @@ import App from "../App";
 import Login from "../pages/Login";
 import Registration from "../pages/Registration";
 import Main from "../pages/Main";
-import SearchLocation from "../pages/SearchLocation";
+import MyLocation from "../pages/MyLocation";
 import WriteReview from "../pages/WriteReview";
 
 const Routers = createBrowserRouter([
@@ -34,7 +34,7 @@ const Routers = createBrowserRouter([
         path: "mylocation",
         element: (
           <UserRouter>
-            <SearchLocation />
+            <MyLocation />
           </UserRouter>
         ),
       },

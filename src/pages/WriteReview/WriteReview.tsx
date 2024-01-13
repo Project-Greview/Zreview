@@ -1,7 +1,7 @@
 // MODULE
 import { useState, ChangeEvent } from "react";
 // COMPONENT
-import Input from "../../components/Input";
+import Input from "../../components/Common/Input";
 // SVG
 import { ReactComponent as SearcIcon } from "../../assets/image/icon/keyword_search.svg";
 import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg";

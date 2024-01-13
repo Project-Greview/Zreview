@@ -1,0 +1,7 @@
+.my_location_section {
+  padding-top: var(--haeder-height);
+}
+.my_location_section .sub_tit {
+  font-size: 2rem;
+  font-weight: 600;
+}

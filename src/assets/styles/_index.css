@@ -5,6 +5,7 @@
 @import "./header.css";
 @import "./login.css";
 @import "./registration.css";
+@import "./mylocation.css";
 @import "./write.css";
 
 :root {

@@ -8,9 +8,11 @@ import { ReactComponent as KeywordIcon } from "../../assets/image/icon/marker_g.
 import { ReactComponent as HashTagSearchIcon } from "../../assets/image/icon/hashtag_search.svg";
 import { ReactComponent as KeywordSearcIcon } from "../../assets/image/icon/keyword_search.svg";
 // PROPS TYPE
-type SearchInputProps = {};
+type SearchInputProps = {
+  searchType: string;
+};
 
-const SearchInput: React.FC<SearchInputProps> = () => {
+const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   const [type, setType] = useRecoilState<boolean>(searchTypeState);
 
   const handleChangeSearcType = () => {
@@ -18,12 +20,18 @@ const SearchInput: React.FC<SearchInputProps> = () => {
   };
   return (
     <div className="search_keyword_box relative">
-      <div
-        onClick={() => handleChangeSearcType()}
-        className="type_icon absolute"
-      >
-        {type ? <HashTagIcon /> : <KeywordIcon />}
-      </div>
+      {searchType === "double" ? (
+        <div
+          onClick={() => handleChangeSearcType()}
+          className="type_icon absolute"
+        >
+          {type ? <HashTagIcon /> : <KeywordIcon />}
+        </div>
+      ) : (
+        <div className="type_icon absolute">
+          <HashTagIcon />
+        </div>
+      )}
       <input
         type="text"
         className="search_input"

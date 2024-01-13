@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
             <div></div>
             <div></div>
           </div>
-          <SearchInput />
+          <SearchInput searchType={"double"} />
         </div>
       ) : type === 2 ? (
         <div className="review flex flex_jc_sb flex_ai_c">
@@ -29,6 +29,13 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
             <ArrowLeft color={"#3a3a3a"} />
           </div>
           <div className="page_title flex flex_jc_c flex_ai_c">{title}</div>
+        </div>
+      ) : type === 3 ? (
+        <div className="mylocation flex flex_jc_sb flex_ai_c">
+          <div className="back_btn flex flex_ai_c" onClick={() => navigate(-1)}>
+            <ArrowLeft color={"#3a3a3a"} />
+          </div>
+          <SearchInput searchType={"single"} />
         </div>
       ) : (
         <div

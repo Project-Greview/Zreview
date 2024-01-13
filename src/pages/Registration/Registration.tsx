@@ -3,7 +3,7 @@ import { useState, useEffect, ChangeEvent } from "react";
 // HOOK
 import { CheckPasswordText, CheckKoreaTextCheck } from "utils/textUtil";
 // COMPONENT
-import Input from "../../components/Input";
+import Input from "../../components/Common/Input";
 import Header from "../../components/Header";
 
 // PROPS TYPE
