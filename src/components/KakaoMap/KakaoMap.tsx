@@ -1,7 +1,13 @@
 // MODULE
 import { useRef, useState, useEffect } from "react";
 
-const KakaoMap = () => {
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
+
+const KakaoMap: React.FC = () => {
   const kakaoMaps = useRef(null);
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
@@ -19,7 +25,7 @@ const KakaoMap = () => {
             position.coords.latitude,
             position.coords.longitude
           ),
-          level: 8,
+          level: 4,
         };
 
         const map = new window.kakao.maps.Map(mapContainer, mapOptions);
@@ -36,7 +42,7 @@ const KakaoMap = () => {
       ref={kakaoMaps}
       style={{
         width: "100%",
-        height: `calc(100vh - 11  rem)`,
+        height: `calc(100vh - 11rem)`,
         marginTop: 50,
       }}
     ></div>

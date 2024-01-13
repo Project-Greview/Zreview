@@ -47,8 +47,9 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
             type="text"
             className="keyword_input "
             placeholder="장소명을 입력하세요"
+            id="write_location_keyword"
           />
-          <label htmlFor="" className="absolute">
+          <label htmlFor="write_location_keyword" className="absolute">
             <SearcIcon />
           </label>
           <div className="btn flex flex_jc_c flex_ai_c">확인</div>
@@ -63,8 +64,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
         <div className="line inline_flex"></div>
         <div className="input_section">
           <textarea
-            name=""
-            id=""
+            name="contents"
             value={contents}
             onChange={onChangeContents}
             placeholder="리뷰를 작성해주세요 (100자 이내)"

@@ -28,8 +28,10 @@ const SearchInput: React.FC<SearchInputProps> = () => {
         type="text"
         className="search_input"
         placeholder={type ? "해시태그를 입력해주세요" : "장소명을 입력해주세요"}
+        name={type ? "set_hashtag" : "set_keyword"}
+        id={type ? "set_hashtag" : "set_keyword"}
       />
-      <label htmlFor=""></label>
+      <label htmlFor={type ? "set_hashtag" : "set_keyword"}></label>
       <button
         className="search_btn absolute"
         onClick={type ? () => console.log(type) : () => console.log(type)}
