@@ -1,0 +1,18 @@
+.left_menu_section {
+  width: 85%;
+  height: 100vh;
+  top: 0;
+  left: -100%;
+  z-index: 21;
+  background: #ffffff;
+  transition: all 0.3s;
+}
+.left_menu_section.true {
+  left: 0;
+}
+.left_menu_section .top_section {
+  background: #3a3a3a;
+}
+.left_menu_section .top_section .header_section {
+  padding: 2.5rem 2rem;
+}

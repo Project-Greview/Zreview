@@ -7,6 +7,7 @@
 @import "./registration.css";
 @import "./mylocation.css";
 @import "./write.css";
+@import "./leftmenu.css";
 
 :root {
   /* COLOR */
@@ -29,7 +30,6 @@
   max-width: 50rem;
   margin: 0 auto;
 }
-
 .btn_box .buttons {
   background: var(--point-color);
   border-radius: 5px;

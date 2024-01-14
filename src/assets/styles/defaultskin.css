@@ -2,7 +2,19 @@
 .inner_section {
   padding-top: 5rem;
 }
-
+.bg_section {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: -1;
+  transition: all 0.3s;
+}
+.bg_section.true {
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 19;
+}
 /* INPUT */
 .input_default {
   height: 4.7rem;
@@ -69,7 +81,7 @@
   height: 3rem;
   padding: 0 1rem;
   top: calc(var(--haeder-height) + 1rem);
-  z-index: 20;
+  z-index: 10;
 }
 .main_tag_slide .swiper .swiper-wrapper {
   height: 3rem;

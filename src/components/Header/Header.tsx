@@ -1,5 +1,8 @@
 // MODULE
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+// RECOIL STAET
+import { leftMenuState } from "state/userState";
 // SVG
 import { ReactComponent as ArrowLeft } from "../../assets/image/icon/arrow-left.svg";
 // COMPONENT
@@ -12,11 +15,21 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ type, title }) => {
   const navigate = useNavigate();
+  // STATE
+  const [leftMenu, setLeftMenu] = useRecoilState(leftMenuState);
+  // FUNCTION
+  const handleOpenLeftMenu = () => {
+    setLeftMenu(true);
+  };
+
   return (
     <div className={`header fixed width_100p`}>
       {type === 1 ? (
         <div className="main flex flex_jc_sb flex_ai_c">
-          <div className="bars_menu relative">
+          <div
+            className="bars_menu relative"
+            onClick={() => handleOpenLeftMenu()}
+          >
             <div></div>
             <div></div>
             <div></div>
