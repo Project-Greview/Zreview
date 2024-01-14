@@ -11,8 +11,8 @@ const HashTag: React.FC<HashTagProps> = () => {
   return (
     <div className="main_tag_slide absolute">
       <Swiper
-        spaceBetween={50}
-        slidesPerView={3}
+        spaceBetween={10}
+        slidesPerView={4}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper: SwiperCore) => console.log(swiper)}
       >
@@ -20,9 +20,18 @@ const HashTag: React.FC<HashTagProps> = () => {
           <MarkerIcon />
           <div className="txt">텍스트</div>
         </SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>
+          <MarkerIcon />
+          <div className="txt">텍스트</div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <MarkerIcon />
+          <div className="txt">텍스트</div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <MarkerIcon />
+          <div className="txt">텍스트</div>
+        </SwiperSlide>
       </Swiper>
     </div>
   );

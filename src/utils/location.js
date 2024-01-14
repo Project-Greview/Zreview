@@ -6,9 +6,9 @@ export function getLocationPathname(path) {
     return 2;
   } else if (path === "/write") {
     return 3;
-  } else if (path === "/save-list") {
+  } else if (path === "/bookmark") {
     return 4;
-  } else if (path === "mypage") {
+  } else if (path === "/mypage") {
     return 5;
   } else {
     return 0;

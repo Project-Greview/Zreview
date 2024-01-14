@@ -8,6 +8,8 @@ import Registration from "../pages/Registration";
 import Main from "../pages/Main";
 import MyLocation from "../pages/MyLocation";
 import WriteReview from "../pages/WriteReview";
+import BookMark from "../pages/BookMark";
+import MyPage from "../pages/MyPage";
 
 const Routers = createBrowserRouter([
   {
@@ -43,6 +45,22 @@ const Routers = createBrowserRouter([
         element: (
           <UserRouter>
             <WriteReview />
+          </UserRouter>
+        ),
+      },
+      {
+        path: "bookmark",
+        element: (
+          <UserRouter>
+            <BookMark />
+          </UserRouter>
+        ),
+      },
+      {
+        path: "mypage",
+        element: (
+          <UserRouter>
+            <MyPage />
           </UserRouter>
         ),
       },

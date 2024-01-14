@@ -48,6 +48,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           className={`flex flex_dir_c flex_jc_c flex_ai_c ${
             activeNum === 4 ? "active" : ""
           }`}
+          onClick={() => navigate("/bookmark")}
         >
           <BookmarkIcon color={activeNum === 4 ? "#6656ff" : "#959292"} />
           <p>저장목록</p>
@@ -56,6 +57,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           className={`flex flex_dir_c flex_jc_c flex_ai_c ${
             activeNum === 5 ? "active" : ""
           }`}
+          onClick={() => navigate("/mypage")}
         >
           <MypageIcon color={activeNum === 5 ? "#6656ff" : "#959292"} />
           <p>마이페이지</p>
