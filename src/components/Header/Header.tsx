@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { leftMenuState } from "state/userState";
 // SVG
 import { ReactComponent as ArrowLeft } from "../../assets/image/icon/arrow-left.svg";
+import { ReactComponent as SettingIcon } from "../../assets/image/icon/setting_btn.svg";
 // COMPONENT
 import SearchInput from "../../components/SearchInput";
 // PROPS TYPE
@@ -49,6 +50,16 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
             <ArrowLeft color={"#3a3a3a"} />
           </div>
           <SearchInput searchType={"single"} />
+        </div>
+      ) : type === 4 ? (
+        <div className="mylocation flex flex_jc_sb flex_ai_c">
+          <div className="back_btn flex flex_ai_c" onClick={() => navigate(-1)}>
+            <ArrowLeft color={"#3a3a3a"} />
+          </div>
+          <div className="page_title flex flex_jc_c flex_ai_c">{title}</div>
+          <div className="setting_btn">
+            <SettingIcon />
+          </div>
         </div>
       ) : (
         <div

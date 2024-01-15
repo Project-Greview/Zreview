@@ -42,15 +42,15 @@ const App: React.FC = () => {
       {isMobile ? (
         <Suspense fallback={<Splash />}>
           {activeNum === 1 ? (
-            <Header type={1} title={""} />
+            <Header type={1} title="" />
           ) : activeNum === 2 ? (
-            <Header type={3} title="리뷰쓰기" />
+            <Header type={3} title="" />
           ) : activeNum === 3 ? (
             <Header type={2} title="리뷰쓰기" />
           ) : activeNum === 4 ? (
             <Header type={2} title="저장목록" />
           ) : activeNum === 5 ? (
-            <Header type={2} title="마이페이지" />
+            <Header type={4} title="마이페이지" />
           ) : (
             ""
           )}
