@@ -1,4 +1,5 @@
 // MODULE
+import { useLayoutEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 // RECOIL STAET
 import { leftMenuState } from "state/userState";
@@ -11,11 +12,16 @@ type MainProps = {};
 
 const Main: React.FC<MainProps> = () => {
   const isLeftMenu = useRecoilValue(leftMenuState);
+  const [isReady, setIsReady] = useState(false);
+
+  useLayoutEffect(() => {
+    setIsReady(true);
+  }, []);
   return (
     <>
       <LeftMenu />
       <div className={`bg_section fixed ${isLeftMenu}`}></div>
-      <KakaoMap />
+      {!isReady ? "" : <KakaoMap />}
     </>
   );
 };

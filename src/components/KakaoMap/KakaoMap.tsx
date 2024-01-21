@@ -1,7 +1,7 @@
 // MODULE
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 // COMPONENT
-import HashTag from "../../components/HashTag";
+import HashTag from "../HashTag";
 
 declare global {
   interface Window {
@@ -20,24 +20,33 @@ const KakaoMap: React.FC = () => {
       navigator.geolocation.getCurrentPosition(function (position) {
         setUserLat(position.coords.latitude);
         setUserLng(position.coords.longitude);
-
         const mapContainer = document.getElementById("map");
-        const mapOptions = {
-          center: new window.kakao.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude
-          ),
-          level: 4,
-        };
+        if (!map) {
+          const mapOptions = {
+            center: new window.kakao.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            ),
+            level: 4,
+          };
 
-        const map = new window.kakao.maps.Map(mapContainer, mapOptions);
+          const map = new window.kakao.maps.Map(mapContainer, mapOptions);
+
+          map.setMinLevel(5);
+          map.setMaxLevel(8);
+          map.setDraggable(false);
+          setMap(map);
+        }
       });
+    } else {
+      console.log("내위치 사용 불가");
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    console.log("useLayoutEffect");
     getKakao();
-  }, [kakaoMaps]);
+  }, []);
   return (
     <>
       <HashTag />

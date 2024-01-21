@@ -18,9 +18,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <CookiesProvider>
     <RecoilRoot>
-      <React.StrictMode>
-        <RouterProvider router={Routers} />
-      </React.StrictMode>
+      {/* <React.StrictMode> */}
+      <RouterProvider router={Routers} />
+      {/* </React.StrictMode> */}
     </RecoilRoot>
   </CookiesProvider>
 );
