@@ -213,11 +213,11 @@ const KakaoMapMyLocation = () => {
           ),
           radius: 5000,
           strokeWeight: 0,
-          strokeColor: "#75B8FA",
-          strokeOpacity: 1,
+          strokeColor: "#6556FF",
+          strokeOpacity: "5%",
           strokeStyle: "dashed",
-          fillColor: "#CFE7FF",
-          fillOpacity: 0.3,
+          fillColor: "#6556FF",
+          fillOpacity: 1,
         });
         // LEVEL SIZE CHANGE EVENT
         window.kakao.maps.event.addListener(map, "zoom_changed", function () {

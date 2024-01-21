@@ -31,9 +31,25 @@ const KakaoMap: React.FC = () => {
           };
 
           const map = new window.kakao.maps.Map(mapContainer, mapOptions);
+          // CURRENT MARKER
 
+          // USER RANGE CIRCLE
+          const circle = new window.kakao.maps.Circle({
+            center: new window.kakao.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            ),
+            radius: 1000,
+            strokeWeight: 2,
+            strokeColor: "#6556FF",
+            strokeOpacity: 0.2,
+            strokeStyle: "solid",
+            fillColor: "#6556FF",
+            fillOpacity: 0.05,
+          });
           map.setMinLevel(5);
           map.setMaxLevel(8);
+          circle.setMap(map);
           map.setDraggable(false);
           setMap(map);
         }
