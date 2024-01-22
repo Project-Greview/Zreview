@@ -8,3 +8,9 @@
   font-size: 2rem;
   font-weight: 600;
 }
+.my_location_section .sub_section .hashtag_list {
+  margin-top: 1.5rem;
+}
+.my_location_section .sub_section .hashtag_list li {
+  margin-right: 1rem;
+}

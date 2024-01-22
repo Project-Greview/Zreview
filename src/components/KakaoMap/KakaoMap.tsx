@@ -1,7 +1,7 @@
 // MODULE
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 // COMPONENT
-import HashTag from "../HashTag";
+import HashTagSlide from "../HashTagSlide";
 
 // PROPS TYPE
 declare global {
@@ -66,7 +66,7 @@ const KakaoMap: React.FC = () => {
   }, []);
   return (
     <>
-      <HashTag />
+      <HashTagSlide />
       <div
         id="map"
         ref={kakaoMaps}

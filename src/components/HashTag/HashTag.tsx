@@ -1,38 +1,17 @@
 // MODULE
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperCore } from "swiper";
-import "swiper/css";
+import { useState } from "react";
 // SVG
-import { ReactComponent as MarkerIcon } from "../../assets/image/icon/marker_c.svg";
+import { ReactComponent as HashTagIcon } from "../../assets/image/icon/marker_c.svg";
 // PROPS TYPE
-type HashTagProps = {};
+type HashTagProps = {
+  tag: string;
+};
 
-const HashTag: React.FC<HashTagProps> = () => {
+const HashTag: React.FC<HashTagProps> = ({ tag }) => {
   return (
-    <div className="main_tag_slide absolute">
-      <Swiper
-        spaceBetween={10}
-        slidesPerView={4}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper: SwiperCore) => console.log(swiper)}
-      >
-        <SwiperSlide>
-          <MarkerIcon />
-          <div className="txt">텍스트</div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MarkerIcon />
-          <div className="txt">텍스트</div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MarkerIcon />
-          <div className="txt">텍스트</div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MarkerIcon />
-          <div className="txt">텍스트</div>
-        </SwiperSlide>
-      </Swiper>
+    <div className="hashtag flex flex_jc_sa flex_ai_c">
+      <HashTagIcon width={16} height={16} />
+      <div className="tag_name">{tag}</div>
     </div>
   );
 };

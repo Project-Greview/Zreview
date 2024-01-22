@@ -217,7 +217,7 @@ const KakaoMapMyLocation = () => {
           strokeOpacity: "5%",
           strokeStyle: "dashed",
           fillColor: "#6556FF",
-          fillOpacity: 1,
+          fillOpacity: 0.2,
         });
         // LEVEL SIZE CHANGE EVENT
         window.kakao.maps.event.addListener(map, "zoom_changed", function () {

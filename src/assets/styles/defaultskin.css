@@ -15,6 +15,17 @@
   background: rgba(0, 0, 0, 0.6);
   z-index: 19;
 }
+.hashtag {
+  padding: 3px 1rem;
+  background: var(--white-color);
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+}
+.hashtag .tag_name {
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  color: var(--disable-text);
+}
 /* INPUT */
 .input_default {
   height: 4.7rem;
