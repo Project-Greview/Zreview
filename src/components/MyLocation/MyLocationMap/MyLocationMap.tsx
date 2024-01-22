@@ -1,8 +1,5 @@
 // MODULE
-import { useRef, useState, useEffect, useLayoutEffect } from "react";
-// COMPONENT
-import HashTag from "../HashTag";
-
+import { useState, useRef, useLayoutEffect } from "react";
 // PROPS TYPE
 declare global {
   interface Window {
@@ -10,8 +7,8 @@ declare global {
   }
 }
 
-const KakaoMap: React.FC = () => {
-  const kakaoMaps = useRef(null);
+const MyLocationMap: React.FC = () => {
+  const myKakaoMaps = useRef(null);
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
@@ -28,7 +25,7 @@ const KakaoMap: React.FC = () => {
               position.coords.latitude,
               position.coords.longitude
             ),
-            level: 4,
+            level: 3,
           };
 
           const map = new window.kakao.maps.Map(mapContainer, mapOptions);
@@ -48,8 +45,6 @@ const KakaoMap: React.FC = () => {
             fillColor: "#6556FF",
             fillOpacity: 0.05,
           });
-          map.setMinLevel(5);
-          map.setMaxLevel(8);
           circle.setMap(map);
           map.setDraggable(false);
           setMap(map);
@@ -65,19 +60,17 @@ const KakaoMap: React.FC = () => {
     getKakao();
   }, []);
   return (
-    <>
-      <HashTag />
-      <div
-        id="map"
-        ref={kakaoMaps}
-        style={{
-          width: "100%",
-          height: `calc(100vh - 11rem)`,
-          marginTop: 50,
-        }}
-      ></div>
-    </>
+    <div
+      id="map"
+      ref={myKakaoMaps}
+      style={{
+        width: `100%`,
+        height: `25vh`,
+        borderRadius: 10,
+        marginTop: 15,
+      }}
+    ></div>
   );
 };
 
-export default KakaoMap;
+export default MyLocationMap;

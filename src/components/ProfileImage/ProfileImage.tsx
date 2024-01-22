@@ -8,18 +8,19 @@ type ProfileImageProps = {
 };
 
 const ProfileImage: React.FC<ProfileImageProps> = ({ src, alt, size }) => {
-  const imgRef = useRef(null);
-  const [imgWidth, setImgWidth] = useState(null);
-  const [imgHeight, setImgHeight] = useState(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const [imgWidth, setImgWidth] = useState<null>(null);
+  const [imgHeight, setImgHeight] = useState<null>(null);
 
   // useEffect(() => {
   //   const onLoadImage = () => {
   //     const img = imgRef?.current;
+  //     if (!img) return;
   //     const width = img?.naturalWidth;
   //     const height = img?.naturalHeight;
 
-  //     setImgWidth(width);
-  //     setImgHeight(height);
+  //     setImgWidth(width || null);
+  //     setImgHeight(height || null);
 
   //     const ratio = width / height;
 

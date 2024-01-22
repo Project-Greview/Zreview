@@ -1,7 +1,10 @@
 .my_location_section {
-  padding-top: var(--haeder-height);
+  padding: var(--haeder-height) 20px var(--bottom-navigation) 20px;
 }
-.my_location_section .sub_tit {
+.my_location_section .sub_section {
+  margin-top: 2.5rem;
+}
+.my_location_section .sub_section .sub_tit {
   font-size: 2rem;
   font-weight: 600;
 }
