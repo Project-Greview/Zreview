@@ -16,3 +16,34 @@
 .left_menu_section .top_section .header_section {
   padding: 2.5rem 2rem;
 }
+.left_menu_section .top_section .my_profile * {
+  color: var(--white-color);
+}
+.left_menu_section .top_section .my_profile .my_nickname {
+  margin-top: 1.5rem;
+  font-size: 2rem;
+}
+.left_menu_section .top_section .my_profile .my_location {
+  margin-top: 0.5rem;
+}
+.left_menu_section .top_section .semi_count {
+  margin-top: 10rem;
+  padding-bottom: 2.5rem;
+}
+.left_menu_section .middle_section {
+}
+.left_menu_section .middle_section ul li {
+  padding: 2.5rem;
+}
+.left_menu_section .middle_section ul li:not(:last-child) {
+  border-bottom: 1px solid rgba(237, 237, 237, 0.5);
+}
+.left_menu_section .middle_section ul li svg {
+  margin-right: 1rem;
+}
+.left_menu_section .middle_section ul li .txt {
+  flex-grow: 1;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--disable-color);
+}
