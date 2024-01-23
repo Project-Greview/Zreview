@@ -29,7 +29,12 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
           <div className="section_title">장소명 선택</div>
           <div className="radio_box flex">
             <div className="mar_rh_5">
-              <input type="radio" id="location_search" name="location_type" />
+              <input
+                type="radio"
+                id="location_search"
+                name="location_type"
+                defaultChecked
+              />
               <label htmlFor="location_search" className="flex">
                 장소 검색
               </label>
