@@ -116,3 +116,29 @@
 .main_tag_slide .swiper-slide.swiper-slide-active .txt {
   color: var(--white-color);
 }
+/* SOMENAIL REVIEW */
+.somenail_review {
+  margin-top: 3rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+.somenail_review .img_box {
+  max-height: 10rem;
+  overflow: hidden;
+}
+.somenail_review .review_info {
+  padding: 1rem;
+}
+.somenail_review .review_info .top_info .title {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+.somenail_review .review_info .top_info .score p {
+  margin-left: 1rem;
+  color: var(--point-color);
+}
+.somenail_review .review_info .addr {
+  font-size: 1.4rem;
+  color: var(--disable-text);
+}

@@ -3,6 +3,7 @@
 // COMPONENT
 import HashTag from "components/HashTag";
 import MyLocationMap from "components/MyLocation/MyLocationMap";
+import SomenailItem from "components/SomenailItem";
 // PROPS TYPE
 type MyLocationProps = {};
 
@@ -23,6 +24,9 @@ const MyLocation: React.FC<MyLocationProps> = () => {
       </div>
       <div className="sub_section">
         <p className="sub_tit">우리동네 실시간 리뷰</p>
+        <ul>
+          <SomenailItem type={"empty"} />
+        </ul>
       </div>
     </div>
   );
