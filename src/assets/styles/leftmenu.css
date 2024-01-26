@@ -4,8 +4,11 @@
   top: 0;
   left: -100%;
   z-index: 21;
-  background: #ffffff;
+  background: #ededed;
   transition: all 0.3s;
+}
+.left_menu_section > * {
+  background: var(--white-color);
 }
 .left_menu_section.true {
   left: 0;
@@ -14,7 +17,7 @@
   background: #3a3a3a;
 }
 .left_menu_section .top_section .header_section {
-  padding: 2.5rem 2rem;
+  padding: 2.5rem 1.6rem;
 }
 .left_menu_section .top_section .my_profile * {
   color: var(--white-color);
@@ -27,10 +30,22 @@
   margin-top: 0.5rem;
 }
 .left_menu_section .top_section .semi_count {
-  margin-top: 10rem;
+  max-width: 60%;
+  margin: 10rem auto 0 auto;
   padding-bottom: 2.5rem;
 }
+.left_menu_section .top_section .semi_count li .key_tit {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--disable-text);
+}
+.left_menu_section .top_section .semi_count li .count {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--white-color);
+}
 .left_menu_section .middle_section {
+  flex-grow: 1;
 }
 .left_menu_section .middle_section ul li {
   padding: 2.5rem;
@@ -46,4 +61,17 @@
   font-size: 1.8rem;
   font-weight: 600;
   color: var(--disable-color);
+}
+.left_menu_section .bottom_section {
+  margin-top: 1rem;
+}
+.left_menu_section .bottom_section ul li {
+  padding: 2rem 2.5rem;
+}
+.left_menu_section .bottom_section ul li:first-child {
+  border-bottom: 1px solid var(--border-color);
+}
+.left_menu_section .bottom_section ul li div {
+  font-size: 1.6rem;
+  color: var(--disable-text);
 }

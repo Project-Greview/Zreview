@@ -61,7 +61,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
     setLeftMenu(false);
   };
   return (
-    <div className={`left_menu_section fixed ${leftMenu}`}>
+    <div className={`left_menu_section fixed flex flex_dir_c ${leftMenu}`}>
       <div className="top_section">
         <div className="header_section flex flex_jc_sb flex_ai_c">
           <div className="close" onClick={() => handleCLoseLeftMenu()}>
@@ -79,12 +79,12 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
         <div className="semi_count">
           <ul className="flex flex_jc_sb flex_ai_c">
             <li>
-              <div>리뷰</div>
-              <div>00</div>
+              <div className="key_tit">리뷰</div>
+              <div className="count">00</div>
             </li>
             <li>
-              <div>댓글</div>
-              <div>00</div>
+              <div className="key_tit">댓글</div>
+              <div className="count">00</div>
             </li>
           </ul>
         </div>
@@ -92,7 +92,17 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
       <div className="middle_section">
         <MiddleMenu />
       </div>
-      <div className="bottom_section"></div>
+      <div className="bottom_section">
+        <ul>
+          <li className="flex flex_ai_c">
+            <div>문의하기</div>
+          </li>
+          <li className="flex flex_jc_sb flex_ai_c">
+            <div>버전정보</div>
+            <div></div>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };
