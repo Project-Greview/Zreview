@@ -1,8 +1,23 @@
 import React, { useState } from "react";
+import dummyHashtag from "../json/dummyHashTag.json";
+
+let nextId = 1;
+
+const getRandumHashTagType = (type) => {
+  const availableHashtags = dummyHashtag[type];
+  const selectedHashtag =
+    availableHashtags[Math.floor(Math.random() * availableHashtags.length)];
+
+  return selectedHashtag.name;
+};
+const getRandomCategory = () => {
+  return Math.random() < 0.5 ? "good" : "not_good";
+};
 
 export function generateRandomData() {
   return {
-    id: getRandomNumber(1, 100),
+    // id: getRandomNumber(1, 100),
+    id: nextId++,
     title: generateRandomString(3),
     member: generateRandomString(2),
     content: generateRandomString(10),
@@ -11,9 +26,9 @@ export function generateRandomData() {
     created_at: getRandomDate(),
     updated_at: getRandomDate(),
     hashtag: [
-      generateRandomString(3),
-      generateRandomString(3),
-      generateRandomString(3),
+      getRandumHashTagType(getRandomCategory()),
+      getRandumHashTagType(getRandomCategory()),
+      getRandumHashTagType(getRandomCategory()),
     ],
     views: getRandomNumber(1, 100),
     rating: getRandomNumber(1, 5),
@@ -44,21 +59,21 @@ const getRandomDate = () =>
   ).toISOString();
 
 const DataGenerator = () => {
-  const [jsonData, setJsonData] = useState(null);
+  const [jsonDataArray, setJsonDataArray] = useState([]);
 
   const saveDataToState = () => {
     const randomData = generateRandomData();
-    setJsonData(randomData);
+    setJsonDataArray((prevDataArray) => [...prevDataArray, randomData]);
   };
 
   return (
     <div>
       <button onClick={saveDataToState}>Generate and Save Data</button>
-      {jsonData && (
-        <pre>
-          <code>{JSON.stringify(jsonData, null, 2)}</code>
+      {jsonDataArray.map((data, index) => (
+        <pre key={index}>
+          <code>{JSON.stringify(data, null, 2)}</code>
         </pre>
-      )}
+      ))}
     </div>
   );
 };

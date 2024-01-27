@@ -1,0 +1,56 @@
+.modal_bg {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.modal_frame {
+  width: 90%;
+  height: 40vh;
+  top: calc(50% - 20vh);
+  left: 5%;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  z-index: 101;
+}
+.modal_frame .modal_header .title {
+  flex-grow: 1;
+  margin-right: -2rem;
+  font-size: 2rem;
+}
+.modal_frame .modal_body {
+  margin-top: 4rem;
+}
+.modal_frame .modal_body .explanation_list li {
+  position: relative;
+  margin: 0.8rem 0 0.8rem 1.5rem;
+  font-size: 1.5rem;
+  color: var(--disable-color);
+  word-break: keep-all;
+}
+.modal_frame .modal_body .explanation_list li::before {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  top: calc(50% - 2.5px);
+  left: -1.5rem;
+  background: var(--disable-color);
+  border-radius: 50%;
+}
+.modal_frame .modal_body .count_box {
+  margin-top: 0.5rem;
+}
+.modal_frame .modal_body .count_box input {
+  width: 100%;
+}
+.modal_frame .modal_body .btn_box {
+  width: calc(100% - 2rem);
+  bottom: 1rem;
+}
+.modal_frame .modal_body .buttons {
+  height: 5rem;
+}

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // IMAGE
 import { ReactComponent as Logo } from "../../assets/image/Logo.svg";
+import Button from "components/Common/Button";
 // PROPS TYPE
 type LoginProps = {};
 
@@ -44,12 +45,12 @@ const Login: React.FC<LoginProps> = () => {
         </div>
       </div>
       <div className="btn_box flex">
-        <div
-          className="buttons flex flex_jc_c flex_ai_c width_100p cursor_p"
-          onClick={!isReady ? () => handleOnLoginBox() : () => handleLogin()}
-        >
-          {!isReady ? "시작하기" : "로그인"}
-        </div>
+        <Button
+          title={!isReady ? "시작하기" : "로그인"}
+          event={!isReady ? () => handleOnLoginBox() : () => handleLogin()}
+          styles={"buttons flex flex_jc_c flex_ai_c width_100p cursor_p"}
+          width={"100%"}
+        />
       </div>
       <div className="registraion_info flex">
         <div>처음이신가요?&ensp;</div>

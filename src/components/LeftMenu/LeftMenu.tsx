@@ -54,6 +54,7 @@ const MiddleMenu: React.FC = () => {
 // PROPS TYPE
 type LeftMenuProps = {};
 const LeftMenu: React.FC<LeftMenuProps> = () => {
+  const navigate = useNavigate();
   // STATE
   const [leftMenu, setLeftMenu] = useRecoilState(leftMenuState);
   // FUNCTION
@@ -67,7 +68,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
           <div className="close" onClick={() => handleCLoseLeftMenu()}>
             <CloseBtn />
           </div>
-          <div className="setting">
+          <div className="setting" onClick={() => navigate("/setting")}>
             <SettingBtn />
           </div>
         </div>

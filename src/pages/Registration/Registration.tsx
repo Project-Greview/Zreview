@@ -1,7 +1,7 @@
 // MODULE
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 // HOOK
-import { CheckPasswordText, CheckKoreaTextCheck } from "utils/textUtil";
+import { CheckPasswordText } from "utils/textUtil";
 // COMPONENT
 import Input from "../../components/Common/Input";
 import Header from "../../components/Header";

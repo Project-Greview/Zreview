@@ -116,3 +116,10 @@
   border-radius: 5px;
   color: var(--white-color);
 }
+.write_form .write_btn {
+  width: 90%;
+  bottom: 2rem;
+}
+.write_form .write_btn .buttons {
+  height: 5rem;
+}

@@ -10,6 +10,7 @@ import MyLocation from "../pages/MyLocation";
 import WriteReview from "../pages/WriteReview";
 import BookMark from "../pages/BookMark";
 import MyPage from "../pages/MyPage";
+import Setting from "pages/Setting";
 
 const Routers = createBrowserRouter([
   {
@@ -61,6 +62,14 @@ const Routers = createBrowserRouter([
         element: (
           <UserRouter>
             <MyPage />
+          </UserRouter>
+        ),
+      },
+      {
+        path: "setting",
+        element: (
+          <UserRouter>
+            <Setting />
           </UserRouter>
         ),
       },

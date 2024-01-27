@@ -9,7 +9,7 @@ type MyLocationProps = {};
 
 const MyLocation: React.FC<MyLocationProps> = () => {
   return (
-    <div className="my_location_section">
+    <div className="my_location_section view_section">
       <div className="sub_section">
         <p className="sub_tit">현재 접속한 동네 이름 표시</p>
         <MyLocationMap />

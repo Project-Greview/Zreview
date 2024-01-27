@@ -7,6 +7,7 @@ import { ReactComponent as SearcIcon } from "../../assets/image/icon/keyword_sea
 import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg";
 
 import StarScore from "./ScoreStar";
+import Button from "components/Common/Button";
 // PROPS TYPE
 type WriteReviewProps = {};
 
@@ -92,8 +93,21 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
             />
           </div>
           <div className="btn_box">
-            <div className="btn flex flex_jc_c flex_ai_c">추가</div>
+            <Button
+              title={"추가"}
+              width={""}
+              event={() => console.log("대기중")}
+              styles={"btn flex flex_jc_c flex_ai_c"}
+            />
           </div>
+        </div>
+        <div className="write_btn btn_box absolute">
+          <Button
+            title={"등록하기"}
+            width={"100%"}
+            event={() => console.log("대기중")}
+            styles={"buttons flex flex_jc_c flex_ai_c width_100p cursor_p"}
+          />
         </div>
       </div>
     </div>

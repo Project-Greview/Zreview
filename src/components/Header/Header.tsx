@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
             <ArrowLeft color={"#3a3a3a"} />
           </div>
           <div className="page_title flex flex_jc_c flex_ai_c">{title}</div>
-          <div className="setting_btn">
+          <div className="setting_btn" onClick={() => navigate("/setting")}>
             <SettingIcon />
           </div>
         </div>

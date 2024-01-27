@@ -10,6 +10,8 @@ export function getLocationPathname(path) {
     return 4;
   } else if (path === "/mypage") {
     return 5;
+  } else if (path === "/setting") {
+    return 6;
   } else {
     return 0;
   }

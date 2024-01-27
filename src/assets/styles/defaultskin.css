@@ -1,4 +1,7 @@
 /* COMMON */
+.view_section {
+  padding: var(--haeder-height) 20px var(--bottom-navigation) 20px;
+}
 .inner_section {
   padding-top: 5rem;
 }
@@ -141,4 +144,17 @@
 .somenail_review .review_info .addr {
   font-size: 1.4rem;
   color: var(--disable-text);
+}
+/* SETTING */
+.setting_section {
+  height: 100vh;
+  background: #f6f6f6;
+}
+.setting_section ul {
+  margin-top: 1rem;
+}
+.setting_section ul li {
+  padding: 2rem 2.6rem;
+  background: var(--white-color);
+  border-bottom: 1px solid var(--border-color);
 }
