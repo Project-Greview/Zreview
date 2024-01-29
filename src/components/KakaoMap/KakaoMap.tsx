@@ -1,5 +1,8 @@
 // MODULE
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { useRecoilState } from "recoil";
+// RECOIL STATE
+import { dummyDateState } from "state/dummyState";
 // COMPONENT
 import HashTagSlide from "../HashTagSlide";
 
@@ -15,6 +18,7 @@ const KakaoMap: React.FC = () => {
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
+  const [dummyData, setDummyData] = useRecoilState(dummyDateState);
 
   const getKakao = () => {
     if (navigator.geolocation) {
@@ -34,6 +38,56 @@ const KakaoMap: React.FC = () => {
           const map = new window.kakao.maps.Map(mapContainer, mapOptions);
           // CURRENT MARKER
 
+          // CLUSTER OPTION
+          const clusterer = new window.kakao.maps.MarkerClusterer({
+            map: map,
+            averageCenter: true,
+            minLevel: 5,
+            calculator: [99, 999, 9999],
+            disableClickZoom: true,
+            styles: [
+              {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "40px",
+                height: "50px",
+                paddingBottom: "22%",
+                // background: `url(${NormalMarker}) no-repeat center center`,
+                backgroundSize: "40px 50px",
+                fontSize: "18px",
+                fontWeight: 700,
+                color: `let(--point-color)`,
+              },
+              {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "50px",
+                height: "60px",
+                paddingBottom: "26%",
+                // background: `url(${NormalMarker}) no-repeat center center`,
+                backgroundSize: "50px 60px",
+                fontSize: "18px",
+                fontWeight: 700,
+                color: `let(--point-color)`,
+              },
+              {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "70px",
+                height: "80px",
+                paddingBottom: "26%",
+                // background: `url(${NormalMarker}) no-repeat center center`,
+                backgroundSize: "70px 80px",
+                fontSize: "18px",
+                fontWeight: 700,
+                color: `let(--point-color)`,
+              },
+            ],
+          });
+
           // USER RANGE CIRCLE
           const circle = new window.kakao.maps.Circle({
             center: new window.kakao.maps.LatLng(
@@ -48,8 +102,8 @@ const KakaoMap: React.FC = () => {
             fillColor: "#6556FF",
             fillOpacity: 0.05,
           });
-          map.setMinLevel(5);
-          map.setMaxLevel(8);
+          // map.setMinLevel(5);
+          // map.setMaxLevel(8);
           circle.setMap(map);
           map.setDraggable(false);
           setMap(map);
@@ -61,7 +115,6 @@ const KakaoMap: React.FC = () => {
   };
 
   useLayoutEffect(() => {
-    console.log("useLayoutEffect");
     getKakao();
   }, []);
   return (

@@ -7,9 +7,10 @@ import { ReactComponent as StarIcon } from "../../assets/image/icon/Score_star.s
 // PROPS TYPE
 type SomenailItemProps = {
   type: string;
+  data: any;
 };
 
-const SomenailItem: React.FC<SomenailItemProps> = ({ type }) => {
+const SomenailItem: React.FC<SomenailItemProps> = ({ type, data }) => {
   return (
     <li className="somenail_review">
       <div className="img_box">
@@ -23,17 +24,19 @@ const SomenailItem: React.FC<SomenailItemProps> = ({ type }) => {
           <div className="title">에버랜드</div>
           <div className="score flex flex_ai_c">
             <StarIcon width={19} height={19} color={"#6656ff"} />
-            <p>4.5</p>
+            <p>{data.rating}</p>
           </div>
         </div>
         <div className="addr">
           경기도 용인시 처인구 포곡읍 에버랜드로 199 삼성물산㈜
         </div>
         <div className="hashtag_list flex flex_jc_s flex_ai_c">
-          <ul>
-            <li>
-              <HashTag tag={"맛집"} />
-            </li>
+          <ul className="flex flex_jc_s flex_ai_c">
+            {data.hashtag.map((tag: string, index: number) => (
+              <li key={index}>
+                <HashTag tag={tag} />
+              </li>
+            ))}
           </ul>
         </div>
       </div>

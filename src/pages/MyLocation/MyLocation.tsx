@@ -25,7 +25,7 @@ const MyLocation: React.FC<MyLocationProps> = () => {
       <div className="sub_section">
         <p className="sub_tit">우리동네 실시간 리뷰</p>
         <ul>
-          <SomenailItem type={"empty"} />
+          <SomenailItem type={"empty"} data={null} />
         </ul>
       </div>
     </div>

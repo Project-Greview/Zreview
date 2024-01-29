@@ -28,6 +28,7 @@
   margin-left: 1rem;
   font-size: 1.4rem;
   color: var(--disable-text);
+  white-space: nowrap;
 }
 /* INPUT */
 .input_default {
@@ -144,6 +145,10 @@
 .somenail_review .review_info .addr {
   font-size: 1.4rem;
   color: var(--disable-text);
+}
+.somenail_review .review_info .hashtag_list {
+  margin-top: 1rem;
+  overflow-x: scroll;
 }
 /* SETTING */
 .setting_section {

@@ -12,6 +12,8 @@ import BookMark from "../pages/BookMark";
 import MyPage from "../pages/MyPage";
 import Setting from "pages/Setting";
 
+import DummyDataList from "pages/DummyDataList";
+
 const Routers = createBrowserRouter([
   {
     path: "/",
@@ -70,6 +72,15 @@ const Routers = createBrowserRouter([
         element: (
           <UserRouter>
             <Setting />
+          </UserRouter>
+        ),
+      },
+      // DUMMY
+      {
+        path: "Dummy_List",
+        element: (
+          <UserRouter>
+            <DummyDataList />
           </UserRouter>
         ),
       },
