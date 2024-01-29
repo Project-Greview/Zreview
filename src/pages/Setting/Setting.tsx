@@ -1,6 +1,5 @@
 // MODULE
 import { useRecoilState } from "recoil";
-import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 // RECOIL STATE
 import { dummyModalState } from "state/dummyState";
@@ -10,7 +9,6 @@ import menuList from "../../json/settingMenu.json";
 import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow_right.svg";
 
 const Setting: React.FC = () => {
-  const navigate = useNavigate();
   const [productModal, setProductModal] =
     useRecoilState<Boolean>(dummyModalState);
 
@@ -56,15 +54,6 @@ const Setting: React.FC = () => {
         ) : (
           ""
         )}
-        <li
-          className="flex flex_jc_sb flex_ai_c"
-          onClick={() => navigate("/Dummy_List")}
-        >
-          <div>임시데이터 목록 보기</div>
-          <div>
-            <ArrowIcon />
-          </div>
-        </li>
       </ul>
     </div>
   );

@@ -1,8 +1,20 @@
 import React, { useState } from "react";
 import dummyHashtag from "../json/dummyHashTag.json";
+import dummyTitle from "../json/dummyTitle.json";
+import dummyContents from "../json/dummyContent.json";
 
 let nextId = 1;
 
+const getRandomTitle = () => {
+  const titles = dummyTitle.title;
+  const randomIndex = Math.floor(Math.random() * titles.length);
+  return titles[randomIndex].name;
+};
+const getRandomContent = () => {
+  const contents = dummyContents.content;
+  const randomIndex = Math.floor(Math.random() * contents.length);
+  return contents[randomIndex].name;
+};
 const getRandumHashTagType = (type) => {
   const availableHashtags = dummyHashtag[type];
   const selectedHashtag =
@@ -18,9 +30,9 @@ export function generateRandomData() {
   return {
     // id: getRandomNumber(1, 100),
     id: nextId++,
-    title: generateRandomString(3),
+    title: getRandomTitle(),
     member: generateRandomString(2),
-    content: generateRandomString(10),
+    content: getRandomContent(),
     location_lat: getRandomLatitude(),
     location_lon: getRandomLongitude(),
     created_at: getRandomDate(),

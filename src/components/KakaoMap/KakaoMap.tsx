@@ -1,6 +1,6 @@
 // MODULE
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
 // COMPONENT
@@ -18,8 +18,10 @@ const KakaoMap: React.FC = () => {
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
-  const [dummyData, setDummyData] = useRecoilState(dummyDateState);
+  // const [dummyData, setDummyData] = useRecoilState(dummyDateState);
 
+  const dummyData = useRecoilValue(dummyDateState);
+  console.log("Main_dummyData", dummyData);
   const getKakao = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {

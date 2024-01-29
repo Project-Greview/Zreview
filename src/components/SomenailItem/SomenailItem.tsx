@@ -24,7 +24,7 @@ const SomenailItem: React.FC<SomenailItemProps> = ({ type, data }) => {
           <div className="title">에버랜드</div>
           <div className="score flex flex_ai_c">
             <StarIcon width={19} height={19} color={"#6656ff"} />
-            <p>{data.rating}</p>
+            <p>{data === null ? 4 : data.rating}</p>
           </div>
         </div>
         <div className="addr">
@@ -32,11 +32,13 @@ const SomenailItem: React.FC<SomenailItemProps> = ({ type, data }) => {
         </div>
         <div className="hashtag_list flex flex_jc_s flex_ai_c">
           <ul className="flex flex_jc_s flex_ai_c">
-            {data.hashtag.map((tag: string, index: number) => (
-              <li key={index}>
-                <HashTag tag={tag} />
-              </li>
-            ))}
+            {data !== null
+              ? data.hashtag.map((tag: string, index: number) => (
+                  <li key={index}>
+                    <HashTag tag={tag} />
+                  </li>
+                ))
+              : ""}
           </ul>
         </div>
       </div>
