@@ -17,7 +17,7 @@ type DummyModalType = {
 };
 const DummyModal: React.FC<DummyModalType> = ({ close }) => {
   const [dummyDataArray, setDummyDataArray] = useRecoilState(dummyDateState);
-  const [dataCount, setDataCount] = useState<number>(0);
+  const [dataCount, setDataCount] = useState<number | any>(null);
 
   const onChangeCount = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

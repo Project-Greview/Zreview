@@ -23,7 +23,7 @@ const Main: React.FC<MainProps> = () => {
         let lat = position.coords.latitude;
         let lng = position.coords.longitude;
         setCookie("UserLat", lat);
-        setCookie("UserLng", lng);
+        setCookie("UserLon", lng);
       },
       (error: any) => {
         console.log(error);

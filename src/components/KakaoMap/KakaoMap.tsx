@@ -38,8 +38,51 @@ const KakaoMap: React.FC = () => {
           };
 
           const map = new window.kakao.maps.Map(mapContainer, mapOptions);
-          // CURRENT MARKER
 
+          const individualMarkers: any[] = [];
+          // CREATIVE CLUSTER
+          dummyData?.forEach((position) => {
+            // SETTING MARKER
+            const MarkerSrc = HashTagSlide;
+            const MarkerSize = new window.kakao.maps.Size(45, 55);
+            const MarkerInfo = new window.kakao.maps.MarkerImage(
+              MarkerSrc,
+              MarkerSize
+            );
+            const marker = new window.kakao.maps.Marker({
+              position: new window.kakao.maps.LatLng(
+                position.location_lat,
+                position.location_lon
+              ),
+              image: MarkerInfo,
+            });
+            // ONCLICK MARKER EVENT
+            window.kakao.maps.event.addListener(marker, "click", function () {
+              const tolerance = 0.0001;
+              const clickedPosition = marker.getPosition();
+              const clickedData = dummyData.find((data) => {
+                const latDiff = Math.abs(
+                  data.location_lat - clickedPosition.getLat()
+                );
+                const lngDiff = Math.abs(
+                  data.location_lon - clickedPosition.getLng()
+                );
+                return latDiff < tolerance && lngDiff < tolerance;
+              });
+              if (clickedData) {
+                console.log(clickedData);
+                // navigate("/cluster-list", {
+                //   state: {
+                //     listItem: clickedData,
+                //     placeName: clickedData.placeName,
+                //   },
+                // });
+              } else {
+                console.log("데이터 로드 실패 오류");
+              }
+            });
+            individualMarkers.push(marker);
+          });
           // CLUSTER OPTION
           const clusterer = new window.kakao.maps.MarkerClusterer({
             map: map,
@@ -55,7 +98,7 @@ const KakaoMap: React.FC = () => {
                 width: "40px",
                 height: "50px",
                 paddingBottom: "22%",
-                // background: `url(${NormalMarker}) no-repeat center center`,
+                background: `url(${HashTagSlide}) no-repeat center center`,
                 backgroundSize: "40px 50px",
                 fontSize: "18px",
                 fontWeight: 700,
@@ -68,7 +111,7 @@ const KakaoMap: React.FC = () => {
                 width: "50px",
                 height: "60px",
                 paddingBottom: "26%",
-                // background: `url(${NormalMarker}) no-repeat center center`,
+                background: `url(${HashTagSlide}) no-repeat center center`,
                 backgroundSize: "50px 60px",
                 fontSize: "18px",
                 fontWeight: 700,
@@ -81,7 +124,7 @@ const KakaoMap: React.FC = () => {
                 width: "70px",
                 height: "80px",
                 paddingBottom: "26%",
-                // background: `url(${NormalMarker}) no-repeat center center`,
+                background: `url(${HashTagSlide}) no-repeat center center`,
                 backgroundSize: "70px 80px",
                 fontSize: "18px",
                 fontWeight: 700,
@@ -89,6 +132,8 @@ const KakaoMap: React.FC = () => {
               },
             ],
           });
+
+          clusterer.addMarkers(individualMarkers);
 
           // USER RANGE CIRCLE
           const circle = new window.kakao.maps.Circle({
