@@ -14,6 +14,7 @@ declare global {
 }
 
 const MyLocationMap: React.FC = () => {
+  console.log(MapMarkerIcon);
   const myKakaoMaps = useRef(null);
   const dummyData = useRecoilValue(dummyDateState);
   const [map, setMap] = useState(null);
@@ -26,6 +27,10 @@ const MyLocationMap: React.FC = () => {
       navigator.geolocation.getCurrentPosition(function (position) {
         setUserLat(position.coords.latitude);
         setUserLng(position.coords.longitude);
+        let locPosition = new window.kakao.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        );
         const mapContainer = document.getElementById("map");
         if (!map) {
           const mapOptions = {
@@ -37,6 +42,20 @@ const MyLocationMap: React.FC = () => {
           };
 
           const map = new window.kakao.maps.Map(mapContainer, mapOptions);
+          // CURRENT USER MARKER
+          let imageSrc = MapMarkerIcon,
+            imageSize = new window.kakao.maps.Size(20, 20),
+            imageOption = { offset: new window.kakao.maps.Point(20, 20) };
+          let markerImage = new window.kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption
+          );
+          const marker = new window.kakao.maps.Marker({
+            map: map,
+            image: markerImage,
+            position: locPosition,
+          });
           // CLUSTER OPTION
           const clusterer = new window.kakao.maps.MarkerClusterer({
             map: map,
@@ -87,6 +106,50 @@ const MyLocationMap: React.FC = () => {
             ],
           });
           // CURRENT MARKER
+          const individualMarkers: any = [];
+          // CREATIVE CLUSTER
+          dummyData?.forEach((position) => {
+            // SETTING MARKER
+            const MarkerSrc = MapMarkerIcon;
+            const MarkerSize = new window.kakao.maps.Size(45, 55);
+            const MarkerInfo = new window.kakao.maps.MarkerImage(
+              MarkerSrc,
+              MarkerSize
+            );
+            const marker = new window.kakao.maps.Marker({
+              position: new window.kakao.maps.LatLng(
+                position.location_lat,
+                position.location_lon
+              ),
+              image: MarkerInfo,
+            });
+            // ONCLICK MARKER EVENT
+            window.kakao.maps.event.addListener(marker, "click", function () {
+              const tolerance = 0.0001;
+              const clickedPosition = marker.getPosition();
+              const clickedData = dummyData.find((data) => {
+                const latDiff = Math.abs(
+                  data.location_lat - clickedPosition.getLat()
+                );
+                const lngDiff = Math.abs(
+                  data.location_lon - clickedPosition.getLng()
+                );
+                return latDiff < tolerance && lngDiff < tolerance;
+              });
+              if (clickedData) {
+                console.log(clickedData);
+                // navigate("/cluster-list", {
+                //   state: {
+                //     listItem: clickedData,
+                //     placeName: clickedData.placeName,
+                //   },
+                // });
+              } else {
+                console.log("데이터 로드 실패 오류");
+              }
+            });
+            individualMarkers.push(marker);
+          });
 
           // USER RANGE CIRCLE
           const circle = new window.kakao.maps.Circle({
@@ -102,8 +165,11 @@ const MyLocationMap: React.FC = () => {
             fillColor: "#6556FF",
             fillOpacity: 0.05,
           });
+          marker.setMap(map);
+          clusterer.addMarkers(individualMarkers);
           circle.setMap(map);
-          map.setDraggable(false);
+          // MAP DRAGGABLE
+          map.setDraggable(true);
           setMap(map);
         }
       });
