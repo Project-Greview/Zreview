@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { getCookie } from "./cookies";
 import dummyHashtag from "../json/dummyHashTag.json";
 import dummyTitle from "../json/dummyTitle.json";
 import dummyContents from "../json/dummyContent.json";
 
 let nextId = 1;
+
+const UserLat = getCookie("UserLat");
+const UserLon = getCookie("UserLon");
 
 const getRandomTitle = () => {
   const titles = dummyTitle.title;
@@ -59,9 +63,41 @@ const generateRandomString = (length) => {
   return result;
 };
 
-const getRandomLatitude = () => getRandomNumber(33, 38) + Math.random();
+// const getRandomLatitude = () => getRandomNumber(33, 38) + Math.random();
 
-const getRandomLongitude = () => getRandomNumber(125, 130) + Math.random();
+// const getRandomLongitude = () => getRandomNumber(125, 130) + Math.random();
+
+const getRandomLatitude = () => {
+  if (UserLat) {
+    const randomOffset = Math.random() * 0.1 - 0.05; // -0.05 ~ +0.05 범위의 랜덤 값
+    const adjustedLat = Math.floor(UserLat.toFixed(7)) + randomOffset; // 정수 부분 제거
+    const decimalLat = adjustedLat + Math.random().toFixed(7); // 소수점 숫자만 랜덤
+    const radius = 20000; // 20km
+    const distance = Math.sqrt(
+      Math.pow(radius, 2) - Math.pow(adjustedLat - UserLat, 2)
+    );
+    const randomLat = adjustedLat + distance * Math.random();
+    return Math.max(33, Math.min(38, randomLat)); // 33 ~ 38 범위 내로 제한
+  } else {
+    return getRandomNumber(33, 38) + Math.random();
+  }
+};
+
+const getRandomLongitude = () => {
+  if (UserLon) {
+    const randomOffset = Math.random() * 0.1 - 0.05; // -0.05 ~ +0.05 범위의 랜덤 값
+    const adjustedLon = Math.floor(UserLon.toFixed(7)) + randomOffset; // 정수 부분 제거
+    const decimalLon = adjustedLon + Math.random().toFixed(7); // 소수점 숫자만 랜덤
+    const radius = 20000; // 20km
+    const distance = Math.sqrt(
+      Math.pow(radius, 2) - Math.pow(adjustedLon - UserLon, 2)
+    );
+    const randomLon = adjustedLon + distance * Math.random();
+    return Math.max(125, Math.min(130, randomLon)); // 125 ~ 130 범위 내로 제한
+  } else {
+    return getRandomNumber(125, 130) + Math.random();
+  }
+};
 
 const getRandomDate = () =>
   new Date(

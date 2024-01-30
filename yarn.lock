@@ -7921,10 +7921,10 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
-react-cookie@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-7.0.0.tgz#359e0a8dca412843bee1dbaf83e2e773f2cb153d"
-  integrity sha512-BDXJ9J0zo8xJtoTY3vu6Mn+67gdi1Q1JIJndFMemeHu3tEAN2G3EYqYfB0KNL3IXev3h+lfuOKJYvPYWMN4ijg==
+react-cookie@7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-7.0.2.tgz#a0bf09c44bdb1955e02d442511fa9512062cb81a"
+  integrity sha512-UnW1rZw1VibRdTvV8Ksr0BKKZoajeUxYLE89sIygDeyQgtz6ik89RHOM+3kib36G9M7HxheORggPoLk5DxAK7Q==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.5"
     hoist-non-react-statics "^3.3.2"
