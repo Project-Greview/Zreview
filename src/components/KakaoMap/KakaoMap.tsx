@@ -5,6 +5,11 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { dummyDateState } from "state/dummyState";
 // COMPONENT
 import HashTagSlide from "../HashTagSlide";
+// SVG
+import ClusterMapMarkerIcon from "../../assets/image/icon/cluster_map_marker.svg";
+import MapMarkerIcon from "../../assets/image/icon/map_marker.svg";
+import ActiveMapMarkerIcon from "../../assets/image/icon/active_map_marker.svg";
+import MyMarkerIcon from "../../assets/image/icon/my_marker.svg";
 
 // PROPS TYPE
 declare global {
@@ -18,10 +23,8 @@ const KakaoMap: React.FC = () => {
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
-  // const [dummyData, setDummyData] = useRecoilState(dummyDateState);
 
   const dummyData = useRecoilValue(dummyDateState);
-  console.log("Main_dummyData", dummyData);
   const getKakao = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -39,11 +42,11 @@ const KakaoMap: React.FC = () => {
 
           const map = new window.kakao.maps.Map(mapContainer, mapOptions);
 
-          const individualMarkers: any[] = [];
           // CREATIVE CLUSTER
+          const individualMarkers: any[] = [];
           dummyData?.forEach((position) => {
             // SETTING MARKER
-            const MarkerSrc = HashTagSlide;
+            const MarkerSrc = MapMarkerIcon;
             const MarkerSize = new window.kakao.maps.Size(45, 55);
             const MarkerInfo = new window.kakao.maps.MarkerImage(
               MarkerSrc,
@@ -83,6 +86,24 @@ const KakaoMap: React.FC = () => {
             });
             individualMarkers.push(marker);
           });
+          // MY POSITION MARKER
+          const myPosition = new window.kakao.maps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          const myMarker = MyMarkerIcon,
+            myMarkerSize = new window.kakao.maps.Size(20, 20),
+            myMarkerOption = { offset: new window.kakao.maps.Point(0, 0) };
+          const myMarkerPosition = new window.kakao.maps.MarkerImage(
+            myMarker,
+            myMarkerSize,
+            myMarkerOption
+          );
+          const marker = new window.kakao.maps.Marker({
+            map: map,
+            image: myMarkerPosition,
+            position: myPosition,
+          });
           // CLUSTER OPTION
           const clusterer = new window.kakao.maps.MarkerClusterer({
             map: map,
@@ -98,7 +119,7 @@ const KakaoMap: React.FC = () => {
                 width: "40px",
                 height: "50px",
                 paddingBottom: "22%",
-                background: `url(${HashTagSlide}) no-repeat center center`,
+                background: `url(${ClusterMapMarkerIcon}) no-repeat center center`,
                 backgroundSize: "40px 50px",
                 fontSize: "18px",
                 fontWeight: 700,
@@ -111,7 +132,7 @@ const KakaoMap: React.FC = () => {
                 width: "50px",
                 height: "60px",
                 paddingBottom: "26%",
-                background: `url(${HashTagSlide}) no-repeat center center`,
+                background: `url(${ClusterMapMarkerIcon}) no-repeat center center`,
                 backgroundSize: "50px 60px",
                 fontSize: "18px",
                 fontWeight: 700,
@@ -124,7 +145,7 @@ const KakaoMap: React.FC = () => {
                 width: "70px",
                 height: "80px",
                 paddingBottom: "26%",
-                background: `url(${HashTagSlide}) no-repeat center center`,
+                background: `url(${ClusterMapMarkerIcon}) no-repeat center center`,
                 backgroundSize: "70px 80px",
                 fontSize: "18px",
                 fontWeight: 700,
@@ -132,7 +153,6 @@ const KakaoMap: React.FC = () => {
               },
             ],
           });
-
           clusterer.addMarkers(individualMarkers);
 
           // USER RANGE CIRCLE
@@ -152,7 +172,7 @@ const KakaoMap: React.FC = () => {
           // map.setMinLevel(5);
           // map.setMaxLevel(8);
           circle.setMap(map);
-          map.setDraggable(false);
+          map.setDraggable(true);
           setMap(map);
         }
       });
