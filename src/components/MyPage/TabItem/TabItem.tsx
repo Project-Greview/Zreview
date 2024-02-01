@@ -1,5 +1,4 @@
 // MODULE
-import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 // RECOIL STATE
 import { tabMenuTypeState } from "state/mypageTabState";
@@ -9,7 +8,6 @@ import ReviewItem from "components/ReviewItem";
 type TabItemProps = {};
 
 const TabItem: React.FC<TabItemProps> = () => {
-  const [getHeight, setGetHeight] = useState<number>(0);
   const getType = useRecoilValue(tabMenuTypeState);
   const box1Height = document
     .querySelector(".scroll_section ")
@@ -17,15 +15,13 @@ const TabItem: React.FC<TabItemProps> = () => {
   const box2Height = document
     .querySelector(".tab_buttons ")
     ?.getBoundingClientRect().height;
-  useEffect(() => {
-    if (box1Height !== undefined && box2Height !== undefined) {
-      setGetHeight(box1Height + box2Height);
-    }
-  }, []);
+
   return (
     <div
       className="list_section"
-      style={{ minHeight: `calc(100vh - ${getHeight}px - 69px)` }}
+      style={{
+        minHeight: `calc(100vh - ((${box1Height}px + ${box2Height}px) + 69px))`,
+      }}
     >
       <div className="count flex flex_jc_s flex_ai_c">
         <div>
