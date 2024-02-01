@@ -65,6 +65,7 @@ const App: React.FC = () => {
   }, [isMobile]);
 
   const activeNum = getLocationPathname(location.pathname);
+  console.log(activeNum);
   return (
     <>
       {isMobile ? (

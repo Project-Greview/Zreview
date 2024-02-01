@@ -10,8 +10,10 @@ import { ReactComponent as MyLocationIcon } from "../../assets/image/icon/Compas
 import { ReactComponent as ReviewIcon } from "../../assets/image/icon/Review-icon.svg";
 import { ReactComponent as BookMarkIcon } from "../../assets/image/icon/Bookmark-icon.svg";
 import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow_right.svg";
-// COMPOENT
+// COMPONENT
 import ProfileImage from "components/ProfileImage";
+// IMAGE
+import Logo from "../../assets/image/Logo.png";
 
 const MiddleMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -73,7 +75,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
           </div>
         </div>
         <div className="my_profile flex flex_dir_c flex_ai_c">
-          <ProfileImage src={""} alt={"프로필"} size={50} />
+          <ProfileImage src={Logo} alt={"프로필"} size={94} />
           <div className="my_nickname">여기에는 내 닉네임이</div>
           <div className="my_location">여기에는 내 설정지역이</div>
         </div>

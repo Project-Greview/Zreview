@@ -22,12 +22,18 @@
 .left_menu_section .top_section .my_profile * {
   color: var(--white-color);
 }
+.left_menu_section .top_section .my_profile > .img_box {
+  background: var(--white-color);
+  border-radius: 50px;
+  overflow: hidden;
+}
 .left_menu_section .top_section .my_profile .my_nickname {
   margin-top: 1.5rem;
   font-size: 2rem;
 }
 .left_menu_section .top_section .my_profile .my_location {
   margin-top: 0.5rem;
+  color: #d0cfcf;
 }
 .left_menu_section .top_section .semi_count {
   max-width: 60%;

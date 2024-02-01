@@ -9,37 +9,46 @@ type ProfileImageProps = {
 
 const ProfileImage: React.FC<ProfileImageProps> = ({ src, alt, size }) => {
   const imgRef = useRef<HTMLImageElement | null>(null);
-  const [imgWidth, setImgWidth] = useState<null>(null);
-  const [imgHeight, setImgHeight] = useState<null>(null);
+  useEffect(() => {
+    const onLoadImage = () => {
+      const img = imgRef?.current;
+      if (!img) return;
 
-  // useEffect(() => {
-  //   const onLoadImage = () => {
-  //     const img = imgRef?.current;
-  //     if (!img) return;
-  //     const width = img?.naturalWidth;
-  //     const height = img?.naturalHeight;
+      const width = img?.naturalWidth;
+      const height = img?.naturalHeight;
+      const ratio = width / height;
 
-  //     setImgWidth(width || null);
-  //     setImgHeight(height || null);
+      if (ratio > 1) {
+        const newWidth = size;
+        const newHeight = size / ratio;
+        img.style.width = `${newWidth}px`;
+        img.style.height = `${newHeight}px`;
+      } else {
+        const newHeight = size;
+        const newWidth = size * ratio;
+        img.style.width = `${newWidth}px`;
+        img.style.height = `${newHeight}px`;
+      }
+    };
 
-  //     const ratio = width / height;
+    if (imgRef.current) {
+      imgRef.current.addEventListener("load", onLoadImage);
 
-  //     if (ratio > 1) {
-  //       const newWidth = size * ratio;
-  //       const newHeight = size;
-  //       img.style.width = `${newWidth}px`;
-  //       img.style.height = `${newHeight}px`;
-  //     } else {
-  //       const newWidth = size;
-  //       const newHeight = size * ratio;
-  //       img.style.width = `${newWidth}px`;
-  //       img.style.height = `${newHeight}px`;
-  //     }
-  //   };
-  //   imgRef.current.addEventListener("load", onLoadImage);
-  // }, [src, size]);
+      return () => {
+        if (imgRef.current) {
+          imgRef.current.removeEventListener("load", onLoadImage);
+        }
+      };
+    }
+  }, [src, size]);
   return (
-    <div>
+    <div
+      className="img_box"
+      style={{
+        width: size,
+        height: size,
+      }}
+    >
       <img ref={imgRef} src={src} alt={alt} />
     </div>
   );

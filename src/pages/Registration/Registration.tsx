@@ -91,7 +91,7 @@ const Registration: React.FC<RegistrationProps> = () => {
 
   return (
     <>
-      <Header type={3} title={"회원가입"} />
+      <Header type={2} title={"회원가입"} />
       <div className="res_form_section">
         <div className="relative width_100p mar_top_20">
           <Input
@@ -107,6 +107,9 @@ const Registration: React.FC<RegistrationProps> = () => {
           <div className="event_txt absolute"></div>
         </div>
         <div className="relative width_100p mar_top_20">
+          <div className="pw_explanation absolute_top">
+            8~16자의 영문과 숫자, 특수문자 조합
+          </div>
           <Input
             id={"res_password"}
             name={"비밀번호"}
@@ -120,6 +123,9 @@ const Registration: React.FC<RegistrationProps> = () => {
           <div className="event_txt absolute"></div>
         </div>
         <div className="relative width_100p mar_top_20">
+          <div className="pw_explanation absolute_top">
+            8~16자의 영문과 숫자, 특수문자 조합
+          </div>
           <Input
             id={"res_password_check"}
             name={"비밀번호 확인"}

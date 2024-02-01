@@ -1,6 +1,3 @@
-// STYLE
-import "../../../assets/styles/pcstyle.css";
-
 const Section2: React.FC = () => {
   return (
     <div className="pc_section section_1">

@@ -1,5 +1,10 @@
 .res_form_section {
-  padding: var(--haeder-height) 2rem 0;
+  padding: var(--header-height) 2rem 0;
+}
+.res_form_section .pw_explanation {
+  right: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 .res_form_section .input_name {
   font-size: 1.2rem;

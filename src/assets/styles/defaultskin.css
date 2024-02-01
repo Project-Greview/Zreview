@@ -1,9 +1,16 @@
 /* COMMON */
+#root {
+  background: var(--border-color);
+}
 .view_section {
-  padding: var(--haeder-height) 20px var(--bottom-navigation) 20px;
+  min-height: 100vh;
+  padding: var(--header-height) 20px var(--bottom-navigation) 20px;
+  background: var(--white-color);
 }
 .inner_section {
+  min-height: 100vh;
   padding-top: 5rem;
+  background: var(--white-color);
 }
 .bg_section {
   width: 100vw;
@@ -71,6 +78,7 @@
   height: var(--bottom-navigation);
   left: 0;
   bottom: 0;
+  background: var(--white-color);
   border-top: 1px solid #d0cfcf;
 }
 .navigate ul {
@@ -95,7 +103,7 @@
   width: 100%;
   height: 3rem;
   padding: 0 1rem;
-  top: calc(var(--haeder-height) + 1rem);
+  top: calc(var(--header-height) + 1rem);
   z-index: 10;
 }
 .main_tag_slide .swiper .swiper-wrapper {
@@ -149,6 +157,92 @@
 .somenail_review .review_info .hashtag_list {
   margin-top: 1rem;
   overflow-x: scroll;
+}
+/* MYPAGE */
+.my_page_section.view_section {
+  padding-bottom: 0;
+}
+.my_page_section .my_profile {
+  padding-top: 3rem;
+}
+.my_page_section .my_profile .img_box {
+  margin-right: 2rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+.my_page_section .my_profile > div:not(.img_box) {
+  line-height: 1.6;
+}
+.my_page_section .my_profile .my_nickname {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #3a3a3a;
+}
+.my_page_section .my_profile .my_location {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--disable-text);
+}
+.my_page_section .scroll_section > .btn_box {
+  margin-top: 2rem;
+}
+.my_page_section .scroll_section > .btn_box .buttons {
+  height: 3.7rem;
+  font-size: 1.4rem;
+}
+.my_page_section .tab_buttons {
+  position: sticky;
+  top: 0;
+  margin-top: 2rem;
+  background: var(--white-color);
+  border-bottom: 1px solid var(--disable-color);
+}
+.my_page_section .tab_buttons::after {
+  content: "";
+  position: absolute;
+  width: calc(100% + 4rem);
+  height: 1px;
+  bottom: -1px;
+  left: -2rem;
+  background: #ededed;
+  z-index: -1;
+}
+.my_page_section .tab_buttons li {
+  flex-basis: calc(100% / 3);
+  padding: 1.5rem 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
+  font-size: 1.4rem;
+  color: var(--disable-text);
+  transition: all 0.3s;
+}
+.my_page_section .tab_buttons li.active {
+  font-weight: 700;
+  color: var(--point-color);
+}
+.my_page_section .tab_buttons li.bottom_line {
+  width: calc(100% / 3);
+  height: 2px;
+  padding: 0;
+  bottom: 0;
+  background: var(--point-color);
+  transition: all 0.3s;
+}
+.my_page_section .item_list {
+  margin: 0 -2rem;
+  background: rgba(237, 237, 237, 0.5);
+}
+.my_page_section .item_list .list_section {
+  padding: 1.5rem 2rem;
+}
+.my_page_section .item_list .list_section .count {
+  position: sticky;
+  top: calc(var(--header-height) + 1.5rem);
+}
+.my_page_section .item_list .list_section .count * {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--disable-color);
 }
 /* SETTING */
 .setting_section {
