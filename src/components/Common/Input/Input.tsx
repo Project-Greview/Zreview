@@ -10,6 +10,7 @@ type InputProps = {
   type: string;
   maxLength: number;
   placeholder: string;
+  readonly: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -21,6 +22,7 @@ const Input: React.FC<InputProps> = ({
   type,
   maxLength,
   placeholder,
+  readonly,
 }) => {
   return (
     <>
@@ -35,6 +37,7 @@ const Input: React.FC<InputProps> = ({
         className={`input_default`}
         maxLength={maxLength}
         placeholder={placeholder}
+        readOnly={readonly}
       />
       <label htmlFor={id}></label>
     </>

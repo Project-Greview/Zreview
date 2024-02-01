@@ -1,5 +1,6 @@
 .res_form_section {
   padding: var(--header-height) 2rem 0;
+  background: var(--white-color);
 }
 .res_form_section .pw_explanation {
   right: 0;

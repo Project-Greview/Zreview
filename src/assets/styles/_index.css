@@ -29,6 +29,7 @@
 .con {
   max-width: 50rem;
   margin: 0 auto;
+  background: var(--white-color);
 }
 .btn_box .buttons {
   background: var(--point-color);

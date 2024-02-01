@@ -13,6 +13,7 @@ import MyPage from "../pages/MyPage";
 import Setting from "pages/Setting";
 
 import DummyDataList from "pages/DummyDataList";
+import ProfileModify from "pages/ProfileModify";
 
 const Routers = createBrowserRouter([
   {
@@ -64,6 +65,14 @@ const Routers = createBrowserRouter([
         element: (
           <UserRouter>
             <MyPage />
+          </UserRouter>
+        ),
+      },
+      {
+        path: "profile-modify",
+        element: (
+          <UserRouter>
+            <ProfileModify />
           </UserRouter>
         ),
       },

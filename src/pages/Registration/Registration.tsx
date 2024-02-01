@@ -103,6 +103,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={onCheckResEmail}
             maxLength={40}
             placeholder={""}
+            readonly={false}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -119,6 +120,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={onCheckResPassWord}
             maxLength={16}
             placeholder={""}
+            readonly={false}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -135,6 +137,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={onCheckResPasswordCheck}
             maxLength={16}
             placeholder={""}
+            readonly={false}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -148,6 +151,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={onCheckResPhone}
             maxLength={11}
             placeholder={""}
+            readonly={false}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -161,6 +165,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={onCheckResName}
             maxLength={10}
             placeholder={""}
+            readonly={false}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -174,6 +179,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={onCheckResNickname}
             maxLength={12}
             placeholder={""}
+            readonly={false}
           />
           <div className="event_txt absolute"></div>
         </div>

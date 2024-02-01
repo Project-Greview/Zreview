@@ -90,6 +90,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
               type={"text"}
               maxLength={10}
               placeholder={"해시태그를 입력해주세요"}
+              readonly={false}
             />
           </div>
           <div className="btn_box">

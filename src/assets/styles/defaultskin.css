@@ -39,7 +39,7 @@
 }
 /* INPUT */
 .input_default {
-  height: 4.7rem;
+  height: 4rem;
   padding: 1.3rem 2rem;
   margin-top: 1.5rem;
   border-radius: 5px;
@@ -243,6 +243,47 @@
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--disable-color);
+}
+/* PROFILE MODIFY */
+.profile_modify_section {
+}
+.profile_modify_section .modify_img {
+  margin-top: 5%;
+}
+.profile_modify_section .modify_img .img_box {
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+.profile_modify_section .form_section {
+  margin-top: 10%;
+}
+.profile_modify_section .form_section .input_name {
+  margin-top: 2.5rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--disable-color);
+}
+.profile_modify_section .form_section .input_default {
+  width: 100%;
+  margin-top: 1rem;
+  background: rgba(237, 237, 237, 0.5);
+  border: 1px solid rgba(237, 237, 237, 0.5);
+}
+.profile_modify_section .form_section .location_box .location_state {
+  right: 0.8rem;
+  bottom: 0.8rem;
+  padding: 0.5rem 1rem;
+  background: rgba(101, 86, 255, 0.2);
+  border-radius: 5px;
+  font-size: 1.2rem;
+  color: var(--point-color);
+}
+.profile_modify_section > .btn_box {
+  width: calc(100% - 4rem);
+  height: 5rem;
+  bottom: 2rem;
+  left: 2rem;
 }
 /* SETTING */
 .setting_section {

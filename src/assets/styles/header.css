@@ -63,6 +63,9 @@
   top: 25%;
   right: 1.5rem;
 }
+.header > .mypage .page_title {
+  margin-left: 0;
+}
 /* NORMAL HAEDER */
 .header .page_title {
   flex-grow: 1;

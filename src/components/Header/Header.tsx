@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
           <SearchInput searchType={"single"} />
         </div>
       ) : type === 4 ? (
-        <div className="mylocation flex flex_jc_sb flex_ai_c">
+        <div className="mypage flex flex_jc_sb flex_ai_c">
           <div className="back_btn flex flex_ai_c" onClick={() => navigate(-1)}>
             <ArrowLeft color={"#3a3a3a"} />
           </div>

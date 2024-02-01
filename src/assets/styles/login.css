@@ -16,6 +16,9 @@
 .login_box ~ .btn_box > .buttons {
   height: 5rem;
 }
+.login_box.active .input_default {
+  height: 4.7rem;
+}
 .registraion_info {
   margin-top: 2.5rem;
 }

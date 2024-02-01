@@ -1,4 +1,5 @@
 // MODULE
+import { useNavigate } from "react-router-dom";
 // COMPONENT
 import ProfileImage from "components/ProfileImage";
 // IMAGE
@@ -8,6 +9,7 @@ import Button from "components/Common/Button";
 type UserInfoProps = {};
 
 const UserInfo: React.FC<UserInfoProps> = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="my_profile flex flex_jc_s flex_ai_c">
@@ -20,7 +22,7 @@ const UserInfo: React.FC<UserInfoProps> = () => {
       <div className="btn_box flex">
         <Button
           title={"프로필 수정"}
-          event={() => console.log("이동준비")}
+          event={() => navigate("/profile-modify")}
           width={"100%"}
           styles={"buttons flex flex_jc_c flex_ai_c width_100p cursor_p"}
         />
