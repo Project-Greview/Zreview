@@ -12,8 +12,8 @@
 
 # 기존의 JavaScript 에서 Typescript로 변경했습니다...
 
-- git clone https://github.com/Project-Greview/Zreview_Front_Upgrade.git
-- cd Zreview_Front_Upgrade
+- git clone https://github.com/Project-Greview/Zreview.git
+- cd Zreview
 - yarn install
 - yarn start
 
