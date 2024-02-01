@@ -70,6 +70,14 @@
   background: var(--point-color);
   color: var(--white-color);
 }
+.btn_box .buttons.cancel_btn {
+  background: var(--point-half-color);
+}
+.btn_box .double_buttons {
+}
+.modal_frame .btn_box .buttons {
+  height: 4rem;
+}
 
 /* SEARCH KEYWORD */
 
@@ -127,6 +135,37 @@
 }
 .main_tag_slide .swiper-slide.swiper-slide-active .txt {
   color: var(--white-color);
+}
+/* MODAL */
+.modal_bg {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.modal_frame {
+  width: 90%;
+  height: 45vh;
+  top: calc(50% - 22.5vh);
+  left: 5%;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  z-index: 101;
+}
+.modal_frame .modal_body {
+  text-align: center;
+  color: var(--disable-text);
+}
+.modal_frame .btn_box {
+  width: calc(100% - 4rem);
+  bottom: 2rem;
+}
+.modal_frame.type_2 {
+  height: 20rem;
+  top: calc(50% - 10rem);
 }
 /* SOMENAIL REVIEW */
 .somenail_review {

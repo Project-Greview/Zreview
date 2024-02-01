@@ -18,7 +18,17 @@ const Setting: React.FC = () => {
     <div className="setting_section inner_section">
       <ul>
         {menuList.top_menu.map((item) => (
-          <li key={item.name} className="flex flex_jc_sb flex_ai_c">
+          <li
+            key={item.name}
+            className="flex flex_jc_sb flex_ai_c"
+            onClick={() =>
+              navigate(`${item.url}`, {
+                state: {
+                  type: item.url === "/user-modify" ? "modify" : "normal",
+                },
+              })
+            }
+          >
             <div>{item.name}</div>
             {item.sub === "" ? (
               ""
@@ -32,7 +42,11 @@ const Setting: React.FC = () => {
       </ul>
       <ul>
         {menuList.bottom_menu.map((item) => (
-          <li key={item.name} className="flex flex_jc_sb flex_ai_c">
+          <li
+            key={item.name}
+            className="flex flex_jc_sb flex_ai_c"
+            onClick={() => navigate(`${item.url}`)}
+          >
             <div>{item.name}</div>
             {item.sub === "" ? (
               ""

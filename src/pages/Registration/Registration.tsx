@@ -1,14 +1,25 @@
 // MODULE
 import { useState, ChangeEvent } from "react";
+import { useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
 // HOOK
 import { CheckPasswordText } from "utils/textUtil";
 // COMPONENT
 import Input from "../../components/Common/Input";
 import Header from "../../components/Header";
+import Button from "components/Common/Button";
+import Modal from "components/Modal";
 
 // PROPS TYPE
 type RegistrationProps = {};
+
 const Registration: React.FC<RegistrationProps> = () => {
+  const { state } = useLocation();
+  const checkPage = state.type === "modify";
+
+  // 추가로 checkPage 가 true 일 경우 recoil에서 사용자의 개인정보를 가져와 뿌린 후 수정작업 필요
+
+  const [modifyModal, setModifyModal] = useState<number>(0);
   const [resEmail, setResEmail] = useState<string>("");
   const [resPassword, setResPassword] = useState<string>("");
   const [pwCheck, setPwCheck] = useState<number>(0);
@@ -88,12 +99,41 @@ const Registration: React.FC<RegistrationProps> = () => {
       : "disable";
 
   const handleRegistZreview = () => {};
-
+  // MODIFY
+  const handleStep1UsereModify = () => {
+    setModifyModal(1);
+  };
   return (
     <>
-      <Header type={2} title={"회원가입"} />
+      {modifyModal === 1 ? (
+        <Modal
+          type={"type_2"}
+          contents={"수정하시겠습니까?"}
+          conform={() => (
+            console.log(
+              "여기에는 수정 API를 태우세요. 끝에는 setModifyModal(2)"
+            ),
+            setModifyModal(2)
+          )}
+          conform_txt={"확인"}
+          cancel={() => setModifyModal(0)}
+          cancel_txt={"취소"}
+        />
+      ) : modifyModal === 2 ? (
+        <Modal
+          type={"type_2"}
+          contents={"수정이 완료되었습니다."}
+          conform={() => setModifyModal(0)}
+          conform_txt={"확인"}
+          cancel={null}
+          cancel_txt={""}
+        />
+      ) : (
+        ""
+      )}
+      <Header type={2} title={checkPage ? "개인정보 수정" : "회원가입"} />
       <div className="res_form_section">
-        <div className="relative width_100p mar_top_20">
+        <div className="relative width_100p mar_top_25">
           <Input
             id={"res_email"}
             name={"이메일"}
@@ -107,7 +147,7 @@ const Registration: React.FC<RegistrationProps> = () => {
           />
           <div className="event_txt absolute"></div>
         </div>
-        <div className="relative width_100p mar_top_20">
+        <div className="relative width_100p mar_top_25">
           <div className="pw_explanation absolute_top">
             8~16자의 영문과 숫자, 특수문자 조합
           </div>
@@ -124,7 +164,7 @@ const Registration: React.FC<RegistrationProps> = () => {
           />
           <div className="event_txt absolute"></div>
         </div>
-        <div className="relative width_100p mar_top_20">
+        <div className="relative width_100p mar_top_25">
           <div className="pw_explanation absolute_top">
             8~16자의 영문과 숫자, 특수문자 조합
           </div>
@@ -141,7 +181,7 @@ const Registration: React.FC<RegistrationProps> = () => {
           />
           <div className="event_txt absolute"></div>
         </div>
-        <div className="relative width_100p mar_top_20">
+        <div className="relative width_100p mar_top_25">
           <Input
             id={"res_phone"}
             name={"핸드폰 번호"}
@@ -155,7 +195,7 @@ const Registration: React.FC<RegistrationProps> = () => {
           />
           <div className="event_txt absolute"></div>
         </div>
-        <div className="relative width_100p mar_top_20">
+        <div className="relative width_100p mar_top_25">
           <Input
             id={"res_name"}
             name={"이름"}
@@ -169,7 +209,7 @@ const Registration: React.FC<RegistrationProps> = () => {
           />
           <div className="event_txt absolute"></div>
         </div>
-        <div className="relative width_100p mar_top_20">
+        <div className="relative width_100p mar_top_25">
           <Input
             id={"res_nickname"}
             name={"닉네임"}
@@ -183,10 +223,19 @@ const Registration: React.FC<RegistrationProps> = () => {
           />
           <div className="event_txt absolute"></div>
         </div>
-        <div className={`btn_box absolute flex ${checkValue}`}>
-          <div className="buttons flex flex_jc_c flex_ai_c width_100p cursor_p">
-            가입하기
-          </div>
+        <div
+          className={`btn_box absolute flex ${!checkPage ? checkValue : ""}`}
+        >
+          <Button
+            title={checkPage ? "수정완료" : "가입하기"}
+            event={
+              checkPage
+                ? () => handleStep1UsereModify()
+                : console.log("회원가입 이벤트 작동")
+            }
+            width={"100%"}
+            styles={"buttons flex flex_jc_c flex_ai_c width_100p cursor_p"}
+          />
         </div>
       </div>
     </>

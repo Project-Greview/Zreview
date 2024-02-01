@@ -9,7 +9,7 @@ import Modal from "components/Modal";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
 const ProfileModify: React.FC = () => {
-  const [modifyModal, setModifyModal] = useState<boolean>(false);
+  const [modifyModal, setModifyModal] = useState<number>(0);
   const [nickname, setNickname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [myLocation, setMyLocation] = useState<string>("");
@@ -24,18 +24,32 @@ const ProfileModify: React.FC = () => {
   };
 
   const handleStep1ProfileModify = () => {
-    setModifyModal(true);
+    setModifyModal(1);
   };
   return (
     <>
-      {modifyModal ? (
+      {modifyModal === 1 ? (
         <Modal
           type={"type_2"}
           contents={"수정하시겠습니까?"}
-          conform={() => console.log("여기에는 수정 API를 태우세요")}
+          conform={() => (
+            console.log(
+              "여기에는 수정 API를 태우세요. 끝에는 setModifyModal(2)"
+            ),
+            setModifyModal(2)
+          )}
           conform_txt={"확인"}
-          cancel={() => setModifyModal(false)}
+          cancel={() => setModifyModal(0)}
           cancel_txt={"취소"}
+        />
+      ) : modifyModal === 2 ? (
+        <Modal
+          type={"type_2"}
+          contents={"수정이 완료되었습니다."}
+          conform={() => setModifyModal(0)}
+          conform_txt={"확인"}
+          cancel={null}
+          cancel_txt={""}
         />
       ) : (
         ""

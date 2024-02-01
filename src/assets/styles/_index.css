@@ -12,6 +12,7 @@
 :root {
   /* COLOR */
   --point-color: #6656ff;
+  --point-half-color: rgba(152, 145, 224, 0.5);
   --disable-color: #959292;
   --disable-text: #959292;
   --white-color: #ffffff;

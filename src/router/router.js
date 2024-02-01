@@ -77,6 +77,14 @@ const Routers = createBrowserRouter([
         ),
       },
       {
+        path: "user-modify",
+        element: (
+          <UserRouter>
+            <Registration />
+          </UserRouter>
+        ),
+      },
+      {
         path: "setting",
         element: (
           <UserRouter>
