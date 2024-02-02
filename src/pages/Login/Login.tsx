@@ -1,14 +1,23 @@
 // MODULE
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+// RECOIL STATE
+import { isLoginState } from "state/userState";
+// HOOK
+import { loginGET } from "api/dummyAPI";
 // IMAGE
 import { ReactComponent as Logo } from "../../assets/image/Logo.svg";
 import Button from "components/Common/Button";
+import Input from "components/Common/Input";
 // PROPS TYPE
 type LoginProps = {};
 
 const Login: React.FC<LoginProps> = () => {
   const navigate = useNavigate();
+  const [loginState, setLoginState] = useRecoilState(isLoginState);
+  const [loginId, setLoginId] = useState<string>("");
+  const [loginPw, setLoginPw] = useState<string>("");
   const [isReady, setIsReady] = useState(false);
 
   // ENABLE LOGIN BOX
@@ -16,9 +25,26 @@ const Login: React.FC<LoginProps> = () => {
     setIsReady(true);
   };
 
+  const onChangeLoginId = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setLoginId(e.target.value);
+  };
+
+  const onChangeLoginPw = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setLoginPw(e.target.value);
+  };
+
   // LOGIN
-  const handleLogin = () => {
-    navigate("/main");
+  const handleLogin = async () => {
+    try {
+      const response = await loginGET(loginId, loginPw);
+      console.log(response);
+      setLoginState(true);
+      navigate("/main");
+    } catch (error) {
+      console.log("일단 오류화면 생각중");
+    }
   };
   return (
     <div
@@ -27,21 +53,31 @@ const Login: React.FC<LoginProps> = () => {
     >
       <Logo />
       <div className={`login_box ${!isReady ? "" : "active"}`}>
-        <div className="input_box">
-          <input
-            type="text"
-            className="input_default width_100p"
+        <div className="input_box ">
+          <Input
+            id={"login_id"}
+            name={""}
+            value={loginId}
+            onChange={onChangeLoginId}
+            type={"text"}
+            onBlur={null}
+            maxLength={20}
             placeholder="아이디"
+            readonly={false}
           />
-          <label htmlFor=""></label>
         </div>
         <div className="input_box">
-          <input
-            type="text"
-            className="input_default width_100p"
+          <Input
+            id={"login_pw"}
+            name={""}
+            value={loginPw}
+            onChange={onChangeLoginPw}
+            type={"password"}
+            onBlur={null}
+            maxLength={20}
             placeholder="비밀번호"
+            readonly={false}
           />
-          <label htmlFor=""></label>
         </div>
       </div>
       <div className="btn_box flex">

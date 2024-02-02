@@ -49,7 +49,6 @@ const App: React.FC = () => {
     setProductModal(false);
     console.log(dataCheck);
   };
-
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       // 조합 키 체크 (Ctrl + M)

@@ -4,3 +4,8 @@ export const leftMenuState = atom({
   key: "leftState",
   default: false,
 });
+
+export const isLoginState = atom({
+  key: "loginState",
+  default: false,
+});
