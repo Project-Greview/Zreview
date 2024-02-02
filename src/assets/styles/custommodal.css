@@ -12,6 +12,7 @@
   font-size: 1.5rem;
   color: var(--disable-color);
   word-break: keep-all;
+  text-align: left;
 }
 .modal_frame .modal_body .explanation_list li::before {
   content: "";
@@ -30,8 +31,8 @@
   width: 100%;
 }
 .modal_frame .modal_body .btn_box {
-  width: calc(100% - 2rem);
-  bottom: 1rem;
+  width: calc(100% - 4rem);
+  bottom: 2rem;
 }
 .modal_frame .modal_body .buttons {
   height: 5rem;

@@ -56,7 +56,7 @@ const Login: React.FC<LoginProps> = () => {
         <div>처음이신가요?&ensp;</div>
         <div
           className="buttons cursor_p"
-          onClick={() => navigate("registration")}
+          onClick={() => navigate("registration", { state: { type: "" } })}
         >
           회원가입
         </div>
