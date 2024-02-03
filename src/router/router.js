@@ -14,6 +14,8 @@ import Setting from "pages/Setting";
 
 import DummyDataList from "pages/DummyDataList";
 import ProfileModify from "pages/ProfileModify";
+import PlaceReview from "pages/PlaceReview";
+import DetailReview from "pages/DetailReview";
 
 const Routers = createBrowserRouter([
   {
@@ -89,6 +91,22 @@ const Routers = createBrowserRouter([
         element: (
           <UserRouter>
             <Setting />
+          </UserRouter>
+        ),
+      },
+      {
+        path: "place_review",
+        element: (
+          <UserRouter>
+            <PlaceReview />
+          </UserRouter>
+        ),
+      },
+      {
+        path: "detail_review",
+        element: (
+          <UserRouter>
+            <DetailReview />
           </UserRouter>
         ),
       },

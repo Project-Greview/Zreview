@@ -1,5 +1,5 @@
 // MODULE
-
+import { useNavigate } from "react-router-dom";
 // COMPONENT
 import HashTag from "components/HashTag";
 // SVG
@@ -11,8 +11,12 @@ type SomenailItemProps = {
 };
 
 const SomenailItem: React.FC<SomenailItemProps> = ({ type, data }) => {
+  const navigate = useNavigate();
   return (
-    <li className="somenail_review">
+    <li
+      className="somenail_review"
+      onClick={() => navigate(`/detail_review`, { state: data.id })}
+    >
       <div className="img_box">
         <img
           src="https://t1.daumcdn.net/cfile/tistory/996EB03D5F06B5CD31"

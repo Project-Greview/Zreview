@@ -78,6 +78,7 @@ const App: React.FC = () => {
       setCookie("dummyName", "지리뷰");
       setCookie("dummyNickname", "ZReview");
       setCookie("dummyPhone", "01012345678");
+      setCookie("dummyLocation", "OO동");
     };
     let titleStyles = `
       padding:10px 50px;

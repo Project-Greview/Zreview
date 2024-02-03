@@ -1,5 +1,7 @@
 // MODULE
 
+// HOOK
+import { getCookie } from "utils/cookies";
 // COMPONENT
 import HashTag from "components/HashTag";
 import MyLocationMap from "components/MyLocation/MyLocationMap";
@@ -8,10 +10,11 @@ import SomenailItem from "components/SomenailItem";
 type MyLocationProps = {};
 
 const MyLocation: React.FC<MyLocationProps> = () => {
+  const dummyLocation = getCookie("dummyLocation");
   return (
     <div className="my_location_section view_section">
       <div className="sub_section">
-        <p className="sub_tit">현재 접속한 동네 이름 표시</p>
+        <p className="sub_tit">{dummyLocation}</p>
         <MyLocationMap />
       </div>
       <div className="sub_section">

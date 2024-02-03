@@ -6,6 +6,7 @@ import { dummyDateState } from "state/dummyState";
 // SVG
 // import { ReactComponent as MapMarkerIcon } from "../../../assets/image/icon/map_marker.svg";
 import MapMarkerIcon from "../../../assets/image/icon/map_marker.svg";
+import MyMarkerIcon from "../../../assets/image/icon/my_marker.svg";
 // PROPS TYPE
 declare global {
   interface Window {
@@ -14,14 +15,12 @@ declare global {
 }
 
 const MyLocationMap: React.FC = () => {
-  console.log(MapMarkerIcon);
   const myKakaoMaps = useRef(null);
   const dummyData = useRecoilValue(dummyDateState);
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
 
-  console.log("dummyData", dummyData);
   const getKakao = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -38,12 +37,12 @@ const MyLocationMap: React.FC = () => {
               position.coords.latitude,
               position.coords.longitude
             ),
-            level: 3,
+            level: 5,
           };
 
           const map = new window.kakao.maps.Map(mapContainer, mapOptions);
           // CURRENT USER MARKER
-          let imageSrc = MapMarkerIcon,
+          let imageSrc = MyMarkerIcon,
             imageSize = new window.kakao.maps.Size(20, 20),
             imageOption = { offset: new window.kakao.maps.Point(20, 20) };
           let markerImage = new window.kakao.maps.MarkerImage(
@@ -157,7 +156,7 @@ const MyLocationMap: React.FC = () => {
               position.coords.latitude,
               position.coords.longitude
             ),
-            radius: 1000,
+            radius: 250,
             strokeWeight: 2,
             strokeColor: "#6556FF",
             strokeOpacity: 0.2,
@@ -165,11 +164,12 @@ const MyLocationMap: React.FC = () => {
             fillColor: "#6556FF",
             fillOpacity: 0.05,
           });
-          marker.setMap(map);
           clusterer.addMarkers(individualMarkers);
+          marker.setMap(map);
           circle.setMap(map);
-          // MAP DRAGGABLE
-          map.setDraggable(true);
+          map.setMinLevel(2);
+          map.setMaxLevel(5);
+          map.setDraggable(false);
           setMap(map);
         }
       });
