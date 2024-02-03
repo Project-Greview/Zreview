@@ -5,7 +5,7 @@ import { getCookie } from "utils/cookies";
 // COMPONENT
 import HashTag from "components/HashTag";
 import MyLocationMap from "components/MyLocation/MyLocationMap";
-import SomenailItem from "components/SomenailItem";
+import ThumbnailItem from "components/ThumbnailItem";
 // PROPS TYPE
 type MyLocationProps = {};
 
@@ -28,7 +28,7 @@ const MyLocation: React.FC<MyLocationProps> = () => {
       <div className="sub_section">
         <p className="sub_tit">우리동네 실시간 리뷰</p>
         <ul>
-          <SomenailItem type={"empty"} data={null} />
+          <ThumbnailItem type={"empty"} data={null} />
         </ul>
       </div>
     </div>

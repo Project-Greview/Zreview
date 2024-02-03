@@ -16,6 +16,7 @@ type LoginProps = {};
 const Login: React.FC<LoginProps> = () => {
   const navigate = useNavigate();
   const [loginState, setLoginState] = useRecoilState(isLoginState);
+  const [error, setError] = useState(false);
   const [loginId, setLoginId] = useState<string>("");
   const [loginPw, setLoginPw] = useState<string>("");
   const [isReady, setIsReady] = useState(false);
@@ -43,7 +44,7 @@ const Login: React.FC<LoginProps> = () => {
       setLoginState(true);
       navigate("/main");
     } catch (error) {
-      console.log("일단 오류화면 생각중");
+      setError(true);
     }
   };
   return (
@@ -52,7 +53,7 @@ const Login: React.FC<LoginProps> = () => {
       style={{ marginTop: "35% " }}
     >
       <Logo />
-      <div className={`login_box ${!isReady ? "" : "active"}`}>
+      <div className={`login_box ${!isReady ? "" : "active"} relative`}>
         <div className="input_box ">
           <Input
             id={"login_id"}
@@ -78,6 +79,10 @@ const Login: React.FC<LoginProps> = () => {
             placeholder="비밀번호"
             readonly={false}
           />
+        </div>
+
+        <div className="event_txt absolute">
+          {error ? "아이디 혹은 비밀번호를 확인해주세요." : ""}
         </div>
       </div>
       <div className="btn_box flex">

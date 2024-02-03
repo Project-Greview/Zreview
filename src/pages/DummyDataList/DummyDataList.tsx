@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
 // COMPONENT
-import SomenailItem from "components/SomenailItem";
+import ThumbnailItem from "components/ThumbnailItem";
 
 const DummyDataList: React.FC = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const DummyDataList: React.FC = () => {
         ) : (
           dummyList.map((item) => {
             const itemInfo = {};
-            return <SomenailItem key={item.id} type={""} data={item} />;
+            return <ThumbnailItem key={item.id} type={""} data={item} />;
           })
         )}
       </ul>

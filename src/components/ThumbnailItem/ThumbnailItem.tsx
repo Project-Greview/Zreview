@@ -14,7 +14,7 @@ const SomenailItem: React.FC<SomenailItemProps> = ({ type, data }) => {
   const navigate = useNavigate();
   return (
     <li
-      className="somenail_review"
+      className="thumbnail_review"
       onClick={() => navigate(`/detail_review`, { state: data.id })}
     >
       <div className="img_box">
@@ -38,7 +38,7 @@ const SomenailItem: React.FC<SomenailItemProps> = ({ type, data }) => {
           <ul className="flex flex_jc_s flex_ai_c">
             {data !== null
               ? data.hashtag.map((tag: string, index: number) => (
-                  <li key={index}>
+                  <li key={index} className="mar_rh_10">
                     <HashTag tag={tag} />
                   </li>
                 ))

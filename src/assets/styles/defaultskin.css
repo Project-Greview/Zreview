@@ -167,33 +167,33 @@
   height: 20rem;
   top: calc(50% - 10rem);
 }
-/* SOMENAIL REVIEW */
-.somenail_review {
+/* THUMBNAIL REVIEW */
+.thumbnail_review {
   margin-top: 3rem;
   border-radius: 10px;
   border: 1px solid var(--border-color);
   overflow: hidden;
 }
-.somenail_review .img_box {
+.thumbnail_review .img_box {
   max-height: 10rem;
   overflow: hidden;
 }
-.somenail_review .review_info {
+.thumbnail_review .review_info {
   padding: 1rem;
 }
-.somenail_review .review_info .top_info .title {
+.thumbnail_review .review_info .top_info .title {
   font-size: 1.6rem;
   font-weight: 600;
 }
-.somenail_review .review_info .top_info .score p {
+.thumbnail_review .review_info .top_info .score p {
   margin-left: 1rem;
   color: var(--point-color);
 }
-.somenail_review .review_info .addr {
+.thumbnail_review .review_info .addr {
   font-size: 1.4rem;
   color: var(--disable-text);
 }
-.somenail_review .review_info .hashtag_list {
+.thumbnail_review .review_info .hashtag_list {
   margin-top: 1rem;
   overflow-x: scroll;
 }
@@ -324,6 +324,8 @@
   bottom: 2rem;
   left: 2rem;
 }
+/* DETAIL REVIEW */
+
 /* SETTING */
 .setting_section {
   height: 100vh;

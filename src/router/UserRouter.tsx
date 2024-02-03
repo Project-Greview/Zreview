@@ -11,8 +11,7 @@ type UserRouterProps = {
 
 const UserRouter: React.FC<UserRouterProps> = ({ children }) => {
   const isLogin = useRecoilValue(isLoginState);
-  // if (children) {
-  console.log(children);
+  // console.log(children);
   if (children) {
     return children;
   }
