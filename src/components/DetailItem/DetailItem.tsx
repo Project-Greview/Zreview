@@ -12,6 +12,7 @@ import Logo from "../../assets/image/Logo.png";
 import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.svg";
 import { ReactComponent as CommentIcon } from "../../assets/image/icon/comment_icon.svg";
 import { ReactComponent as LikeIcon } from "../../assets/image/icon/like_icon.svg";
+import ImageSlide from "components/ImageSlide";
 // PROPS TYPE
 type StarScoreProps = {
   max: number;
@@ -43,14 +44,13 @@ const DetailItem: React.FC = () => {
   const getDummyData = dummyData[0].filter(
     (dummyItem) => dummyItem.id === state
   );
-  const formattedDate = new Date(getDummyData[0].updated_at).toLocaleDateString(
-    "ko-KR",
-    {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-  );
+  const formattedDate = new Date(
+    getDummyData[0]?.updated_at
+  ).toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   return (
     <li className="review_item_box">
       <div className="reviewer_info flex flex_jc_sb flex_ai_fs">
@@ -68,7 +68,9 @@ const DetailItem: React.FC = () => {
         </div>
       </div>
       <div className="review_box">
-        <div className="slider"></div>
+        <div className="slider">
+          <ImageSlide />
+        </div>
         <div className="score flex">
           <StarScore max={5} rating={getDummyData[0].rating} />
           <p>{getDummyData[0].rating}</p>

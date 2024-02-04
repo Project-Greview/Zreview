@@ -375,6 +375,15 @@
 .review_item_box .review_box {
   padding: 2rem;
 }
+.review_item_box .review_box .slider {
+  margin: 0 -2rem;
+  border: 1px solid red;
+}
+.review_item_box .review_box .slider .swiper-pagination > span {
+  width: 1rem;
+  height: 1rem;
+  transform: scale(1);
+}
 .review_item_box .review_box .score p {
   margin-left: 5px;
   font-size: 1.4rem;

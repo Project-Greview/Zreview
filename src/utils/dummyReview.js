@@ -20,16 +20,23 @@ const getRandomContent = () => {
   const randomIndex = Math.floor(Math.random() * contents.length);
   return contents[randomIndex].name;
 };
-const getRandumHashTagType = (type) => {
-  const availableHashtags = dummyHashtag[type];
-  const selectedHashtag =
-    availableHashtags[Math.floor(Math.random() * availableHashtags.length)];
+const getRandumHashTagType = (category) => {
+  const availableHashtags = dummyHashtag[category];
+  const randomIndex = Math.floor(Math.random() * availableHashtags.length);
+  const selectedHashtag = availableHashtags[randomIndex];
 
-  return selectedHashtag.name;
+  const usedHashtags = new Set();
+  if (usedHashtags.has(selectedHashtag.name)) {
+    return getRandumHashTagType(category);
+  } else {
+    usedHashtags.add(selectedHashtag.name);
+    return selectedHashtag.name;
+  }
 };
 const getRandomCategory = () => {
   return Math.random() < 0.5 ? "good" : "not_good";
 };
+
 const getRandomNickname = () => {
   const nickname = dummyNickname.nickname;
   const randomIndex = Math.floor(Math.random() * nickname.length);
@@ -37,7 +44,6 @@ const getRandomNickname = () => {
 };
 export function generateRandomData() {
   return {
-    // id: getRandomNumber(1, 100),
     id: nextId++,
     title: getRandomTitle(),
     member: getRandomNickname(),

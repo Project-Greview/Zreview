@@ -12,6 +12,8 @@ interface DataType {
   hashtag: string[];
   views: number;
   rating: number;
+  likes: number;
+  comments: number;
 }
 
 export const dummyDateState = atom<DataType[]>({
