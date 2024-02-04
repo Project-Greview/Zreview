@@ -47,6 +47,8 @@ const ProfileImage: React.FC<ProfileImageProps> = ({ src, alt, size }) => {
       style={{
         width: size,
         height: size,
+        borderRadius: "50%",
+        overflow: "hidden",
       }}
     >
       <img ref={imgRef} src={src} alt={alt} />

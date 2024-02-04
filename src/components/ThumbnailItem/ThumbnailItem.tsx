@@ -5,12 +5,12 @@ import HashTag from "components/HashTag";
 // SVG
 import { ReactComponent as StarIcon } from "../../assets/image/icon/Score_star.svg";
 // PROPS TYPE
-type SomenailItemProps = {
+type ThumbnailItemProps = {
   type: string;
   data: any;
 };
 
-const SomenailItem: React.FC<SomenailItemProps> = ({ type, data }) => {
+const ThumbnailItem: React.FC<ThumbnailItemProps> = ({ type, data }) => {
   const navigate = useNavigate();
   return (
     <li
@@ -50,4 +50,4 @@ const SomenailItem: React.FC<SomenailItemProps> = ({ type, data }) => {
   );
 };
 
-export default SomenailItem;
+export default ThumbnailItem;

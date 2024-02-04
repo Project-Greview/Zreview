@@ -10,6 +10,7 @@ import ThumbnailItem from "components/ThumbnailItem";
 const DummyDataList: React.FC = () => {
   const navigate = useNavigate();
   const [dummyList, setDummyuList] = useRecoilState(dummyDateState);
+  console.log(dummyList);
   return (
     <div
       style={{

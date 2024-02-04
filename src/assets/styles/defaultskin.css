@@ -325,7 +325,88 @@
   left: 2rem;
 }
 /* DETAIL REVIEW */
-
+.detail_frame {
+  min-height: calc(100vh - var(--header-height));
+  /* background: #f6f6f6; */
+}
+/* DETAIL ITEM */
+.review_item_box {
+  margin: 1rem 2rem;
+  background: var(--white-color);
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+}
+.review_item_box .reviewer_info {
+  padding: 2rem 2rem 2rem 1rem;
+}
+.review_item_box .reviewer_info .txt_box {
+  margin-left: 1rem;
+}
+.review_item_box .reviewer_info .txt_box .user_nickname {
+  font-weight: 700;
+  color: var(--point-color);
+}
+.review_item_box .reviewer_info .txt_box .create_dt {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #d0cfcf;
+}
+.review_item_box .reviewer_info .review_menu_btn {
+  width: 4px;
+  height: 16px;
+  margin-left: -4px;
+}
+.review_item_box .reviewer_info .review_menu_btn > div {
+  width: 4px;
+  height: 4px;
+  left: 0;
+  background: var(--disable-color);
+  border-radius: 50%;
+}
+.review_item_box .reviewer_info .review_menu_btn > div:first-child {
+  top: -2px;
+}
+.review_item_box .reviewer_info .review_menu_btn > div:nth-child(2) {
+  top: calc(50% - 2px);
+}
+.review_item_box .reviewer_info .review_menu_btn > div:last-child {
+  top: calc(100% - 2px);
+}
+.review_item_box .review_box {
+  padding: 2rem;
+}
+.review_item_box .review_box .score p {
+  margin-left: 5px;
+  font-size: 1.4rem;
+  color: var(--point-color);
+}
+.review_item_box .review_box .contents {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--disable-text);
+  line-height: 1.2;
+  word-break: keep-all;
+}
+.review_item_box .review_box .hashtag_list {
+  margin-top: 1rem;
+}
+.review_item_box .review_box .hashtag_list li {
+  margin-right: 1rem;
+}
+.review_item_box .review_box .icon_box {
+  margin-top: 2rem;
+}
+.review_item_box .review_box .icon_box > div {
+  margin-right: 1rem;
+}
+.review_item_box .review_box .icon_box svg {
+  margin-right: 5px;
+}
+.review_item_box .review_box .icon_box p {
+  font-size: 1.4rem;
+  color: var(--disable-text);
+}
 /* SETTING */
 .setting_section {
   height: 100vh;

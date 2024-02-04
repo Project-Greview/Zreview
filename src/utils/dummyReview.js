@@ -3,6 +3,7 @@ import { getCookie } from "./cookies";
 import dummyHashtag from "../json/dummyHashTag.json";
 import dummyTitle from "../json/dummyTitle.json";
 import dummyContents from "../json/dummyContent.json";
+import dummyNickname from "../json/dummyNickname.json";
 
 let nextId = 1;
 
@@ -29,13 +30,17 @@ const getRandumHashTagType = (type) => {
 const getRandomCategory = () => {
   return Math.random() < 0.5 ? "good" : "not_good";
 };
-
+const getRandomNickname = () => {
+  const nickname = dummyNickname.nickname;
+  const randomIndex = Math.floor(Math.random() * nickname.length);
+  return nickname[randomIndex].nickname;
+};
 export function generateRandomData() {
   return {
     // id: getRandomNumber(1, 100),
     id: nextId++,
     title: getRandomTitle(),
-    member: generateRandomString(2),
+    member: getRandomNickname(),
     content: getRandomContent(),
     location_lat: getRandomLatitude(),
     location_lon: getRandomLongitude(),
@@ -48,6 +53,8 @@ export function generateRandomData() {
     ],
     views: getRandomNumber(1, 100),
     rating: getRandomNumber(1, 5),
+    comments: getRandomNumber(0, 20),
+    likes: getRandomNumber(0, 50),
   };
 }
 
