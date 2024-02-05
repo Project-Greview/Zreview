@@ -1,15 +1,17 @@
 // MODULE
+import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
 // RECOIL STATE
 import { searchTypeState } from "state/searchState";
 import { toastPopupState } from "state/commonState";
 import { searchKeywordState } from "state/searchState";
+// HOOK
+import { getCookie } from "utils/cookies";
 // SVG
 import { ReactComponent as HashTagIcon } from "../../assets/image/icon/marker_c.svg";
 import { ReactComponent as KeywordIcon } from "../../assets/image/icon/marker_g.svg";
 import { ReactComponent as HashTagSearchIcon } from "../../assets/image/icon/hashtag_search.svg";
 import { ReactComponent as KeywordSearchIcon } from "../../assets/image/icon/keyword_search.svg";
-import { ChangeEvent, useState } from "react";
 // PROPS TYPE
 type SearchInputProps = {
   searchType: string;
@@ -22,6 +24,8 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const [hashTagText, setHashTagText] = useState<string>("");
   const [locationText, setLocationText] = useState<string>("");
+  const [lat, setLat] = useState<number>(0);
+  const [lng, setLng] = useState<number>(0);
 
   const handleChangeSearcType = () => {
     setType((type) => !type);
@@ -35,17 +39,53 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
     e.preventDefault();
     setHashTagText(e.target.value);
   };
-  // LOCATION SEARCH
-  const handleSearchLocation = () => {
-    console.log("작동!");
-    console.log("검색결과를 가져온 후");
-    setSearchKeyword(locationText);
-    setToastModal(true);
-  };
+
   // HASHTAG SEARCH
   const handleSearchHashTag = () => {
     console.log("태그검색작동!");
   };
+  // LOCATION SEARCH
+  const handleSearchLocation = () => {
+    if (locationText.length === 0) {
+      alert("검색어가 없어요.");
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        (position: any) => {
+          setLat(position.coords.latitude);
+          setLng(position.coords.longitude);
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+      // if (lat && lng) {
+      const ps = new window.kakao.maps.services.Places();
+      const searchOption = {
+        location: new window.kakao.maps.LatLng(lat, lng),
+        radius: 1000,
+        size: 15,
+        page: 1,
+      };
+      // SEARCH FUNCTION
+      ps.keywordSearch(locationText, placeSearchDB, searchOption);
+      // }
+    }
+  };
+  function placeSearchDB(data: any, status: any, pagination: any): any {
+    if (status === window.kakao.maps.services.Status.OK) {
+      // setResuultPop(true);
+      // setResult({
+      //   item: data,
+      //   page: pagination,
+      // });
+      setSearchKeyword(locationText);
+      setToastModal(true);
+    } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+      return status;
+    } else if (status === window.kakao.maps.services.Status.ERROR) {
+      return status;
+    }
+  }
   return (
     <div className="search_keyword_box relative">
       {searchType === "double" ? (
