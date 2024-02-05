@@ -19,7 +19,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     e.preventDefault();
     setContents(e.target.value);
   };
-  const onCanngHastag = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangHashtag = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setWriteHashTag(e.target.value);
   };
@@ -85,7 +85,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
               id={"write_hashtag"}
               name={""}
               value={writeHashTag}
-              onChange={onCanngHastag}
+              onChange={onChangHashtag}
               onBlur={null}
               type={"text"}
               maxLength={10}

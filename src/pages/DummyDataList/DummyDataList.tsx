@@ -25,6 +25,7 @@ const DummyDataList: React.FC = () => {
           top: 0,
           left: 0,
           padding: "0 20px",
+          background: "#ffffff",
           borderBottom: "1px solid #ebebeb",
         }}
         className="fixed flex flex_ai_c width_100p"

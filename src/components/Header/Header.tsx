@@ -18,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
   const navigate = useNavigate();
   // STATE
   const [leftMenu, setLeftMenu] = useRecoilState(leftMenuState);
+
   // FUNCTION
   const handleOpenLeftMenu = () => {
     setLeftMenu(true);

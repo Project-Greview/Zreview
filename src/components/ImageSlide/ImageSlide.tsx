@@ -4,12 +4,14 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 // PROPS TYPE
-type ImageSlideProps = {};
-const ImageSlide: React.FC<ImageSlideProps> = () => {
+type ImageSlideProps = {
+  boxSize: number | undefined;
+};
+const ImageSlide: React.FC<ImageSlideProps> = ({ boxSize }) => {
   const pagination = {
     clickable: true,
     renderBullet: function (index: number, className: string) {
-      return '<span class="' + className + '"></span>';
+      return '<span class="custom_pagination ' + className + '"></span>';
     },
   };
   return (
@@ -18,15 +20,30 @@ const ImageSlide: React.FC<ImageSlideProps> = () => {
       modules={[Pagination]}
       className="image_slider"
     >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
+      <SwiperSlide
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          maxHeight: boxSize,
+          height: boxSize,
+          overflow: "hidden",
+        }}
+      >
+        <img src={"http://via.placeholder.com/500x500"} alt={""} />
+      </SwiperSlide>
+      <SwiperSlide
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          maxHeight: boxSize,
+          height: boxSize,
+          overflow: "hidden",
+        }}
+      >
+        <img src={"http://via.placeholder.com/500x500"} alt={""} />
+      </SwiperSlide>
     </Swiper>
   );
 };

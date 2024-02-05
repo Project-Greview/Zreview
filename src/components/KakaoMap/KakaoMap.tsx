@@ -3,6 +3,10 @@ import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
+import {
+  locationSearchResultState,
+  searchKeywordState,
+} from "state/searchState";
 // COMPONENT
 import HashTagSlide from "../HashTagSlide";
 // SVG
@@ -20,11 +24,16 @@ declare global {
 
 const KakaoMap: React.FC = () => {
   const kakaoMaps = useRef(null);
+  const [searchResult, setSearchResult] = useRecoilState(
+    locationSearchResultState
+  );
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
 
   const dummyData = useRecoilValue(dummyDateState);
+  const keyword = useRecoilValue(searchKeywordState);
+
   const getKakao = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -169,18 +178,40 @@ const KakaoMap: React.FC = () => {
             fillColor: "#6556FF",
             fillOpacity: 0.05,
           });
+
+          // SEARCH FUNCTION
+          const ps = new window.kakao.maps.service.Places();
+          const searchOption = {
+            location: new window.kakao.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            ),
+            radius: 1000,
+            size: 15,
+            page: 1,
+          };
+          ps.keywordSearch(keyword, placeSearchDB, searchOption);
+
           // map.setMinLevel(5);
           // map.setMaxLevel(8);
           circle.setMap(map);
           map.setDraggable(true);
           setMap(map);
         }
+        function placeSearchDB(data: any, status: any, pagination: any): any {
+          if (status === window.kakao.maps.service.Status.OK) {
+            console.log(status);
+          } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+            return status;
+          } else if (status === window.kakao.maps.services.Status.ERROR) {
+            return status;
+          }
+        }
       });
     } else {
       console.log("내위치 사용 불가");
     }
   };
-
   useLayoutEffect(() => {
     getKakao();
   }, []);

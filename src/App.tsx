@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { isMobile } from "react-device-detect";
 // RECOIL STATE
 import { dummyDateState, dummyModalState } from "state/dummyState";
+import { toastPopupState } from "state/commonState";
 // STYLE
 import "./assets/styles/_index.css";
 // HOOK
@@ -42,7 +43,7 @@ const App: React.FC = () => {
 
   const [productModal, setProductModal] =
     useRecoilState<Boolean>(dummyModalState);
-
+  const [toastModal, setToastModal] = useRecoilState(toastPopupState);
   const dataCheck = useRecoilValue(dummyDateState);
 
   const handleCloseModal = () => {
@@ -61,6 +62,10 @@ const App: React.FC = () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
+  useEffect(() => {
+    setToastModal(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!isMobile && location.pathname !== "/") {

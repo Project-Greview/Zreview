@@ -1,4 +1,5 @@
 // MODULE
+import { useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // RECOIL STATE
@@ -39,7 +40,8 @@ const StarScore: React.FC<StarScoreProps> = ({ max, rating }) => {
 
 const DetailItem: React.FC = () => {
   const { state } = useLocation();
-  // 임시 데이터용
+  const [boxWidth, setBoxWidth] = useState<number | undefined>(0);
+  // 임시 데이터
   const dummyData = useRecoilState(dummyDateState);
   const getDummyData = dummyData[0].filter(
     (dummyItem) => dummyItem.id === state
@@ -51,6 +53,12 @@ const DetailItem: React.FC = () => {
     month: "long",
     day: "numeric",
   });
+  // 임시 데이터
+
+  useLayoutEffect(() => {
+    let Element = document.querySelector(".review_box");
+    setBoxWidth(Element?.clientWidth);
+  }, []);
   return (
     <li className="review_item_box">
       <div className="reviewer_info flex flex_jc_sb flex_ai_fs">
@@ -69,7 +77,7 @@ const DetailItem: React.FC = () => {
       </div>
       <div className="review_box">
         <div className="slider">
-          <ImageSlide />
+          <ImageSlide boxSize={boxWidth} />
         </div>
         <div className="score flex">
           <StarScore max={5} rating={getDummyData[0].rating} />

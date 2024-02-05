@@ -1,13 +1,15 @@
 // MODULE
 import { useLayoutEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-// RECOIL STAET
+import { useRecoilState, useRecoilValue } from "recoil";
+// RECOIL STATE
 import { leftMenuState } from "state/userState";
+import { toastPopupState } from "state/commonState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
 // COMPONENT
 import LeftMenu from "../../components/LeftMenu";
 import KakaoMap from "../../components/KakaoMap";
+import ToastPopup from "components/ToastPopup";
 
 // PROPS TYPE
 type MainProps = {};
@@ -15,6 +17,7 @@ type MainProps = {};
 const Main: React.FC<MainProps> = () => {
   const isLeftMenu = useRecoilValue(leftMenuState);
   const [isReady, setIsReady] = useState(false);
+  const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const UserLat = getCookie("UserLat");
   const UserLon = getCookie("UserLon");
   if (UserLat === undefined || UserLon === undefined) {
@@ -38,6 +41,7 @@ const Main: React.FC<MainProps> = () => {
     <>
       <LeftMenu />
       <div className={`bg_section fixed ${isLeftMenu}`}></div>
+      <ToastPopup ready={toastModal} />
       {!isReady ? "" : <KakaoMap />}
     </>
   );
