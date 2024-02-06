@@ -13,5 +13,13 @@ export const searchKeywordState = atom({
 // LOCATION SEARCH RESULT
 export const locationSearchResultState = atom({
   key: "searchResult",
+  default: {
+    result: [],
+    totalCount: 0,
+    maxPage: 0,
+  },
+});
+export const testData = atom({
+  key: "datas",
   default: [],
 });

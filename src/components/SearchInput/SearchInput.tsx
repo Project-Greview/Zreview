@@ -1,12 +1,16 @@
 // MODULE
-import { ChangeEvent, useState } from "react";
-import { useRecoilState } from "recoil";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 // RECOIL STATE
-import { searchTypeState } from "state/searchState";
-import { toastPopupState } from "state/commonState";
-import { searchKeywordState } from "state/searchState";
+import {
+  searchTypeState,
+  searchKeywordState,
+  locationSearchResultState,
+  testData,
+} from "state/searchState";
+import { toastPopupState, paginationState } from "state/commonState";
+
 // HOOK
-import { getCookie } from "utils/cookies";
 // SVG
 import { ReactComponent as HashTagIcon } from "../../assets/image/icon/marker_c.svg";
 import { ReactComponent as KeywordIcon } from "../../assets/image/icon/marker_g.svg";
@@ -22,13 +26,20 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   const [searchKeyword, setSearchKeyword] =
     useRecoilState<string>(searchKeywordState);
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
+  const [locationResult, setLocationResult] = useRecoilState(
+    locationSearchResultState
+  );
   const [hashTagText, setHashTagText] = useState<string>("");
   const [locationText, setLocationText] = useState<string>("");
+  const [test, setTest] = useRecoilState<any>(testData);
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
 
+  const pages = useRecoilValue(paginationState);
+
   const handleChangeSearcType = () => {
     setType((type) => !type);
+    setToastModal(false);
   };
 
   const onChangeLocationText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +75,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
         location: new window.kakao.maps.LatLng(lat, lng),
         radius: 1000,
         size: 15,
-        page: 1,
+        page: pages,
       };
       // SEARCH FUNCTION
       ps.keywordSearch(locationText, placeSearchDB, searchOption);
@@ -73,11 +84,13 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   };
   function placeSearchDB(data: any, status: any, pagination: any): any {
     if (status === window.kakao.maps.services.Status.OK) {
-      // setResuultPop(true);
-      // setResult({
-      //   item: data,
-      //   page: pagination,
-      // });
+      setLocationResult({
+        result: data,
+        totalCount: pagination.totalCount,
+        maxPage: pagination.last,
+      });
+      setTest((prevTest: any) => [...prevTest, ...data]);
+      console.log(data);
       setSearchKeyword(locationText);
       setToastModal(true);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
@@ -86,6 +99,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
       return status;
     }
   }
+  useEffect(() => {
+    handleSearchLocation();
+  }, [pages]);
   return (
     <div className="search_keyword_box relative">
       {searchType === "double" ? (

@@ -191,9 +191,57 @@
   background: var(--bright-gray);
   border-radius: 3rem;
 }
+.toast_section .toast_header .keyword_result_header {
+  margin-top: 1.5rem;
+  font-weight: 500;
+  color: var(--disable-text);
+}
+.toast_section .toast_header .keyword_result_header p {
+  font-weight: 700;
+  color: var(--point-color);
+}
 .toast_section .toast_body {
+  max-height: 70vh;
+  padding: 2rem;
   background: var(--bright-gray);
   overflow: auto;
+}
+/* SEARCH RESULT ITEM */
+.search_result_item {
+  padding: 2rem;
+  margin-bottom: 1rem;
+  background: var(--white-color);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+.search_result_item .type_img {
+  flex-basis: 5rem;
+  width: 5rem;
+  height: 5rem;
+  background: var(--white-color);
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+}
+.search_result_item .result_info {
+  flex-basis: 65%;
+}
+.search_result_item .result_info > div:not(:first-child) {
+  margin-top: 0.3rem;
+}
+.search_result_item .result_info .store_name {
+  font-size: 1.8rem;
+  color: var(--dark-gray-text);
+  word-break: keep-all;
+}
+.search_result_item .result_info .store_address {
+  font-size: 1.4rem;
+  color: var(--disable-text);
+  word-break: keep-all;
+}
+.search_result_item .result_info .short_info .range {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--point-color);
 }
 /* THUMBNAIL REVIEW */
 .thumbnail_review {
