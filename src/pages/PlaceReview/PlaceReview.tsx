@@ -1,3 +1,6 @@
+// MODULE
+
+// PROPS TYPE
 const PlaceReview: React.FC = () => {
   return <></>;
 };

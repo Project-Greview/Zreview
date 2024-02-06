@@ -69,7 +69,6 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
           console.log(error);
         }
       );
-      // if (lat && lng) {
       const ps = new window.kakao.maps.services.Places();
       const searchOption = {
         location: new window.kakao.maps.LatLng(lat, lng),
@@ -79,7 +78,6 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
       };
       // SEARCH FUNCTION
       ps.keywordSearch(locationText, placeSearchDB, searchOption);
-      // }
     }
   };
   function placeSearchDB(data: any, status: any, pagination: any): any {
@@ -90,9 +88,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
         maxPage: pagination.last,
       });
       setTest((prevTest: any) => [...prevTest, ...data]);
-      console.log(data);
       setSearchKeyword(locationText);
       setToastModal(true);
+      console.log(pagination);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
       return status;
     } else if (status === window.kakao.maps.services.Status.ERROR) {
@@ -100,7 +98,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
     }
   }
   useEffect(() => {
-    handleSearchLocation();
+    if (pages > 2) {
+      handleSearchLocation();
+    }
   }, [pages]);
   return (
     <div className="search_keyword_box relative">
