@@ -32,14 +32,14 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   const [hashTagText, setHashTagText] = useState<string>("");
   const [locationText, setLocationText] = useState<string>("");
   const [test, setTest] = useRecoilState<any>(testData);
-  const [lat, setLat] = useState<number>(0);
-  const [lng, setLng] = useState<number>(0);
 
   const pages = useRecoilValue(paginationState);
 
   const handleChangeSearcType = () => {
     setType((type) => !type);
     setToastModal(false);
+    setLocationText("");
+    setHashTagText("");
   };
 
   const onChangeLocationText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,22 +62,23 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
     } else {
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
-          setLat(position.coords.latitude);
-          setLng(position.coords.longitude);
+          const ps = new window.kakao.maps.services.Places();
+          const searchOption = {
+            location: new window.kakao.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            ),
+            radius: 1000,
+            size: 15,
+            page: pages,
+          };
+          // SEARCH FUNCTION
+          ps.keywordSearch(locationText, placeSearchDB, searchOption);
         },
         (error: any) => {
           console.log(error);
         }
       );
-      const ps = new window.kakao.maps.services.Places();
-      const searchOption = {
-        location: new window.kakao.maps.LatLng(lat, lng),
-        radius: 1000,
-        size: 15,
-        page: pages,
-      };
-      // SEARCH FUNCTION
-      ps.keywordSearch(locationText, placeSearchDB, searchOption);
     }
   };
   function placeSearchDB(data: any, status: any, pagination: any): any {

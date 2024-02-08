@@ -11,7 +11,7 @@ type ResultItemProps = {
 
 const ResultItem: React.FC<ResultItemProps> = ({ data, range }) => {
   return (
-    <li className="search_result_item flex flex_jc_sb flex_ai_c">
+    <div className="search_result_item flex flex_jc_sb flex_ai_c">
       <div className="type_img flex flex_jc_c flex_ai_c">
         <LogoIcon width={35} height={35} />
       </div>
@@ -26,7 +26,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ data, range }) => {
       <div className="bookmark">
         <BookMakrIcon color={"#959292"} />
       </div>
-    </li>
+    </div>
   );
 };
 

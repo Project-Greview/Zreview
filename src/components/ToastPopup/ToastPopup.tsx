@@ -29,6 +29,19 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   const maxPage = useRecoilValue(locationSearchResultState).maxPage;
   const searchType = useRecoilValue(searchTypeState);
 
+  let startTouchY = 0;
+
+  function handleTouchMove(e: TouchEvent) {
+    const deltaY = e.touches[0].clientY - startTouchY;
+    console.log(deltaY);
+    // Y축 이동 거리 사용 코드
+  }
+
+  function handleTouchStart(e: TouchEvent) {
+    startTouchY = e.touches[0].clientY;
+    console.log("aa");
+  }
+
   navigator.geolocation.getCurrentPosition((position: any) => {
     setLat(position.coords.latitude);
     setLng(position.coords.longitude);
@@ -39,6 +52,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   useEffect(() => {
     if (inView) {
       setPage(page < maxPage ? page + 1 : page);
+      console.log("무한으로 즐겨요");
     }
   }, [inView]);
   return (
@@ -46,6 +60,8 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
       className={`toast_section absolute ${
         toastModal && loading ? "active" : ""
       }`}
+      onTouchStart={() => handleTouchStart}
+      onTouchMove={() => handleTouchMove}
     >
       <div className="toast_header flex flex_dir_c flex_jc_c flex_ai_c">
         <div className="drag_icon"></div>
@@ -91,10 +107,12 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
 
               const distance = getDistance(lat, lng, lat2, lng2);
               return (
-                <>
-                  <ResultItem key={item.id} data={item} range={distance} />
-                  {item.length > 14 ? <li ref={ref}></li> : ""}
-                </>
+                <li
+                  key={item.id}
+                  ref={index > locationResult.result.length - 1 ? ref : null}
+                >
+                  <ResultItem data={item} range={distance} />
+                </li>
               );
             })}
           </ul>

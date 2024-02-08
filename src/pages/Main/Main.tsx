@@ -1,6 +1,8 @@
 // MODULE
 import { useLayoutEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import toast, { Toaster } from "react-hot-toast";
+
 // RECOIL STATE
 import { leftMenuState } from "state/userState";
 import { toastPopupState } from "state/commonState";
@@ -20,6 +22,9 @@ const Main: React.FC<MainProps> = () => {
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const UserLat = getCookie("UserLat");
   const UserLon = getCookie("UserLon");
+
+  const notify = () => toast("Here is your toast.");
+
   if (UserLat === undefined || UserLon === undefined) {
     navigator.geolocation.getCurrentPosition(
       (position: any) => {
@@ -40,7 +45,6 @@ const Main: React.FC<MainProps> = () => {
   return (
     <>
       <LeftMenu />
-      <div className={`bg_section fixed ${isLeftMenu}`}></div>
       <ToastPopup ready={toastModal} />
       {!isReady ? "" : <KakaoMap />}
     </>
