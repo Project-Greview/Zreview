@@ -202,9 +202,11 @@
 }
 .toast_section .toast_body {
   max-height: 70vh;
+  height: 20vh;
   padding: 2rem;
   background: var(--bright-gray);
   overflow: auto;
+  transition: height 0.4s;
 }
 /* SEARCH RESULT ITEM */
 .search_result_item {
@@ -451,6 +453,7 @@
 }
 .review_item_box .review_box {
   padding: 2rem;
+  overflow: hidden;
 }
 .review_item_box .review_box .slider {
   margin: 0 -2rem;
@@ -487,6 +490,7 @@
 }
 .review_item_box .review_box .hashtag_list {
   margin-top: 1rem;
+  overflow-x: scroll;
 }
 .review_item_box .review_box .hashtag_list li {
   margin-right: 1rem;
@@ -503,6 +507,65 @@
 .review_item_box .review_box .icon_box p {
   font-size: 1.4rem;
   color: var(--disable-text);
+}
+/* PLACE REVIEW */
+.place_info_header {
+  background: var(--white-color);
+}
+.place_info_header .type_img {
+  width: 8.2rem;
+  height: 8.2rem;
+  left: 2rem;
+  bottom: 18rem;
+  background: var(--white-color);
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+}
+.place_info_header > div:not(.place_representative) {
+  padding: 0 2rem;
+}
+.place_info_header .place_representative {
+  max-height: 16rem;
+  overflow: hidden;
+}
+.place_info_header .txt_info {
+  margin-top: 3rem;
+}
+.place_info_header .txt_info .store_name {
+  font-size: 2.6rem;
+  font-weight: 700;
+}
+.place_info_header .txt_info .store_address {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--disable-text);
+}
+.place_info_header .txt_info .store_address svg {
+  margin-right: 1rem;
+}
+.place_info_header .btn_box {
+  margin-top: 2rem;
+}
+.place_info_header .btn_box button {
+  height: 4.4rem;
+  border-radius: 5px;
+}
+.place_info_header .btn_box .store_bookmark {
+  flex-basis: 18%;
+  background: #d0cfcf;
+}
+.place_info_header .btn_box .store_review_write {
+  flex-basis: 80%;
+  background: var(--point-color);
+  color: var(--white-color);
+}
+.place_info_header .hashtag_box {
+  margin-top: 3rem;
+}
+.place_info_header .hashtag_box p {
+  font-weight: 800;
+  color: var(--dark-gray-text);
 }
 /* SETTING */
 .setting_section {

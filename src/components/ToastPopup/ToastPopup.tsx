@@ -1,7 +1,9 @@
 // MODULE
-import { useLayoutEffect, useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useLayoutEffect, useState, useEffect, TouchEvent } from "react";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { useInView } from "react-intersection-observer";
+import { useNavigate } from "react-router-dom";
+import throttle from "lodash/throttle";
 // HOOK
 // RECOIL STATE
 import { toastPopupState, paginationState } from "state/commonState";
@@ -18,29 +20,19 @@ type ToastPopupProps = {
 
 const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   const [ref, inView] = useInView();
+  const navigate = useNavigate();
   const [page, setPage] = useRecoilState(paginationState);
   const [toastModal, setToastModal] = useRecoilState(toastPopupState);
   const [loading, setLoading] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
+  const [startY, setStartY] = useState<number>(0);
+  const [moveSize, setMoveSize] = useState<number>(0);
 
   const keyword = useRecoilValue(searchKeywordState);
   const locationResult = useRecoilValue(locationSearchResultState);
   const maxPage = useRecoilValue(locationSearchResultState).maxPage;
   const searchType = useRecoilValue(searchTypeState);
-
-  let startTouchY = 0;
-
-  function handleTouchMove(e: TouchEvent) {
-    const deltaY = e.touches[0].clientY - startTouchY;
-    console.log(deltaY);
-    // Y축 이동 거리 사용 코드
-  }
-
-  function handleTouchStart(e: TouchEvent) {
-    startTouchY = e.touches[0].clientY;
-    console.log("aa");
-  }
 
   navigator.geolocation.getCurrentPosition((position: any) => {
     setLat(position.coords.latitude);
@@ -55,13 +47,33 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
       console.log("무한으로 즐겨요");
     }
   }, [inView]);
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    setStartY(event.touches[0].clientY);
+  };
+
+  const handleTouchMove = throttle((event: TouchEvent<HTMLDivElement>) => {
+    const currentY = event.touches[0].clientY;
+    const deltaY = currentY - startY;
+    setMoveSize(deltaY / 10);
+  }, 100);
+  const cleanResult = useResetRecoilState(locationSearchResultState);
+
+  const dragCloseModal = () => {
+    setToastModal(false);
+    cleanResult();
+  };
+  useEffect(() => {
+    moveSize > 10 ? dragCloseModal() : setToastModal(true);
+  }, [moveSize]);
+
   return (
     <div
       className={`toast_section absolute ${
         toastModal && loading ? "active" : ""
       }`}
-      onTouchStart={() => handleTouchStart}
-      onTouchMove={() => handleTouchMove}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
     >
       <div className="toast_header flex flex_dir_c flex_jc_c flex_ai_c">
         <div className="drag_icon"></div>
@@ -73,7 +85,10 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
           </div>
         )}
       </div>
-      <div className="toast_body">
+      <div
+        className="toast_body"
+        style={{ height: moveSize < -10 ? "70vh" : "20vh" }}
+      >
         {searchType ? (
           "ㅁㅁㅁ"
         ) : (
@@ -110,6 +125,9 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
                 <li
                   key={item.id}
                   ref={index > locationResult.result.length - 1 ? ref : null}
+                  onClick={() =>
+                    navigate(`/place_review`, { state: { placeData: item } })
+                  }
                 >
                   <ResultItem data={item} range={distance} />
                 </li>

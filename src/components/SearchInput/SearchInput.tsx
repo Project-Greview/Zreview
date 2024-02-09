@@ -103,6 +103,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
       handleSearchLocation();
     }
   }, [pages]);
+
   return (
     <div className="search_keyword_box relative">
       {searchType === "double" ? (
