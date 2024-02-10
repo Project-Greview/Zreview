@@ -14,12 +14,12 @@ export const searchKeywordState = atom({
 export const locationSearchResultState = atom({
   key: "searchResult",
   default: {
-    result: [],
+    // result: [],
     totalCount: 0,
     maxPage: 0,
   },
 });
-export const testData = atom({
+export const resultDataState = atom({
   key: "datas",
   default: [],
 });

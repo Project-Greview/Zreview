@@ -6,7 +6,7 @@ import {
   searchTypeState,
   searchKeywordState,
   locationSearchResultState,
-  testData,
+  resultDataState,
 } from "state/searchState";
 import { toastPopupState, paginationState } from "state/commonState";
 
@@ -31,7 +31,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   );
   const [hashTagText, setHashTagText] = useState<string>("");
   const [locationText, setLocationText] = useState<string>("");
-  const [test, setTest] = useRecoilState<any>(testData);
+  const [result, setResult] = useRecoilState<any>(resultDataState);
 
   const pages = useRecoilValue(paginationState);
 
@@ -84,11 +84,11 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   function placeSearchDB(data: any, status: any, pagination: any): any {
     if (status === window.kakao.maps.services.Status.OK) {
       setLocationResult({
-        result: data,
+        // result: data,
         totalCount: pagination.totalCount,
         maxPage: pagination.last,
       });
-      setTest((prevTest: any) => [...prevTest, ...data]);
+      setResult((prevData: any) => [...prevData, ...data]);
       setSearchKeyword(locationText);
       setToastModal(true);
       console.log(pagination);

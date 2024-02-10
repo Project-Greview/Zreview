@@ -11,6 +11,7 @@ import {
   searchTypeState,
   locationSearchResultState,
   searchKeywordState,
+  resultDataState,
 } from "state/searchState";
 import ResultItem from "./ResultItem";
 // PROPS TYPE
@@ -33,6 +34,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   const locationResult = useRecoilValue(locationSearchResultState);
   const maxPage = useRecoilValue(locationSearchResultState).maxPage;
   const searchType = useRecoilValue(searchTypeState);
+  const searchResult = useRecoilValue(resultDataState);
 
   navigator.geolocation.getCurrentPosition((position: any) => {
     setLat(position.coords.latitude);
@@ -93,7 +95,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
           "ㅁㅁㅁ"
         ) : (
           <ul>
-            {locationResult.result.map((item: any, index: number) => {
+            {searchResult.map((item: any, index: number) => {
               function getDistance(
                 lat: number,
                 lng: number,
@@ -124,7 +126,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
               return (
                 <li
                   key={item.id}
-                  ref={index > locationResult.result.length - 1 ? ref : null}
+                  ref={index > searchResult.length - 2 ? ref : null}
                   onClick={() =>
                     navigate(`/place_review`, { state: { placeData: item } })
                   }
