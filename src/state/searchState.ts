@@ -1,5 +1,11 @@
 import { atom } from "recoil";
 
+interface LocationSearchResult {
+  result: any[];
+  totalCount: number;
+  maxPage: number;
+}
+
 // SEARCH TYPE
 export const searchTypeState = atom({
   key: "searchType",
@@ -11,15 +17,11 @@ export const searchKeywordState = atom({
   default: "",
 });
 // LOCATION SEARCH RESULT
-export const locationSearchResultState = atom({
+export const locationSearchResultState = atom<LocationSearchResult>({
   key: "searchResult",
   default: {
-    // result: [],
+    result: [],
     totalCount: 0,
     maxPage: 0,
   },
-});
-export const resultDataState = atom({
-  key: "datas",
-  default: [],
 });

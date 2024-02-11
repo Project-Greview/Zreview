@@ -1,11 +1,12 @@
 // MODULE
-import { useLayoutEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import toast, { Toaster } from "react-hot-toast";
 
 // RECOIL STATE
 import { leftMenuState } from "state/userState";
 import { toastPopupState } from "state/commonState";
+import { locationSearchResultState } from "state/searchState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
 // COMPONENT
@@ -22,6 +23,8 @@ const Main: React.FC<MainProps> = () => {
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const UserLat = getCookie("UserLat");
   const UserLon = getCookie("UserLon");
+
+  const cleanResult = useResetRecoilState(locationSearchResultState);
 
   const notify = () => toast("Here is your toast.");
 
@@ -42,6 +45,9 @@ const Main: React.FC<MainProps> = () => {
   useLayoutEffect(() => {
     setIsReady(true);
   }, []);
+  useEffect(() => {
+    cleanResult();
+  }, [isReady]);
   return (
     <>
       <LeftMenu />

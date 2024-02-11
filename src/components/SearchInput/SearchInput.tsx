@@ -1,12 +1,11 @@
 // MODULE
 import { ChangeEvent, useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 // RECOIL STATE
 import {
   searchTypeState,
   searchKeywordState,
   locationSearchResultState,
-  resultDataState,
 } from "state/searchState";
 import { toastPopupState, paginationState } from "state/commonState";
 
@@ -31,9 +30,10 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   );
   const [hashTagText, setHashTagText] = useState<string>("");
   const [locationText, setLocationText] = useState<string>("");
-  const [result, setResult] = useRecoilState<any>(resultDataState);
 
   const pages = useRecoilValue(paginationState);
+
+  const cleanResult = useResetRecoilState(locationSearchResultState);
 
   const handleChangeSearcType = () => {
     setType((type) => !type);
@@ -60,6 +60,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
     if (locationText.length === 0) {
       alert("검색어가 없어요.");
     } else {
+      cleanResult();
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
           const ps = new window.kakao.maps.services.Places();
@@ -83,12 +84,11 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   };
   function placeSearchDB(data: any, status: any, pagination: any): any {
     if (status === window.kakao.maps.services.Status.OK) {
-      setLocationResult({
-        // result: data,
+      setLocationResult((prevData: any) => ({
+        result: [...prevData.result, ...data],
         totalCount: pagination.totalCount,
         maxPage: pagination.last,
-      });
-      setResult((prevData: any) => [...prevData, ...data]);
+      }));
       setSearchKeyword(locationText);
       setToastModal(true);
       console.log(pagination);

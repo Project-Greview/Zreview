@@ -1,5 +1,6 @@
 // MODULE
 import { Outlet, useLocation, ScrollRestoration } from "react-router-dom";
+
 // PROPS TYPE
 type LayoutProps = {};
 
