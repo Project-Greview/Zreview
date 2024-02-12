@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 interface LocationSearchResult {
-  result: any[];
+  // result: any[];
   totalCount: number;
   maxPage: number;
 }
@@ -20,8 +20,13 @@ export const searchKeywordState = atom({
 export const locationSearchResultState = atom<LocationSearchResult>({
   key: "searchResult",
   default: {
-    result: [],
+    // result: [],
     totalCount: 0,
     maxPage: 0,
   },
+});
+// SEARCH RESULT DATA
+export const searchResultState = atom({
+  key: "resultData",
+  default: [],
 });

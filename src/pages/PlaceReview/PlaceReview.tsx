@@ -10,10 +10,9 @@ import { ReactComponent as DefaultMarkerIcon } from "../../assets/image/icon/def
 
 const PlaceReview: React.FC = () => {
   const { state } = useLocation();
-  console.log(state);
   return (
-    <>
-      <div className="place_info_header relative">
+    <div>
+      <div className="place_info_header sticky_top">
         <div className="type_img absolute flex flex_jc_c flex_ai_c">
           <Logo width={50} height={50} />
         </div>
@@ -54,8 +53,10 @@ const PlaceReview: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="place_body"></div>
-    </>
+      <div className="place_body">
+        <li>aaaaa</li>
+      </div>
+    </div>
   );
 };
 

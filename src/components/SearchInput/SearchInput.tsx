@@ -6,6 +6,7 @@ import {
   searchTypeState,
   searchKeywordState,
   locationSearchResultState,
+  searchResultState,
 } from "state/searchState";
 import { toastPopupState, paginationState } from "state/commonState";
 
@@ -28,12 +29,13 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   const [locationResult, setLocationResult] = useRecoilState(
     locationSearchResultState
   );
+  const [resultData, setResultData] = useRecoilState<any>(searchResultState);
   const [hashTagText, setHashTagText] = useState<string>("");
   const [locationText, setLocationText] = useState<string>("");
 
   const pages = useRecoilValue(paginationState);
-
   const cleanResult = useResetRecoilState(locationSearchResultState);
+  const cleanPages = useResetRecoilState(paginationState);
 
   const handleChangeSearcType = () => {
     setType((type) => !type);
@@ -61,6 +63,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
       alert("검색어가 없어요.");
     } else {
       cleanResult();
+      cleanPages();
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
           const ps = new window.kakao.maps.services.Places();
@@ -69,7 +72,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
               position.coords.latitude,
               position.coords.longitude
             ),
-            radius: 1000,
+            radius: 500,
             size: 15,
             page: pages,
           };
@@ -84,14 +87,14 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   };
   function placeSearchDB(data: any, status: any, pagination: any): any {
     if (status === window.kakao.maps.services.Status.OK) {
-      setLocationResult((prevData: any) => ({
-        result: [...prevData.result, ...data],
+      setLocationResult({
+        // result: [...prevData.result, ...data],
         totalCount: pagination.totalCount,
         maxPage: pagination.last,
-      }));
+      });
+      setResultData((prevData: any) => [...prevData, ...data]);
       setSearchKeyword(locationText);
       setToastModal(true);
-      console.log(pagination);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
       return status;
     } else if (status === window.kakao.maps.services.Status.ERROR) {
@@ -99,7 +102,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
     }
   }
   useEffect(() => {
-    if (pages > 2) {
+    if (pages > 1) {
       handleSearchLocation();
     }
   }, [pages]);
