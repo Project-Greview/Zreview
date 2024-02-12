@@ -64,13 +64,13 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
         </div>
       ) : (
         <div
-          className="flex flex_jc_sb flex_ai_c"
+          className="normal_header flex flex_jc_sb flex_ai_c"
           style={{ boxShadow: "0 0.5rem 1rem #eeeeee" }}
         >
           <div className="back_btn flex flex_ai_c" onClick={() => navigate(-1)}>
             <ArrowLeft color={"#3a3a3a"} />
           </div>
-          <div className="page_title flex flex_jc_c flex_ai_c">{title}</div>
+          <div className="page_title flex flex_jc_s flex_ai_c">{title}</div>
         </div>
       )}
     </div>

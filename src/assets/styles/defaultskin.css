@@ -602,7 +602,11 @@
   color: var(--dark-gray-text);
 }
 .place_body {
+  padding: 2rem;
   height: 100rem;
+}
+.place_body .point_txt {
+  font-weight: 700;
 }
 /* SETTING */
 .setting_section {

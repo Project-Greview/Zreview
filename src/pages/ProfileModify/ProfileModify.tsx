@@ -1,5 +1,7 @@
 // MODULE
 import { useState, useEffect, ChangeEvent } from "react";
+// HOOK
+import { getCookie } from "utils/cookies";
 // COMPONENT
 import Input from "components/Common/Input";
 import Button from "components/Common/Button";
@@ -9,10 +11,15 @@ import Modal from "components/Modal";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
 const ProfileModify: React.FC = () => {
+  // DUMMY
+  const getNickname = getCookie("dummyNickname");
+  const getEmail = getCookie("dummyEmail");
+  const getSettingLocation = getCookie("dummyLocation");
+
   const [modifyModal, setModifyModal] = useState<number>(0);
-  const [nickname, setNickname] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [myLocation, setMyLocation] = useState<string>("");
+  const [nickname, setNickname] = useState<string>(getNickname);
+  const [email, setEmail] = useState<string>(getEmail);
+  const [myLocation, setMyLocation] = useState<string>(getSettingLocation);
 
   const onChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

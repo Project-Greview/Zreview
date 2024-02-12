@@ -36,8 +36,9 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   const searchType = useRecoilValue(searchTypeState);
   const resultData = useRecoilValue(searchResultState);
 
-  const cleanResult = useResetRecoilState(locationSearchResultState);
+  const cleanResultInfo = useResetRecoilState(locationSearchResultState);
   const cleanPages = useResetRecoilState(paginationState);
+  const cleanResult = useResetRecoilState(searchResultState);
 
   navigator.geolocation.getCurrentPosition((position: any) => {
     setLat(position.coords.latitude);
@@ -48,23 +49,11 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   }, []);
   useEffect(() => {
     if (inView) {
-      // if (maxPage > page) {
-      //   setPage(page + 1);
-      //   console.log("무한으로 즐겨요");
-      //   console.log("page", page);
-      //   console.log("maxPage", maxPage);
-      // } else {
-      //   setPage(page);
-      //   console.log("무한으로 즐겨요");
-      //   console.log("page", page);
-      //   console.log("maxPage", maxPage);
-      // }
-      setPage(maxPage < page ? page : page + 1);
-      console.log("무한으로 즐겨요");
+      setPage(maxPage <= page ? page : page + 1);
       console.log("page", page);
       console.log("maxPage", maxPage);
     }
-  }, [inView, page]);
+  }, [inView]);
 
   const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
     setStartY(event.touches[0].clientY);
@@ -78,6 +67,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
 
   const dragCloseModal = () => {
     setToastModal(false);
+    cleanResultInfo();
     cleanResult();
     cleanPages();
   };

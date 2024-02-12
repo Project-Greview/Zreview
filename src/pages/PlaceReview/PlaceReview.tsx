@@ -1,5 +1,5 @@
 // MODULE
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 // COMPONENT
@@ -15,10 +15,15 @@ const PlaceReview: React.FC = () => {
   const [ref, inView] = useInView();
   const { state } = useLocation();
 
+  const [headerVisibility, setHeaderVisibility] = useState<boolean>(false);
+
   useEffect(() => {
     if (inView) {
+      setHeaderVisibility(true);
+    } else {
+      setHeaderVisibility(false);
     }
-  }, []);
+  }, [inView]);
   return (
     <div>
       <div className="place_info_header relative">
@@ -61,11 +66,17 @@ const PlaceReview: React.FC = () => {
             </div>
           </div>
         </div>
+        <div ref={ref}></div>
       </div>
 
       <div className="place_body sticky_top">
-        <Header type={2} title="" />
-        <li>aaaaa</li>
+        {!headerVisibility ? (
+          <Header type={0} title={state.placeData.place_name} />
+        ) : (
+          ""
+        )}
+        <div className="point_txt">ZReview</div>
+        <ul className={`${!headerVisibility ? "active" : ""}`}></ul>
       </div>
     </div>
   );

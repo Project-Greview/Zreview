@@ -8,6 +8,9 @@
   height: inherit;
   padding: 1rem 2rem;
 }
+.header > .normal_header .page_title {
+  margin-left: 5%;
+}
 /* MAIN HEADER */
 .header > .main {
 }

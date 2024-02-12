@@ -34,8 +34,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   const [locationText, setLocationText] = useState<string>("");
 
   const pages = useRecoilValue(paginationState);
-  const cleanResult = useResetRecoilState(locationSearchResultState);
+  const cleanResultInfo = useResetRecoilState(locationSearchResultState);
   const cleanPages = useResetRecoilState(paginationState);
+  const cleanResult = useResetRecoilState(searchResultState);
 
   const handleChangeSearcType = () => {
     setType((type) => !type);
@@ -62,8 +63,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
     if (locationText.length === 0) {
       alert("검색어가 없어요.");
     } else {
-      cleanResult();
+      cleanResultInfo();
       cleanPages();
+      cleanResult();
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
           const ps = new window.kakao.maps.services.Places();

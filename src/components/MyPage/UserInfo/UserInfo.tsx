@@ -1,5 +1,7 @@
 // MODULE
 import { useNavigate } from "react-router-dom";
+// HOOK
+import { getCookie } from "utils/cookies";
 // COMPONENT
 import ProfileImage from "components/ProfileImage";
 // IMAGE
@@ -10,13 +12,16 @@ type UserInfoProps = {};
 
 const UserInfo: React.FC<UserInfoProps> = () => {
   const navigate = useNavigate();
+  // DUMMY
+  const getNickname = getCookie("dummyNickname");
+  const getSettingLocation = getCookie("dummyLocation");
   return (
     <>
       <div className="my_profile flex flex_jc_s flex_ai_c">
         <ProfileImage src={Logo} alt={"프로필"} size={80} />
         <div className="flex flex_dir_c">
-          <div className="my_nickname">여기에는 내 닉네임이</div>
-          <div className="my_location">여기에는 내 설정지역이</div>
+          <div className="my_nickname">{getNickname}</div>
+          <div className="my_location">{getSettingLocation}</div>
         </div>
       </div>
       <div className="btn_box flex">
