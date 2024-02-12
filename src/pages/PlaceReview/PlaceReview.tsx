@@ -1,18 +1,27 @@
 // MODULE
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
 // COMPONENT
 import HashTag from "components/HashTag";
 // SVG
 import { ReactComponent as Logo } from "../../assets/image/icon/marker_c.svg";
 import { ReactComponent as BookMarkIcon } from "../../assets/image/icon/Bookmark-icon.svg";
 import { ReactComponent as DefaultMarkerIcon } from "../../assets/image/icon/default_marker.svg";
+import Header from "components/Header";
 // PROPS TYPE
 
 const PlaceReview: React.FC = () => {
+  const [ref, inView] = useInView();
   const { state } = useLocation();
+
+  useEffect(() => {
+    if (inView) {
+    }
+  }, []);
   return (
     <div>
-      <div className="place_info_header sticky_top">
+      <div className="place_info_header relative">
         <div className="type_img absolute flex flex_jc_c flex_ai_c">
           <Logo width={50} height={50} />
         </div>
@@ -53,7 +62,9 @@ const PlaceReview: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="place_body">
+
+      <div className="place_body sticky_top">
+        <Header type={2} title="" />
         <li>aaaaa</li>
       </div>
     </div>
