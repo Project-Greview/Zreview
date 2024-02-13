@@ -7,6 +7,7 @@ import {
   searchKeywordState,
   locationSearchResultState,
   searchResultState,
+  inViewState,
 } from "state/searchState";
 import { toastPopupState, paginationState } from "state/commonState";
 
@@ -33,11 +34,17 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   const [hashTagText, setHashTagText] = useState<string>("");
   const [locationText, setLocationText] = useState<string>("");
 
+  const isViewScroll = useRecoilValue(inViewState);
   const pages = useRecoilValue(paginationState);
   const cleanResultInfo = useResetRecoilState(locationSearchResultState);
   const cleanPages = useResetRecoilState(paginationState);
   const cleanResult = useResetRecoilState(searchResultState);
 
+  const resetResult = () => {
+    cleanResultInfo();
+    cleanPages();
+    cleanResult();
+  };
   const handleChangeSearcType = () => {
     setType((type) => !type);
     setToastModal(false);
@@ -63,9 +70,6 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
     if (locationText.length === 0) {
       alert("검색어가 없어요.");
     } else {
-      cleanResultInfo();
-      cleanPages();
-      cleanResult();
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
           const ps = new window.kakao.maps.services.Places();
@@ -108,7 +112,6 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
       handleSearchLocation();
     }
   }, [pages]);
-
   return (
     <div className="search_keyword_box relative">
       {searchType === "double" ? (
@@ -135,7 +138,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
       <button
         className="search_btn absolute"
         onClick={
-          type ? () => handleSearchHashTag() : () => handleSearchLocation()
+          type
+            ? () => handleSearchHashTag()
+            : () => (handleSearchLocation(), resetResult())
         }
       >
         {type ? <HashTagSearchIcon /> : <KeywordSearchIcon />}

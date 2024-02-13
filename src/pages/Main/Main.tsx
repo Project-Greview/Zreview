@@ -1,7 +1,6 @@
 // MODULE
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import toast, { Toaster } from "react-hot-toast";
 
 // RECOIL STATE
 import { leftMenuState } from "state/userState";
@@ -25,8 +24,6 @@ const Main: React.FC<MainProps> = () => {
   const UserLon = getCookie("UserLon");
 
   const cleanResult = useResetRecoilState(locationSearchResultState);
-
-  const notify = () => toast("Here is your toast.");
 
   if (UserLat === undefined || UserLon === undefined) {
     navigator.geolocation.getCurrentPosition(

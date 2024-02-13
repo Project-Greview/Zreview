@@ -30,3 +30,8 @@ export const searchResultState = atom({
   key: "resultData",
   default: [],
 });
+// INFINITY SCROLL CHECK
+export const inViewState = atom({
+  key: "scrollState",
+  default: false,
+});

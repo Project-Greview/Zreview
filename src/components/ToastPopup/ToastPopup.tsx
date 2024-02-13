@@ -12,6 +12,7 @@ import {
   locationSearchResultState,
   searchKeywordState,
   searchResultState,
+  inViewState,
 } from "state/searchState";
 import ResultItem from "./ResultItem";
 // PROPS TYPE
@@ -24,6 +25,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   const navigate = useNavigate();
   const [page, setPage] = useRecoilState<number>(paginationState);
   const [toastModal, setToastModal] = useRecoilState(toastPopupState);
+  const [scrollView, setScrollView] = useRecoilState(inViewState);
   const [loading, setLoading] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
@@ -44,19 +46,15 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
     setLat(position.coords.latitude);
     setLng(position.coords.longitude);
   });
-  useLayoutEffect(() => {
-    setLoading(true);
-  }, []);
-  useEffect(() => {
-    if (inView) {
-      setPage(maxPage <= page ? page : page + 1);
-      console.log("page", page);
-      console.log("maxPage", maxPage);
-    }
-  }, [inView]);
 
   const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
     setStartY(event.touches[0].clientY);
+  };
+
+  const resetResult = () => {
+    cleanResultInfo();
+    cleanResult();
+    cleanPages();
   };
 
   const handleTouchMove = throttle((event: TouchEvent<HTMLDivElement>) => {
@@ -67,14 +65,24 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
 
   const dragCloseModal = () => {
     setToastModal(false);
-    cleanResultInfo();
-    cleanResult();
-    cleanPages();
+    resetResult();
   };
+  useLayoutEffect(() => {
+    setLoading(true);
+  }, []);
+  useEffect(() => {
+    if (inView) {
+      setPage(maxPage <= page ? page : page + 1);
+      console.log("page", page);
+      console.log("maxPage", maxPage);
+      setScrollView(inView);
+    } else {
+      setScrollView(inView);
+    }
+  }, [inView]);
   useEffect(() => {
     moveSize > 10 ? dragCloseModal() : setToastModal(true);
   }, [moveSize]);
-
   return (
     <div
       className={`toast_section fixed ${toastModal && loading ? "active" : ""}`}
