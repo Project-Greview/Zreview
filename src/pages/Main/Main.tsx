@@ -48,7 +48,7 @@ const Main: React.FC<MainProps> = () => {
   return (
     <>
       <LeftMenu />
-      <ToastPopup ready={toastModal} />
+      <ToastPopup ready={toastModal} popupType={"main"} />
       {!isReady ? "" : <KakaoMap />}
     </>
   );

@@ -18,9 +18,10 @@ import ResultItem from "./ResultItem";
 // PROPS TYPE
 type ToastPopupProps = {
   ready: boolean;
+  popupType: string;
 };
 
-const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
+const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   const [ref, inView] = useInView();
   const navigate = useNavigate();
   const [page, setPage] = useRecoilState<number>(paginationState);
@@ -83,10 +84,11 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   useEffect(() => {
     moveSize > 10 ? dragCloseModal() : setToastModal(true);
   }, [moveSize]);
-  console.log(resultData);
   return (
     <div
-      className={`toast_section fixed ${toastModal && loading ? "active" : ""}`}
+      className={`toast_section fixed ${
+        toastModal && loading ? "active" : ""
+      } ${popupType}`}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
@@ -102,7 +104,10 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
       </div>
       <div
         className="toast_body"
-        style={{ height: moveSize < -10 ? "70vh" : "20vh" }}
+        style={{
+          height:
+            popupType !== "write" ? (moveSize < -10 ? "70vh" : "20vh") : "",
+        }}
       >
         {searchType ? (
           "ㅁㅁㅁ"

@@ -208,6 +208,26 @@
   overflow: auto;
   transition: height 0.4s;
 }
+/* WRITE PAGE TOAST */
+.popup_bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.3s;
+}
+.popup_bg.true {
+  background: rgba(0, 0, 0, 0.6);
+}
+.toast_section.write.active {
+  bottom: 0;
+}
+.toast_section.write .toast_body {
+  max-height: 90vh;
+  height: 90vh;
+}
 /* SEARCH RESULT ITEM */
 .search_result_item {
   padding: 2rem;
@@ -268,6 +288,7 @@
   color: var(--point-color);
 }
 .thumbnail_review .review_info .addr {
+  margin-top: 0.5rem;
   font-size: 1.4rem;
   color: var(--disable-text);
   text-align: left;
