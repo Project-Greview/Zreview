@@ -83,6 +83,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready }) => {
   useEffect(() => {
     moveSize > 10 ? dragCloseModal() : setToastModal(true);
   }, [moveSize]);
+  console.log(resultData);
   return (
     <div
       className={`toast_section fixed ${toastModal && loading ? "active" : ""}`}

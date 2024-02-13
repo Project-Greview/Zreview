@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // HOOK
 import { CheckPasswordText } from "utils/textUtil";
+import { getCookie } from "utils/cookies";
 // COMPONENT
 import Input from "../../components/Common/Input";
 import Header from "../../components/Header";
@@ -18,15 +19,25 @@ const Registration: React.FC<RegistrationProps> = () => {
   const checkPage = state.type === "modify";
 
   // 추가로 checkPage 가 true 일 경우 recoil에서 사용자의 개인정보를 가져와 뿌린 후 수정작업 필요
+  // DUMMY DATA
+  const loginUserEmail = getCookie("dummyEmail");
+  const loginUserPhone = getCookie("dummyPhone");
+  const loginUserName = getCookie("dummyName");
 
   const [modifyModal, setModifyModal] = useState<number>(0);
-  const [resEmail, setResEmail] = useState<string>("");
+  const [resEmail, setResEmail] = useState<string>(
+    checkPage ? loginUserEmail : ""
+  );
   const [resPassword, setResPassword] = useState<string>("");
   const [pwCheck, setPwCheck] = useState<number>(0);
   const [resPasswordCheck, setResPasswordCheck] = useState<string>("");
   const [pwCkCheck, setPwCkCheck] = useState<number>(0);
-  const [resPhone, setResPhone] = useState<string>("");
-  const [resName, setResName] = useState<string>("");
+  const [resPhone, setResPhone] = useState<string>(
+    checkPage ? loginUserPhone : ""
+  );
+  const [resName, setResName] = useState<string>(
+    checkPage ? loginUserName : ""
+  );
   const [nameCheck, setNameCheck] = useState<number>(0);
   const [resNickname, setResNickname] = useState<string>("");
   const [nicknameCheck, setNicknameCheck] = useState<number>(0);
@@ -209,20 +220,24 @@ const Registration: React.FC<RegistrationProps> = () => {
           />
           <div className="event_txt absolute"></div>
         </div>
-        <div className="relative width_100p mar_top_25">
-          <Input
-            id={"res_nickname"}
-            name={"닉네임"}
-            value={resNickname}
-            onChange={onChangeRegNickname}
-            type={"text"}
-            onBlur={onCheckResNickname}
-            maxLength={12}
-            placeholder={""}
-            readonly={false}
-          />
-          <div className="event_txt absolute"></div>
-        </div>
+        {checkPage ? (
+          ""
+        ) : (
+          <div className="relative width_100p mar_top_25">
+            <Input
+              id={"res_nickname"}
+              name={"닉네임"}
+              value={resNickname}
+              onChange={onChangeRegNickname}
+              type={"text"}
+              onBlur={onCheckResNickname}
+              maxLength={12}
+              placeholder={""}
+              readonly={false}
+            />
+            <div className="event_txt absolute"></div>
+          </div>
+        )}
         <div
           className={`btn_box absolute flex ${!checkPage ? checkValue : ""}`}
         >

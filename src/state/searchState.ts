@@ -22,7 +22,7 @@ export const locationSearchResultState = atom<LocationSearchResult>({
   default: {
     // result: [],
     totalCount: 0,
-    maxPage: 1,
+    maxPage: 0,
   },
 });
 // SEARCH RESULT DATA

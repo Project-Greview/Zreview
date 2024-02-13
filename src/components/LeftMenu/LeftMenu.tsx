@@ -14,6 +14,7 @@ import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow_right
 import ProfileImage from "components/ProfileImage";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
+import { getCookie } from "utils/cookies";
 
 const MiddleMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -59,6 +60,9 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
   const navigate = useNavigate();
   // STATE
   const [leftMenu, setLeftMenu] = useRecoilState(leftMenuState);
+  // DUMMY DATA
+  const myNickname = getCookie("dummyNickname");
+  const myLocation = getCookie("dummyLocation");
   // FUNCTION
   const handleCLoseLeftMenu = () => {
     setLeftMenu(false);
@@ -76,8 +80,8 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
         </div>
         <div className="my_profile flex flex_dir_c flex_ai_c">
           <ProfileImage src={Logo} alt={"프로필"} size={94} />
-          <div className="my_nickname">여기에는 내 닉네임이</div>
-          <div className="my_location">여기에는 내 설정지역이</div>
+          <div className="my_nickname">{myNickname}</div>
+          <div className="my_location">{myLocation}</div>
         </div>
         <div className="semi_count">
           <ul className="flex flex_jc_sb flex_ai_c">
