@@ -10,14 +10,14 @@ import Input from "../../components/Common/Input";
 import StarScore from "./ScoreStar";
 import Button from "components/Common/Button";
 // SVG
-import { ReactComponent as SearcIcon } from "../../assets/image/icon/keyword_search.svg";
+import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
 import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg";
 // PROPS TYPE
 type WriteReviewProps = {};
 
 const WriteReview: React.FC<WriteReviewProps> = () => {
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
-  const [locationType, setLocationType] = useState<"search" | "wrtie">(
+  const [locationType, setLocationType] = useState<"search" | "write">(
     "search"
   );
   const [writeLocation, setWriteLocation] = useState<string>("");
@@ -78,7 +78,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
                   type="radio"
                   id="write_location"
                   name="location_type"
-                  value={"wrtie"}
+                  value={"write"}
                   checked={!setSearchLocation}
                   onChange={(e: any) => setLocationType(e.target.value)}
                 />
@@ -106,7 +106,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
               }
             />
             <label htmlFor="write_location_keyword" className="absolute">
-              <SearcIcon />
+              <SearchIcon color={"#959292"} />
             </label>
             <div className="btn flex flex_jc_c flex_ai_c">확인</div>
           </div>

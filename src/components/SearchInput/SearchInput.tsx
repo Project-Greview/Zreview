@@ -143,7 +143,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
             : () => (handleSearchLocation(), resetResult())
         }
       >
-        {type ? <HashTagSearchIcon /> : <KeywordSearchIcon />}
+        {type ? <HashTagSearchIcon /> : <KeywordSearchIcon color={"#959292"} />}
       </button>
     </div>
   );
