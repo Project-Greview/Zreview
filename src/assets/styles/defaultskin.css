@@ -272,7 +272,27 @@
   color: var(--disable-text);
 }
 .toast_section.write .toast_body.write {
+  padding: 0;
   background: rgba(237, 237, 237, 0.4);
+}
+.toast_section.write .toast_body.write .place_item {
+  padding: 2rem;
+  background: var(--white-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.2s;
+}
+.toast_section.write .toast_body.write .place_item.active {
+  background: rgba(237, 237, 237, 0.5);
+}
+.toast_section.write .toast_body.write .place_item .place_name {
+  font-weight: 600;
+  color: var(--dark-gray-text);
+  line-height: 1.8;
+}
+.toast_section.write .toast_body.write .place_item .place_address {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--disable-text);
 }
 /* SEARCH RESULT ITEM */
 .search_result_item {

@@ -23,6 +23,7 @@ import {
 import {
   reviewStoreSearchResultState,
   reviewSearchResultState,
+  reviewLocationInfoState,
 } from "state/writeState";
 // COMPONENT
 import Input from "components/Common/Input";
@@ -40,14 +41,36 @@ type WriteToastProps = {};
 const WriteToastContent: React.FC<WriteToastProps> = () => {
   const [ref, inView] = useInView();
 
+  const [selectIndex, setSelectIndex] = useState<number>(-1);
+  const [locationData, setLocationData] = useRecoilState(
+    reviewLocationInfoState
+  );
+
   const storeSearchResult = useRecoilValue<any>(reviewSearchResultState);
+
+  const handleSelectPlace = (info: any, number: number) => {
+    setLocationData({
+      placeName: info.place_name,
+      placeLatitude: info.y,
+      placeLongitude: info.x,
+      placeAddress:
+        info.road_address_name === undefined
+          ? info.address_name
+          : info.road_address_name,
+    });
+    setSelectIndex(number);
+  };
   return (
     <div className="write toast_body">
       <ul>
-        {storeSearchResult.map((result: any) => (
-          <li key={result.id}>
-            <div>{result.place_name}</div>
-            <div>
+        {storeSearchResult.map((result: any, number: number) => (
+          <li
+            key={result.id}
+            className={`place_item ${selectIndex === number ? "active" : ""}`}
+            onClick={() => handleSelectPlace(result, number)}
+          >
+            <div className="place_name">{result.place_name}</div>
+            <div className="place_address">
               {result.road_address_name === undefined
                 ? result.address_name
                 : result.road_address_name}
@@ -174,6 +197,14 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
       return status;
     }
   }
+
+  const handleMobileBrowsersEnterKey = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      writeResetResult();
+      handleSearchLocation();
+    }
+  };
+
   useEffect(() => {
     if (page > 1) {
       handleSearchLocation();
@@ -221,6 +252,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
               <SearchIcon
                 color={"#D0CFCF"}
                 onClick={() => (writeResetResult(), handleSearchLocation())}
+                onKeyDown={handleMobileBrowsersEnterKey}
               />
               <Input
                 id={"keyword"}

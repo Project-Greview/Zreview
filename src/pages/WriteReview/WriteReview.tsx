@@ -1,9 +1,10 @@
 // MODULE
 import { useState, ChangeEvent, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 // RECOIL STATE
 import { toastPopupState } from "state/commonState";
 import { locationSearchResultState } from "state/searchState";
+import { reviewLocationInfoState } from "state/writeState";
 // COMPONENT
 import ToastPopup from "components/ToastPopup";
 import Input from "../../components/Common/Input";
@@ -20,19 +21,21 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const [locationType, setLocationType] = useState<"search" | "write">(
     "search"
   );
+  const [searchLocation, setSearchLocation] = useState<string>("");
   const [writeLocation, setWriteLocation] = useState<string>("");
   const [contents, setContents] = useState("");
   const [writeHashTag, setWriteHashTag] = useState<string>("");
 
-  const setSearchLocation = locationType === "search";
+  const settingType = locationType === "search";
+  const locationInfo = useRecoilValue(reviewLocationInfoState);
 
   const handleOpenToastPopup = () => {
     setToastModal(true);
   };
-  const onChangeSearchLocation = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setWriteLocation(e.target.value);
-  };
+  // const onChangeSearchLocation = (e: ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setSearchLocation(locationInfo.placeName);
+  // };
   const onChangeWriteLocation = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setWriteLocation(e.target.value);
@@ -47,7 +50,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   };
 
   useEffect(() => {
-    if (!setSearchLocation) {
+    if (!settingType) {
       setToastModal(false);
     }
   }, [locationType]);
@@ -66,7 +69,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
                   id="location_search"
                   name="location_type"
                   value={"search"}
-                  checked={setSearchLocation}
+                  checked={settingType}
                   onChange={(e: any) => setLocationType(e.target.value)}
                 />
                 <label htmlFor="location_search" className="flex">
@@ -79,7 +82,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
                   id="write_location"
                   name="location_type"
                   value={"write"}
-                  checked={!setSearchLocation}
+                  checked={!settingType}
                   onChange={(e: any) => setLocationType(e.target.value)}
                 />
                 <label htmlFor="write_location" className="flex">
@@ -94,16 +97,13 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
               className="keyword_input "
               placeholder="장소명을 입력하세요"
               id="write_location_keyword"
-              readOnly={setSearchLocation}
-              value={setSearchLocation ? writeLocation : writeLocation}
-              onChange={
-                setSearchLocation
-                  ? onChangeSearchLocation
-                  : onChangeWriteLocation
-              }
-              onClick={
-                setSearchLocation ? () => handleOpenToastPopup() : undefined
-              }
+              readOnly={settingType}
+              value={settingType ? locationInfo.placeName : writeLocation}
+              // onChange={
+              //   settingType ? onChangeSearchLocation : onChangeWriteLocation
+              // }
+              onChange={!settingType ? onChangeWriteLocation : undefined}
+              onClick={settingType ? () => handleOpenToastPopup() : undefined}
             />
             <label htmlFor="write_location_keyword" className="absolute">
               <SearchIcon color={"#959292"} />

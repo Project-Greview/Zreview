@@ -4,6 +4,12 @@ interface ReviewStoreSearchResult {
   totalCount: number;
   maxPage: number;
 }
+interface ReviewLocationInfo {
+  placeName: string;
+  placeLatitude: number;
+  placeLongitude: number;
+  placeAddress: string;
+}
 
 // REVIEW SCORE
 export const starScoreState = atom({
@@ -24,4 +30,15 @@ export const reviewStoreSearchResultState = atom<ReviewStoreSearchResult>({
 export const reviewSearchResultState = atom({
   key: "storeData",
   default: [],
+});
+
+// REVIEW LOCATION INFO DATA
+export const reviewLocationInfoState = atom<ReviewLocationInfo>({
+  key: "locationInfo",
+  default: {
+    placeName: "",
+    placeLatitude: 0,
+    placeLongitude: 0,
+    placeAddress: "",
+  },
 });
