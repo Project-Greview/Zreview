@@ -271,6 +271,9 @@
   input::placeholder {
   color: var(--disable-text);
 }
+.toast_section.write .toast_body.write {
+  background: rgba(237, 237, 237, 0.4);
+}
 /* SEARCH RESULT ITEM */
 .search_result_item {
   padding: 2rem;

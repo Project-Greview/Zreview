@@ -40,8 +40,23 @@ type WriteToastProps = {};
 const WriteToastContent: React.FC<WriteToastProps> = () => {
   const [ref, inView] = useInView();
 
-  const storeSearchResult = useRecoilValue(reviewSearchResultState);
-  return <div className="toast_body"></div>;
+  const storeSearchResult = useRecoilValue<any>(reviewSearchResultState);
+  return (
+    <div className="write toast_body">
+      <ul>
+        {storeSearchResult.map((result: any) => (
+          <li key={result.id}>
+            <div>{result.place_name}</div>
+            <div>
+              {result.road_address_name === undefined
+                ? result.address_name
+                : result.road_address_name}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
@@ -72,6 +87,10 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   const cleanResultInfo = useResetRecoilState(locationSearchResultState);
   const cleanPages = useResetRecoilState(paginationState);
   const cleanResult = useResetRecoilState(searchResultState);
+  const cleanWriteResultInfo = useResetRecoilState(
+    reviewStoreSearchResultState
+  );
+  const cleanWriteResult = useResetRecoilState(reviewSearchResultState);
 
   navigator.geolocation.getCurrentPosition((position: any) => {
     setLat(position.coords.latitude);
@@ -86,10 +105,16 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
     setStartY(event.touches[0].clientY);
   };
-
+  // MAIN SEARCH RESET
   const resetResult = () => {
     cleanResultInfo();
     cleanResult();
+    cleanPages();
+  };
+  // WRITE SEARCH RESET
+  const writeResetResult = () => {
+    cleanWriteResult();
+    cleanWriteResultInfo();
     cleanPages();
   };
 
@@ -103,6 +128,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     setToastModal(false);
     setReviewKeyword("");
     resetResult();
+    writeResetResult();
   };
   // REVIEW STORE SEARCH
   const handleSearchLocation = () => {
@@ -194,7 +220,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
             <div className="keyword_input relative">
               <SearchIcon
                 color={"#D0CFCF"}
-                onClick={() => handleSearchLocation()}
+                onClick={() => (writeResetResult(), handleSearchLocation())}
               />
               <Input
                 id={"keyword"}
