@@ -42,3 +42,68 @@
   font-weight: 600;
   color: var(--white-color);
 }
+.contact_team_modal_bg {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 29;
+}
+.contact_team {
+  width: 90%;
+  height: 70vh;
+  top: 15vh;
+  left: 5%;
+  padding: 1.5rem;
+  background: var(--white-color);
+  border-radius: 10px;
+  z-index: 30;
+}
+.contact_team .close_btn {
+  width: 2rem;
+  height: 2rem;
+}
+.contact_team .close_btn > div {
+  width: 100%;
+  height: 3px;
+  top: 45%;
+  background: #666666;
+  transform: rotate(-45deg);
+}
+.contact_team .close_btn > div:first-child {
+  transform: rotate(45deg);
+}
+.contact_team .title {
+  flex-grow: 1;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.contact_team .team_name {
+  font-size: 3rem;
+  font-weight: 900;
+  color: transparent;
+  background-image: linear-gradient(
+    0deg,
+    rgba(102, 102, 102, 1) 0%,
+    rgba(53, 53, 53, 1) 50%,
+    rgba(101, 86, 255, 1) 50%,
+    rgba(70, 28, 244, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+}
+
+.contact_team ul {
+  margin-top: 1rem;
+}
+.contact_team ul li {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 2;
+}
+.contact_team .contact {
+  margin-top: 2rem;
+  font-size: 1.7rem;
+}

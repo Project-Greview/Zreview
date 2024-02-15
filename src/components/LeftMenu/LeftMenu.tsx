@@ -15,6 +15,8 @@ import ProfileImage from "components/ProfileImage";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
 import { getCookie } from "utils/cookies";
+import ContactTeam from "components/ContactTeam";
+import { useState } from "react";
 
 const MiddleMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -60,6 +62,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
   const navigate = useNavigate();
   // STATE
   const [leftMenu, setLeftMenu] = useRecoilState(leftMenuState);
+  const [contactModal, setContactModal] = useState<boolean>(false);
   // DUMMY DATA
   const myNickname = getCookie("dummyNickname");
   const myLocation = getCookie("dummyLocation");
@@ -67,50 +70,60 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
   const handleCLoseLeftMenu = () => {
     setLeftMenu(false);
   };
+  const closeContantTeam = () => {
+    setContactModal(false);
+  };
   return (
-    <div className={`left_menu_section fixed flex flex_dir_c ${leftMenu}`}>
-      <div className="top_section">
-        <div className="header_section flex flex_jc_sb flex_ai_c">
-          <div className="close" onClick={() => handleCLoseLeftMenu()}>
-            <CloseBtn />
+    <>
+      {contactModal ? <ContactTeam close={closeContantTeam} /> : ""}
+
+      <div className={`left_menu_section fixed flex flex_dir_c ${leftMenu}`}>
+        <div className="top_section">
+          <div className="header_section flex flex_jc_sb flex_ai_c">
+            <div className="close" onClick={() => handleCLoseLeftMenu()}>
+              <CloseBtn />
+            </div>
+            <div className="setting" onClick={() => navigate("/setting")}>
+              <SettingBtn />
+            </div>
           </div>
-          <div className="setting" onClick={() => navigate("/setting")}>
-            <SettingBtn />
+          <div className="my_profile flex flex_dir_c flex_ai_c">
+            <ProfileImage src={Logo} alt={"프로필"} size={94} />
+            <div className="my_nickname">{myNickname}</div>
+            <div className="my_location">{myLocation}</div>
+          </div>
+          <div className="semi_count">
+            <ul className="flex flex_jc_sb flex_ai_c">
+              <li>
+                <div className="key_tit">리뷰</div>
+                <div className="count">00</div>
+              </li>
+              <li>
+                <div className="key_tit">댓글</div>
+                <div className="count">00</div>
+              </li>
+            </ul>
           </div>
         </div>
-        <div className="my_profile flex flex_dir_c flex_ai_c">
-          <ProfileImage src={Logo} alt={"프로필"} size={94} />
-          <div className="my_nickname">{myNickname}</div>
-          <div className="my_location">{myLocation}</div>
+        <div className="middle_section">
+          <MiddleMenu />
         </div>
-        <div className="semi_count">
-          <ul className="flex flex_jc_sb flex_ai_c">
-            <li>
-              <div className="key_tit">리뷰</div>
-              <div className="count">00</div>
+        <div className="bottom_section">
+          <ul>
+            <li
+              className="flex flex_ai_c"
+              onClick={() => setContactModal(true)}
+            >
+              <div>문의하기</div>
             </li>
-            <li>
-              <div className="key_tit">댓글</div>
-              <div className="count">00</div>
+            <li className="flex flex_jc_sb flex_ai_c">
+              <div>버전정보</div>
+              <div></div>
             </li>
           </ul>
         </div>
       </div>
-      <div className="middle_section">
-        <MiddleMenu />
-      </div>
-      <div className="bottom_section">
-        <ul>
-          <li className="flex flex_ai_c">
-            <div>문의하기</div>
-          </li>
-          <li className="flex flex_jc_sb flex_ai_c">
-            <div>버전정보</div>
-            <div></div>
-          </li>
-        </ul>
-      </div>
-    </div>
+    </>
   );
 };
 export default LeftMenu;
