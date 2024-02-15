@@ -42,3 +42,15 @@ export const reviewLocationInfoState = atom<ReviewLocationInfo>({
     placeAddress: "",
   },
 });
+
+// UPLOAD IMAGE STATE
+export const originUploadState = atom({
+  key: "originImageState",
+  default: [],
+});
+
+// UPLOAD RESIZE IMAGE STATE
+export const resizeUploadImageState = atom({
+  key: "resizeImageState",
+  default: [],
+});

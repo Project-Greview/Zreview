@@ -1,13 +1,14 @@
 // MODULE
-import { useState, ChangeEvent, useEffect, useRef } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import Resizer from "react-image-file-resizer";
 // RECOIL STATE
 import { toastPopupState } from "state/commonState";
 import { locationSearchResultState } from "state/searchState";
 import {
   reviewLocationInfoState,
   reviewSearchResultState,
+  resizeUploadImageState,
+  originUploadState,
 } from "state/writeState";
 // COMPONENT
 import ToastPopup from "components/ToastPopup";
@@ -16,21 +17,14 @@ import StarScore from "./ScoreStar";
 import Button from "components/Common/Button";
 import HashTag from "components/HashTag";
 import Modal from "components/Modal";
+import ImageUpload from "components/ImageUpload";
 // SVG
 import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
 import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg";
-import { InputFiles } from "typescript";
 // PROPS TYPE
-interface FileInputChangeEvent {
-  target: {
-    files: FileList;
-  };
-}
 type WriteReviewProps = {};
 
 const WriteReview: React.FC<WriteReviewProps> = () => {
-  const imgRef = useRef<HTMLInputElement | null>(null);
-
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const [locationType, setLocationType] = useState<"search" | "write">(
     "search"
@@ -41,61 +35,13 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const [writeHashTag, setWriteHashTag] = useState<string>("");
   const [hashtag, setHashtag] = useState<any>([]);
   const [alarmModal, setAlarmModal] = useState<number>(0);
-  const [resizeImg, setResizeImg] = useState<any>([]);
-  const [uploadImage, setUploadImage] = useState<any>([]);
 
   let maxHashtag = hashtag.length === 3;
   const settingType = locationType === "search";
   const locationInfo = useRecoilValue(reviewLocationInfoState);
+  const uploadImage = useRecoilValue(originUploadState);
   const resetLocationInfo = useResetRecoilState(reviewLocationInfoState);
   const resetLocationData = useResetRecoilState(reviewSearchResultState);
-
-  console.log(uploadImage);
-  // IMAGE RESIZE
-  const resizeFile = (file: File) =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        1200,
-        1200,
-        "JPEG",
-        80,
-        0,
-        (uri) => {
-          resolve(uri);
-        },
-        "file"
-      );
-    });
-  const handleAddImages = async (e: FileInputChangeEvent) => {
-    const imageLists = e.target.files;
-    const resizedImages = [];
-
-    const imageUrlLists = [...resizeImg];
-
-    for (let i = 0; i < imageLists.length; i++) {
-      const file = imageLists[i];
-      const image = await resizeFile(file);
-      resizedImages.push(image);
-    }
-
-    let newImageList = [
-      ...uploadImage,
-      ...resizedImages.slice(0, 5 - uploadImage.length),
-    ];
-    let newImageThumbList = newImageList.map((image) =>
-      image instanceof File ? URL.createObjectURL(image) : image
-    );
-
-    if (resizedImages.length > 2) {
-      alert("이미지는 최대 2장 까지만 등록이 가능합니다.");
-      setResizeImg(newImageList.slice(0, 2));
-      setUploadImage(newImageThumbList);
-    } else {
-      setResizeImg(newImageList);
-      setUploadImage(newImageThumbList);
-    }
-  };
 
   const handleOpenToastPopup = () => {
     setToastModal(true);
@@ -272,25 +218,16 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
               </ul>
             </div>
 
-            <div className="image_section">
-              <div>
-                <input
-                  id="image_file"
-                  type="file"
-                  accept="image/*"
-                  ref={imgRef}
-                  multiple
-                  onChange={(e) => handleAddImages(e as FileInputChangeEvent)}
-                />
-              </div>
-              <div className="thumb_img flex flex_ai_fe">
+            <div className="image_section flex flex_jc_s flex_ai_c">
+              <ImageUpload />
+              <div className="thumb_img relative flex flex_jc_c flex_ai_c">
                 {uploadImage.map((image: any, id: any) => (
-                  <span key={id} className="relative">
+                  <span key={id}>
                     <div className="img_box relative flex flex_ai_c">
                       <img src={image} alt={`${image}-${id}`} width={70} />
                     </div>
                     <div
-                      className="del_btn flex flex_jc_c flex_ai_c"
+                      className="del_btn absolute flex flex_jc_c flex_ai_c"
                       // onClick={() => handleDeleteImage(id)}
                     >
                       +

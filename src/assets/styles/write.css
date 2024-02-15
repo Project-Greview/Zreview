@@ -151,3 +151,41 @@
 .write_form .write_btn .buttons {
   height: 5rem;
 }
+.write_form .image_section > * {
+  margin-right: 1rem;
+}
+.write_form .image_section .thumb_img {
+  width: 7.5rem;
+  height: 7.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--depp-border-color);
+}
+.write_form .image_section .thumb_img .del_btn {
+  width: 1.8rem;
+  height: 1.8rem;
+  top: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  border: 1px solid var(--white-color);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--white-color);
+  transform: rotate(45deg);
+}
+#image_file_upload {
+  display: none;
+}
+#image_file_upload ~ label {
+  width: 7.5rem;
+  height: 7.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--depp-border-color);
+}
+#image_file_upload ~ label svg {
+  margin-bottom: 0.5rem;
+}
+#image_file_upload ~ label .txt {
+  font-size: 1.2rem;
+  color: var(--depp-border-color);
+}
