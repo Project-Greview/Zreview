@@ -1,15 +1,20 @@
 // MODULE
 import { useState, ChangeEvent, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 // RECOIL STATE
 import { toastPopupState } from "state/commonState";
 import { locationSearchResultState } from "state/searchState";
-import { reviewLocationInfoState } from "state/writeState";
+import {
+  reviewLocationInfoState,
+  reviewSearchResultState,
+} from "state/writeState";
 // COMPONENT
 import ToastPopup from "components/ToastPopup";
 import Input from "../../components/Common/Input";
 import StarScore from "./ScoreStar";
 import Button from "components/Common/Button";
+import HashTag from "components/HashTag";
+import Modal from "components/Modal";
 // SVG
 import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
 import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg";
@@ -25,17 +30,31 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const [writeLocation, setWriteLocation] = useState<string>("");
   const [contents, setContents] = useState("");
   const [writeHashTag, setWriteHashTag] = useState<string>("");
+  const [hashtag, setHashtag] = useState<any>([]);
+  const [alarmModal, setAlarmModal] = useState<number>(0);
 
+  let maxHashtag = hashtag.length === 3;
   const settingType = locationType === "search";
   const locationInfo = useRecoilValue(reviewLocationInfoState);
+  const resetLocationInfo = useResetRecoilState(reviewLocationInfoState);
+  const resetLocationData = useResetRecoilState(reviewSearchResultState);
 
   const handleOpenToastPopup = () => {
     setToastModal(true);
   };
-  // const onChangeSearchLocation = (e: ChangeEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   setSearchLocation(locationInfo.placeName);
-  // };
+  const handleAddWriteHashtag = () => {
+    if (!maxHashtag) {
+      setHashtag((prevTag: any) => [...prevTag, writeHashTag]);
+      setWriteHashTag("");
+    }
+  };
+  const handleRemoveWriteHashtag = (index: number) => {
+    setHashtag((prevTag: string[]) => {
+      const newHashtag = [...prevTag];
+      newHashtag.splice(index, 1);
+      return newHashtag;
+    });
+  };
   const onChangeWriteLocation = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setWriteLocation(e.target.value);
@@ -54,8 +73,29 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       setToastModal(false);
     }
   }, [locationType]);
+
+  useEffect(() => {
+    resetLocationInfo();
+    resetLocationData();
+  }, []);
+
+  console.log("hashtag", hashtag);
   return (
     <>
+      {alarmModal === 1 ? (
+        <Modal
+          type={""}
+          contents={"리뷰를 등록하시겠습니까?"}
+          conform={() => setAlarmModal(0)}
+          conform_txt={"확인"}
+          cancel={() => setAlarmModal(0)}
+          cancel_txt={"취소"}
+        />
+      ) : alarmModal === 2 ? (
+        ""
+      ) : (
+        ""
+      )}
       <div className={`popup_bg ${toastModal}`}></div>
       <ToastPopup ready={toastModal} popupType={"write"} />
       <div className="inner_section">
@@ -94,21 +134,29 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
           <div className="search_section relative flex flex_jc_sb flex_ai_c">
             <input
               type="text"
-              className="keyword_input "
+              className={`keyword_input ${settingType ? "enable" : ""}`}
               placeholder="장소명을 입력하세요"
               id="write_location_keyword"
               readOnly={settingType}
               value={settingType ? locationInfo.placeName : writeLocation}
-              // onChange={
-              //   settingType ? onChangeSearchLocation : onChangeWriteLocation
-              // }
               onChange={!settingType ? onChangeWriteLocation : undefined}
               onClick={settingType ? () => handleOpenToastPopup() : undefined}
             />
             <label htmlFor="write_location_keyword" className="absolute">
               <SearchIcon color={"#959292"} />
             </label>
-            <div className="btn flex flex_jc_c flex_ai_c">확인</div>
+            <div
+              className={`btn flex flex_jc_c flex_ai_c ${
+                settingType ? "disable" : ""
+              }`}
+              onClick={() =>
+                console.log(
+                  "직접 입력한 장소와 현재 위도,경도,주소를 recoil로!"
+                )
+              }
+            >
+              확인
+            </div>
           </div>
           <div className="line inline_flex"></div>
           <div className="score_section">
@@ -126,7 +174,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
               placeholder="리뷰를 작성해주세요 (100자 이내)"
             ></textarea>
           </div>
-          <div className="hashtag_section flex flex_jc_sb flex_ai_c">
+          <div className="hashtag_section flex flex_jc_sb flex_ai_c flex_wrap_wrap">
             <div className="input_box relative">
               <LogoIcon
                 style={{ position: "absolute", top: "30%", left: "6%" }}
@@ -141,17 +189,33 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
                 maxLength={10}
                 placeholder={"해시태그를 입력해주세요"}
                 readonly={false}
+                styles={maxHashtag ? "disable" : ""}
               />
             </div>
             <div className="btn_box">
               <Button
                 title={"추가"}
                 width={""}
-                event={() => console.log("대기중")}
-                styles={"btn flex flex_jc_c flex_ai_c"}
+                event={() => handleAddWriteHashtag()}
+                styles={`btn flex flex_jc_c flex_ai_c ${
+                  maxHashtag ? "disable" : ""
+                }`}
               />
             </div>
+            <div className="write_state_hashtag">
+              <ul className="flex flex_wrap_wrap">
+                {hashtag.map((text: string, index: number) => (
+                  <li
+                    key={text}
+                    onClick={() => handleRemoveWriteHashtag(index)}
+                  >
+                    <HashTag tag={text} />
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
+
           <div className="write_btn btn_box absolute">
             <Button
               title={"등록하기"}

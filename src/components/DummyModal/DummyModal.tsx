@@ -71,6 +71,7 @@ const DummyModal: React.FC<DummyModalType> = ({ close }) => {
               maxLength={500}
               placeholder={"생성할 데이터 갯수를 입력하세요"}
               readonly={false}
+              styles={""}
             />
           </div>
           <div className="btn_box absolute flex flex_jc_sb">

@@ -77,6 +77,7 @@ const ProfileModify: React.FC = () => {
             maxLength={12}
             placeholder={""}
             readonly={false}
+            styles={""}
           />
           <Input
             id={"email"}
@@ -88,6 +89,7 @@ const ProfileModify: React.FC = () => {
             maxLength={40}
             placeholder={""}
             readonly={true}
+            styles={""}
           />
           <div className="location_box relative">
             <div className={`location_state absolute flex flex_jc_c flex_ai_c`}>
@@ -103,6 +105,7 @@ const ProfileModify: React.FC = () => {
               maxLength={12}
               placeholder={""}
               readonly={true}
+              styles={""}
             />
           </div>
         </div>

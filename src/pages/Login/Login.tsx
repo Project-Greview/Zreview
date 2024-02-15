@@ -65,6 +65,7 @@ const Login: React.FC<LoginProps> = () => {
             maxLength={20}
             placeholder="아이디"
             readonly={false}
+            styles={""}
           />
         </div>
         <div className="input_box">
@@ -78,6 +79,7 @@ const Login: React.FC<LoginProps> = () => {
             maxLength={20}
             placeholder="비밀번호"
             readonly={false}
+            styles={""}
           />
         </div>
 

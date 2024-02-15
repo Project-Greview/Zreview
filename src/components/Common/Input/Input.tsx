@@ -11,6 +11,7 @@ type InputProps = {
   maxLength: number;
   placeholder: string;
   readonly: boolean;
+  styles: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -23,6 +24,7 @@ const Input: React.FC<InputProps> = ({
   maxLength,
   placeholder,
   readonly,
+  styles,
 }) => {
   return (
     <>
@@ -34,7 +36,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        className={`input_default`}
+        className={`input_default ${styles}`}
         maxLength={maxLength}
         placeholder={placeholder}
         readOnly={readonly}

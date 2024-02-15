@@ -264,6 +264,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
                 maxLength={25}
                 placeholder={"지번,도로명,건물명으로 검색"}
                 readonly={false}
+                styles={""}
               />
               {reviewKeyword.length > 0 ? (
                 <div

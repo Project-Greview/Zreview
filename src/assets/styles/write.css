@@ -32,6 +32,14 @@
 .write_form .search_section > * {
   height: 3.4rem;
 }
+.write_form .search_section .keyword_input.enable {
+  flex-basis: 100%;
+  width: 100%;
+}
+.write_form .search_section .btn.disable {
+  flex-basis: 0;
+  width: 0;
+}
 .write_form .search_section .keyword_input {
   flex-basis: 73%;
   padding-left: 12%;
@@ -39,6 +47,7 @@
   border-radius: 5px;
   border: none;
   font-size: 1.4rem;
+  transition: flex-basis 0.3s, width 0.3s;
 }
 .write_form .search_section .keyword_input::placeholder {
   font-size: 1.2rem;
@@ -55,7 +64,10 @@
   border-radius: 5px;
   background: var(--disable-color);
   color: var(--white-color);
+  transition: flex-basis 0.3s, width 0.3s;
+  overflow: hidden;
 }
+
 .write_form .line {
   width: 100%;
   height: 2px;
@@ -80,7 +92,7 @@
   height: 13.8rem;
   padding: 1rem 1.5rem;
   border-radius: 5px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--depp-border-color);
   font-size: 1.5rem;
   outline: none;
   resize: none;
@@ -102,6 +114,11 @@
   height: 4.1rem;
   padding-left: 17%;
   margin-top: 0;
+  border-color: var(--depp-border-color);
+  transition: border-color 0.3s;
+}
+.write_form .hashtag_section .input_box .input_default.disable {
+  border-color: var(--border-color);
 }
 .write_form .hashtag_section .input_box .input_default::placeholder {
   font-size: 1.4rem;
@@ -116,6 +133,16 @@
   background: var(--point-color);
   border-radius: 5px;
   color: var(--white-color);
+}
+.write_form .hashtag_section .btn_box .btn.disable {
+  background: var(--disable-color);
+}
+.write_form .hashtag_section .write_state_hashtag {
+  flex-basis: 100%;
+  margin-top: 1.5rem;
+}
+.write_form .hashtag_section .write_state_hashtag ul li {
+  margin-right: 1rem;
 }
 .write_form .write_btn {
   width: 90%;

@@ -155,6 +155,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             maxLength={40}
             placeholder={""}
             readonly={false}
+            styles={""}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -172,6 +173,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             maxLength={16}
             placeholder={""}
             readonly={false}
+            styles={""}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -189,6 +191,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             maxLength={16}
             placeholder={""}
             readonly={false}
+            styles={""}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -203,6 +206,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             maxLength={11}
             placeholder={""}
             readonly={false}
+            styles={""}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -217,6 +221,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             maxLength={10}
             placeholder={""}
             readonly={false}
+            styles={""}
           />
           <div className="event_txt absolute"></div>
         </div>
@@ -234,6 +239,7 @@ const Registration: React.FC<RegistrationProps> = () => {
               maxLength={12}
               placeholder={""}
               readonly={false}
+              styles={""}
             />
             <div className="event_txt absolute"></div>
           </div>
