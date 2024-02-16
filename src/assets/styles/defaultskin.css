@@ -167,6 +167,11 @@
   height: 20rem;
   top: calc(50% - 10rem);
 }
+.modal_frame.type_99 {
+  word-break: keep-all;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
 .toast_section {
   width: 100vw;
   /* height: 20rem; */

@@ -76,7 +76,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
   return (
     <>
       {contactModal ? <ContactTeam close={closeContantTeam} /> : ""}
-
+      <div className={`menu_bg fixed ${leftMenu}`}></div>
       <div className={`left_menu_section fixed flex flex_dir_c ${leftMenu}`}>
         <div className="top_section">
           <div className="header_section flex flex_jc_sb flex_ai_c">

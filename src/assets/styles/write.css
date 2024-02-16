@@ -67,6 +67,9 @@
   transition: flex-basis 0.3s, width 0.3s;
   overflow: hidden;
 }
+.write_form .search_section .btn.conform {
+  background: var(--point-color);
+}
 
 .write_form .line {
   width: 100%;

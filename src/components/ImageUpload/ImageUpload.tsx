@@ -47,7 +47,7 @@ const ImageUpload: React.FC = () => {
 
     let newImageList = [
       ...uploadImage,
-      ...resizedImages.slice(0, 5 - uploadImage.length),
+      ...resizedImages.slice(0, 2 - uploadImage.length),
     ];
     let newImageThumbList = newImageList.map((image) =>
       image instanceof File ? URL.createObjectURL(image) : image
@@ -63,7 +63,7 @@ const ImageUpload: React.FC = () => {
     }
   };
   return (
-    <div>
+    <div className={`${resizeImg.length === 2 ? "disable" : ""}`}>
       <input
         id="image_file_upload"
         type="file"
@@ -71,6 +71,7 @@ const ImageUpload: React.FC = () => {
         ref={imgRef}
         multiple
         onChange={(e) => handleAddImages(e as FileInputChangeEvent)}
+        disabled={resizeImg.length === 2}
       />
       <label
         htmlFor="image_file_upload"
