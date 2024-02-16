@@ -232,10 +232,12 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
       className={`toast_section fixed ${
         toastModal && loading ? "active" : ""
       } ${popupType}`}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
     >
-      <div className="toast_header flex flex_dir_c flex_jc_c flex_ai_c">
+      <div
+        className="toast_header flex flex_dir_c flex_jc_c flex_ai_c"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+      >
         <div className="drag_icon"></div>
         {popupType === "write" ? (
           <div className="review_store_search_header width_100p">
