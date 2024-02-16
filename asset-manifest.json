@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Zreview/static/css/main.02e23f8a.css",
-    "main.js": "/Zreview/static/js/main.49c03665.js",
+    "main.js": "/Zreview/static/js/main.bac861e5.js",
     "static/js/27.c0ea535b.chunk.js": "/Zreview/static/js/27.c0ea535b.chunk.js",
     "static/media/Pretendard-Thin.ttf": "/Zreview/static/media/Pretendard-Thin.23965237737042c7c087.ttf",
     "static/media/Pretendard-ExtraLight.ttf": "/Zreview/static/media/Pretendard-ExtraLight.3a1f8545bfb6498f1f14.ttf",
@@ -14,7 +14,6 @@
     "static/media/Logo.png": "/Zreview/static/media/Logo.142199ddccbb54d3a0c3.png",
     "static/media/Logo.svg": "/Zreview/static/media/Logo.4d7224482601674125a127f813cddce8.svg",
     "static/media/map_marker.svg": "/Zreview/static/media/map_marker.5923965d175ef9fa4e9e1feb19296326.svg",
-    "static/media/cluster_map_marker.svg": "/Zreview/static/media/cluster_map_marker.f890f604ae02a734b8539b17bad2877e.svg",
     "static/media/marker_c.svg": "/Zreview/static/media/marker_c.1e4851af8dec9921c1846655cefb6f7c.svg",
     "static/media/big_logo.svg": "/Zreview/static/media/big_logo.d18f7df2ed8e1c7d3a8db66d70907f06.svg",
     "static/media/marker_g.svg": "/Zreview/static/media/marker_g.4fcf37987e3eeda495204f8754becb12.svg",
@@ -39,6 +38,6 @@
   },
   "entrypoints": [
     "static/css/main.02e23f8a.css",
-    "static/js/main.49c03665.js"
+    "static/js/main.bac861e5.js"
   ]
 }
