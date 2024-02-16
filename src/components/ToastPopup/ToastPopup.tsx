@@ -156,7 +156,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   // REVIEW STORE SEARCH
   const handleSearchLocation = () => {
     if (reviewKeyword.length === 0) {
-      alert("검색어가 없어요.");
+      // alert("검색어가 없어요.");
     } else {
       navigator.geolocation.getCurrentPosition(
         (position: any) => {

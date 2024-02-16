@@ -68,7 +68,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   // LOCATION SEARCH
   const handleSearchLocation = () => {
     if (locationText.length === 0) {
-      alert("검색어가 없어요.");
+      // alert("검색어가 없어요.");
     } else {
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
