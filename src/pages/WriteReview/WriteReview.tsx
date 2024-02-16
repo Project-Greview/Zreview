@@ -82,7 +82,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     resetLocationInfo();
     resetLocationData();
   }, []);
-
+  console.log(uploadImage.length);
   return (
     <>
       {alarmModal === 1 ? (
@@ -207,34 +207,45 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
             </div>
             <div className="write_state_hashtag">
               <ul className="flex flex_wrap_wrap">
-                {hashtag.map((text: string, index: number) => (
+                {hashtag.length === 0 ? (
                   <li
-                    key={text}
-                    onClick={() => handleRemoveWriteHashtag(index)}
-                  >
-                    <HashTag tag={text} />
-                  </li>
-                ))}
+                    className="empty_tag"
+                    style={{ minHeight: "2.4rem" }}
+                  ></li>
+                ) : (
+                  hashtag.map((text: string, index: number) => (
+                    <li
+                      key={text}
+                      onClick={() => handleRemoveWriteHashtag(index)}
+                    >
+                      <HashTag tag={text} />
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
 
             <div className="image_section flex flex_jc_s flex_ai_c">
               <ImageUpload />
-              <div className="thumb_img relative flex flex_jc_c flex_ai_c">
-                {uploadImage.map((image: any, id: any) => (
-                  <span key={id}>
+              {uploadImage.map((image: any, id: any) => (
+                <div
+                  className="thumb_img relative flex flex_jc_c flex_ai_c"
+                  key={id}
+                >
+                  <span>
                     <div className="img_box relative flex flex_ai_c">
-                      <img src={image} alt={`${image}-${id}`} width={70} />
+                      <img src={image} alt={`${image}-${id}`} width={75} />
                     </div>
                     <div
                       className="del_btn absolute flex flex_jc_c flex_ai_c"
                       // onClick={() => handleDeleteImage(id)}
                     >
-                      +
+                      <div className="absolute"></div>
+                      <div className="absolute"></div>
                     </div>
                   </span>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
 

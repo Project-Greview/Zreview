@@ -139,9 +139,9 @@
 }
 .write_form .hashtag_section .write_state_hashtag {
   flex-basis: 100%;
-  margin-top: 1.5rem;
 }
 .write_form .hashtag_section .write_state_hashtag ul li {
+  margin-top: 1.5rem;
   margin-right: 1rem;
 }
 .write_form .write_btn {
@@ -150,6 +150,9 @@
 }
 .write_form .write_btn .buttons {
   height: 5rem;
+}
+.write_form .image_section {
+  margin-top: 1.5rem;
 }
 .write_form .image_section > * {
   margin-right: 1rem;
@@ -163,15 +166,24 @@
 .write_form .image_section .thumb_img .del_btn {
   width: 1.8rem;
   height: 1.8rem;
-  top: 5px;
-  right: 5px;
+  top: 3px;
+  right: 3px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 50px;
-  border: 1px solid var(--white-color);
-  font-size: 1.8rem;
-  font-weight: 300;
+  border: 2px solid var(--white-color);
+  font-weight: 500;
   color: var(--white-color);
+}
+.write_form .image_section .thumb_img .del_btn > div {
+  width: 70%;
+  height: 2px;
+  top: calc(50% - 1px);
+  background: var(--white-color);
+  border-radius: 15px;
   transform: rotate(45deg);
+}
+.write_form .image_section .thumb_img .del_btn > div:last-child {
+  transform: rotate(-45deg);
 }
 #image_file_upload {
   display: none;
