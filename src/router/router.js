@@ -17,7 +17,8 @@ import ProfileModify from "pages/ProfileModify";
 import PlaceReview from "pages/PlaceReview";
 import DetailReview from "pages/DetailReview";
 
-const Routers = createBrowserRouter([
+console.log(window.location);
+const routes = [
   {
     path: "/",
     element: <App />,
@@ -121,6 +122,11 @@ const Routers = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+const Routers = createBrowserRouter(routes, {
+  basename:
+    window.location.hostname === "localhost" ? "/" : process.env.PUBLIC_URL,
+});
 
 export default Routers;
