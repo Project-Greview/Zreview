@@ -23,7 +23,8 @@
 }
 .login_box.active .event_txt {
   bottom: -15%;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  color: var(--false-text);
 }
 .registraion_info {
   margin-top: 2.5rem;

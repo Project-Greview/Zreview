@@ -8,6 +8,7 @@
 @import "./mylocation.css";
 @import "./write.css";
 @import "./leftmenu.css";
+@import "./Keyframe.css";
 
 :root {
   /* COLOR */
@@ -23,13 +24,16 @@
   --bright-gray: #d9d9d9;
   --dark-gray-color: #3a3a3a;
   --dark-gray-text: #3a3a3a;
+  --false-text: #f04141;
   /* SIZE */
   --header-height: 4.9rem;
   --bottom-navigation: 6rem;
 }
+
 * {
   font-family: "pretendard";
   font-weight: 600;
+  -webkit-tap-highlight-color: transparent !important;
 }
 .con {
   max-width: 50rem;

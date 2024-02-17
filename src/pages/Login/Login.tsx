@@ -1,9 +1,10 @@
 // MODULE
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // RECOIL STATE
 import { isLoginState } from "state/userState";
+import { shakeAnimationState } from "state/commonState";
 // HOOK
 import { loginGET } from "api/dummyAPI";
 // IMAGE
@@ -16,6 +17,7 @@ type LoginProps = {};
 const Login: React.FC<LoginProps> = () => {
   const navigate = useNavigate();
   const [loginState, setLoginState] = useRecoilState(isLoginState);
+  const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [error, setError] = useState(false);
   const [loginId, setLoginId] = useState<string>("");
   const [loginPw, setLoginPw] = useState<string>("");
@@ -45,8 +47,15 @@ const Login: React.FC<LoginProps> = () => {
       navigate("/main");
     } catch (error) {
       setError(true);
+      setShake(true);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShake(false);
+    }, 1000);
+  }, [shake]);
 
   return (
     <div
@@ -84,7 +93,7 @@ const Login: React.FC<LoginProps> = () => {
           />
         </div>
 
-        <div className="event_txt absolute">
+        <div className={`event_txt absolute ${shake ? "shake_rotate" : ""}`}>
           {error ? "아이디 혹은 비밀번호를 확인해주세요." : ""}
         </div>
       </div>

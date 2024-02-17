@@ -1,5 +1,5 @@
 // MODULE
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 // RECOIL STATE
 import {
@@ -23,6 +23,8 @@ type SearchInputProps = {
 };
 
 const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [type, setType] = useRecoilState<boolean>(searchTypeState);
   const [searchKeyword, setSearchKeyword] =
     useRecoilState<string>(searchKeywordState);
@@ -61,6 +63,17 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
     setHashTagText(e.target.value);
   };
 
+  // SEARCH KEYBOARD
+  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      if (type) {
+        handleSearchHashTag();
+      } else {
+        handleSearchLocation();
+        resetResult();
+      }
+    }
+  };
   // HASHTAG SEARCH
   const handleSearchHashTag = () => {
     console.log("태그검색작동!");
@@ -112,6 +125,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
       handleSearchLocation();
     }
   }, [pages]);
+
   return (
     <div className="search_keyword_box relative">
       {searchType === "double" ? (
@@ -133,6 +147,8 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
         name={type ? "set_hashtag" : "set_keyword"}
         id={type ? "set_hashtag" : "set_keyword"}
         onChange={type ? onChangeHashTagText : onChangeLocationText}
+        ref={inputRef}
+        onKeyDown={handleInputKeyDown}
       />
       <label htmlFor={type ? "set_hashtag" : "set_keyword"}></label>
       <button
