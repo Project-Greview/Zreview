@@ -330,7 +330,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
             </div>
           </div>
 
-          <div className="write_btn btn_box absolute">
+          <div className="write_btn btn_box fixed">
             <Button
               title={"등록하기"}
               width={"100%"}

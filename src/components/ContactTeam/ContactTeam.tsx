@@ -26,6 +26,14 @@ const ContactTeam: React.FC<ContactTeamProps> = ({ close }) => {
           <li>💻Frontend : 👨‍💻김기태, 👩‍💻이수아</li>
         </ul>
         <div className="contact">연락방법은 저희도 모르겠어요... </div>
+        <div className="mar_top_20">Issue Register</div>
+        <a
+          href="https://github.com/Project-Greview/Zreview/issues"
+          target={"_blank"}
+          rel="noreferrer"
+        >
+          Move ZReview Issue Page
+        </a>
       </div>
     </>
   );
