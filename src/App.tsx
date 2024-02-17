@@ -121,7 +121,6 @@ const App: React.FC = () => {
     <>
       {isMobile ? (
         <Suspense fallback={<Splash />}>
-          <meta name="apple-mobile-web-app-capable" content="yes" />
           {productModal ? <DummyModal close={() => handleCloseModal()} /> : ""}
           {activeNum === 1 ? (
             <Header type={1} title="" />

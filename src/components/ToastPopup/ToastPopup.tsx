@@ -60,8 +60,9 @@ const WriteToastContent: React.FC<WriteToastProps> = () => {
     });
     setSelectIndex(number);
   };
+  const BodyHeight: number = window.innerHeight * 0.8;
   return (
-    <div className="write toast_body">
+    <div className="write toast_body" style={{ maxHeight: `${BodyHeight}px` }}>
       <ul>
         {storeSearchResult.map((result: any, number: number) => (
           <li
@@ -114,7 +115,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     reviewStoreSearchResultState
   );
   const cleanWriteResult = useResetRecoilState(reviewSearchResultState);
-
+  const BodyHeight: number = window.innerHeight * 0.7;
   navigator.geolocation.getCurrentPosition((position: any) => {
     setLat(position.coords.latitude);
     setLng(position.coords.longitude);
@@ -294,8 +295,13 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
         <div
           className="toast_body"
           style={{
+            maxHeight: `${BodyHeight}px`,
             height:
-              popupType !== "write" ? (moveSize < -10 ? "70vh" : "20vh") : "",
+              popupType !== "write"
+                ? moveSize < -10
+                  ? `${BodyHeight}px`
+                  : "20vh"
+                : "",
           }}
         >
           {searchType ? (
