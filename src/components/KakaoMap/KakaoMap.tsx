@@ -33,6 +33,7 @@ const KakaoMap: React.FC = () => {
 
   const dummyData = useRecoilValue(dummyDateState);
   const keyword = useRecoilValue(searchKeywordState);
+  const viewHeight: number = window.innerHeight;
 
   const getKakao = () => {
     if (navigator.geolocation) {
@@ -201,7 +202,7 @@ const KakaoMap: React.FC = () => {
         ref={kakaoMaps}
         style={{
           width: "100%",
-          height: `calc(100vh - 11rem)`,
+          height: `calc(${viewHeight}px - 11rem)`,
           marginTop: 50,
         }}
       ></div>
