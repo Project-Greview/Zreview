@@ -17,3 +17,9 @@ export const shakeAnimationState = atom<boolean>({
   key: "shakeState",
   default: false,
 });
+
+// MOBILE KEYPAD HIDE OPTION
+export const mobileKeypadState = atom<boolean>({
+  key: "keypadState",
+  default: false,
+});

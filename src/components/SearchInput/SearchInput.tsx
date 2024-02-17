@@ -10,8 +10,8 @@ import {
   inViewState,
 } from "state/searchState";
 import { toastPopupState, paginationState } from "state/commonState";
-
 // HOOK
+import { handleInputKeyDown } from "utils/mobileWebEnter";
 // SVG
 import { ReactComponent as HashTagIcon } from "../../assets/image/icon/marker_c.svg";
 import { ReactComponent as KeywordIcon } from "../../assets/image/icon/marker_g.svg";
@@ -81,7 +81,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   // LOCATION SEARCH
   const handleSearchLocation = () => {
     if (locationText.length === 0) {
-      // alert("검색어가 없어요.");
+      alert("검색어가 없어요.");
     } else {
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
@@ -148,6 +148,15 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
         id={type ? "set_hashtag" : "set_keyword"}
         onChange={type ? onChangeHashTagText : onChangeLocationText}
         ref={inputRef}
+        // onKeyDown={(e) =>
+        //   handleInputKeyDown(
+        //     e,
+        //     handleSearchLocation,
+        //     handleSearchHashTag,
+        //     resetResult,
+        //     type
+        //   )
+        // }
         onKeyDown={handleInputKeyDown}
       />
       <label htmlFor={type ? "set_hashtag" : "set_keyword"}></label>
