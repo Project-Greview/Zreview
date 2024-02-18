@@ -11,7 +11,6 @@ import { toastPopupState } from "state/commonState";
 import { mapMarkerState } from "state/mapMarkerState";
 // COMPONENT
 import HashTagSlide from "../HashTagSlide";
-import ToastPopup from "components/ToastPopup";
 // SVG
 import ClusterMapMarkerIcon from "../../assets/image/icon/cluster_map_marker.svg";
 import MapMarkerIcon from "../../assets/image/icon/map_marker.svg";
@@ -202,7 +201,6 @@ const KakaoMap: React.FC = () => {
   }, []);
   return (
     <>
-      <ToastPopup ready={toastModal} popupType={"marker"} />
       <HashTagSlide />
       <div
         id="map"

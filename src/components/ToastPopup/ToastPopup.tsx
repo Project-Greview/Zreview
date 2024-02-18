@@ -7,8 +7,6 @@ import {
   ChangeEvent,
 } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
 import throttle from "lodash/throttle";
 // HOOK
 // RECOIL STATE
@@ -18,17 +16,16 @@ import {
   locationSearchResultState,
   searchKeywordState,
   searchResultState,
-  inViewState,
 } from "state/searchState";
 import {
   reviewStoreSearchResultState,
   reviewSearchResultState,
-  reviewLocationInfoState,
 } from "state/writeState";
 import { mapMarkerState } from "state/mapMarkerState";
 // COMPONENT
 import Input from "components/Common/Input";
-import ResultItem from "./ResultItem";
+import WriteBody from "./WriteBody";
+import LocationSearchResult from "./LocationSearchResult";
 // SVG
 import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow-left.svg";
 import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
@@ -38,58 +35,10 @@ type ToastPopupProps = {
   ready: boolean;
   popupType: string;
 };
-type WriteToastProps = {};
-const WriteToastContent: React.FC<WriteToastProps> = () => {
-  const [ref, inView] = useInView();
-
-  const [selectIndex, setSelectIndex] = useState<number>(-1);
-  const [locationData, setLocationData] = useRecoilState(
-    reviewLocationInfoState
-  );
-
-  const storeSearchResult = useRecoilValue<any>(reviewSearchResultState);
-
-  const handleSelectPlace = (info: any, number: number) => {
-    setLocationData({
-      placeName: info.place_name,
-      placeLatitude: info.y,
-      placeLongitude: info.x,
-      placeAddress:
-        info.road_address_name === undefined
-          ? info.address_name
-          : info.road_address_name,
-    });
-    setSelectIndex(number);
-  };
-  const BodyHeight: number = window.innerHeight * 0.8;
-  return (
-    <div className="write toast_body" style={{ maxHeight: `${BodyHeight}px` }}>
-      <ul>
-        {storeSearchResult.map((result: any, number: number) => (
-          <li
-            key={result.id}
-            className={`place_item ${selectIndex === number ? "active" : ""}`}
-            onClick={() => handleSelectPlace(result, number)}
-          >
-            <div className="place_name">{result.place_name}</div>
-            <div className="place_address">
-              {result.road_address_name === undefined
-                ? result.address_name
-                : result.road_address_name}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
 
 const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
-  const [ref, inView] = useInView();
-  const navigate = useNavigate();
   const [page, setPage] = useRecoilState<number>(paginationState);
   const [toastModal, setToastModal] = useRecoilState(toastPopupState);
-  const [scrollView, setScrollView] = useRecoilState(inViewState);
   const [loading, setLoading] = useState<boolean>(false);
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
@@ -105,9 +54,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
 
   const keyword = useRecoilValue(searchKeywordState);
   const locationResult = useRecoilValue(locationSearchResultState);
-  const maxPage = useRecoilValue(locationSearchResultState).maxPage;
   const searchType = useRecoilValue(searchTypeState);
-  const resultData = useRecoilValue(searchResultState);
 
   const cleanResultInfo = useResetRecoilState(locationSearchResultState);
   const cleanPages = useResetRecoilState(paginationState);
@@ -158,7 +105,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   // REVIEW STORE SEARCH
   const handleSearchLocation = () => {
     if (reviewKeyword.length === 0) {
-      // alert("검색어가 없어요.");
+      alert("검색어가 없어요.");
     } else {
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
@@ -207,25 +154,16 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     }
   };
 
-  useEffect(() => {
-    if (page > 1) {
-      handleSearchLocation();
-    }
-  }, [page]);
+  // useEffect(() => {
+  //   if (page > 1) {
+  //     handleSearchLocation();
+  //   }
+  // }, [page]);
 
   useLayoutEffect(() => {
     setLoading(true);
   }, []);
-  useEffect(() => {
-    if (inView) {
-      setPage(maxPage <= page ? page : page + 1);
-      console.log("page", page);
-      console.log("maxPage", maxPage);
-      setScrollView(inView);
-    } else {
-      setScrollView(inView);
-    }
-  }, [inView]);
+
   useEffect(() => {
     moveSize > 10 ? dragCloseModal() : setToastModal(true);
   }, [moveSize]);
@@ -291,69 +229,15 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
         )}
       </div>
       {popupType === "write" ? (
-        <WriteToastContent />
+        <WriteBody />
       ) : (
-        <div
-          className="toast_body"
-          style={{
-            maxHeight: `${BodyHeight}px`,
-            height:
-              popupType !== "write"
-                ? moveSize < -10
-                  ? `${BodyHeight}px`
-                  : "20vh"
-                : "",
-          }}
-        >
-          {searchType ? (
-            "ㅁㅁㅁ"
-          ) : (
-            <ul>
-              {resultData.map((item: any, index: number) => {
-                function getDistance(
-                  lat: number,
-                  lng: number,
-                  lat2: number,
-                  lng2: number
-                ) {
-                  const R = 6371000;
-
-                  const dLat = ((lat2 - lat) * Math.PI) / 180;
-                  const dLon = ((lng2 - lng) * Math.PI) / 180;
-
-                  const a =
-                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos((lat * Math.PI) / 180) *
-                      Math.cos((lat2 * Math.PI) / 180) *
-                      Math.sin(dLon / 2) *
-                      Math.sin(dLon / 2);
-
-                  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-                  return Math.floor(R * c);
-                }
-
-                const lat2 = item.y;
-                const lng2 = item.x;
-
-                const distance = getDistance(lat, lng, lat2, lng2);
-                return (
-                  <li
-                    key={item.id}
-                    ref={index > resultData.length - 2 ? ref : null}
-                    onClick={() =>
-                      navigate(`/place_review`, {
-                        state: { placeData: item },
-                      })
-                    }
-                  >
-                    <ResultItem data={item} range={distance} />
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
+        <LocationSearchResult
+          popupType={popupType}
+          BodyHeight={BodyHeight}
+          moveSize={moveSize}
+          lat={lat}
+          lng={lng}
+        />
       )}
     </div>
   );
