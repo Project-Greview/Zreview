@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getCookie } from "./cookies";
 import dummyHashtag from "../json/dummyHashTag.json";
+import dummyPlace from "../json/dummyPlace.json";
 import dummyTitle from "../json/dummyTitle.json";
 import dummyContents from "../json/dummyContent.json";
 import dummyNickname from "../json/dummyNickname.json";
@@ -10,10 +11,16 @@ let nextId = 1;
 let UserLat = getCookie("UserLat");
 let UserLon = getCookie("UserLon");
 
+const getRandomPlace = () => {
+  const place = dummyPlace.place_name;
+  const randomIndex = Math.floor(Math.random() * place.length);
+  return place[randomIndex].name;
+};
+
 const getRandomTitle = () => {
-  const titles = dummyTitle.title;
-  const randomIndex = Math.floor(Math.random() * titles.length);
-  return titles[randomIndex].name;
+  const title = dummyTitle.title;
+  const randomIndex = Math.floor(Math.random() * title.length);
+  return title[randomIndex].name;
 };
 const getRandomContent = () => {
   const contents = dummyContents.content;
@@ -45,6 +52,7 @@ const getRandomNickname = () => {
 export function generateRandomData() {
   return {
     id: nextId++,
+    place: getRandomPlace(),
     title: getRandomTitle(),
     member: getRandomNickname(),
     content: getRandomContent(),

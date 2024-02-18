@@ -1,3 +1,7 @@
+.modal_frame {
+  min-height: 45vh;
+  height: auto;
+}
 .modal_frame .modal_header .title {
   flex-grow: 1;
   margin-right: -2rem;
@@ -31,8 +35,9 @@
   width: 100%;
 }
 .modal_frame .modal_body .btn_box {
-  width: calc(100% - 4rem);
-  bottom: 2rem;
+  width: 100%;
+  bottom: 0rem;
+  margin-top: 2rem;
 }
 .modal_frame .modal_body .buttons {
   height: 5rem;

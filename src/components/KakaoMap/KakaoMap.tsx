@@ -7,8 +7,11 @@ import {
   locationSearchResultState,
   searchKeywordState,
 } from "state/searchState";
+import { toastPopupState } from "state/commonState";
+import { mapMarkerState } from "state/mapMarkerState";
 // COMPONENT
 import HashTagSlide from "../HashTagSlide";
+import ToastPopup from "components/ToastPopup";
 // SVG
 import ClusterMapMarkerIcon from "../../assets/image/icon/cluster_map_marker.svg";
 import MapMarkerIcon from "../../assets/image/icon/map_marker.svg";
@@ -28,13 +31,14 @@ const KakaoMap: React.FC = () => {
     locationSearchResultState
   );
   const [map, setMap] = useState(null);
+  const [mapMarkerData, setMapMarkerData] = useRecoilState(mapMarkerState);
+  const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
 
   const dummyData = useRecoilValue(dummyDateState);
   const keyword = useRecoilValue(searchKeywordState);
   const viewHeight: number = window.innerHeight;
-
   const getKakao = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -84,6 +88,8 @@ const KakaoMap: React.FC = () => {
               });
               if (clickedData) {
                 console.log(clickedData);
+                setMapMarkerData(clickedData);
+                setToastModal(true);
                 // navigate("/cluster-list", {
                 //   state: {
                 //     listItem: clickedData,
@@ -196,6 +202,7 @@ const KakaoMap: React.FC = () => {
   }, []);
   return (
     <>
+      <ToastPopup ready={toastModal} popupType={"marker"} />
       <HashTagSlide />
       <div
         id="map"

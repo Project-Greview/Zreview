@@ -25,6 +25,7 @@ import {
   reviewSearchResultState,
   reviewLocationInfoState,
 } from "state/writeState";
+import { mapMarkerState } from "state/mapMarkerState";
 // COMPONENT
 import Input from "components/Common/Input";
 import ResultItem from "./ResultItem";

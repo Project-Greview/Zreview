@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-interface DataType {
+interface MarkerDataType {
   id: number;
   place: string;
   title: string;
@@ -17,12 +17,8 @@ interface DataType {
   comments: number;
 }
 
-export const dummyDateState = atom<DataType[]>({
-  key: "dummyData",
-  default: [],
-});
-
-export const dummyModalState = atom<Boolean>({
-  key: "modalState",
-  default: false,
+// MAP MARKER STATE
+export const mapMarkerState = atom<MarkerDataType | null>({
+  key: "markerData",
+  default: null,
 });

@@ -17,7 +17,6 @@ import ProfileModify from "pages/ProfileModify";
 import PlaceReview from "pages/PlaceReview";
 import DetailReview from "pages/DetailReview";
 
-console.log(window.location);
 const routes = [
   {
     path: "/",

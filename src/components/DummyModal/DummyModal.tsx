@@ -74,7 +74,7 @@ const DummyModal: React.FC<DummyModalType> = ({ close }) => {
               styles={""}
             />
           </div>
-          <div className="btn_box absolute flex flex_jc_sb">
+          <div className="btn_box relative flex flex_jc_sb">
             <Button
               title={"생성하기"}
               width={"45%"}
