@@ -1,4 +1,5 @@
 .modal_frame {
+  min-height: 45vh;
   height: auto;
 }
 .modal_frame .modal_header .title {
