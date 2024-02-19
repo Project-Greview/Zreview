@@ -10,11 +10,14 @@ import {
 import { CookiesProvider } from "react-cookie";
 import reportWebVitals from "./reportWebVitals";
 
-import Routers from "./router/router";
+import { indexedDBStart } from "utils/indexedDB";
 
+import Routers from "./router/router";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+indexedDBStart();
+
 root.render(
   <CookiesProvider>
     <RecoilRoot>

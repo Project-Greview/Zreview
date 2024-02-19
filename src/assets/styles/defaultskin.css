@@ -157,6 +157,7 @@
 }
 .modal_frame .modal_body {
   text-align: center;
+  margin-top: 4rem;
   color: var(--disable-text);
 }
 .modal_frame .btn_box {

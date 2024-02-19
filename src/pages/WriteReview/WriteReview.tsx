@@ -2,6 +2,8 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+// HOOK
+import { addDataToIndexedDB } from "api/review";
 // RECOIL STATE
 import { toastPopupState } from "state/commonState";
 import { locationSearchResultState } from "state/searchState";
@@ -10,6 +12,7 @@ import {
   reviewSearchResultState,
   resizeUploadImageState,
   originUploadState,
+  starScoreState,
 } from "state/writeState";
 // COMPONENT
 import ToastPopup from "components/ToastPopup";
@@ -41,7 +44,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const [resizeImg, setResizeImg] = useRecoilState<any>(resizeUploadImageState);
   const [searchLocation, setSearchLocation] = useState<string>("");
   const [writeLocation, setWriteLocation] = useState<string>("");
-  const [contents, setContents] = useState("");
+  const [writeContents, setWriteContents] = useState<any>("");
   const [writeHashTag, setWriteHashTag] = useState<string>("");
   const [hashtag, setHashtag] = useState<any>([]);
   const [alarmModal, setAlarmModal] = useState<number>(0);
@@ -54,6 +57,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const resetLocationInfo = useResetRecoilState(reviewLocationInfoState);
   const resetLocationData = useResetRecoilState(reviewSearchResultState);
   const locationInfo = useRecoilValue(reviewLocationInfoState);
+  const score = useRecoilValue(starScoreState);
 
   const handleOpenToastPopup = () => {
     setToastModal(true);
@@ -79,7 +83,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       placeLongitude: lng,
     });
   };
-  console.log(writeLocationData);
 
   const onChangeWriteLocation = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -87,7 +90,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   };
   const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
-    setContents(e.target.value);
+    setWriteContents(e.target.value);
   };
   const onChangHashtag = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -111,8 +114,18 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     console.log("리뷰작성 API 발동!");
   };
   const handleReviewPOST = async () => {
+    const postData = {
+      place_name: writeLocationData.placeName,
+      location_lag: writeLocationData.placeLatitude,
+      location_lng: writeLocationData.placeLongitude,
+      place_address: writeLocationData.placeAddress,
+      contents: writeContents,
+      hashtag: hashtag,
+      score: score,
+      images: uploadImage,
+    };
     try {
-      const response = await setAPICode();
+      const response = await addDataToIndexedDB(postData);
       console.log(response);
       setAlarmModal(2);
     } catch (error) {
@@ -281,7 +294,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
           <div className="input_section">
             <textarea
               name="contents"
-              value={contents}
+              value={writeContents}
               onChange={onChangeContents}
               placeholder="리뷰를 작성해주세요 (100자 이내)"
             ></textarea>

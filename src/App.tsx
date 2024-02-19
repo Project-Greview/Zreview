@@ -117,6 +117,7 @@ const App: React.FC = () => {
   }, []);
 
   const activeNum = getLocationPathname(location.pathname);
+
   return (
     <>
       {isMobile ? (
