@@ -43,8 +43,6 @@ const LocationSearchResult: React.FC<LocationSearchResultType> = ({
   useEffect(() => {
     if (inView) {
       setPage(maxPage <= page ? page : page + 1);
-      console.log("page", page);
-      console.log("maxPage", maxPage);
       setScrollView(inView);
     } else {
       setScrollView(inView);

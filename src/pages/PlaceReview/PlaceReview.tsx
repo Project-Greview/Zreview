@@ -1,6 +1,6 @@
 // MODULE
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 // COMPONENT
 import HashTag from "components/HashTag";
@@ -13,6 +13,7 @@ import Header from "components/Header";
 
 const PlaceReview: React.FC = () => {
   const [ref, inView] = useInView();
+  const navigate = useNavigate();
   const { state } = useLocation();
 
   const [headerVisibility, setHeaderVisibility] = useState<boolean>(false);
@@ -24,7 +25,12 @@ const PlaceReview: React.FC = () => {
       setHeaderVisibility(false);
     }
   }, [inView]);
-  console.log(state);
+  const writePlaceData = {
+    place_name: state.placeData.place_name,
+    address: state.placeData.road_address_name,
+    location_lat: state.placeData.y,
+    location_lng: state.placeData.x,
+  };
   return (
     <div>
       <div className="place_info_header relative">
@@ -46,7 +52,12 @@ const PlaceReview: React.FC = () => {
           <button className="store_bookmark">
             <BookMarkIcon color={"#ffffff"} />
           </button>
-          <button className="store_review_write">리뷰쓰기</button>
+          <button
+            className="store_review_write"
+            onClick={() => navigate("/write", { state: writePlaceData })}
+          >
+            리뷰쓰기
+          </button>
         </div>
         <div className="hashtag_box">
           <p>ZReview Tag</p>

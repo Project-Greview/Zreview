@@ -1,6 +1,6 @@
 // MODULE
 import { useState, ChangeEvent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 // RECOIL STATE
 import { toastPopupState } from "state/commonState";
@@ -26,6 +26,7 @@ import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg
 type WriteReviewProps = {};
 
 const WriteReview: React.FC<WriteReviewProps> = () => {
+  const { state } = useLocation();
   const navigate = useNavigate();
 
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
@@ -143,6 +144,12 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     resetLocationInfo();
     resetLocationData();
   }, []);
+
+  useEffect(() => {
+    if (state !== null) {
+    }
+  }, []);
+  console.log("write", state);
   return (
     <>
       {alarmModal === 1 ? (
@@ -197,7 +204,12 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
                   name="location_type"
                   value={"search"}
                   checked={settingType}
-                  onChange={(e: any) => setLocationType(e.target.value)}
+                  onChange={
+                    state !== null
+                      ? undefined
+                      : (e: any) => setLocationType(e.target.value)
+                  }
+                  readOnly={state !== null}
                 />
                 <label htmlFor="location_search" className="flex">
                   장소 검색
@@ -210,7 +222,12 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
                   name="location_type"
                   value={"write"}
                   checked={!settingType}
-                  onChange={(e: any) => setLocationType(e.target.value)}
+                  onChange={
+                    state !== null
+                      ? undefined
+                      : (e: any) => setLocationType(e.target.value)
+                  }
+                  readOnly={state !== null}
                 />
                 <label htmlFor="write_location" className="flex">
                   직접 입력
@@ -224,10 +241,22 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
               className={`keyword_input ${settingType ? "enable" : ""}`}
               placeholder="장소명을 입력하세요"
               id="write_location_keyword"
-              readOnly={settingType}
-              value={settingType ? locationInfo.placeName : writeLocation}
+              readOnly={settingType || state !== null}
+              value={
+                state !== null
+                  ? state.place_name
+                  : settingType
+                  ? locationInfo.placeName
+                  : writeLocation
+              }
               onChange={!settingType ? onChangeWriteLocation : undefined}
-              onClick={settingType ? () => handleOpenToastPopup() : undefined}
+              onClick={
+                state === null
+                  ? settingType
+                    ? () => handleOpenToastPopup()
+                    : undefined
+                  : undefined
+              }
               onBlur={settingType ? undefined : onBlurWritePlace}
             />
             <label htmlFor="write_location_keyword" className="absolute">
