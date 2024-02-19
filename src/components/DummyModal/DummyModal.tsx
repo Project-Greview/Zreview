@@ -46,7 +46,7 @@ const DummyModal: React.FC<DummyModalType> = ({ close }) => {
   return (
     <>
       <div className="modal_bg fixed"></div>
-      <div className="modal_frame fixed">
+      <div className="modal_frame fixed" style={{ minHeight: "45vh" }}>
         <div className="modal_header flex flex_jc_sb flex_ai_c">
           <div className="title flex flex_jc_c">더미데이터 만들기</div>
           <div className="close_btn" onClick={close}>
