@@ -8,6 +8,7 @@ import { toastPopupState } from "state/commonState";
 import { locationSearchResultState } from "state/searchState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
+import { getAllDataFromIndexedDB } from "api/review";
 // COMPONENT
 import LeftMenu from "../../components/LeftMenu";
 import KakaoMap from "../../components/KakaoMap";
@@ -41,6 +42,7 @@ const Main: React.FC<MainProps> = () => {
 
   useLayoutEffect(() => {
     setIsReady(true);
+    getAllDataFromIndexedDB();
   }, []);
   useEffect(() => {
     cleanResult();

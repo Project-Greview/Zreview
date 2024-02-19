@@ -1,6 +1,8 @@
 // MODULE
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+// HOOK
+import { getAllDataFromIndexedDB } from "api/review";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
 import {
@@ -34,6 +36,7 @@ const KakaoMap: React.FC = () => {
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
+  const [data, setData] = useState<any>([]);
 
   const dummyData = useRecoilValue(dummyDateState);
   const keyword = useRecoilValue(searchKeywordState);
@@ -196,6 +199,19 @@ const KakaoMap: React.FC = () => {
       console.log("내위치 사용 불가");
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getAllDataFromIndexedDB();
+        console.log("result", result);
+        setData(result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   useLayoutEffect(() => {
     getKakao();
   }, []);
