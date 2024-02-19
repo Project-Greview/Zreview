@@ -46,9 +46,8 @@ export const getAllDataFromIndexedDB = () => {
     const review = reviewDB.getAll();
 
     review.onsuccess = (e) => {
-      // console.log(e);
-      console.log(e.srcElement.result);
-      return e.srcElement.result;
+      const data = e.srcElement.result;
+      return data;
     };
 
     review.onerror = (e) => {

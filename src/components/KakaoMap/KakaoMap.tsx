@@ -199,22 +199,37 @@ const KakaoMap: React.FC = () => {
       console.log("내위치 사용 불가");
     }
   };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await getAllDataFromIndexedDB();
+  //       setData(result);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getAllDataFromIndexedDB();
         console.log("result", result);
+
         setData(result);
+        getKakao(); // 데이터 로딩 후 지도 초기화
       } catch (error) {
         console.error(error);
+        // 에러 처리 로직 추가
       }
     };
+
     fetchData();
   }, []);
 
-  useLayoutEffect(() => {
-    getKakao();
-  }, []);
+  // useLayoutEffect(() => {
+  //   getKakao();
+  // }, []);
   return (
     <>
       <HashTagSlide />
