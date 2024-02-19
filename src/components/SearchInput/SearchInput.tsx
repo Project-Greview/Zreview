@@ -10,6 +10,7 @@ import {
   inViewState,
 } from "state/searchState";
 import { toastPopupState, paginationState } from "state/commonState";
+import { mapMarkerState } from "state/mapMarkerState";
 // HOOK
 import { handleInputKeyDown } from "utils/mobileWebEnter";
 // SVG
@@ -41,11 +42,13 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchType }) => {
   const cleanResultInfo = useResetRecoilState(locationSearchResultState);
   const cleanPages = useResetRecoilState(paginationState);
   const cleanResult = useResetRecoilState(searchResultState);
+  const clearMarkerData = useResetRecoilState(mapMarkerState);
 
   const resetResult = () => {
     cleanResultInfo();
     cleanPages();
     cleanResult();
+    clearMarkerData();
   };
   const handleChangeSearcType = () => {
     setType((type) => !type);

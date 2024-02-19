@@ -52,7 +52,7 @@ const getRandomNickname = () => {
 export function generateRandomData() {
   return {
     id: nextId++,
-    place: getRandomPlace(),
+    place_name: getRandomPlace(),
     title: getRandomTitle(),
     member: getRandomNickname(),
     content: getRandomContent(),
@@ -86,9 +86,13 @@ const generateRandomString = (length) => {
 
 const getRandomLatitude = () =>
   getRandomNumber(33.2491, 37.8779) + Math.random();
+// getRandomNumber(Number(UserLat) - 0.0001, Number(UserLat) + 0.0001) +
+// Math.random();
 
 const getRandomLongitude = () =>
   getRandomNumber(126.9994, 129.9993) + Math.random();
+// getRandomNumber(Number(UserLon) - 0.0001, Number(UserLon) + 0.0001) +
+// Math.random();
 
 // const getRandomLatitude = () => {
 //   if (UserLat) {

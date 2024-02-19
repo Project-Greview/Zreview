@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { useInView } from "react-intersection-observer";
+// HOOK
+import { getDistanceCalc } from "utils/distanceCalc";
 // RECOIL STATE
 import { paginationState } from "state/commonState";
 import {
@@ -66,33 +68,7 @@ const LocationSearchResult: React.FC<LocationSearchResultType> = ({
       ) : (
         <ul>
           {resultData.map((item: any, index: number) => {
-            function getDistance(
-              lat: number,
-              lng: number,
-              lat2: number,
-              lng2: number
-            ) {
-              const R = 6371000;
-
-              const dLat = ((lat2 - lat) * Math.PI) / 180;
-              const dLon = ((lng2 - lng) * Math.PI) / 180;
-
-              const a =
-                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos((lat * Math.PI) / 180) *
-                  Math.cos((lat2 * Math.PI) / 180) *
-                  Math.sin(dLon / 2) *
-                  Math.sin(dLon / 2);
-
-              const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-              return Math.floor(R * c);
-            }
-
-            const lat2 = item.y;
-            const lng2 = item.x;
-
-            const distance = getDistance(lat, lng, lat2, lng2);
+            const distance = getDistanceCalc(lat, lng, item.y, item.x);
             return (
               <li
                 key={item.id}

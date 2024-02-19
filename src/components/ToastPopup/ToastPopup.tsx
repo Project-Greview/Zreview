@@ -7,8 +7,10 @@ import {
   ChangeEvent,
 } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 import throttle from "lodash/throttle";
 // HOOK
+import { getDistanceCalc } from "utils/distanceCalc";
 // RECOIL STATE
 import { toastPopupState, paginationState } from "state/commonState";
 import {
@@ -26,10 +28,15 @@ import { mapMarkerState } from "state/mapMarkerState";
 import Input from "components/Common/Input";
 import WriteBody from "./WriteBody";
 import LocationSearchResult from "./LocationSearchResult";
+import MarkerBody from "./MarkerBody";
+import HashTag from "components/HashTag";
 // SVG
 import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow-left.svg";
 import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
 import { ReactComponent as CloseIcon } from "../../assets/image/icon/close_btn.svg";
+import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.svg";
+import { ReactComponent as DefaultMarkerIcon } from "../../assets/image/icon/default_marker.svg";
+import { ReactComponent as BookMarkIcon } from "../../assets/image/icon/Bookmark-icon.svg";
 // PROPS TYPE
 type ToastPopupProps = {
   ready: boolean;
@@ -37,6 +44,7 @@ type ToastPopupProps = {
 };
 
 const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
+  const navigate = useNavigate();
   const [page, setPage] = useRecoilState<number>(paginationState);
   const [toastModal, setToastModal] = useRecoilState(toastPopupState);
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,6 +53,8 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   const [startY, setStartY] = useState<number>(0);
   const [moveSize, setMoveSize] = useState<number>(0);
   const [reviewKeyword, setReviewKeyword] = useState<string>("");
+  const [markerDistance, setMarkerDistance] = useState<number>(0);
+
   const [reviewStoreList, setReviewStoreList] = useRecoilState<any>(
     reviewSearchResultState
   );
@@ -55,6 +65,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   const keyword = useRecoilValue(searchKeywordState);
   const locationResult = useRecoilValue(locationSearchResultState);
   const searchType = useRecoilValue(searchTypeState);
+  const markerData = useRecoilValue(mapMarkerState);
 
   const cleanResultInfo = useResetRecoilState(locationSearchResultState);
   const cleanPages = useResetRecoilState(paginationState);
@@ -63,6 +74,8 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     reviewStoreSearchResultState
   );
   const cleanWriteResult = useResetRecoilState(reviewSearchResultState);
+  const clearMarkerData = useResetRecoilState(mapMarkerState);
+
   const BodyHeight: number = window.innerHeight * 0.7;
   navigator.geolocation.getCurrentPosition((position: any) => {
     setLat(position.coords.latitude);
@@ -82,12 +95,14 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     cleanResultInfo();
     cleanResult();
     cleanPages();
+    clearMarkerData();
   };
   // WRITE SEARCH RESET
   const writeResetResult = () => {
     cleanWriteResult();
     cleanWriteResultInfo();
     cleanPages();
+    clearMarkerData();
   };
 
   const handleTouchMove = throttle((event: TouchEvent<HTMLDivElement>) => {
@@ -101,6 +116,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     setReviewKeyword("");
     resetResult();
     writeResetResult();
+    clearMarkerData();
   };
   // REVIEW STORE SEARCH
   const handleSearchLocation = () => {
@@ -136,9 +152,6 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
         maxPage: pagination.last,
       });
       console.log(pagination);
-      // setResultData((prevData: any) => [...prevData, ...data]);
-      // setSearchKeyword(locationText);
-      // setToastModal(true);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
       // return status;
       console.log(data);
@@ -167,6 +180,19 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   useEffect(() => {
     moveSize > 10 ? dragCloseModal() : setToastModal(true);
   }, [moveSize]);
+
+  useEffect(() => {
+    if (markerData !== null) {
+      setMarkerDistance(
+        getDistanceCalc(
+          markerData?.location_lat,
+          markerData?.location_lon,
+          lat,
+          lng
+        )
+      );
+    }
+  }, [markerData]);
   return (
     <div
       className={`toast_section fixed ${
@@ -220,6 +246,61 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
               )}
             </div>
           </div>
+        ) : markerData !== null ? (
+          <div className="marker_result_header flex flex_dir_c flex_jc_sb flex_ai_c flex_wrap_wrap width_100p">
+            <div className="flex flex_jc_sb flex_ai_c width_100p">
+              <div className="distance flex">
+                <div>
+                  {markerDistance > 1
+                    ? markerDistance + "km"
+                    : markerDistance + "m"}
+                </div>
+                <div className="review_count relative flex flex_ai_c">
+                  <p>리뷰</p>
+                  <p>{markerData.comments}</p>
+                </div>
+              </div>
+              <div className="score flex flex_ai_c">
+                <ScoreIcon width={14} height={14} color={"#6656ff"} />
+                <p>{markerData.rating}</p>
+              </div>
+            </div>
+            <div className="place_info flex flex_dir_c flex_jc_s flex_ai_s">
+              <p className="place_name">{markerData.place_name}</p>
+              <div className="place_address flex">
+                <DefaultMarkerIcon />
+                <div>
+                  여기엔 주소가 나올 예정인데 DB에서 저장된 값을 불러올지
+                  Geolocation으로 불러올지 고민중
+                </div>
+              </div>
+            </div>
+            <div className="best_hashtag_list flex flex_jc_s flex_ai_fs width_100p">
+              <ul className="flex">
+                {/* 현재는 Dummy Data 내에 있는 태그 3개만 보여주지만 추후 가장 많이 작성된 6개까지 미리보여질 예정 */}
+                {markerData.hashtag.map((txt) => (
+                  <li key={txt}>
+                    <HashTag tag={txt} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className=" btn_box flex flex_jc_sb flex_ai_c width_100p">
+              <button className="store_bookmark">
+                <BookMarkIcon color={"#ffffff"} />
+              </button>
+              <button
+                className="store_review_write"
+                onClick={() =>
+                  navigate("/place_review", {
+                    state: { placeData: markerData },
+                  })
+                }
+              >
+                리뷰 보러가기
+              </button>
+            </div>
+          </div>
         ) : searchType ? (
           "ㅁㅁㅁ"
         ) : (
@@ -230,6 +311,8 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
       </div>
       {popupType === "write" ? (
         <WriteBody />
+      ) : markerData !== null ? (
+        <MarkerBody data={markerData} />
       ) : (
         <LocationSearchResult
           popupType={popupType}

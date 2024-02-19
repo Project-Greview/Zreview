@@ -367,6 +367,7 @@
 .thumbnail_review .review_info .hashtag_list {
   margin-top: 1rem;
   overflow-x: scroll;
+  scrollbar-width: none;
 }
 /* MYPAGE */
 .my_page_section.view_section {
@@ -583,6 +584,7 @@
 .review_item_box .review_box .hashtag_list {
   margin-top: 1rem;
   overflow-x: scroll;
+  scrollbar-width: none;
 }
 .review_item_box .review_box .hashtag_list li {
   margin-right: 1rem;
@@ -699,6 +701,88 @@
 }
 .place_body .point_txt {
   font-weight: 700;
+}
+/* MAP MARKER INFO */
+.toast_section .marker_result_header {
+  margin-top: 1.5rem;
+}
+.toast_section .marker_result_header .distance * {
+  font-size: 1.4rem;
+}
+.toast_section .marker_result_header .distance > div:first-child {
+  color: var(--point-color);
+}
+.toast_section .marker_result_header .distance .review_count {
+  margin-left: 2rem;
+}
+.toast_section .marker_result_header .distance .review_count::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 1.1rem;
+  top: 15%;
+  left: -1rem;
+  background: var(--bright-gray);
+}
+.toast_section .marker_result_header .distance .review_count > p:first-child {
+  color: var(--disable-text);
+}
+.toast_section .marker_result_header .distance .review_count > p:last-child {
+  margin-left: 0.5rem;
+  color: var(--dark-gray-text);
+}
+.toast_section .marker_result_header .score p {
+  margin-left: 0.5rem;
+  font-size: 1.4rem;
+  font-size: 500;
+  color: var(--point-color);
+}
+.toast_section .marker_result_header .place_info {
+  margin-top: 2rem;
+}
+.toast_section .marker_result_header .place_info .place_name {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--dark-gray-text);
+}
+.toast_section .marker_result_header .place_info .place_address {
+  margin-top: 1rem;
+}
+.toast_section .marker_result_header .place_info .place_address svg {
+  flex-basis: 9px;
+  width: 9px;
+  margin-right: 5px;
+}
+.toast_section .marker_result_header .place_info .place_address > div {
+  flex-basis: calc(100% - 9px);
+  font-size: 1.4rem;
+  color: var(--disable-text);
+}
+.toast_section .marker_result_header .best_hashtag_list {
+  margin-top: 2rem;
+}
+.toast_section .marker_result_header .best_hashtag_list ul {
+  overflow-x: scroll;
+  scrollbar-width: none;
+}
+.toast_section .marker_result_header .best_hashtag_list ul li {
+  margin-right: 1rem;
+}
+.toast_section .marker_result_header .btn_box {
+  margin-top: 2rem;
+}
+.toast_section .marker_result_header .btn_box button {
+  height: 4.4rem;
+  border-radius: 5px;
+}
+.toast_section .marker_result_header .btn_box .store_bookmark {
+  flex-basis: 18%;
+  background: #d0cfcf;
+}
+.toast_section .marker_result_header .btn_box .store_review_write {
+  flex-basis: 80%;
+  background: var(--point-color);
+  color: var(--white-color);
 }
 /* SETTING */
 .setting_section {

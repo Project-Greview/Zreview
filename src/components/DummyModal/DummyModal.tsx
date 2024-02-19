@@ -26,7 +26,7 @@ const DummyModal: React.FC<DummyModalType> = ({ close }) => {
 
   const saveRandomDataToState = () => {
     // RANDUM DUMMY DATA COUNT SET
-    if (dataCount === 0 || dataCount > 200) {
+    if (dataCount === "" || dataCount > 200 || dataCount === 0) {
       alert("데이터 갯수를 정확하게 입력해주새요.");
     } else {
       setDummyDataArray((prevDataArray) => {

@@ -24,6 +24,7 @@ const PlaceReview: React.FC = () => {
       setHeaderVisibility(false);
     }
   }, [inView]);
+  console.log(state);
   return (
     <div>
       <div className="place_info_header relative">

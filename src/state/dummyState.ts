@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 interface DataType {
   id: number;
-  place: string;
+  place_name: string;
   title: string;
   member: string;
   content: string;
