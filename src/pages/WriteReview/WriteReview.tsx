@@ -147,9 +147,14 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
 
   useEffect(() => {
     if (state !== null) {
+      setWriteLocationData({
+        placeName: state.place_name,
+        placeLatitude: state.location_lat,
+        placeLongitude: state.location_lng,
+        placeAddress: state.address,
+      });
     }
   }, []);
-  console.log("write", state);
   return (
     <>
       {alarmModal === 1 ? (
@@ -242,13 +247,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
               placeholder="장소명을 입력하세요"
               id="write_location_keyword"
               readOnly={settingType || state !== null}
-              value={
-                state !== null
-                  ? state.place_name
-                  : settingType
-                  ? locationInfo.placeName
-                  : writeLocation
-              }
+              value={settingType ? locationInfo.placeName : writeLocation}
               onChange={!settingType ? onChangeWriteLocation : undefined}
               onClick={
                 state === null
