@@ -15,8 +15,8 @@ export const addDataToIndexedDB = (postData) => {
 
     const users = reviewDB.put({
       place_name: postData.place_name,
-      location_lat: postData.location_lag,
-      location_lon: postData.location_lng,
+      location_lat: postData.location_lat,
+      location_lon: postData.location_lon,
       place_address: postData.place_address,
       contents: postData.contents,
       hashtag: postData.hashtag,

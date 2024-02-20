@@ -8,6 +8,7 @@ import { locationSearchResultState } from "state/searchState";
 import { dummyDateState } from "state/dummyState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
+import { getAllDataFromIndexedDB } from "api/review";
 // COMPONENT
 import LeftMenu from "../../components/LeftMenu";
 import KakaoMap from "../../components/KakaoMap";
@@ -47,6 +48,18 @@ const Main: React.FC<MainProps> = () => {
   useEffect(() => {
     cleanResult();
   }, [isReady]);
+  useEffect(() => {
+    getAllDataFromIndexedDB()
+      .then((data) => {
+        setData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        console.log("aaaa", data);
+      });
+  }, []);
   return (
     <>
       <LeftMenu />

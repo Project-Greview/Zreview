@@ -51,7 +51,6 @@ const KakaoMap: React.FC = () => {
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
-  const [data, setData] = useState(null);
 
   const dummyData = useRecoilValue(dummyDateState);
   const keyword = useRecoilValue(searchKeywordState);
@@ -215,23 +214,23 @@ const KakaoMap: React.FC = () => {
     }
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     getAllDataFromIndexedDB()
       .then((data) => {
         setData(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
-        getKakao();
+        console.log("aaaa", data);
       });
-  }, []);
+  }, []); */
 
-  // useLayoutEffect(() => {
-  //   getKakao();
-  // }, []);
+  useLayoutEffect(() => {
+    getKakao();
+    console.log(dummyData);
+  }, []);
   return (
     <>
       <HashTagSlide />
