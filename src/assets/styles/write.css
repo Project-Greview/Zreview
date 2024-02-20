@@ -165,6 +165,7 @@
   height: 7.5rem;
   border-radius: 5px;
   border: 1px solid var(--depp-border-color);
+  overflow: hidden;
 }
 .write_form .image_section .thumb_img .del_btn {
   width: 1.8rem;

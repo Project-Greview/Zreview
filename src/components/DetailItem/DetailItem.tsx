@@ -34,6 +34,7 @@ interface ReviewDataType {
   created_at: string;
   updated_at: string;
   hashtag: string[];
+  images: string[];
   views: number;
   rating: number;
   likes: number;

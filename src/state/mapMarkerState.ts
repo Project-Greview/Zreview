@@ -10,10 +10,13 @@ interface MarkerDataType {
   created_at: string;
   updated_at: string;
   hashtag: string[];
+  images: string[];
   views: number;
   rating: number;
   likes: number;
   comments: number;
+  writer: string;
+  profile: string;
 }
 
 // MAP MARKER STATE

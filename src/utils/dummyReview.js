@@ -70,6 +70,7 @@ export function generateRandomData() {
     comments: getRandomNumber(0, 20),
     likes: getRandomNumber(0, 50),
     profile: "",
+    images: ["", ""],
   };
 }
 

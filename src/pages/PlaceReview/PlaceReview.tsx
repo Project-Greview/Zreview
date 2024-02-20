@@ -31,7 +31,7 @@ const PlaceReview: React.FC = () => {
     location_lat: state.placeData.y,
     location_lng: state.placeData.x,
   };
-
+  console.log(writePlaceData);
   useEffect(() => {
     if (inView) {
       setHeaderVisibility(true);
@@ -51,10 +51,10 @@ const PlaceReview: React.FC = () => {
           <img src={"http://via.placeholder.com/500x500"} alt={""} />
         </div>
         <div className="txt_info">
-          <div className="store_name">{state.placeData.place_name}</div>
+          <div className="store_name">{writePlaceData.place_name}</div>
           <div className="store_address flex flex_ai_c">
             <DefaultMarkerIcon />
-            {state.placeData.place_address}
+            {writePlaceData.address}
           </div>
         </div>
         <div className=" btn_box flex flex_jc_sb flex_ai_c">
