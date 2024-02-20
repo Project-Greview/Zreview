@@ -64,7 +64,7 @@ const Header: React.FC<HeaderProps> = ({ type, title }) => {
         </div>
       ) : (
         <div
-          className="normal_header flex flex_jc_sb flex_ai_c"
+          className="normal_header flex flex_jc_sb flex_ai_c relative"
           style={{ boxShadow: "0 0.5rem 1rem #eeeeee" }}
         >
           <div className="back_btn flex flex_ai_c" onClick={() => navigate(-1)}>

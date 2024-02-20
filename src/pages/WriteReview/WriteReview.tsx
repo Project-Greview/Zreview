@@ -28,11 +28,10 @@ import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg
 import { getCookie } from "utils/cookies";
 // PROPS TYPE
 type WriteReviewProps = {};
-interface DataType {
+interface ReviewDataType {
   place_name: string;
   place_address: string;
   title: string;
-  member: string;
   content: string;
   location_lat: number;
   location_lon: number;
@@ -44,6 +43,8 @@ interface DataType {
   rating: number;
   likes: number;
   comments: number;
+  writer: string;
+  profile: string;
 }
 const WriteReview: React.FC<WriteReviewProps> = () => {
   const { state } = useLocation();
@@ -130,8 +131,9 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const setAPICode = () => {
     console.log("리뷰작성 API 발동!");
   };
+  console.log(writeLocationData);
   const handleReviewPOST = async () => {
-    const postData: DataType = {
+    const postData: ReviewDataType = {
       title: writeLocationData.placeName,
       place_name: writeLocationData.placeName,
       location_lat: Number(writeLocationData.placeLatitude),
@@ -143,10 +145,11 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       images: uploadImage,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      member: getCookie("dummyNickname"),
       views: 0,
       likes: 0,
       comments: 0,
+      writer: getCookie("dummyNickname"),
+      profile: "",
     };
     try {
       const response = await addDataToIndexedDB(postData);
@@ -225,9 +228,9 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
             " 빠른 시일내에 작업하도록 하겠습니다!"
           }
           conform={() => navigate("/main")}
-          conform_txt={"홈으로"}
-          cancel={() => setAlarmModal(0)}
-          cancel_txt={"돌아가기"}
+          conform_txt={"확인"}
+          cancel={null}
+          cancel_txt={""}
         />
       ) : (
         ""

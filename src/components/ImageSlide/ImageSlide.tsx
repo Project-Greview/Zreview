@@ -30,7 +30,9 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ boxSize }) => {
           overflow: "hidden",
         }}
       >
-        <img src={"http://via.placeholder.com/500x500"} alt={""} />
+        <div className="img_box">
+          <img src={"http://via.placeholder.com/500x500"} alt={""} />
+        </div>
       </SwiperSlide>
       <SwiperSlide
         style={{
@@ -42,7 +44,9 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ boxSize }) => {
           overflow: "hidden",
         }}
       >
-        <img src={"http://via.placeholder.com/500x500"} alt={""} />
+        <div className="img_box">
+          <img src={"http://via.placeholder.com/500x500"} alt={""} />
+        </div>
       </SwiperSlide>
     </Swiper>
   );

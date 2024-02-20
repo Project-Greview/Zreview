@@ -1,14 +1,17 @@
 // MODULE
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
+// HOOK
 // COMPONENT
+import Header from "components/Header";
+import DetailItem from "components/DetailItem";
 import HashTag from "components/HashTag";
 // SVG
 import { ReactComponent as Logo } from "../../assets/image/icon/marker_c.svg";
 import { ReactComponent as BookMarkIcon } from "../../assets/image/icon/Bookmark-icon.svg";
 import { ReactComponent as DefaultMarkerIcon } from "../../assets/image/icon/default_marker.svg";
-import Header from "components/Header";
+
 // PROPS TYPE
 
 const PlaceReview: React.FC = () => {
@@ -17,6 +20,17 @@ const PlaceReview: React.FC = () => {
   const { state } = useLocation();
 
   const [headerVisibility, setHeaderVisibility] = useState<boolean>(false);
+  const [reviewData, setReviewData] = useState([]);
+
+  const writePlaceData = {
+    place_name: state.placeData.place_name,
+    address:
+      state.placeData.road_address_name !== undefined
+        ? state.placeData.road_address_name
+        : state.placeData.address_name,
+    location_lat: state.placeData.y,
+    location_lng: state.placeData.x,
+  };
 
   useEffect(() => {
     if (inView) {
@@ -25,12 +39,7 @@ const PlaceReview: React.FC = () => {
       setHeaderVisibility(false);
     }
   }, [inView]);
-  const writePlaceData = {
-    place_name: state.placeData.place_name,
-    address: state.placeData.road_address_name,
-    location_lat: state.placeData.y,
-    location_lng: state.placeData.x,
-  };
+
   return (
     <div>
       <div className="place_info_header relative">
@@ -45,7 +54,7 @@ const PlaceReview: React.FC = () => {
           <div className="store_name">{state.placeData.place_name}</div>
           <div className="store_address flex flex_ai_c">
             <DefaultMarkerIcon />
-            {state.placeData.road_address_name}
+            {state.placeData.place_address}
           </div>
         </div>
         <div className=" btn_box flex flex_jc_sb flex_ai_c">
@@ -88,7 +97,9 @@ const PlaceReview: React.FC = () => {
           ""
         )}
         <div className="point_txt">ZReview</div>
-        <ul className={`${!headerVisibility ? "active" : ""}`}></ul>
+        <div className={`${!headerVisibility ? "active" : ""}`}>
+          <DetailItem place={state.placeData.place_name} />
+        </div>
       </div>
     </div>
   );

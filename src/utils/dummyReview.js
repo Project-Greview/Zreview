@@ -54,7 +54,7 @@ export function generateRandomData() {
     id: nextId++,
     place_name: getRandomPlace(),
     place_address: "주소는 언젠가...",
-    member: getRandomNickname(),
+    writer: getRandomNickname(),
     content: getRandomContent(),
     location_lat: getRandomLatitude(),
     location_lon: getRandomLongitude(),
@@ -69,6 +69,7 @@ export function generateRandomData() {
     rating: getRandomNumber(1, 5),
     comments: getRandomNumber(0, 20),
     likes: getRandomNumber(0, 50),
+    profile: "",
   };
 }
 

@@ -24,23 +24,24 @@ declare global {
   interface Window {
     kakao: any;
   }
-  interface DataType {
-    id: number;
-    place_name: string;
-    member: string;
-    content: string;
-    location_lat: number;
-    location_lon: number;
-    created_at: string;
-    updated_at: string;
-    hashtag: string[];
-    views: number;
-    rating: number;
-    likes: number;
-    comments: number;
-  }
 }
-
+interface ReviewDataType {
+  id: number;
+  place_name: string;
+  place_address: string;
+  content: string;
+  location_lat: number;
+  location_lon: number;
+  created_at: string;
+  updated_at: string;
+  hashtag: string[];
+  views: number;
+  rating: number;
+  likes: number;
+  comments: number;
+  writer: string;
+  profile: string;
+}
 const KakaoMap: React.FC = () => {
   const kakaoMaps = useRef(null);
   const [searchResult, setSearchResult] = useRecoilState(
@@ -93,7 +94,7 @@ const KakaoMap: React.FC = () => {
             window.kakao.maps.event.addListener(marker, "click", function () {
               const tolerance = 0.0001;
               const clickedPosition = marker.getPosition();
-              const clickedData = dummyData.find((data: DataType) => {
+              const clickedData = dummyData.find((data: ReviewDataType) => {
                 const latDiff = Math.abs(
                   data.location_lat - clickedPosition.getLat()
                 );
@@ -227,10 +228,17 @@ const KakaoMap: React.FC = () => {
       });
   }, []); */
 
-  useLayoutEffect(() => {
+  // useLayoutEffect(() => {
+  //   getKakao();
+  // }, []);
+  useEffect(() => {
+    if (dummyData.length === 0) {
+      return;
+    }
+
+    // dummyData가 모두 로딩된 후 실행할 코드
     getKakao();
-    console.log(dummyData);
-  }, []);
+  }, [dummyData]);
   return (
     <>
       <HashTagSlide />

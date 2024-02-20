@@ -11,9 +11,7 @@ const DetailReview: React.FC<DetailReviewProps> = ({}) => {
     <div className="inner_section" style={{ background: "#f6f6f6" }}>
       <Header type={2} title={"상호명"} />
       <div className="detail_frame">
-        <ul>
-          <DetailItem />
-        </ul>
+        <ul>{/* <DetailItem /> */}</ul>
       </div>
     </div>
   );

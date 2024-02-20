@@ -23,20 +23,6 @@ import { consoleLogo } from "consoleLogo";
 
 // PROPS TYPE
 
-interface DataType {
-  id: number;
-  title: string;
-  member: string;
-  content: string;
-  location_lat: number;
-  location_lon: number;
-  created_at: string;
-  updated_at: string;
-  hashtag: string[];
-  views: number;
-  rating: number;
-}
-
 const App: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();

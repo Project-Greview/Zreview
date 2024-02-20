@@ -265,14 +265,11 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
                 <p>{markerData.rating}</p>
               </div>
             </div>
-            <div className="place_info flex flex_dir_c flex_jc_s flex_ai_s">
+            <div className="place_info flex flex_dir_c flex_jc_s flex_ai_s width_100p">
               <p className="place_name">{markerData.place_name}</p>
               <div className="place_address flex">
                 <DefaultMarkerIcon />
-                <div>
-                  여기엔 주소가 나올 예정인데 DB에서 저장된 값을 불러올지
-                  Geolocation으로 불러올지 고민중
-                </div>
+                <div>{markerData.place_address}</div>
               </div>
             </div>
             <div className="best_hashtag_list flex flex_jc_s flex_ai_fs width_100p">

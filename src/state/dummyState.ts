@@ -1,9 +1,9 @@
 import { atom } from "recoil";
 
-interface DataType {
+interface ReviewDataType {
   id: number;
   place_name: string;
-  member: string;
+  place_address: string;
   content: string;
   location_lat: number;
   location_lon: number;
@@ -14,9 +14,11 @@ interface DataType {
   rating: number;
   likes: number;
   comments: number;
+  writer: string;
+  profile: string;
 }
 
-export const dummyDateState = atom<DataType[]>({
+export const dummyDateState = atom<ReviewDataType[]>({
   key: "dummyData",
   default: [],
 });

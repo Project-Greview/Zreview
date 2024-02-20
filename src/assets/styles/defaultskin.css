@@ -504,7 +504,7 @@
 }
 /* DETAIL ITEM */
 .review_item_box {
-  margin: 1rem 2rem;
+  margin: 1.5rem 0rem;
   background: var(--white-color);
   border-radius: 5px;
   border: 1px solid var(--border-color);
@@ -698,10 +698,13 @@
 }
 .place_body {
   padding: 2rem;
-  height: 100rem;
+  min-height: 100rem;
 }
 .place_body .point_txt {
   font-weight: 700;
+}
+.place_body .header {
+  z-index: 2;
 }
 /* MAP MARKER INFO */
 .toast_section .marker_result_header {
