@@ -3,7 +3,6 @@ import { atom } from "recoil";
 interface MarkerDataType {
   id: number;
   place_name: string;
-  title: string;
   member: string;
   content: string;
   location_lat: number;

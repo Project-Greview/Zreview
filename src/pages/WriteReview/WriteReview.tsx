@@ -25,9 +25,26 @@ import ImageUpload from "components/ImageUpload";
 // SVG
 import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
 import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg";
+import { getCookie } from "utils/cookies";
 // PROPS TYPE
 type WriteReviewProps = {};
-
+interface DataType {
+  place_name: string;
+  place_address: string;
+  title: string;
+  member: string;
+  content: string;
+  location_lat: number;
+  location_lon: number;
+  created_at: string;
+  updated_at: string;
+  hashtag: string[];
+  images: string[];
+  views: number;
+  rating: number;
+  likes: number;
+  comments: number;
+}
 const WriteReview: React.FC<WriteReviewProps> = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -44,7 +61,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const [resizeImg, setResizeImg] = useRecoilState<any>(resizeUploadImageState);
   const [searchLocation, setSearchLocation] = useState<string>("");
   const [writeLocation, setWriteLocation] = useState<string>("");
-  const [writeContents, setWriteContents] = useState<any>("");
+  const [content, setContent] = useState<any>("");
   const [writeHashTag, setWriteHashTag] = useState<string>("");
   const [hashtag, setHashtag] = useState<any>([]);
   const [alarmModal, setAlarmModal] = useState<number>(0);
@@ -90,7 +107,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   };
   const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
-    setWriteContents(e.target.value);
+    setContent(e.target.value);
   };
   const onChangHashtag = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -114,15 +131,22 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     console.log("리뷰작성 API 발동!");
   };
   const handleReviewPOST = async () => {
-    const postData = {
+    const postData: DataType = {
+      title: writeLocationData.placeName,
       place_name: writeLocationData.placeName,
-      location_lag: writeLocationData.placeLatitude,
-      location_lng: writeLocationData.placeLongitude,
+      location_lat: Number(writeLocationData.placeLatitude),
+      location_lon: Number(writeLocationData.placeLongitude),
       place_address: writeLocationData.placeAddress,
-      contents: writeContents,
+      content: content,
       hashtag: hashtag,
-      score: score,
+      rating: score,
       images: uploadImage,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      member: getCookie("dummyNickname"),
+      views: 0,
+      likes: 0,
+      comments: 0,
     };
     try {
       const response = await addDataToIndexedDB(postData);
@@ -294,7 +318,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
           <div className="input_section">
             <textarea
               name="contents"
-              value={writeContents}
+              value={content}
               onChange={onChangeContents}
               placeholder="리뷰를 작성해주세요 (100자 이내)"
             ></textarea>

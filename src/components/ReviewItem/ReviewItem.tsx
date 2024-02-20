@@ -4,7 +4,11 @@
 type ReviewItemProps = {};
 
 const ReviewItem: React.FC<ReviewItemProps> = () => {
-  return <li></li>;
+  return (
+    <ul>
+      <li></li>
+    </ul>
+  );
 };
 
 export default ReviewItem;

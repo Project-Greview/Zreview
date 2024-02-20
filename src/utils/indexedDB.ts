@@ -1,3 +1,5 @@
+import { openDB } from "idb";
+
 export const indexedDBStart = () => {
   const indexedDB = window.indexedDB;
   const dbName = "zreview";

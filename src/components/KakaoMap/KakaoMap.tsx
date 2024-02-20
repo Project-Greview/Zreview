@@ -24,6 +24,21 @@ declare global {
   interface Window {
     kakao: any;
   }
+  interface DataType {
+    id: number;
+    place_name: string;
+    member: string;
+    content: string;
+    location_lat: number;
+    location_lon: number;
+    created_at: string;
+    updated_at: string;
+    hashtag: string[];
+    views: number;
+    rating: number;
+    likes: number;
+    comments: number;
+  }
 }
 
 const KakaoMap: React.FC = () => {
@@ -36,7 +51,7 @@ const KakaoMap: React.FC = () => {
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState(null);
 
   const dummyData = useRecoilValue(dummyDateState);
   const keyword = useRecoilValue(searchKeywordState);
@@ -79,7 +94,7 @@ const KakaoMap: React.FC = () => {
             window.kakao.maps.event.addListener(marker, "click", function () {
               const tolerance = 0.0001;
               const clickedPosition = marker.getPosition();
-              const clickedData = dummyData.find((data) => {
+              const clickedData = dummyData.find((data: DataType) => {
                 const latDiff = Math.abs(
                   data.location_lat - clickedPosition.getLat()
                 );
@@ -199,32 +214,19 @@ const KakaoMap: React.FC = () => {
       console.log("내위치 사용 불가");
     }
   };
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await getAllDataFromIndexedDB();
-  //       setData(result);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getAllDataFromIndexedDB();
-        console.log("result", result);
-
-        setData(result);
-        getKakao(); // 데이터 로딩 후 지도 초기화
-      } catch (error) {
-        console.error(error);
-        // 에러 처리 로직 추가
-      }
-    };
-
-    fetchData();
+    getAllDataFromIndexedDB()
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        getKakao();
+      });
   }, []);
 
   // useLayoutEffect(() => {

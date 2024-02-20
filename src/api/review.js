@@ -16,12 +16,17 @@ export const addDataToIndexedDB = (postData) => {
     const users = reviewDB.put({
       place_name: postData.place_name,
       location_lat: postData.location_lag,
-      location_lng: postData.location_lng,
+      location_lon: postData.location_lng,
       place_address: postData.place_address,
       contents: postData.contents,
       hashtag: postData.hashtag,
       score: postData.score,
       images: postData.images,
+      created_at: postData.created_at,
+      member: postData.member,
+      views: postData.views,
+      likes: postData.likes,
+      comments: postData.comments,
     });
 
     users.onsuccess = () => {
@@ -37,27 +42,29 @@ export const addDataToIndexedDB = (postData) => {
 };
 // GET REVIEW
 export const getAllDataFromIndexedDB = () => {
-  const dbOpen = idb.open("zreview", 1);
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
 
-  dbOpen.onsuccess = () => {
-    let db = dbOpen.result;
-    const transaction = db.transaction("review", "readonly");
-    const reviewDB = transaction.objectStore("review");
-    const review = reviewDB.getAll();
+    dbOpen.onsuccess = () => {
+      let db = dbOpen.result;
+      const transaction = db.transaction("review", "readonly");
+      const reviewDB = transaction.objectStore("review");
+      const review = reviewDB.getAll();
 
-    review.onsuccess = (e) => {
-      const data = e.srcElement.result;
-      return data;
+      review.onsuccess = (e) => {
+        const data = e.srcElement.result;
+        resolve(data);
+      };
+
+      review.onerror = (e) => {
+        console.log("error", e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
     };
-
-    review.onerror = (e) => {
-      console.log("error", e);
-    };
-
-    transaction.oncomplete = () => {
-      db.close();
-    };
-  };
+  });
 };
 
 // GET DETAIL REVIEW

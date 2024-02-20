@@ -1,5 +1,8 @@
 // MODULE
+import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
+// HOOK
+import { getAllDataFromIndexedDB } from "api/review";
 // RECOIL STATE
 import { tabMenuTypeState } from "state/mypageTabState";
 // COMPONENT
@@ -8,6 +11,8 @@ import ReviewItem from "components/ReviewItem";
 type TabItemProps = {};
 
 const TabItem: React.FC<TabItemProps> = () => {
+  const [data, setData] = useState([]);
+
   const getType = useRecoilValue(tabMenuTypeState);
   const box1Height = document
     .querySelector(".scroll_section ")
@@ -16,6 +21,17 @@ const TabItem: React.FC<TabItemProps> = () => {
     .querySelector(".tab_buttons ")
     ?.getBoundingClientRect().height;
 
+  useEffect(() => {
+    getAllDataFromIndexedDB()
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {});
+  }, []);
   return (
     <div
       className="list_section"
@@ -39,9 +55,7 @@ const TabItem: React.FC<TabItemProps> = () => {
             : `(${0})`}
         </div>
       </div>
-      <ul>
-        <ReviewItem />
-      </ul>
+      <ReviewItem />
     </div>
   );
 };

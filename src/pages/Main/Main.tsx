@@ -1,14 +1,13 @@
 // MODULE
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-
 // RECOIL STATE
 import { leftMenuState } from "state/userState";
 import { toastPopupState } from "state/commonState";
 import { locationSearchResultState } from "state/searchState";
+import { dummyDateState } from "state/dummyState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
-import { getAllDataFromIndexedDB } from "api/review";
 // COMPONENT
 import LeftMenu from "../../components/LeftMenu";
 import KakaoMap from "../../components/KakaoMap";
@@ -19,8 +18,10 @@ type MainProps = {};
 
 const Main: React.FC<MainProps> = () => {
   const isLeftMenu = useRecoilValue(leftMenuState);
-  const [isReady, setIsReady] = useState(false);
+  const [data, setData] = useRecoilState(dummyDateState);
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
+  const [isReady, setIsReady] = useState(false);
+
   const UserLat = getCookie("UserLat");
   const UserLon = getCookie("UserLon");
 
@@ -42,7 +43,6 @@ const Main: React.FC<MainProps> = () => {
 
   useLayoutEffect(() => {
     setIsReady(true);
-    getAllDataFromIndexedDB();
   }, []);
   useEffect(() => {
     cleanResult();

@@ -53,7 +53,7 @@ export function generateRandomData() {
   return {
     id: nextId++,
     place_name: getRandomPlace(),
-    title: getRandomTitle(),
+    place_address: "주소는 언젠가...",
     member: getRandomNickname(),
     content: getRandomContent(),
     location_lat: getRandomLatitude(),
