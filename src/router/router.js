@@ -16,7 +16,6 @@ import DummyDataList from "pages/DummyDataList";
 import ProfileModify from "pages/ProfileModify";
 import PlaceReview from "pages/PlaceReview";
 import DetailReview from "pages/DetailReview";
-
 const routes = [
   {
     path: "/",
@@ -124,8 +123,11 @@ const routes = [
 ];
 
 const Routers = createBrowserRouter(routes, {
+  // basename: window.location.hostname === "localhost" ? "/" : process.env.PUBLIC_URL,
   basename:
-    window.location.hostname === "localhost" ? "/" : process.env.PUBLIC_URL,
+    process.env.NODE_ENV === "production"
+      ? "/<username>/<repository-name>"
+      : "/",
 });
 
 export default Routers;
