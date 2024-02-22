@@ -23,7 +23,7 @@ const Login: React.FC<LoginProps> = () => {
   const [loginId, setLoginId] = useState<string>("");
   const [loginPw, setLoginPw] = useState<string>("");
   const [isReady, setIsReady] = useState(false);
-
+  console.log("envTest", process.env.REACT_APP_KAKAOMAP_KEY);
   // ENABLE LOGIN BOX
   const handleOnLoginBox = () => {
     setIsReady(true);
