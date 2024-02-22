@@ -17,4 +17,5 @@ jobs:
           echo "REACT_APP_KAKAOMAP_KEY=${{secrets.REACT_APP_KAKAOMAP_KEY}}" >> .env
       - run: cat .env
 
-      - run: npm run dploy
+      - run: npm install
+      - run: npm run build
