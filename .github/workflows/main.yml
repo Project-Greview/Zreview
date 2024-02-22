@@ -8,10 +8,11 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - run: |
           echo "CRYPTOJS_SECRET_KEY=${{ secrets.REACT_APP_CRYPTOJS_SECRET_KEY }}" >> .env
           echo "KAKAOMAP_KEY=${{ secrets.REACT_APP_KAKAOMAP_KEY }}" >> .env
 
       - run: npm install && dotenv .env && npm run build
+      - run: npm run deploy
