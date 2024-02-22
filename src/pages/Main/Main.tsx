@@ -8,7 +8,7 @@ import { locationSearchResultState } from "state/searchState";
 import { dummyDateState } from "state/dummyState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
-import { getAllDataFromIndexedDB } from "api/review";
+import { getAllDataFromIndexedDB } from "api/IDBreview";
 // COMPONENT
 import LeftMenu from "../../components/LeftMenu";
 import KakaoMap from "../../components/KakaoMap";

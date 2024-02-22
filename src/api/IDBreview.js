@@ -42,6 +42,7 @@ export const addDataToIndexedDB = (postData) => {
 
       review.onerror = (e) => {
         console.log("error", e);
+        reject(e);
       };
     };
   });

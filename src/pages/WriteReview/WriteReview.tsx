@@ -3,7 +3,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 // HOOK
-import { addDataToIndexedDB } from "api/review";
+import { addDataToIndexedDB } from "api/IDBreview";
 // RECOIL STATE
 import { toastPopupState } from "state/commonState";
 import { locationSearchResultState } from "state/searchState";
@@ -131,7 +131,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const setAPICode = () => {
     console.log("리뷰작성 API 발동!");
   };
-  console.log(writeLocationData);
   const handleReviewPOST = async () => {
     const postData: ReviewDataType = {
       title: writeLocationData.placeName,

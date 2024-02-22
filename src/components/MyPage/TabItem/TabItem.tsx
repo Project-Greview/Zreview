@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 // HOOK
-import { getAllDataFromIndexedDB } from "api/review";
+import { getAllDataFromIndexedDB } from "api/IDBreview";
 // RECOIL STATE
 import { tabMenuTypeState } from "state/mypageTabState";
 // COMPONENT

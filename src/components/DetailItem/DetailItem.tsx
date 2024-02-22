@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // HOOK\
-import { getAllTargetDataFromIndexedDB } from "api/review";
+import { getAllTargetDataFromIndexedDB } from "api/IDBreview";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
 // COMPONENT

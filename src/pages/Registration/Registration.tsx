@@ -1,10 +1,11 @@
 // MODULE
 import { useState, ChangeEvent } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // HOOK
 import { CheckPasswordText } from "utils/textUtil";
 import { getCookie } from "utils/cookies";
+import { addMemberDataToIndexedDB } from "api/IDBmember";
 // COMPONENT
 import Input from "../../components/Common/Input";
 import Header from "../../components/Header";
@@ -16,6 +17,7 @@ type RegistrationProps = {};
 
 const Registration: React.FC<RegistrationProps> = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const checkPage = state.type === "modify";
 
   // 추가로 checkPage 가 true 일 경우 recoil에서 사용자의 개인정보를 가져와 뿌린 후 수정작업 필요
@@ -24,7 +26,7 @@ const Registration: React.FC<RegistrationProps> = () => {
   const loginUserPhone = getCookie("dummyPhone");
   const loginUserName = getCookie("dummyName");
 
-  const [modifyModal, setModifyModal] = useState<number>(0);
+  const [modalState, setModalState] = useState<number>(0);
   const [resEmail, setResEmail] = useState<string>(
     checkPage ? loginUserEmail : ""
   );
@@ -109,32 +111,58 @@ const Registration: React.FC<RegistrationProps> = () => {
       ? ""
       : "disable";
 
-  const handleRegistZreview = () => {};
+  const handleRegisterZreview = async () => {
+    const postData = {
+      email: resEmail,
+      password: resPassword,
+      phone: resPhone,
+      name: resName,
+      nickname: resNickname,
+    };
+    try {
+      const response = await addMemberDataToIndexedDB(postData);
+      console.log(response);
+      if (response === "success") {
+        setModalState(3);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // MODIFY
   const handleStep1UsereModify = () => {
-    setModifyModal(1);
+    setModalState(1);
   };
   return (
     <>
-      {modifyModal === 1 ? (
+      {modalState === 1 ? (
         <Modal
           type={"type_2"}
           contents={"수정하시겠습니까?"}
           conform={() => (
             console.log(
-              "여기에는 수정 API를 태우세요. 끝에는 setModifyModal(2)"
+              "여기에는 수정 API를 태우세요. 끝에는 setModalState(2)"
             ),
-            setModifyModal(2)
+            setModalState(2)
           )}
           conform_txt={"확인"}
-          cancel={() => setModifyModal(0)}
+          cancel={() => setModalState(0)}
           cancel_txt={"취소"}
         />
-      ) : modifyModal === 2 ? (
+      ) : modalState === 2 ? (
         <Modal
           type={"type_2"}
           contents={"수정이 완료되었습니다."}
-          conform={() => setModifyModal(0)}
+          conform={() => setModalState(0)}
+          conform_txt={"확인"}
+          cancel={null}
+          cancel_txt={""}
+        />
+      ) : modalState === 3 ? (
+        <Modal
+          type={"type_2"}
+          contents={"회원가입이 완료되었습니다!"}
+          conform={() => (setModalState(0), navigate("/"))}
           conform_txt={"확인"}
           cancel={null}
           cancel_txt={""}
@@ -252,7 +280,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             event={
               checkPage
                 ? () => handleStep1UsereModify()
-                : console.log("회원가입 이벤트 작동")
+                : () => handleRegisterZreview()
             }
             width={"100%"}
             styles={"buttons flex flex_jc_c flex_ai_c width_100p cursor_p"}

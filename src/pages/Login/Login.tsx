@@ -7,6 +7,7 @@ import { isLoginState } from "state/userState";
 import { shakeAnimationState } from "state/commonState";
 // HOOK
 import { loginGET } from "api/dummyAPI";
+import { getLoginMemberFromIndexedDB } from "api/IDBmember";
 // IMAGE
 import { ReactComponent as Logo } from "../../assets/image/Logo.svg";
 import Button from "components/Common/Button";
@@ -40,14 +41,20 @@ const Login: React.FC<LoginProps> = () => {
 
   // LOGIN
   const handleLogin = async () => {
+    // try {
+    //   const response = await loginGET(loginId, loginPw);
+    //   console.log(response);
+    //   setLoginState(true);
+    //   navigate("/main");
+    // } catch (error) {
+    //   setError(true);
+    //   setShake(true);
+    // }
     try {
-      const response = await loginGET(loginId, loginPw);
+      const response = await getLoginMemberFromIndexedDB(loginId, loginPw);
       console.log(response);
-      setLoginState(true);
-      navigate("/main");
     } catch (error) {
-      setError(true);
-      setShake(true);
+      console.log(error);
     }
   };
 

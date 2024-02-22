@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 // HOOK
-import { getAllDataFromIndexedDB } from "api/review";
+import { getAllDataFromIndexedDB } from "api/IDBreview";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
 import {
