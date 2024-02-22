@@ -1,0 +1,21 @@
+name: ZReview Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      # Pull Repo
+      - uses: actions/checkout@v3
+
+      # Github Secrets에서 API Key 받아온 후 .env 파일에 추가
+      - run: |
+          echo "REACT_APP_CRYPTOJS_SCERET_KEY=${{secrets.REACT_APP_CRYPTOJS_SCERET_KEY}}" >> .env
+          echo "REACT_APP_KAKAOMAP_KEY=${{secrets.REACT_APP_KAKAOMAP_KEY}}" >> .env
+      - run: cat .env
+
+      - run: npm install
+      - run: npm run build
