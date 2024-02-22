@@ -38,7 +38,6 @@ const Login: React.FC<LoginProps> = () => {
     e.preventDefault();
     setLoginPw(e.target.value);
   };
-
   // LOGIN
   const handleLogin = async () => {
     // try {
@@ -53,6 +52,13 @@ const Login: React.FC<LoginProps> = () => {
     try {
       const response = await getLoginMemberFromIndexedDB(loginId, loginPw);
       console.log(response);
+      if (response) {
+        setLoginState(true);
+        navigate("/main");
+      } else {
+        setError(true);
+        setShake(true);
+      }
     } catch (error) {
       console.log(error);
     }
