@@ -23,7 +23,6 @@ const Login: React.FC<LoginProps> = () => {
   const [loginId, setLoginId] = useState<string>("");
   const [loginPw, setLoginPw] = useState<string>("");
   const [isReady, setIsReady] = useState(false);
-  console.log("envTest", process.env.REACT_APP_KAKAOMAP_KEY);
   // ENABLE LOGIN BOX
   const handleOnLoginBox = () => {
     setIsReady(true);
@@ -51,7 +50,6 @@ const Login: React.FC<LoginProps> = () => {
     // }
     try {
       const response = await getLoginMemberFromIndexedDB(loginId, loginPw);
-      console.log(response);
       if (response) {
         setLoginState(true);
         navigate("/main");
@@ -70,6 +68,7 @@ const Login: React.FC<LoginProps> = () => {
     }, 1000);
   }, [shake]);
 
+  console.log(process.env.REACT_APP_CRYPTOJS_SECRET_KEY);
   return (
     <div
       className="con flex flex_dir_c flex_jc_c flex_ai_c mar_top_50"

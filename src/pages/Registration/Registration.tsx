@@ -1,11 +1,18 @@
 // MODULE
-import { useState, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+// RECOIL STATE
+import { shakeAnimationState } from "state/commonState";
 // HOOK
 import { CheckPasswordText } from "utils/textUtil";
 import { getCookie } from "utils/cookies";
-import { addMemberDataToIndexedDB } from "api/IDBmember";
+import {
+  addMemberDataToIndexedDB,
+  getCheckMemberEmailDuplicationIndexedDB,
+  getCheckMemberPhoneDuplicationIndexedDB,
+  getCheckMemberNicknameDuplicationIndexedDB,
+} from "api/IDBmember";
 // COMPONENT
 import Input from "../../components/Common/Input";
 import Header from "../../components/Header";
@@ -26,10 +33,12 @@ const Registration: React.FC<RegistrationProps> = () => {
   const loginUserPhone = getCookie("dummyPhone");
   const loginUserName = getCookie("dummyName");
 
+  const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [modalState, setModalState] = useState<number>(0);
   const [resEmail, setResEmail] = useState<string>(
     checkPage ? loginUserEmail : ""
   );
+  const [emailCheck, setEmailCheck] = useState<number>(0);
   const [resPassword, setResPassword] = useState<string>("");
   const [pwCheck, setPwCheck] = useState<number>(0);
   const [resPasswordCheck, setResPasswordCheck] = useState<string>("");
@@ -37,6 +46,7 @@ const Registration: React.FC<RegistrationProps> = () => {
   const [resPhone, setResPhone] = useState<string>(
     checkPage ? loginUserPhone : ""
   );
+  const [phoneCheck, setPhoneCheck] = useState<number>(0);
   const [resName, setResName] = useState<string>(
     checkPage ? loginUserName : ""
   );
@@ -48,16 +58,28 @@ const Registration: React.FC<RegistrationProps> = () => {
     e.preventDefault();
     setResEmail(e.target.value);
   };
-  const onCheckResEmail = () => {};
+  const onCheckResEmail = () => {
+    const isTrue = onDuplicationCheckEmail();
+    if (resEmail.length < 5) {
+      setEmailCheck(1);
+      setShake(true);
+    } else if (!isTrue) {
+      setEmailCheck(2);
+      setShake(true);
+    } else {
+      setEmailCheck(3);
+    }
+  };
   const onChangeRegPassword = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setResPassword(e.target.value);
   };
   const onCheckResPassWord = () => {
     if (CheckPasswordText(resPassword) === true) {
-      return setPwCheck(2);
+      setPwCheck(2);
     } else {
-      return setPwCheck(1);
+      setPwCheck(1);
+      setShake(true);
     }
   };
   const onChangeRegPasswordCheck = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,10 +87,11 @@ const Registration: React.FC<RegistrationProps> = () => {
     setResPasswordCheck(e.target.value);
   };
   const onCheckResPasswordCheck = () => {
-    if (resPassword === resPasswordCheck) {
-      return setPwCkCheck(2);
+    if (resPassword !== resPasswordCheck) {
+      setPwCkCheck(1);
+      setShake(true);
     } else {
-      return setPwCkCheck(1);
+      setPwCkCheck(2);
     }
   };
   const onChangeRegPhone = (e: ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +103,18 @@ const Registration: React.FC<RegistrationProps> = () => {
     }
     setResPhone(value);
   };
-  const onCheckResPhone = () => {};
+  const onCheckResPhone = () => {
+    const isTrue = onDuplicationCheckPhone();
+    if (resPhone.length < 10) {
+      setPhoneCheck(1);
+      setShake(true);
+    } else if (!isTrue) {
+      setPhoneCheck(2);
+      setShake(true);
+    } else {
+      setPhoneCheck(3);
+    }
+  };
   const onChangeRegName = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setResName(e.target.value);
@@ -88,29 +122,61 @@ const Registration: React.FC<RegistrationProps> = () => {
   const onCheckResName = () => {
     if (resName.length < 2) {
       setNameCheck(1);
+      setShake(true);
     } else {
       setNameCheck(2);
     }
   };
-
   const onChangeRegNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     let value = e.target.value.replace(/[^\w\sㄱ-ㅎ가-힣]/g, "");
     setResNickname(value);
   };
   const onCheckResNickname = () => {
+    const isTrue = onDuplicationCheckNickname();
     if (resNickname.length < 2) {
       setNicknameCheck(1);
-    } else {
+      setShake(true);
+    } else if (!isTrue) {
       setNicknameCheck(2);
+      setShake(true);
+    } else {
+      setNicknameCheck(3);
     }
   };
   // REGISTRATION
+
   const checkValue =
-    pwCheck === 2 && pwCkCheck === 2 && nameCheck === 2 && nicknameCheck === 2
+    pwCheck === 2 && pwCkCheck === 2 && nameCheck === 3 && nicknameCheck === 3
       ? ""
       : "disable";
-
+  // CHECKING
+  const onDuplicationCheckEmail = async () => {
+    try {
+      const response = await getCheckMemberEmailDuplicationIndexedDB(resEmail);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const onDuplicationCheckPhone = async () => {
+    try {
+      const response = await getCheckMemberPhoneDuplicationIndexedDB(resPhone);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const onDuplicationCheckNickname = async () => {
+    try {
+      const response = await getCheckMemberNicknameDuplicationIndexedDB(
+        resNickname
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleRegisterZreview = async () => {
     const postData = {
       email: resEmail,
@@ -133,6 +199,11 @@ const Registration: React.FC<RegistrationProps> = () => {
   const handleStep1UsereModify = () => {
     setModalState(1);
   };
+  useEffect(() => {
+    setTimeout(() => {
+      setShake(false);
+    }, 1000);
+  }, [shake]);
   return (
     <>
       {modalState === 1 ? (
@@ -179,13 +250,25 @@ const Registration: React.FC<RegistrationProps> = () => {
             value={resEmail}
             onChange={onChangeRegEmail}
             type={"text"}
-            onBlur={onCheckResEmail}
+            onBlur={checkPage ? undefined : onCheckResEmail}
             maxLength={40}
             placeholder={""}
             readonly={false}
             styles={""}
           />
-          <div className="event_txt absolute"></div>
+          <div
+            className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
+              emailCheck === 3
+            }`}
+          >
+            {emailCheck === 1
+              ? "올바른 이메일 주소를 입력해주세요."
+              : emailCheck === 2
+              ? "중복된 이메일 입니다."
+              : emailCheck === 3
+              ? "사용 가능한 이메일 입니다."
+              : ""}
+          </div>
         </div>
         <div className="relative width_100p mar_top_25">
           <div className="pw_explanation absolute_top">
@@ -203,7 +286,13 @@ const Registration: React.FC<RegistrationProps> = () => {
             readonly={false}
             styles={""}
           />
-          <div className="event_txt absolute"></div>
+          <div
+            className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
+              pwCheck === 2
+            }`}
+          >
+            {pwCheck === 1 ? "비밀번호를 확인해주세요." : ""}
+          </div>
         </div>
         <div className="relative width_100p mar_top_25">
           <div className="pw_explanation absolute_top">
@@ -221,7 +310,13 @@ const Registration: React.FC<RegistrationProps> = () => {
             readonly={false}
             styles={""}
           />
-          <div className="event_txt absolute"></div>
+          <div
+            className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
+              pwCkCheck === 2
+            }`}
+          >
+            {pwCkCheck === 1 ? "입력한 비밀번호가 다릅니다." : ""}
+          </div>
         </div>
         <div className="relative width_100p mar_top_25">
           <Input
@@ -230,13 +325,25 @@ const Registration: React.FC<RegistrationProps> = () => {
             value={resPhone}
             onChange={onChangeRegPhone}
             type={"text"}
-            onBlur={onCheckResPhone}
+            onBlur={checkPage ? undefined : onCheckResPhone}
             maxLength={11}
             placeholder={""}
             readonly={false}
             styles={""}
           />
-          <div className="event_txt absolute"></div>
+          <div
+            className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
+              phoneCheck === 3
+            }`}
+          >
+            {phoneCheck === 1
+              ? "올바른 전화번호를 입력해주세요."
+              : phoneCheck === 2
+              ? "가입된 전화번호 입니다."
+              : phoneCheck === 3
+              ? "사용 가능한 전화번호 입니다."
+              : ""}
+          </div>
         </div>
         <div className="relative width_100p mar_top_25">
           <Input
@@ -263,13 +370,25 @@ const Registration: React.FC<RegistrationProps> = () => {
               value={resNickname}
               onChange={onChangeRegNickname}
               type={"text"}
-              onBlur={onCheckResNickname}
+              onBlur={checkPage ? undefined : onCheckResNickname}
               maxLength={12}
               placeholder={""}
               readonly={false}
               styles={""}
             />
-            <div className="event_txt absolute"></div>
+            <div
+              className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
+                nicknameCheck === 3
+              }`}
+            >
+              {nicknameCheck === 1
+                ? "올바른 닉네임을 입력해주세요."
+                : nicknameCheck === 2
+                ? "중복된 닉네임 입니다."
+                : nicknameCheck === 3
+                ? "사용 가능한 닉네임 입니다."
+                : ""}
+            </div>
           </div>
         )}
         <div

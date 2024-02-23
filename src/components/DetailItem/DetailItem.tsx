@@ -113,7 +113,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ place }) => {
           </div>
           <div className="review_box">
             <div className="slider">
-              <ImageSlide boxSize={boxWidth} />
+              <ImageSlide boxSize={boxWidth} images={item?.images} />
             </div>
             <div className="score flex">
               <StarScore max={5} rating={item?.rating} />

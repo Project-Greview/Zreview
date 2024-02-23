@@ -60,7 +60,6 @@ const Main: React.FC<MainProps> = () => {
         console.log("aaaa", data);
       });
   }, []);
-  console.log("테스트", process.env.REACT_APP_KAKAOMAP_KEY);
   return (
     <>
       <LeftMenu />

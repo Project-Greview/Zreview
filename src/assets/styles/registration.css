@@ -21,3 +21,12 @@
 .res_form_section .btn_box .buttons {
   height: 5rem;
 }
+.res_form_section .event_txt {
+  top: 105%;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--false-text);
+}
+.res_form_section .event_txt.true {
+  color: var(--point-color);
+}
