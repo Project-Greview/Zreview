@@ -79,7 +79,7 @@ const Login: React.FC<LoginProps> = () => {
 
   useEffect(() => {
     // 자동로그인 관련 대기
-    const isLogined = getCookie("user").token;
+    const isLogined = getCookie("user")?.token;
     if (isLogined) {
       navigate("/main");
     }
