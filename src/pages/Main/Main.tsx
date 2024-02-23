@@ -60,6 +60,7 @@ const Main: React.FC<MainProps> = () => {
         console.log("aaaa", data);
       });
   }, []);
+
   return (
     <>
       <LeftMenu />

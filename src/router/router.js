@@ -16,6 +16,8 @@ import DummyDataList from "pages/DummyDataList";
 import ProfileModify from "pages/ProfileModify";
 import PlaceReview from "pages/PlaceReview";
 import DetailReview from "pages/DetailReview";
+
+import Error from "pages/Error";
 const routes = [
   {
     path: "/",
@@ -108,6 +110,10 @@ const routes = [
             <DetailReview />
           </UserRouter>
         ),
+      },
+      {
+        path: "*",
+        element: <Error />,
       },
       // DUMMY
       {

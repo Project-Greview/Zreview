@@ -239,6 +239,7 @@ const KakaoMap: React.FC = () => {
     // dummyData가 모두 로딩된 후 실행할 코드
     getKakao();
   }, [dummyData]);
+
   return (
     <>
       <HashTagSlide />
