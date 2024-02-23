@@ -13,7 +13,7 @@ type UserInfoProps = {};
 const UserInfo: React.FC<UserInfoProps> = () => {
   const navigate = useNavigate();
   // DUMMY
-  const getNickname = getCookie("dummyNickname");
+  const getNickname = getCookie("user").nickname;
   const getSettingLocation = getCookie("dummyLocation");
   return (
     <>

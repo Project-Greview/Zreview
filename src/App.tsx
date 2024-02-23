@@ -34,7 +34,6 @@ const App: React.FC = () => {
 
   const handleCloseModal = () => {
     setProductModal(false);
-    console.log(dataCheck);
   };
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -60,46 +59,46 @@ const App: React.FC = () => {
   }, [isMobile]);
 
   useLayoutEffect(() => {
-    let DummyId = getCookie("dummyId");
-    let DummyPw = getCookie("dummyPw");
-    const setDummyUser = () => {
-      setCookie("dummyId", "testUser");
-      setCookie("dummyPw", "zreview1234!");
-      setCookie("dummyEmail", "zreview@test.com");
-      setCookie("dummyName", "지리뷰");
-      setCookie("dummyNickname", "ZReview");
-      setCookie("dummyPhone", "01012345678");
-      setCookie("dummyLocation", "OO동");
-    };
-    let titleStyles = `
-      padding:10px 50px;
-      margin-bottom:10px;
-      background:#6656ff;
-      font-size:25px;
-      font-weight:bold;
-    `;
-    let dummyInfoKeyStyle = `
-      font-size:18px;
-    `;
-    let dummyInfoValueStyle = `
-      padding:5px;
-      border:1px solid #6656ff;
-      font-size:20px;
-      font-weight:bold;
-      color:#6656ff;
-    `;
-
-    {
-      DummyId === undefined ? setDummyUser() : consoleLogo();
-      console.log(
-        `%c테스트 계정 정보%c\n로그인 ID : %c${DummyId}%c\n로그인 PASSWORD : %c${DummyPw}`,
-        titleStyles,
-        dummyInfoKeyStyle,
-        dummyInfoValueStyle,
-        dummyInfoKeyStyle,
-        dummyInfoValueStyle
-      );
-    }
+    setCookie("dummyLocation", "OO동");
+    // let DummyId = getCookie("dummyId");
+    // let DummyPw = getCookie("dummyPw");
+    // const setDummyUser = () => {
+    //   setCookie("dummyId", "testUser");
+    //   setCookie("dummyPw", "zreview1234!");
+    //   setCookie("dummyEmail", "zreview@test.com");
+    //   setCookie("dummyName", "지리뷰");
+    //   setCookie("dummyNickname", "ZReview");
+    //   setCookie("dummyPhone", "01012345678");
+    //   setCookie("dummyLocation", "OO동");
+    // };
+    // let titleStyles = `
+    //   padding:10px 50px;
+    //   margin-bottom:10px;
+    //   background:#6656ff;
+    //   font-size:25px;
+    //   font-weight:bold;
+    // `;
+    // let dummyInfoKeyStyle = `
+    //   font-size:18px;
+    // `;
+    // let dummyInfoValueStyle = `
+    //   padding:5px;
+    //   border:1px solid #6656ff;
+    //   font-size:20px;
+    //   font-weight:bold;
+    //   color:#6656ff;
+    // `;
+    // {
+    //   DummyId === undefined ? setDummyUser() : consoleLogo();
+    //   console.log(
+    //     `%c테스트 계정 정보%c\n로그인 ID : %c${DummyId}%c\n로그인 PASSWORD : %c${DummyPw}`,
+    //     titleStyles,
+    //     dummyInfoKeyStyle,
+    //     dummyInfoValueStyle,
+    //     dummyInfoKeyStyle,
+    //     dummyInfoValueStyle
+    //   );
+    // }
   }, []);
 
   const activeNum = getLocationPathname(location.pathname);

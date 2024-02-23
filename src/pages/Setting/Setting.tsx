@@ -13,7 +13,9 @@ const Setting: React.FC = () => {
   const navigate = useNavigate();
   const [productModal, setProductModal] =
     useRecoilState<Boolean>(dummyModalState);
-
+  const logout = () => {
+    console.log("테스트");
+  };
   return (
     <div className="setting_section inner_section">
       <ul>
@@ -22,11 +24,13 @@ const Setting: React.FC = () => {
             key={item.name}
             className="flex flex_jc_sb flex_ai_c"
             onClick={() =>
-              navigate(`${item.url}`, {
-                state: {
-                  type: item.url === "/user-modify" ? "modify" : "normal",
-                },
-              })
+              item.event !== ""
+                ? console.log("aaaa")
+                : navigate(`${item.url}`, {
+                    state: {
+                      type: item.url === "/user-modify" ? "modify" : "normal",
+                    },
+                  })
             }
           >
             <div>{item.name}</div>
@@ -57,7 +61,7 @@ const Setting: React.FC = () => {
             )}
           </li>
         ))}
-        {isMobile ? (
+        {/* {isMobile ? (
           <li
             onClick={() => setProductModal(true)}
             className="flex flex_jc_sb flex_ai_c"
@@ -78,7 +82,7 @@ const Setting: React.FC = () => {
           <div>
             <ArrowIcon />
           </div>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

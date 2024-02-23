@@ -24,14 +24,11 @@ const PlaceReview: React.FC = () => {
 
   const writePlaceData = {
     place_name: state.placeData.place_name,
-    address:
-      state.placeData.road_address_name !== undefined
-        ? state.placeData.road_address_name
-        : state.placeData.address_name,
+    address: state.placeData.place_address,
     location_lat: state.placeData.y,
     location_lng: state.placeData.x,
   };
-  console.log(writePlaceData);
+
   useEffect(() => {
     if (inView) {
       setHeaderVisibility(true);
@@ -39,7 +36,6 @@ const PlaceReview: React.FC = () => {
       setHeaderVisibility(false);
     }
   }, [inView]);
-
   return (
     <div>
       <div className="place_info_header relative">

@@ -1,5 +1,5 @@
 // MODULE
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // RECOIL STATE
@@ -12,6 +12,7 @@ import { getLoginMemberFromIndexedDB } from "api/IDBmember";
 import { ReactComponent as Logo } from "../../assets/image/Logo.svg";
 import Button from "components/Common/Button";
 import Input from "components/Common/Input";
+import { getCookie, setCookie } from "utils/cookies";
 // PROPS TYPE
 type LoginProps = {};
 
@@ -52,6 +53,14 @@ const Login: React.FC<LoginProps> = () => {
       const response = await getLoginMemberFromIndexedDB(loginId, loginPw);
       if (response) {
         setLoginState(true);
+        const userData = {
+          nickname: response.nickname,
+          name: response.name,
+          phone: response.phone,
+          email: response.email,
+          token: true,
+        };
+        setCookie("user", JSON.stringify(userData));
         navigate("/main");
       } else {
         setError(true);
@@ -68,6 +77,13 @@ const Login: React.FC<LoginProps> = () => {
     }, 1000);
   }, [shake]);
 
+  useEffect(() => {
+    // 자동로그인 관련 대기
+    const isLogined = getCookie("user").token;
+    if (isLogined) {
+      navigate("/main");
+    }
+  }, []);
   return (
     <div
       className="con flex flex_dir_c flex_jc_c flex_ai_c mar_top_50"

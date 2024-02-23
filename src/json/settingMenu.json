@@ -3,34 +3,40 @@
     {
       "name": "알림설정",
       "url": "",
-      "sub": ""
+      "sub": "",
+      "event": ""
     },
     {
       "name": "개인정보 수정",
       "url": "/user-modify",
-      "sub": "arrow"
+      "sub": "arrow",
+      "event": ""
     },
     {
       "name": "문의하기",
       "url": "",
-      "sub": ""
+      "sub": "",
+      "event": ""
     },
     {
       "name": "버전정보",
       "url": "",
-      "sub": "beta"
+      "sub": "beta",
+      "event": ""
     }
   ],
   "bottom_menu": [
     {
       "name": "로그아웃",
       "url": "",
-      "sub": ""
+      "sub": "",
+      "event": "logout_event"
     },
     {
       "name": "서비스 탈퇴",
       "url": "",
-      "sub": ""
+      "sub": "",
+      "event": ""
     }
   ]
 }

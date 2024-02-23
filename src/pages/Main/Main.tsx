@@ -56,9 +56,7 @@ const Main: React.FC<MainProps> = () => {
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => {
-        console.log("aaaa", data);
-      });
+      .finally(() => {});
   }, []);
   return (
     <>

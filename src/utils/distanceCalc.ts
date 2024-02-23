@@ -18,8 +18,7 @@ export function getDistanceCalc(
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  const distanceResult =
-    Math.floor(R * c) / 1000 > 1 ? Math.floor(R * c) / 1000 : Math.floor(R * c);
+  const distanceResult = Math.floor(R * c);
 
   return distanceResult;
 }

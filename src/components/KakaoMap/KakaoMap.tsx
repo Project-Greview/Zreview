@@ -2,7 +2,10 @@
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 // HOOK
-import { getAllDataFromIndexedDB } from "api/IDBreview";
+import {
+  getAllDataFromIndexedDB,
+  getAllTargetDataFromIndexedDB,
+} from "api/IDBreview";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
 import {
@@ -56,6 +59,16 @@ const KakaoMap: React.FC = () => {
   const dummyData = useRecoilValue(dummyDateState);
   const keyword = useRecoilValue(searchKeywordState);
   const viewHeight: number = window.innerHeight;
+
+  const getReviewData = async (name: string) => {
+    try {
+      const response = await getAllTargetDataFromIndexedDB(name);
+      console.log("테스트", response);
+      setMapMarkerData(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getKakao = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -104,8 +117,8 @@ const KakaoMap: React.FC = () => {
                 return latDiff < tolerance && lngDiff < tolerance;
               });
               if (clickedData) {
-                console.log(clickedData);
-                setMapMarkerData(clickedData);
+                // setMapMarkerData(clickedData);
+                getReviewData(clickedData?.place_name);
                 setToastModal(true);
                 // navigate("/cluster-list", {
                 //   state: {

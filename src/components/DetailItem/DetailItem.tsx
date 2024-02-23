@@ -92,7 +92,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ place }) => {
       })
       .finally(() => {});
   }, []);
-  console.log("reviewData", reviewData);
+  // console.log("reviewData", reviewData);
   return (
     <ul>
       {reviewData.map((item: any) => (

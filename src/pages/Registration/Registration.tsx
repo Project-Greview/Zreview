@@ -29,9 +29,9 @@ const Registration: React.FC<RegistrationProps> = () => {
 
   // 추가로 checkPage 가 true 일 경우 recoil에서 사용자의 개인정보를 가져와 뿌린 후 수정작업 필요
   // DUMMY DATA
-  const loginUserEmail = getCookie("dummyEmail");
-  const loginUserPhone = getCookie("dummyPhone");
-  const loginUserName = getCookie("dummyName");
+  const loginUserEmail = getCookie("user").email;
+  const loginUserPhone = getCookie("user").phone;
+  const loginUserName = getCookie("user").name;
 
   const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [modalState, setModalState] = useState<number>(0);
@@ -145,16 +145,17 @@ const Registration: React.FC<RegistrationProps> = () => {
     }
   };
   // REGISTRATION
-
   const checkValue =
-    pwCheck === 2 && pwCkCheck === 2 && nameCheck === 3 && nicknameCheck === 3
+    pwCheck === 2 &&
+    pwCkCheck === 2 &&
+    nicknameCheck === 3 &&
+    nicknameCheck === 3
       ? ""
       : "disable";
   // CHECKING
   const onDuplicationCheckEmail = async () => {
     try {
       const response = await getCheckMemberEmailDuplicationIndexedDB(resEmail);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -162,7 +163,6 @@ const Registration: React.FC<RegistrationProps> = () => {
   const onDuplicationCheckPhone = async () => {
     try {
       const response = await getCheckMemberPhoneDuplicationIndexedDB(resPhone);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -172,7 +172,6 @@ const Registration: React.FC<RegistrationProps> = () => {
       const response = await getCheckMemberNicknameDuplicationIndexedDB(
         resNickname
       );
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -187,7 +186,6 @@ const Registration: React.FC<RegistrationProps> = () => {
     };
     try {
       const response = await addMemberDataToIndexedDB(postData);
-      console.log(response);
       if (response === "success") {
         setModalState(3);
       }
@@ -253,7 +251,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={checkPage ? undefined : onCheckResEmail}
             maxLength={40}
             placeholder={""}
-            readonly={false}
+            readonly={checkPage}
             styles={""}
           />
           <div
@@ -328,7 +326,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={checkPage ? undefined : onCheckResPhone}
             maxLength={11}
             placeholder={""}
-            readonly={false}
+            readonly={checkPage}
             styles={""}
           />
           <div
@@ -355,7 +353,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             onBlur={onCheckResName}
             maxLength={10}
             placeholder={""}
-            readonly={false}
+            readonly={checkPage}
             styles={""}
           />
           <div className="event_txt absolute"></div>

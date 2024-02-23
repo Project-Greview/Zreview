@@ -13,7 +13,7 @@ export const addMemberDataToIndexedDB = (postData) => {
     const dbOpen = idb.open("zreview", 1);
     const encryptedPassword = CryptoJS.AES.encrypt(
       postData.password,
-      "your-secret-key"
+      process.env.REACT_APP_CRYPTOJS_SECRET_KEY
     ).toString();
     dbOpen.onsuccess = () => {
       const db = dbOpen.result;
@@ -143,18 +143,21 @@ export const getLoginMemberFromIndexedDB = (id, pw) => {
 
       request.onsuccess = (e) => {
         const result = e.target.result;
-        // const matchedMember = result.find(
-        //   (member) => member.email === id && member.password === pw
-        // );
         const matchedMember = result.find((member) => {
           const decryptedPassword = CryptoJS.AES.decrypt(
             member.password,
-            "your-secret-key"
+            process.env.REACT_APP_CRYPTOJS_SECRET_KEY
           ).toString(CryptoJS.enc.Utf8);
           return member.email === id && decryptedPassword === pw;
         });
         if (matchedMember) {
-          resolve(true);
+          resolve({
+            isLogin: true,
+            nickname: matchedMember.nickname,
+            name: matchedMember.name,
+            email: matchedMember.email,
+            phone: matchedMember.phone,
+          });
         } else {
           resolve(false);
         }

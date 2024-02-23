@@ -1,5 +1,5 @@
 // MODULE
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 // HOOK
 import { getCookie } from "utils/cookies";
 // COMPONENT
@@ -12,8 +12,8 @@ import Modal from "components/Modal";
 import Logo from "../../assets/image/Logo.png";
 const ProfileModify: React.FC = () => {
   // DUMMY
-  const getNickname = getCookie("dummyNickname");
-  const getEmail = getCookie("dummyEmail");
+  const getNickname = getCookie("user").nickname;
+  const getEmail = getCookie("user").email;
   const getSettingLocation = getCookie("dummyLocation");
 
   const [modifyModal, setModifyModal] = useState<number>(0);

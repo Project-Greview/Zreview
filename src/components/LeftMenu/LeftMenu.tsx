@@ -1,6 +1,9 @@
 // MODULE
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+// HOOK
+import { getCookie } from "utils/cookies";
 // RECOIL STATE
 import { leftMenuState } from "state/userState";
 // SVG
@@ -12,11 +15,9 @@ import { ReactComponent as BookMarkIcon } from "../../assets/image/icon/Bookmark
 import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow_right.svg";
 // COMPONENT
 import ProfileImage from "components/ProfileImage";
+import ContactTeam from "components/ContactTeam";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
-import { getCookie } from "utils/cookies";
-import ContactTeam from "components/ContactTeam";
-import { useState } from "react";
 
 const MiddleMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const MiddleMenu: React.FC = () => {
     navigate(url);
     setLeftMenu(false);
   };
+
   return (
     <ul>
       <li
@@ -64,7 +66,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
   const [leftMenu, setLeftMenu] = useRecoilState(leftMenuState);
   const [contactModal, setContactModal] = useState<boolean>(false);
   // DUMMY DATA
-  const myNickname = getCookie("dummyNickname");
+  const myNickname = getCookie("user").nickname;
   const myLocation = getCookie("dummyLocation");
   // FUNCTION
   const handleCLoseLeftMenu = () => {
