@@ -68,7 +68,6 @@ const Login: React.FC<LoginProps> = () => {
     }, 1000);
   }, [shake]);
 
-  console.log(process.env.REACT_APP_CRYPTOJS_SECRET_KEY);
   return (
     <div
       className="con flex flex_dir_c flex_jc_c flex_ai_c mar_top_50"
