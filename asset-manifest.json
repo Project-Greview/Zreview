@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Zreview/static/css/main.525ef240.css",
-    "main.js": "/Zreview/static/js/main.5e0f6989.js",
+    "main.css": "/Zreview/static/css/main.c5a07f56.css",
+    "main.js": "/Zreview/static/js/main.f55db1eb.js",
     "static/js/27.e140b8a2.chunk.js": "/Zreview/static/js/27.e140b8a2.chunk.js",
     "static/media/Pretendard-Thin.ttf": "/Zreview/static/media/Pretendard-Thin.23965237737042c7c087.ttf",
     "static/media/Pretendard-ExtraLight.ttf": "/Zreview/static/media/Pretendard-ExtraLight.3a1f8545bfb6498f1f14.ttf",
@@ -38,7 +38,7 @@
     "static/media/arrow-left.svg": "/Zreview/static/media/arrow-left.f11ade5d38e7ceb590a9b1ab97ab2e03.svg"
   },
   "entrypoints": [
-    "static/css/main.525ef240.css",
-    "static/js/main.5e0f6989.js"
+    "static/css/main.c5a07f56.css",
+    "static/js/main.f55db1eb.js"
   ]
 }
