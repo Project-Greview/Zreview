@@ -10,6 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+        name: Use Node.js
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: |
+          set -e
+          npm run build
+
       - name: Create .env file
         run: |
           echo "CRYPTOJS_SECRET_KEY=${{ secrets.REACT_APP_CRYPTOJS_SECRET_KEY }}" >> .env
@@ -17,3 +31,9 @@ jobs:
         env:
           CREDENTIALS: ${{ secrets.REACT_APP_CRYPTOJS_SECRET_KEY }}
             ${{ secrets.REACT_APP_KAKAOMAP_KEY }}
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.2.3
+        with:
+          branch: gh-pages
+          folder: build
