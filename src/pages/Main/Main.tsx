@@ -18,6 +18,7 @@ import ToastPopup from "components/ToastPopup";
 type MainProps = {};
 
 const Main: React.FC<MainProps> = () => {
+  console.log("NODE_ENV", process.env.NODE_ENV);
   const isLeftMenu = useRecoilValue(leftMenuState);
   const [data, setData] = useRecoilState(dummyDateState);
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);

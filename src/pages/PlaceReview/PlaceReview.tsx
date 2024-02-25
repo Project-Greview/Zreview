@@ -24,7 +24,12 @@ const PlaceReview: React.FC = () => {
 
   const writePlaceData = {
     place_name: state.placeData.place_name,
-    address: state.placeData.place_address,
+    address:
+      state.placeData.place_address !== undefined
+        ? state.placeData.place_address
+        : state.placeData.road_address_name !== undefined
+        ? state.placeData.road_address_name
+        : state.placeData.address_name,
     location_lat: state.placeData.y,
     location_lng: state.placeData.x,
   };

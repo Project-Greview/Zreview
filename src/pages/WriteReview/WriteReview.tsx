@@ -74,6 +74,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
 
   const resetLocationInfo = useResetRecoilState(reviewLocationInfoState);
   const resetLocationData = useResetRecoilState(reviewSearchResultState);
+  const resetImageState = useResetRecoilState(originUploadState);
   const locationInfo = useRecoilValue(reviewLocationInfoState);
   const score = useRecoilValue(starScoreState);
 
@@ -182,6 +183,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   useEffect(() => {
     resetLocationInfo();
     resetLocationData();
+    resetImageState();
   }, []);
 
   useEffect(() => {

@@ -28,11 +28,11 @@ const routes = [
         element: <Login />,
       },
       {
-        path: "registration",
+        path: "/registration",
         element: <Registration />,
       },
       {
-        path: "main",
+        path: "/main",
         element: (
           <UserRouter>
             <Main />
@@ -40,7 +40,7 @@ const routes = [
         ),
       },
       {
-        path: "mylocation",
+        path: "/mylocation",
         element: (
           <UserRouter>
             <MyLocation />
@@ -48,7 +48,7 @@ const routes = [
         ),
       },
       {
-        path: "write",
+        path: "/write",
         element: (
           <UserRouter>
             <WriteReview />
@@ -56,7 +56,7 @@ const routes = [
         ),
       },
       {
-        path: "bookmark",
+        path: "/bookmark",
         element: (
           <UserRouter>
             <BookMark />
@@ -64,7 +64,7 @@ const routes = [
         ),
       },
       {
-        path: "mypage",
+        path: "/mypage",
         element: (
           <UserRouter>
             <MyPage />
@@ -72,7 +72,7 @@ const routes = [
         ),
       },
       {
-        path: "profile-modify",
+        path: "/profile-modify",
         element: (
           <UserRouter>
             <ProfileModify />
@@ -80,7 +80,7 @@ const routes = [
         ),
       },
       {
-        path: "user-modify",
+        path: "/user-modify",
         element: (
           <UserRouter>
             <Registration />
@@ -88,7 +88,7 @@ const routes = [
         ),
       },
       {
-        path: "setting",
+        path: "/setting",
         element: (
           <UserRouter>
             <Setting />
@@ -96,7 +96,7 @@ const routes = [
         ),
       },
       {
-        path: "place_review",
+        path: "/place_review",
         element: (
           <UserRouter>
             <PlaceReview />
@@ -104,7 +104,7 @@ const routes = [
         ),
       },
       {
-        path: "detail_review",
+        path: "/detail_review",
         element: (
           <UserRouter>
             <DetailReview />
@@ -117,7 +117,7 @@ const routes = [
       },
       // DUMMY
       {
-        path: "Dummy_List",
+        path: "/Dummy_List",
         element: (
           <UserRouter>
             <DummyDataList />

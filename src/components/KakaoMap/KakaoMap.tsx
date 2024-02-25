@@ -207,7 +207,7 @@ const KakaoMap: React.FC = () => {
               position.coords.latitude,
               position.coords.longitude
             ),
-            radius: 1000,
+            radius: 300,
             strokeWeight: 2,
             strokeColor: "#6556FF",
             strokeOpacity: 0.2,
@@ -215,9 +215,29 @@ const KakaoMap: React.FC = () => {
             fillColor: "#6556FF",
             fillOpacity: 0.05,
           });
-
-          // map.setMinLevel(5);
-          // map.setMaxLevel(8);
+          // LEVEL SIZE CHANGE EVENT
+          window.kakao.maps.event.addListener(map, "zoom_changed", function () {
+            let level = map.getLevel();
+            console.log("level", level);
+            circle.setOptions({
+              radius:
+                level === 7
+                  ? 2500
+                  : level === 6
+                  ? 1300
+                  : level === 5
+                  ? 700
+                  : 300,
+              strokeWeight: 2,
+              strokeColor: "#6556FF",
+              strokeOpacity: 0.2,
+              strokeStyle: "solid",
+              fillColor: "#6556FF",
+              fillOpacity: 0.05,
+            });
+          });
+          map.setMinLevel(2);
+          map.setMaxLevel(7);
           circle.setMap(map);
           map.setDraggable(true);
           setMap(map);
