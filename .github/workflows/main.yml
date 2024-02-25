@@ -14,5 +14,4 @@ jobs:
           echo "CRYPTOJS_SECRET_KEY=${{ secrets.REACT_APP_CRYPTOJS_SECRET_KEY }}" >> .env
           echo "KAKAOMAP_KEY=${{ secrets.REACT_APP_KAKAOMAP_KEY }}" >> .env
         env:
-          CREDENTIALS: ${{ secrets.REACT_APP_CRYPTOJS_SECRET_KEY }}
-            ${{ secrets.REACT_APP_KAKAOMAP_KEY }}
+          CREDENTIALS: ${{ secrets.REACT_APP_KAKAOMAP_KEY }}
