@@ -29,9 +29,9 @@ const Registration: React.FC<RegistrationProps> = () => {
 
   // 추가로 checkPage 가 true 일 경우 recoil에서 사용자의 개인정보를 가져와 뿌린 후 수정작업 필요
   // DUMMY DATA
-  const loginUserEmail = getCookie("user").email;
-  const loginUserPhone = getCookie("user").phone;
-  const loginUserName = getCookie("user").name;
+  const loginUserEmail = getCookie("user")?.email;
+  const loginUserPhone = getCookie("user")?.phone;
+  const loginUserName = getCookie("user")?.name;
 
   const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [modalState, setModalState] = useState<number>(0);
