@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          node-version: node20
 
       - name: Install dependencies
         run: npm install
