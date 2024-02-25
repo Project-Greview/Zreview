@@ -264,14 +264,14 @@ const KakaoMap: React.FC = () => {
   //   getKakao();
   // }, []);
   useEffect(() => {
-    if (dummyData.length === 0) {
-      return;
-    }
+    // 실제 데이터인경우 데이터 없는거 체크 필요
+    // if (dummyData.length === 0) {
+    //   return;
+    // }
 
     // dummyData가 모두 로딩된 후 실행할 코드
     getKakao();
   }, [dummyData]);
-
   return (
     <>
       <HashTagSlide />
