@@ -23,7 +23,9 @@ jobs:
         run: rm -rf build
 
       - name: Build project
-        run: npm run build
+        run: |
+          set -e
+          npm run build
 
       - name: Create .env file
         run: |
