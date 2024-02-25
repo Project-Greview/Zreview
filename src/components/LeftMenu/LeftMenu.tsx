@@ -22,7 +22,7 @@ import Logo from "../../assets/image/Logo.png";
 const MiddleMenu: React.FC = () => {
   const navigate = useNavigate();
   // STATE
-  const [leftMenu, setLeftMenu] = useRecoilState(leftMenuState);
+  const [, setLeftMenu] = useRecoilState(leftMenuState);
   const handleMovePage = (url: string) => {
     navigate(url);
     setLeftMenu(false);

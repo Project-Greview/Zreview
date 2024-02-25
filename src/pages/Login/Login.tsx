@@ -1,12 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // MODULE
-import { ChangeEvent, useEffect, useLayoutEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // RECOIL STATE
 import { isLoginState } from "state/userState";
 import { shakeAnimationState } from "state/commonState";
 // HOOK
-import { loginGET } from "api/dummyAPI";
 import { getLoginMemberFromIndexedDB } from "api/IDBmember";
 // IMAGE
 import { ReactComponent as Logo } from "../../assets/image/Logo.svg";
@@ -18,7 +18,7 @@ type LoginProps = {};
 
 const Login: React.FC<LoginProps> = () => {
   const navigate = useNavigate();
-  const [loginState, setLoginState] = useRecoilState(isLoginState);
+  const [, setLoginState] = useRecoilState(isLoginState);
   const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [error, setError] = useState(false);
   const [loginId, setLoginId] = useState<string>("");
@@ -40,15 +40,6 @@ const Login: React.FC<LoginProps> = () => {
   };
   // LOGIN
   const handleLogin = async () => {
-    // try {
-    //   const response = await loginGET(loginId, loginPw);
-    //   console.log(response);
-    //   setLoginState(true);
-    //   navigate("/main");
-    // } catch (error) {
-    //   setError(true);
-    //   setShake(true);
-    // }
     try {
       const response = await getLoginMemberFromIndexedDB(loginId, loginPw);
       if (response) {

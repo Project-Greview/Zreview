@@ -1,16 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 // MODULE
-import { Suspense, useEffect, useLayoutEffect, useState } from "react";
+import { Suspense, useEffect, useLayoutEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { isMobile } from "react-device-detect";
 // RECOIL STATE
-import { dummyDateState, dummyModalState } from "state/dummyState";
+import { dummyModalState } from "state/dummyState";
 import { toastPopupState } from "state/commonState";
 // STYLE
 import "./assets/styles/_index.css";
 // HOOK
 import { getLocationPathname } from "utils/location";
-import { setCookie, getCookie } from "utils/cookies";
+import { setCookie } from "utils/cookies";
 // COMPONENT
 import Layout from "./components/Layout";
 import Header from "./components/Header";
@@ -18,8 +20,6 @@ import Splash from "./components/Splash";
 import PCView from "./pages/PCView";
 import Navigation from "./components/Navigation";
 import DummyModal from "components/DummyModal";
-
-import { consoleLogo } from "consoleLogo";
 
 // PROPS TYPE
 
@@ -29,8 +29,7 @@ const App: React.FC = () => {
 
   const [productModal, setProductModal] =
     useRecoilState<Boolean>(dummyModalState);
-  const [toastModal, setToastModal] = useRecoilState(toastPopupState);
-  const dataCheck = useRecoilValue(dummyDateState);
+  const [, setToastModal] = useRecoilState(toastPopupState);
 
   const handleCloseModal = () => {
     setProductModal(false);
@@ -60,45 +59,6 @@ const App: React.FC = () => {
 
   useLayoutEffect(() => {
     setCookie("dummyLocation", "OO동");
-    // let DummyId = getCookie("dummyId");
-    // let DummyPw = getCookie("dummyPw");
-    // const setDummyUser = () => {
-    //   setCookie("dummyId", "testUser");
-    //   setCookie("dummyPw", "zreview1234!");
-    //   setCookie("dummyEmail", "zreview@test.com");
-    //   setCookie("dummyName", "지리뷰");
-    //   setCookie("dummyNickname", "ZReview");
-    //   setCookie("dummyPhone", "01012345678");
-    //   setCookie("dummyLocation", "OO동");
-    // };
-    // let titleStyles = `
-    //   padding:10px 50px;
-    //   margin-bottom:10px;
-    //   background:#6656ff;
-    //   font-size:25px;
-    //   font-weight:bold;
-    // `;
-    // let dummyInfoKeyStyle = `
-    //   font-size:18px;
-    // `;
-    // let dummyInfoValueStyle = `
-    //   padding:5px;
-    //   border:1px solid #6656ff;
-    //   font-size:20px;
-    //   font-weight:bold;
-    //   color:#6656ff;
-    // `;
-    // {
-    //   DummyId === undefined ? setDummyUser() : consoleLogo();
-    //   console.log(
-    //     `%c테스트 계정 정보%c\n로그인 ID : %c${DummyId}%c\n로그인 PASSWORD : %c${DummyPw}`,
-    //     titleStyles,
-    //     dummyInfoKeyStyle,
-    //     dummyInfoValueStyle,
-    //     dummyInfoKeyStyle,
-    //     dummyInfoValueStyle
-    //   );
-    // }
   }, []);
 
   const activeNum = getLocationPathname(location.pathname);

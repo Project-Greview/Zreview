@@ -1,17 +1,17 @@
 // MODULE
-import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 // HOOK
 import {
-  getAllDataFromIndexedDB,
+  // getAllDataFromIndexedDB,
   getAllTargetDataFromIndexedDB,
 } from "api/IDBreview";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
-import {
-  locationSearchResultState,
-  searchKeywordState,
-} from "state/searchState";
+// import {
+//   locationSearchResultState,
+//   searchKeywordState,
+// } from "state/searchState";
 import { toastPopupState } from "state/commonState";
 import { mapMarkerState } from "state/mapMarkerState";
 // COMPONENT
@@ -19,7 +19,6 @@ import HashTagSlide from "../HashTagSlide";
 // SVG
 import ClusterMapMarkerIcon from "../../assets/image/icon/cluster_map_marker.svg";
 import MapMarkerIcon from "../../assets/image/icon/map_marker.svg";
-import ActiveMapMarkerIcon from "../../assets/image/icon/active_map_marker.svg";
 import MyMarkerIcon from "../../assets/image/icon/my_marker.svg";
 
 // PROPS TYPE
@@ -47,17 +46,17 @@ interface ReviewDataType {
 }
 const KakaoMap: React.FC = () => {
   const kakaoMaps = useRef(null);
-  const [searchResult, setSearchResult] = useRecoilState(
-    locationSearchResultState
-  );
+  // const [searchResult, setSearchResult] = useRecoilState(
+  //   locationSearchResultState
+  // );
   const [map, setMap] = useState(null);
-  const [mapMarkerData, setMapMarkerData] = useRecoilState(mapMarkerState);
-  const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
-  const [userLat, setUserLat] = useState(0);
-  const [userLng, setUserLng] = useState(0);
+  const [, setMapMarkerData] = useRecoilState(mapMarkerState);
+  const [, setToastModal] = useRecoilState<boolean>(toastPopupState);
+  const [, setUserLat] = useState(0);
+  const [, setUserLng] = useState(0);
 
   const dummyData = useRecoilValue(dummyDateState);
-  const keyword = useRecoilValue(searchKeywordState);
+  // const keyword = useRecoilValue(searchKeywordState);
   const viewHeight: number = window.innerHeight;
 
   const getReviewData = async (name: string) => {
@@ -271,6 +270,7 @@ const KakaoMap: React.FC = () => {
 
     // dummyData가 모두 로딩된 후 실행할 코드
     getKakao();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dummyData]);
 
   return (
