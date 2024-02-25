@@ -132,7 +132,7 @@ const Routers = createBrowserRouter(routes, {
   // basename: window.location.hostname === "localhost" ? "/" : process.env.PUBLIC_URL,
   basename:
     // process.env.NODE_ENV === "production" ? process.env.PUBLIC_URL : "/",
-    process.env.NODE_ENV === "production" ? "/" : "/",
+    "/",
 });
 
 export default Routers;
