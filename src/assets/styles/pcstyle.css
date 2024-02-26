@@ -1,6 +1,443 @@
 .pc_section {
-  height: 100vh;
+  min-height: 100vh;
+  /* height: 100vh; */
 }
+.pc_con {
+  padding: 0 14.5rem;
+}
+.pc_section .point_txt {
+  color: var(--point-color) !important;
+}
+.pc_section h1 {
+  font-size: 10rem;
+}
+.pc_section h2 {
+  font-size: 7rem;
+}
+.pc_section h6 {
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+.pc_section.section_3,
+.pc_section.section_4 {
+  /* background: var(--point-color); */
+  background: #493dc1;
+}
+/* SECTION_1 */
 .pc_section.section_1 {
-  background: #353535;
+  padding-top: 8.5rem;
+  background: var(--normal-gray-color);
+}
+.pc_section.section_1 .pc_con > div {
+  flex-basis: 50%;
+}
+
+.pc_section.section_1 .left_section h1 {
+  font-weight: 800;
+  color: var(--white-color);
+}
+.pc_section.section_1 .left_section .kor_semi_tit {
+  margin-top: 5rem;
+  font-weight: 400;
+  color: var(--white-color);
+}
+.pc_section.section_1 .left_section .kor_semi_tit span {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--white-color);
+}
+.pc_section.section_1 .right_section img {
+  max-width: 95%;
+}
+/* SECTION_2 */
+.pc_section.section_2 {
+  padding-top: 5rem;
+  background: var(--white-color);
+}
+.pc_section.section_2 h2 {
+  margin-top: 4.5rem;
+  font-weight: 600;
+  color: var(--navy-color);
+}
+.pc_section.section_2 h2 span {
+  font-size: 7rem;
+  font-weight: 800;
+  color: var(--navy-color);
+}
+.pc_section.section_2 p {
+  margin-top: 4.5rem;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--navy-color);
+  text-align: center;
+}
+.pc_section.section_2 .circle_chart {
+  margin-top: 8.5rem;
+}
+.pc_section.section_2 .circle_chart .plus_txt {
+  margin: 0 7.5rem;
+  font-size: 10rem;
+  font-weight: 800;
+}
+.pc_section.section_2 .circle_chart .circle_box {
+  flex-basis: 46rem;
+  width: 46rem;
+  height: 46rem;
+  border-radius: 50%;
+  border: 1px solid var(--point-color);
+}
+.pc_section.section_2 .circle_chart .circle_box div > strong {
+  font-size: 3rem;
+  font-weight: 800;
+}
+.pc_section.section_2 .circle_chart .circle_box div > div {
+  font-size: 3rem;
+  font-weight: 600;
+}
+.pc_section.section_2 .circle_chart .circle_box p {
+  margin-top: 3rem;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--normal-gray-text);
+}
+/* SECTION_3 */
+.pc_section.section_3 {
+  padding-top: 4.5rem;
+}
+.pc_section.section_3 .section_tit {
+  font-weight: 800;
+  color: var(--white-color);
+}
+.pc_section.section_3 .semi_tit {
+  margin-top: 2.5rem;
+}
+.pc_section.section_3 .semi_tit > h6 {
+  font-weight: 600;
+  color: var(--white-color);
+  line-height: 1.5;
+}
+.pc_section.section_3 .semi_tit ul {
+  text-align: right;
+}
+.pc_section.section_3 .semi_tit ul li {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+}
+.pc_section.section_3 .chart_list {
+  margin-top: 6rem;
+}
+.pc_section.section_3 .chart_list .mini_chart {
+  flex-basis: calc(97.5% / 3);
+  max-height: 50rem;
+  height: 50rem;
+  padding: 5rem;
+  background: var(--white-color);
+  border-radius: 5rem;
+  box-shadow: 0 20px 34px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+.pc_section.section_3 .chart_list .mini_chart .chart_body {
+  min-height: 40rem;
+  max-height: 40rem;
+  margin: 0 -1rem;
+  overflow-y: auto;
+}
+.pc_section.section_3 .chart_list .mini_chart .chart_body::-webkit-scrollbar {
+  width: 5px;
+}
+.pc_section.section_3
+  .chart_list
+  .mini_chart
+  .chart_body::-webkit-scrollbar-thumb {
+  position: relative;
+  height: 10%;
+  background: var(--point-color);
+  border-right: 1px solid var(--point-color);
+  border-left: 1px solid var(--point-color);
+  border-radius: 10px;
+}
+.pc_section.section_3
+  .chart_list
+  .mini_chart
+  .chart_body::-webkit-scrollbar-track {
+  background: #dbdbdb;
+  border-right: 1px solid var(--white-color);
+  border-left: 1px solid var(--white-color);
+}
+.pc_section.section_3 .chart_list .mini_chart .chart_tit {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--navy-color);
+  line-height: 1.1;
+}
+.pc_section.section_3 .chart_list .mini_chart .chart_tit span {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--navy-color);
+}
+.pc_section.section_3 .chart_list .mini_chart .semi_tit {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--disable-text);
+  letter-spacing: -0.5px;
+}
+.pc_section.section_3 .chart_list .mini_chart .contents {
+  min-height: 4rem;
+  margin-top: 4rem;
+}
+.pc_section.section_3 .chart_list .mini_chart .contents ul li .bars {
+  width: 0;
+  padding: 1.4rem;
+  margin-right: 1rem;
+  background: #dbdbdb;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--white-color);
+  transition: all 0.3s;
+}
+.pc_section.section_3 .chart_list .mini_chart .contents ul li .bars.point_bg {
+  background: var(--point-color);
+}
+.pc_section.section_3 .chart_list .mini_chart .contents ul li .key_txt {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #dbdbdb;
+}
+.pc_section.section_3
+  .chart_list
+  .mini_chart
+  .contents
+  .vertical
+  li:not(:first-child) {
+  margin-top: 2rem;
+}
+.pc_section.section_3
+  .chart_list
+  .mini_chart
+  .contents
+  .horizontal
+  li
+  .key_txt {
+  align-items: flex-start;
+  height: 2em;
+  margin-top: 1rem;
+  white-space: pre;
+  text-align: center;
+}
+.pc_section.section_3 .chart_list .mini_chart:nth-child(2) {
+  margin-top: 5.5rem;
+}
+.pc_section.section_3 .chart_list .mini_chart .contents .horizontal li .bars {
+  width: 5.8rem;
+  height: 0;
+  margin-right: 0;
+  border-top-left-radius: 2rem;
+  border-bottom-right-radius: 0;
+  text-align: center;
+}
+
+.pc_section.section_3 .chart_list .mini_chart .contents .custom_table > li {
+  margin-bottom: 0.5rem;
+}
+.pc_section.section_3 .chart_list .mini_chart .contents .custom_table li li {
+  flex-basis: calc((100% - 1rem) / 3);
+  height: 4.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--point-color);
+  color: var(--point-color);
+}
+.pc_section.section_3
+  .chart_list
+  .mini_chart
+  .contents
+  .custom_table
+  > li:first-child
+  li {
+  background: var(--point-color);
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--white-color);
+}
+.pc_section.section_3
+  .chart_list
+  .mini_chart
+  .contents
+  .custom_table
+  > li:first-child
+  li:first-child {
+  border-radius: 0;
+  border-top-left-radius: 2rem;
+}
+.pc_section.section_3
+  .chart_list
+  .mini_chart
+  .contents
+  .custom_table
+  > li:first-child
+  li:last-child {
+  border-radius: 0;
+  border-top-right-radius: 2rem;
+}
+.pc_section.section_3 .chart_list .mini_chart .contents .end_txt p {
+  margin: 0 0.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+/* SECTION_4 */
+.pc_section.section_4 {
+  padding-top: 4.5rem;
+}
+.pc_section.section_4 .section_tit {
+  font-weight: 700;
+  color: var(--white-color);
+}
+.pc_section.section_4 .zreview_point {
+  margin-top: 6rem;
+}
+.pc_section.section_4 .zreview_point > div > p {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--white-color);
+}
+.pc_section.section_4 .zreview_point > div ul li {
+  position: relative;
+  width: 100%;
+  height: 11rem;
+  padding: 0 4rem;
+  margin-top: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 -1px 1px rgba(255, 255, 255, 0.5);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--white-color);
+}
+.pc_section.section_4 .painpoint_list {
+  flex-basis: 50rem;
+}
+.pc_section.section_4 .painpoint_list ul li {
+  background: rgb(101, 86, 255);
+  background: linear-gradient(
+    90.13deg,
+    rgba(101, 86, 255, 0.5) 0%,
+    rgba(101, 86, 255, 0) 100%
+  );
+}
+.pc_section.section_4 .solution_list {
+  flex-basis: 63rem;
+}
+.pc_section.section_4 .solution_list ul li {
+  background: var(--dark-gray-color);
+}
+/* SECTION_5 */
+.pc_section.section_5 {
+  padding-top: 4.5rem;
+  background: #493dc1;
+  background: linear-gradient(
+    0deg,
+    rgba(141, 130, 254, 1) 0%,
+    rgba(73, 61, 193, 1) 100%
+  );
+}
+.pc_section.section_5 .section_tit {
+  font-weight: 700;
+  color: var(--white-color);
+  text-align: center;
+}
+.pc_section.section_5 .user_persona_list > li {
+  margin-top: 4rem;
+}
+.pc_section.section_5 .user_persona_list li .avatar_img {
+  flex-basis: 31rem;
+}
+.pc_section.section_5 .user_persona_list li .txt_box {
+  flex-basis: calc(100% - 35rem);
+  padding: 4rem;
+  background: var(--white-color);
+  border-radius: 3rem;
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.05);
+}
+.pc_section.section_5 .user_persona_list li .txt_box * {
+  color: var(--navy-color);
+}
+.pc_section.section_5 .user_persona_list li .txt_box .user_info p {
+  padding-right: 3rem;
+  font-size: 3rem;
+  font-weight: 700;
+}
+.pc_section.section_5
+  .user_persona_list
+  li
+  .txt_box
+  .user_info
+  p:first-child::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 2.5rem;
+  background: #d9d9d9;
+  top: 20%;
+  right: 0;
+}
+.pc_section.section_5 .user_persona_list li .txt_box .user_info p.job {
+  padding-left: 3rem;
+  font-weight: 500;
+}
+.pc_section.section_5 .user_persona_list li .txt_box strong {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.pc_section.section_5 .user_persona_list li .txt_box p {
+  font-size: 2rem;
+  font-weight: 500;
+}
+.pc_section.section_5 .user_persona_list li .txt_box p span {
+  font-size: 2rem;
+}
+.pc_section.section_5 .user_persona_list li .txt_box li li {
+  margin-left: 2rem;
+  font-size: 1.8rem;
+  line-height: 1.5;
+  list-style: disc;
+}
+.pc_section.section_5 .user_persona_list li .txt_box .persona_data {
+  margin-top: 4rem;
+}
+.pc_section.section_5
+  .user_persona_list
+  li
+  .txt_box
+  .persona_data
+  > li:first-child {
+  flex-basis: 100%;
+}
+.pc_section.section_5
+  .user_persona_list
+  li
+  .txt_box
+  .persona_data
+  > li:not(:first-child) {
+  flex-basis: 50%;
+  margin-top: 4rem;
+}
+.pc_section.section_5 .user_persona_list li .txt_box strong ~ * {
+  margin-top: 2rem;
+}
+/* SECTION_6 */
+.pc_section.section_6 {
+  padding-top: 4.5rem;
+  background: #493dc1;
+  background: linear-gradient(
+    0deg,
+    rgba(101, 86, 255, 0) 0%,
+    rgba(141, 130, 254, 1) 100%
+  );
+}
+.pc_section.section_6 .section_tit {
+  font-weight: 700;
+  color: var(--white-color);
+  text-align: center;
 }
