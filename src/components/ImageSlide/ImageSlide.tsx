@@ -1,6 +1,7 @@
 // MODULE
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+// STYLE
 import "swiper/css";
 import "swiper/css/pagination";
 // PROPS TYPE
