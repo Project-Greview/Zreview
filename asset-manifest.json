@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Zreview/static/css/main.b8d07dc1.css",
-    "main.js": "/Zreview/static/js/main.b6919768.js",
+    "main.css": "/Zreview/static/css/main.001bddff.css",
+    "main.js": "/Zreview/static/js/main.b8731b93.js",
     "static/js/27.e140b8a2.chunk.js": "/Zreview/static/js/27.e140b8a2.chunk.js",
     "static/media/Pretendard-Thin.ttf": "/Zreview/static/media/Pretendard-Thin.23965237737042c7c087.ttf",
     "static/media/Pretendard-ExtraLight.ttf": "/Zreview/static/media/Pretendard-ExtraLight.3a1f8545bfb6498f1f14.ttf",
@@ -11,6 +11,9 @@
     "static/media/Pretendard-ExtraBold.ttf": "/Zreview/static/media/Pretendard-ExtraBold.cffbbae60cbb858199b0.ttf",
     "static/media/Pretendard-Black.ttf": "/Zreview/static/media/Pretendard-Black.6ffb4c1216878d939b7c.ttf",
     "static/media/Pretendard-Bold.ttf": "/Zreview/static/media/Pretendard-Bold.be4e300c014733a8521f.ttf",
+    "static/media/Montserrat-Bold.ttf": "/Zreview/static/media/Montserrat-Bold.50f0257aa1e905f4bfaf.ttf",
+    "static/media/Montserrat-SemiBold.ttf": "/Zreview/static/media/Montserrat-SemiBold.93b37a465fc4ec0d0415.ttf",
+    "static/media/Montserrat-Medium.ttf": "/Zreview/static/media/Montserrat-Medium.b8c6753baa964ccac1ba.ttf",
     "static/media/Logo.png": "/Zreview/static/media/Logo.142199ddccbb54d3a0c3.png",
     "static/media/Logo.svg": "/Zreview/static/media/Logo.4d7224482601674125a127f813cddce8.svg",
     "static/media/map_marker.svg": "/Zreview/static/media/map_marker.5923965d175ef9fa4e9e1feb19296326.svg",
@@ -38,7 +41,7 @@
     "static/media/arrow-left.svg": "/Zreview/static/media/arrow-left.f11ade5d38e7ceb590a9b1ab97ab2e03.svg"
   },
   "entrypoints": [
-    "static/css/main.b8d07dc1.css",
-    "static/js/main.b6919768.js"
+    "static/css/main.001bddff.css",
+    "static/js/main.b8731b93.js"
   ]
 }
