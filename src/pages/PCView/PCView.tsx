@@ -5,6 +5,8 @@ import Section3 from "components/PCView/Section3";
 import Section4 from "components/PCView/Section4";
 import Section5 from "components/PCView/Section5";
 import Section6 from "components/PCView/Section6";
+import Section7 from "components/PCView/Section7";
+import Section8 from "components/PCView/Section8";
 
 // STYLE
 import "../../assets/styles/pcstyle.css";
@@ -18,6 +20,8 @@ const PCView: React.FC = () => {
       <Section4 />
       <Section5 />
       <Section6 />
+      <Section7 />
+      <Section8 />
     </>
   );
 };

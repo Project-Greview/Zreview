@@ -1,4 +1,5 @@
 @import "../fonts/pretendard.css";
+@import "../fonts//montserrat.css";
 
 @import "./commom.css";
 @import "./defaultskin.css";
@@ -34,7 +35,7 @@
 }
 
 * {
-  font-family: "pretendard";
+  font-family: "montserrat", "pretendard";
   font-weight: 600;
   -webkit-tap-highlight-color: transparent !important;
 }
