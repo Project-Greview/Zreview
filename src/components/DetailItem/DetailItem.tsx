@@ -129,7 +129,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ place }) => {
             </ul>
             <div className="icon_box flex flex_ai_c">
               <div className="like_box flex flex_ai_c">
-                <LikeIcon />
+                <LikeIcon color={"#e0ddff"} />
                 <p>{item?.likes}</p>
               </div>
               <div className="comment_box flex flex_ai_c">

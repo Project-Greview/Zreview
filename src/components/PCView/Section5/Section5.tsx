@@ -13,7 +13,7 @@ const Section5: React.FC = () => {
             <div className="avatar_img">
               <img
                 src={`${process.env.PUBLIC_URL}/assets/image/man_avatar.png`}
-                alt=""
+                alt="남성 아바타 이미지"
               />
             </div>
             <div className="txt_box">
@@ -62,7 +62,7 @@ const Section5: React.FC = () => {
             <div className="avatar_img">
               <img
                 src={`${process.env.PUBLIC_URL}/assets/image/woman_avatar.png`}
-                alt=""
+                alt="여성 아바타 이미지"
               />
             </div>
             <div className="txt_box">

@@ -1,17 +1,5 @@
 // LINK
-// SVG
-import { ReactComponent as MapIcon } from "../../../assets/image/icon/Map-icon.svg";
-import { ReactComponent as CompassIcon } from "../../../assets/image/icon/Compass-icon.svg";
-import { ReactComponent as WriteIcon } from "../../../assets/image/icon/Review-icon.svg";
-import { ReactComponent as BookMarkIcon } from "../../../assets/image/icon/Bookmark-icon.svg";
-import { ReactComponent as MyPageIcon } from "../../../assets/image/icon/MyPage-icon.svg";
-import { ReactComponent as CameraIcon } from "../../../assets/image/icon/camera_icon.svg";
-import { ReactComponent as SettingIcon } from "../../../assets/image/icon/setting_btn.svg";
-import { ReactComponent as CloseIcon } from "../../../assets/image/icon/close_btn.svg";
-import { ReactComponent as LikeIcon } from "../../../assets/image/icon/like_icon.svg";
-import { ReactComponent as ScoreIcon } from "../../../assets/image/icon/Score_star.svg";
-import { ReactComponent as DarkMarker } from "../../../assets/image/icon/marker_g.svg";
-import { ReactComponent as ColorMarker } from "../../../assets/image/icon/marker_c.svg";
+
 const Section7: React.FC = () => {
   return (
     <div className="pc_section section_7">
@@ -42,7 +30,7 @@ const Section7: React.FC = () => {
             <div className="img_box">
               <img
                 src={`${process.env.PUBLIC_URL}/assets/image/app_icon.png`}
-                alt=""
+                alt="지리뷰(ZReview) 앱 아이콘 이미지"
               />
             </div>
           </li>
@@ -51,7 +39,7 @@ const Section7: React.FC = () => {
             <div className="img_box">
               <img
                 src={`${process.env.PUBLIC_URL}/assets/image/wordmark_logo.png`}
-                alt=""
+                alt="지리뷰(ZReview) 텍스트 로고 이미지"
               />
             </div>
           </li>

@@ -54,7 +54,7 @@ const DummyModal: React.FC<DummyModalType> = ({ close }) => {
             더미데이터 만들기
           </div>
           <div className="close_btn" onClick={close}>
-            <CloseIcon width={20} height={20} />
+            <CloseIcon width={20} height={20} color={"#959292"} />
           </div>
         </div>
         <div className={`${dummy.modal_body} modal_body`}>
