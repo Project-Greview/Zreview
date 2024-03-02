@@ -37,7 +37,8 @@
 .pc_section.section_3,
 .pc_section.section_4,
 .pc_section.section_9,
-.pc_section.section_10 {
+.pc_section.section_10,
+.pc_section.section_11 {
   background: #493dc1;
 }
 /* SECTION_1 */
@@ -675,6 +676,10 @@
 .pc_section.section_9 .sub_tit * {
   color: var(--white-color);
 }
+.pc_section.section_9 .sub_tit h3 {
+  margin-right: 19rem;
+  font-weight: 700;
+}
 .pc_section.section_9 .sub_tit p {
   font-size: 3rem;
   font-weight: 300;
@@ -736,7 +741,7 @@
   content: "";
   position: absolute;
   width: 100%;
-  height: 43rem;
+  height: 40rem;
   top: 0;
   left: 0;
   background: var(--white-color);
@@ -751,11 +756,17 @@
   font-weight: 300;
 }
 .pc_section.section_10 .ex_txt p {
+  margin-right: 5.5rem;
   font-size: 2.5rem;
-  font-weight: 300;
+  font-weight: 600;
+  text-align: center;
+  font-family: "pretendard" !important;
+}
+.pc_section.section_10 .sub_tit h3 {
+  font-weight: 700;
 }
 .pc_section.section_10 .mockup_view {
-  margin-top: 9.5rem;
+  margin-top: 8.5rem;
 }
 .pc_section.section_10 .marker_icon {
   margin-left: 4rem;
@@ -775,7 +786,7 @@
   content: "";
   position: absolute;
   width: 1px;
-  height: 4rem;
+  height: 2rem;
   top: 100%;
   left: 30%;
   background: #958bff;
@@ -788,7 +799,7 @@
   content: "";
   position: absolute;
   width: 1px;
-  height: 4rem;
+  height: 2rem;
   bottom: 100%;
   right: 30%;
   background: #958bff;
@@ -800,12 +811,41 @@
   font-weight: 400;
   color: var(--white-color);
 }
+.pc_section.section_10 .mockup_view .search_img .place_mockup .sub_txt {
+  margin-top: 5rem;
+}
+.pc_section.section_10 .mockup_view .search_img .place_mockup .sub_txt > * {
+  color: var(--white-color);
+}
+.pc_section.section_10 .mockup_view .search_img .place_mockup .sub_txt p {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.pc_section.section_10 .mockup_view .search_img .place_mockup .sub_txt div {
+  margin-top: 1.5rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
 .pc_section.section_10 .mockup_view .search_img .review_mockup {
 }
-.pc_section.section_10 .mockup_view .search_img .review_mockup::after {
-  content: "";
-  position: absolute;
-  width: 294px;
-  height: 100%;
-  background: url("../../../public/assets/image/mockup_8.png");
+/* SECTION_11 */
+.pc_section.section_11 {
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+}
+.pc_section.section_11 .sub_tit * {
+  color: var(--white-color);
+}
+.pc_section.section_11 .sub_tit h3 {
+  margin-right: 19rem;
+  font-weight: 700;
+}
+.pc_section.section_11 .sub_tit h3 span {
+  font-size: 5rem;
+  font-weight: 400;
+}
+.pc_section.section_11 .ex_txt p {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--white-color);
 }

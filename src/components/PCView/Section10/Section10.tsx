@@ -40,13 +40,27 @@ const Section10: React.FC = () => {
             </div>
           </div>
           <div className="search_img flex">
-            <div className="place_mockup">
+            <div className="place_mockup flex flex_dir_c">
               <img
                 src={`${process.env.PUBLIC_URL}/assets/image/mockup_7.png`}
                 alt=""
               />
+              <div className="sub_txt">
+                <p>리뷰 간략보기</p>
+                <div>
+                  목록에 있는 리뷰나 리뷰 아이콘을
+                  <br />
+                  눌렀을때 장소에 대한 간단한 리뷰가 뜹니다.
+                </div>
+              </div>
             </div>
-            <div className="review_mockup relative"></div>
+            <div className="review_mockup relative">
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/image/mockup_8.png`}
+                alt=""
+                className="absolute"
+              />
+            </div>
           </div>
         </div>
       </div>
