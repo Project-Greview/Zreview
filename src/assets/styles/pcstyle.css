@@ -654,6 +654,7 @@
   flex-basis: calc(100% / 5);
   height: 6rem;
   margin-top: 1rem;
+  cursor: pointer;
 }
 .pc_section.section_8 .iconography .icon_list li > div {
   display: flex;
@@ -810,6 +811,9 @@
   font-size: 1.8rem;
   font-weight: 400;
   color: var(--white-color);
+}
+.pc_section.section_10 .mockup_view .search_img {
+  flex-basis: 50%;
 }
 .pc_section.section_10 .mockup_view .search_img .place_mockup .sub_txt {
   margin-top: 5rem;
