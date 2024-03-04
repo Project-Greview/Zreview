@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Zreview/static/css/main.1a3c5ee3.css",
-    "main.js": "/Zreview/static/js/main.78649dcb.js",
+    "main.css": "/Zreview/static/css/main.ba835d52.css",
+    "main.js": "/Zreview/static/js/main.2dc67252.js",
     "static/js/27.e140b8a2.chunk.js": "/Zreview/static/js/27.e140b8a2.chunk.js",
     "static/media/Pretendard-Thin.ttf": "/Zreview/static/media/Pretendard-Thin.23965237737042c7c087.ttf",
     "static/media/Pretendard-ExtraLight.ttf": "/Zreview/static/media/Pretendard-ExtraLight.3a1f8545bfb6498f1f14.ttf",
@@ -11,7 +11,6 @@
     "static/media/Pretendard-ExtraBold.ttf": "/Zreview/static/media/Pretendard-ExtraBold.cffbbae60cbb858199b0.ttf",
     "static/media/Pretendard-Black.ttf": "/Zreview/static/media/Pretendard-Black.6ffb4c1216878d939b7c.ttf",
     "static/media/Pretendard-Bold.ttf": "/Zreview/static/media/Pretendard-Bold.be4e300c014733a8521f.ttf",
-    "static/media/mockup_8.png": "/Zreview/static/media/mockup_8.fa7460c8dddedea1b9b0.png",
     "static/media/Montserrat-Bold.ttf": "/Zreview/static/media/Montserrat-Bold.50f0257aa1e905f4bfaf.ttf",
     "static/media/Montserrat-SemiBold.ttf": "/Zreview/static/media/Montserrat-SemiBold.93b37a465fc4ec0d0415.ttf",
     "static/media/Montserrat-Medium.ttf": "/Zreview/static/media/Montserrat-Medium.b8c6753baa964ccac1ba.ttf",
@@ -34,7 +33,7 @@
     "static/media/hashtag_search.svg": "/Zreview/static/media/hashtag_search.beb9997dd64d1de7fd40d85b317c2b92.svg",
     "static/media/default_marker.svg": "/Zreview/static/media/default_marker.72d3a858b1c7b2e11e46462f416b4340.svg",
     "static/media/like_icon.svg": "/Zreview/static/media/like_icon.23f7522a8ed7a8488024e3429dda4e37.svg",
-    "static/media/camera_icon.svg": "/Zreview/static/media/camera_icon.abddb1abfe113ded999d8355b931303f.svg",
+    "static/media/camera_icon.svg": "/Zreview/static/media/camera_icon.25f6051096de3a6bf9900667e74b3981.svg",
     "static/media/comment_icon.svg": "/Zreview/static/media/comment_icon.fb386f24fc133869a16d3e90a34694f0.svg",
     "static/media/arrow_right.svg": "/Zreview/static/media/arrow_right.2700acb732cca38cf0b23c3d6500864f.svg",
     "static/media/Bookmark-icon.svg": "/Zreview/static/media/Bookmark-icon.67790701598a06ebc165773ad6860e69.svg",
@@ -42,7 +41,7 @@
     "static/media/arrow-left.svg": "/Zreview/static/media/arrow-left.f11ade5d38e7ceb590a9b1ab97ab2e03.svg"
   },
   "entrypoints": [
-    "static/css/main.1a3c5ee3.css",
-    "static/js/main.78649dcb.js"
+    "static/css/main.ba835d52.css",
+    "static/js/main.2dc67252.js"
   ]
 }
