@@ -1,4 +1,30 @@
+// MODULE
+import { useEffect, useLayoutEffect, useState } from "react";
+
 const Section10: React.FC = () => {
+  const [longImgWidth, setLongImgWidth] = useState<number | undefined>(0);
+
+  useEffect(() => {
+    setInterval(() => {
+      if (longImgWidth === 0) {
+        const ImageWidth = document
+          .querySelector(".review_mockup > img")
+          ?.getBoundingClientRect().width;
+        setLongImgWidth(ImageWidth);
+        const imageFrames: any = document.querySelector(".review_mockup");
+        const absoluteImage: any = document.querySelector(
+          ".review_mockup > img"
+        );
+        imageFrames.style.width = `${ImageWidth}px`;
+        absoluteImage.style.position = "absolute";
+      } else {
+        const ImageWidth = document
+          .querySelector(".review_mockup > img")
+          ?.getBoundingClientRect().width;
+        setLongImgWidth(ImageWidth);
+      }
+    }, 1000);
+  }, []);
   return (
     <div className="pc_section section_10 relative">
       <div className="pc_con">
@@ -58,7 +84,6 @@ const Section10: React.FC = () => {
               <img
                 src={`${process.env.PUBLIC_URL}/assets/image/mockup_8.png`}
                 alt=""
-                className="absolute"
               />
             </div>
           </div>

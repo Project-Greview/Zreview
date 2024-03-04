@@ -31,7 +31,8 @@
 }
 .pc_section.section_1,
 .pc_section.section_7,
-.pc_section.section_8 {
+.pc_section.section_8,
+.pc_section.section_12 {
   background: var(--normal-gray-color);
 }
 .pc_section.section_3,
@@ -656,6 +657,9 @@
   margin-top: 1rem;
   cursor: pointer;
 }
+.pc_section.section_8 .iconography .icon_list li svg {
+  transition: all 0.3s;
+}
 .pc_section.section_8 .iconography .icon_list li > div {
   display: flex;
   justify-content: center;
@@ -664,6 +668,9 @@
   height: 6rem;
   border-radius: 10px;
   box-shadow: 0 7px 4px rgba(0, 0, 0, 0.25);
+}
+.pc_section.section_8 .iconography .icon_list li:hover svg {
+  color: red;
 }
 /* SECTION_9 */
 .pc_section.section_9 {
@@ -812,8 +819,9 @@
   font-weight: 400;
   color: var(--white-color);
 }
-.pc_section.section_10 .mockup_view .search_img {
-  flex-basis: 50%;
+.pc_section.section_10 .mockup_view .main_img > img {
+  border-radius: 3.8rem;
+  box-shadow: 0 25px 24px rgba(0, 0, 0, 0.3);
 }
 .pc_section.section_10 .mockup_view .search_img .place_mockup .sub_txt {
   margin-top: 5rem;
@@ -830,7 +838,35 @@
   font-size: 2rem;
   font-weight: 400;
 }
-.pc_section.section_10 .mockup_view .search_img .review_mockup {
+.pc_section.section_10 .mockup_view .search_img .review_mockup img {
+  width: 100%;
+  right: -15%;
+}
+.pc_section.section_10 .mockup_view .search_img .review_mockup::before {
+  content: "리뷰 상세보기";
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: inherit;
+  bottom: -98%;
+  right: -15%;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--white-color);
+}
+.pc_section.section_10 .mockup_view .search_img .review_mockup::after {
+  content: "다른 사람들이 쓴 리뷰들을 인피니티 스크롤로 전체 목록으로 볼 수 있으며, 작성할 수 있습니다.";
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 65%;
+  bottom: -108%;
+  right: 3%;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--white-color);
+  word-break: keep-all;
+  text-align: center;
 }
 /* SECTION_11 */
 .pc_section.section_11 {
@@ -852,4 +888,124 @@
   font-size: 2rem;
   font-weight: 300;
   color: var(--white-color);
+}
+.pc_section.section_11 .mockup_list {
+  margin-top: 8.5rem;
+}
+.pc_section.section_11 .mockup_list * {
+  color: var(--white-color);
+}
+.pc_section.section_11 .mockup_list li:first-child {
+  margin-right: 7.5rem;
+}
+.pc_section.section_11 .mockup_list li:nth-child(2) {
+  margin-right: 4.3rem;
+}
+.pc_section.section_11 .mockup_list li:nth-child(3) {
+  margin-right: 2.5rem;
+}
+.pc_section.section_11 .mockup_list li.relative:first-child img {
+  border-radius: 3.8rem;
+  box-shadow: 0 25px 24px rgba(0, 0, 0, 0.3);
+}
+.pc_section.section_11 .mockup_list li.relative:first-child::after {
+  content: "직접입력";
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 11.5rem;
+  height: 4.4rem;
+  top: 0rem;
+  left: 0;
+  border-radius: 3rem;
+  border: 1px solid var(--white-color);
+  font-size: 2rem;
+  font-weight: 300;
+}
+.pc_section.section_11 .mockup_list li.relative:nth-child(2) img {
+  border-radius: 3.8rem;
+  box-shadow: 0 25px 24px rgba(0, 0, 0, 0.3);
+}
+.pc_section.section_11 .mockup_list li.relative:nth-child(2)::after {
+  content: "장소검색";
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 11.5rem;
+  height: 4.4rem;
+  top: 0rem;
+  left: 0;
+  border-radius: 3rem;
+  border: 1px solid var(--white-color);
+  font-size: 2rem;
+  font-weight: 300;
+}
+.pc_section.section_11 .mockup_list .border_tit {
+  max-width: 11.5rem;
+  padding: 1rem 0;
+  border-radius: 3rem;
+  border: 1px solid var(--white-color);
+  font-size: 2rem;
+  font-weight: 300;
+}
+.pc_section.section_11 .mockup_list img {
+  margin-top: 7rem;
+}
+.pc_section.section_11 .mockup_list img ~ div {
+  margin-top: 3rem;
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+}
+.pc_section.section_11 .mockup_list img ~ div > p {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+/* SECTION_12 */
+.pc_section.section_12 {
+  padding: 8.5rem 0;
+  overflow: hidden;
+}
+.pc_section.section_12::after {
+  content: "THANK YOU";
+  position: absolute;
+  width: 100vw;
+  bottom: -12%;
+  left: 0;
+  font-size: 30rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--white-color);
+  opacity: 0.1;
+}
+.pc_section.section_12 .end_page_image .img_box {
+  width: 67.4rem;
+  height: 67.4rem;
+}
+.pc_section.section_12 .end_page_image .img_box::after {
+  content: "";
+  position: absolute;
+  width: 61rem;
+  height: 61rem;
+  top: calc(6.4rem / 2);
+  left: calc(6.4rem / 2);
+  background: #50489c;
+  border-radius: 50%;
+}
+.pc_section.section_12 .end_page_image .img_box img {
+  width: 64rem;
+  z-index: 2;
+}
+.pc_section.section_12 .end_page_image .txt_box * {
+  color: var(--white-color);
+}
+.pc_section.section_12 .end_page_image .txt_box h1 {
+  font-weight: bolder;
+}
+.pc_section.section_12 .end_page_image .txt_box h6:last-child {
+  margin-top: 3rem;
 }
