@@ -1,6 +1,11 @@
+.header {
+  z-index: 2;
+}
 .res_form_section {
   padding: var(--header-height) 2rem 0;
+  padding-bottom: 10rem;
   background: var(--white-color);
+  z-index: 1;
 }
 .res_form_section .pw_explanation {
   right: 0;

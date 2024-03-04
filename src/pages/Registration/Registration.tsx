@@ -177,20 +177,24 @@ const Registration: React.FC<RegistrationProps> = () => {
     }
   };
   const handleRegisterZreview = async () => {
-    const postData = {
-      email: resEmail,
-      password: resPassword,
-      phone: resPhone,
-      name: resName,
-      nickname: resNickname,
-    };
-    try {
-      const response = await addMemberDataToIndexedDB(postData);
-      if (response === "success") {
-        setModalState(3);
+    if (checkValue) {
+      setModalState(4);
+    } else {
+      const postData = {
+        email: resEmail,
+        password: resPassword,
+        phone: resPhone,
+        name: resName,
+        nickname: resNickname,
+      };
+      try {
+        const response = await addMemberDataToIndexedDB(postData);
+        if (response === "success") {
+          setModalState(3);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
   // MODIFY
@@ -202,6 +206,7 @@ const Registration: React.FC<RegistrationProps> = () => {
       setShake(false);
     }, 1000);
   }, [shake]);
+
   return (
     <>
       {modalState === 1 ? (
@@ -236,11 +241,20 @@ const Registration: React.FC<RegistrationProps> = () => {
           cancel={null}
           cancel_txt={""}
         />
+      ) : modalState === 4 ? (
+        <Modal
+          type={"type_2"}
+          contents={"필수값을 입력해주세요."}
+          conform={() => setModalState(0)}
+          conform_txt={"확인"}
+          cancel={null}
+          cancel_txt={""}
+        />
       ) : (
         ""
       )}
       <Header type={2} title={checkPage ? "개인정보 수정" : "회원가입"} />
-      <div className="res_form_section">
+      <div className="res_form_section relative">
         <div className="relative width_100p mar_top_25">
           <Input
             id={"res_email"}
@@ -254,6 +268,23 @@ const Registration: React.FC<RegistrationProps> = () => {
             readonly={checkPage}
             styles={""}
           />
+          {/* <div className="flex flex_jc_s flex_ai_c flex_wrap_wrap">
+            <label htmlFor="res_email" className="width_100p">
+              이메일
+            </label>
+            <input
+              type="text"
+              id="res_email"
+              name="이메일"
+              style={{ width: "60%" }}
+            />
+            <select name="" id="" style={{ width: "40%" }}>
+              <option value="gmail.com">gmail.com</option>
+              <option value="naver.com">naver.com</option>
+              <option value="kakao.com">kakao.com</option>
+              <option value="hanmail.net">hanmail.net</option>
+            </select>
+          </div> */}
           <div
             className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
               emailCheck === 3
@@ -389,9 +420,7 @@ const Registration: React.FC<RegistrationProps> = () => {
             </div>
           </div>
         )}
-        <div
-          className={`btn_box absolute flex ${!checkPage ? checkValue : ""}`}
-        >
+        <div className={`btn_box fixed flex ${!checkPage ? checkValue : ""}`}>
           <Button
             title={checkPage ? "수정완료" : "가입하기"}
             event={
