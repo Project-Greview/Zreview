@@ -1,5 +1,5 @@
 // MODULE
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 // HOOK
@@ -22,18 +22,29 @@ const PlaceReview: React.FC = () => {
   const [headerVisibility, setHeaderVisibility] = useState<boolean>(false);
   const [reviewData, setReviewData] = useState([]);
 
-  const writePlaceData = {
-    place_name: state.placeData.place_name,
-    address:
-      state.placeData.place_address !== undefined
-        ? state.placeData.place_address
-        : state.placeData.road_address_name !== undefined
-        ? state.placeData.road_address_name
-        : state.placeData.address_name,
-    location_lat: state.placeData.y,
-    location_lng: state.placeData.x,
-  };
-
+  const localStorageData: any = localStorage.getItem("pageData");
+  const writePlaceData =
+    state === null
+      ? {
+          place_name: JSON.parse(localStorageData).place_name,
+          address: JSON.parse(localStorageData).address,
+          location_lat: state.placeData.y,
+          location_lng: state.placeData.x,
+        }
+      : {
+          place_name: state.placeData.place_name,
+          address:
+            state.placeData.place_address !== undefined
+              ? state.placeData.place_address
+              : state.placeData.road_address_name !== undefined
+              ? state.placeData.road_address_name
+              : state.placeData.address_name,
+          location_lat: state.placeData.y,
+          location_lng: state.placeData.x,
+        };
+  useEffect(() => {
+    localStorage.setItem("pageData", JSON.stringify(writePlaceData));
+  }, []);
   useEffect(() => {
     if (inView) {
       setHeaderVisibility(true);
@@ -48,7 +59,6 @@ const PlaceReview: React.FC = () => {
           <Logo width={50} height={50} />
         </div>
         <div className="place_representative img_box flex flex_jc_c flex_ai_c">
-          {" "}
           <img src={"http://via.placeholder.com/500x500"} alt={""} />
         </div>
         <div className="txt_info">

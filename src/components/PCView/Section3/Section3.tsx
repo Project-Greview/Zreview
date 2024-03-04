@@ -1,5 +1,6 @@
 // MODULE
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 // JSON
 import PCData from "../../../json/pcIntroData.json";
 // PROPS TYPE
@@ -88,6 +89,13 @@ const CustomTableChart: React.FC = () => {
 };
 
 const Section3: React.FC = () => {
+  const [ref, inView] = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      document.querySelector(".section_3 .chart_list")?.classList.add("active");
+    }
+  }, [inView]);
   return (
     <div className="pc_section section_3">
       <div className="pc_con">
@@ -111,7 +119,7 @@ const Section3: React.FC = () => {
             </li>
           </ul>
         </div>
-        <ul className="chart_list flex flex_jc_sb">
+        <ul className="chart_list relative flex flex_jc_sb">
           <li className="mini_chart">
             <div className="chart_body">
               <div className="chart_tit">
@@ -168,6 +176,7 @@ const Section3: React.FC = () => {
               </div>
             </div>
           </li>
+          <li className="absolute" style={{ bottom: 50 }} ref={ref}></li>
         </ul>
       </div>
     </div>

@@ -91,6 +91,15 @@
 }
 .pc_section.section_2 .circle_chart {
   margin-top: 8.5rem;
+  transform: translateY(-10rem);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+.pc_section.section_2 .circle_chart.active {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
 }
 .pc_section.section_2 .circle_chart .plus_txt {
   margin: 0 7.5rem;
@@ -145,6 +154,7 @@
 .pc_section.section_3 .chart_list {
   margin-top: 6rem;
 }
+
 .pc_section.section_3 .chart_list .mini_chart {
   flex-basis: calc(97.5% / 3);
   max-height: 50rem;
@@ -153,7 +163,26 @@
   background: var(--white-color);
   border-radius: 5rem;
   box-shadow: 0 20px 34px rgba(0, 0, 0, 0.3);
+  transform: translateY(-10rem);
+  opacity: 0;
+  visibility: hidden;
   overflow: hidden;
+}
+.pc_section.section_3 .chart_list .mini_chart:first-child {
+  transition: all 0.3s;
+}
+.pc_section.section_3 .chart_list .mini_chart:nth-child(2) {
+  transition: all 0.3s;
+  transition-delay: 0.5s;
+}
+.pc_section.section_3 .chart_list .mini_chart:nth-child(3) {
+  transition: all 0.3s;
+  transition-delay: 1s;
+}
+.pc_section.section_3 .chart_list.active .mini_chart {
+  transform: translateY(0rem);
+  opacity: 1;
+  visibility: visible;
 }
 .pc_section.section_3 .chart_list .mini_chart .chart_body {
   min-height: 40rem;
@@ -480,12 +509,22 @@
   font-size: 2rem;
   font-weight: 600;
 }
+.pc_section.section_6 .section_sub_tit {
+  margin-top: 6rem;
+}
 .pc_section.section_6 .section_sub_tit h6 {
   font-weight: 700;
   color: var(--white-color);
 }
+.pc_section.section_6 .section_sub_tit > h6:nth-child(3) {
+  margin-top: 4rem;
+}
 .pc_section.section_6 .section_sub_tit p {
+  margin-top: 10rem;
   font-size: 2.5rem;
+}
+.pc_section.section_6 .section_sub_tit h2 {
+  margin-top: 1.5rem;
 }
 .pc_section.section_6 .section_sub_tit h2 span {
   font-size: 7rem;
@@ -670,7 +709,7 @@
   box-shadow: 0 7px 4px rgba(0, 0, 0, 0.25);
 }
 .pc_section.section_8 .iconography .icon_list li:hover svg {
-  color: red;
+  color: var(--point-color);
 }
 /* SECTION_9 */
 .pc_section.section_9 {

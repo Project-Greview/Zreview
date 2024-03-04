@@ -1,4 +1,13 @@
+// MODULE
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 const Section2: React.FC = () => {
+  const [ref, inView] = useInView();
+  useEffect(() => {
+    if (inView) {
+      document.querySelector(".circle_chart")?.classList.add("active");
+    }
+  }, [inView]);
   return (
     <div className="pc_section section_2">
       <div className="pc_con flex flex_dir_c flex_jc_c flex_ai_c">
@@ -15,7 +24,7 @@ const Section2: React.FC = () => {
           <br />
           따듯한 공동체도 형성돼 있어야 떠나지 않는다.
         </p>
-        <ul className="circle_chart flex flex_jc_c flex_ai_c">
+        <ul className="circle_chart relative flex flex_jc_c flex_ai_c">
           <li className="circle_box flex flex_dir_c flex_jc_c flex_ai_c">
             <div className="flex flex_dir_c flex_jc_c flex_ai_c">
               <strong className="point_txt">Hyperlocal</strong>
@@ -43,6 +52,7 @@ const Section2: React.FC = () => {
               </p>
             </div>
           </li>
+          <li className="absolute" style={{ bottom: 0 }} ref={ref}></li>
         </ul>
       </div>
     </div>

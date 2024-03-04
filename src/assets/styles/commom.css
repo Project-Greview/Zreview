@@ -445,17 +445,19 @@ span {
 }
 
 /* scroll_custom */
-body.scroll_custom {
+/* body {
   scroll-behavior: smooth;
+  scrollbar-width: none;
 }
-body.scroll_custom::-webkit-scrollbar {
-  width: 7px;
+body::-webkit-scrollbar {
+  width: 5px;
 }
-body.scroll_custom::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   height: 30%;
-  background: #999999;
+  background: var(--point-color);
+  border: 5px solid var(--point-color);
   border-radius: 10px;
 }
-body.scroll_custom::-webkit-scrollbar-track {
-  background: var(--default-text);
-}
+body::-webkit-scrollbar-track {
+  background: transparent;
+} */
