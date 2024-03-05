@@ -13,6 +13,7 @@ import {
   getCheckMemberPhoneDuplicationIndexedDB,
   getCheckMemberNicknameDuplicationIndexedDB,
 } from "api/IDBmember";
+import { setModalItem } from "components/Modal/ModalState";
 // COMPONENT
 import Input from "../../components/Common/Input";
 import Header from "../../components/Header";
@@ -129,7 +130,7 @@ const Registration: React.FC<RegistrationProps> = () => {
   };
   const onChangeRegNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    let value = e.target.value.replace(/[^\w\sㄱ-ㅎ가-힣]/g, "");
+    let value = e.target.value.replace(/[^\w\sㄱ-ㅎ가-힣\u318D]/g, "");
     setResNickname(value);
   };
   const onCheckResNickname = () => {
@@ -206,7 +207,7 @@ const Registration: React.FC<RegistrationProps> = () => {
       setShake(false);
     }, 1000);
   }, [shake]);
-
+  setModalItem("regist", modalState);
   return (
     <>
       {modalState === 1 ? (
@@ -256,7 +257,7 @@ const Registration: React.FC<RegistrationProps> = () => {
       <Header type={2} title={checkPage ? "개인정보 수정" : "회원가입"} />
       <div className="res_form_section relative">
         <div className="relative width_100p mar_top_25">
-          <Input
+          {/* <Input
             id={"res_email"}
             name={"이메일"}
             value={resEmail}
@@ -267,24 +268,26 @@ const Registration: React.FC<RegistrationProps> = () => {
             placeholder={""}
             readonly={checkPage}
             styles={""}
-          />
-          {/* <div className="flex flex_jc_s flex_ai_c flex_wrap_wrap">
+          /> */}
+          <div className="flex flex_jc_sb flex_ai_c flex_wrap_wrap">
             <label htmlFor="res_email" className="width_100p">
               이메일
             </label>
             <input
+              className="input_default"
               type="text"
               id="res_email"
               name="이메일"
-              style={{ width: "60%" }}
+              style={{ width: "59%" }}
             />
-            <select name="" id="" style={{ width: "40%" }}>
+            <span style={{ width: "5%" }}>@</span>
+            <select name="" id="" style={{ width: "34%" }}>
               <option value="gmail.com">gmail.com</option>
               <option value="naver.com">naver.com</option>
               <option value="kakao.com">kakao.com</option>
               <option value="hanmail.net">hanmail.net</option>
             </select>
-          </div> */}
+          </div>
           <div
             className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
               emailCheck === 3
