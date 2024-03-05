@@ -269,8 +269,8 @@ const Registration: React.FC<RegistrationProps> = () => {
             readonly={checkPage}
             styles={""}
           /> */}
-          <div className="flex flex_jc_sb flex_ai_c flex_wrap_wrap">
-            <label htmlFor="res_email" className="width_100p">
+          <div className="email_form flex flex_jc_sb flex_ai_c flex_wrap_wrap">
+            <label htmlFor="res_email" className="input_name width_100p">
               이메일
             </label>
             <input
@@ -286,6 +286,7 @@ const Registration: React.FC<RegistrationProps> = () => {
               <option value="naver.com">naver.com</option>
               <option value="kakao.com">kakao.com</option>
               <option value="hanmail.net">hanmail.net</option>
+              <option value="nate.com">nate.com</option>
             </select>
           </div>
           <div
