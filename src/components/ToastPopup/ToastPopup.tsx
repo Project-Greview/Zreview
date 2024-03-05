@@ -66,7 +66,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   const locationResult = useRecoilValue(locationSearchResultState);
   const searchType = useRecoilValue(searchTypeState);
   const markerData = useRecoilValue<any>(mapMarkerState);
-
+  console.log("markerData", markerData);
   const cleanResultInfo = useResetRecoilState(locationSearchResultState);
   const cleanPages = useResetRecoilState(paginationState);
   const cleanResult = useResetRecoilState(searchResultState);

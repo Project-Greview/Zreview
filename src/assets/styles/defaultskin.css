@@ -698,7 +698,7 @@
 }
 .place_body {
   padding: 2rem;
-  min-height: 100rem;
+  min-height: 105vh;
 }
 .place_body .point_txt {
   font-weight: 700;

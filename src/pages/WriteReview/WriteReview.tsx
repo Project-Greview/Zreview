@@ -202,14 +202,14 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     const calcScore = {
       score:
         score === 1
-          ? -1.5
+          ? -2
           : score === 2
           ? -1
           : score === 3
           ? +0
           : score === 4
           ? +1
-          : +1.5,
+          : +2,
       key: placeId,
     };
     try {
@@ -252,7 +252,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
         placeName: state.place_name,
         placeLatitude: state.location_lat,
         placeLongitude: state.location_lon,
-        placeAddress: state.address,
+        placeAddress: state.place_address,
       });
     }
   }, []);

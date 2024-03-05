@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 // HOOK
 import { getAllTargetDataFromIndexedDB } from "api/IDBreview";
+import { getPlaceDataFromIndexedDB } from "api/IDBplace";
 // COMPONENT
 import Header from "components/Header";
 import DetailItem from "components/DetailItem";
@@ -22,6 +23,8 @@ const PlaceReview: React.FC = () => {
 
   const [headerVisibility, setHeaderVisibility] = useState<boolean>(false);
   const [reviewData, setReviewData] = useState([]);
+  const [placeScore, setPlaceScore] = useState<number>(0);
+
   const localStorageData: any = localStorage.getItem("pageData");
   const writePlaceData =
     state === null
@@ -33,7 +36,7 @@ const PlaceReview: React.FC = () => {
         }
       : {
           place_name: state.placeData.place_name,
-          address:
+          place_address:
             state.placeData.place_address !== undefined
               ? state.placeData.place_address
               : state.placeData.road_address_name !== undefined
@@ -48,6 +51,16 @@ const PlaceReview: React.FC = () => {
               ? state.placeData.location_lon
               : Number(state.placeData.x),
         };
+
+  const getPlaceScore = async () => {
+    try {
+      const response = await getPlaceDataFromIndexedDB(writePlaceData);
+      const score = (response[0].place_score / 1000) * 100;
+      setPlaceScore(score);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     localStorage.setItem("pageData", JSON.stringify(writePlaceData));
   }, []);
@@ -60,6 +73,7 @@ const PlaceReview: React.FC = () => {
         console.log(error);
       })
       .finally(() => {});
+    getPlaceScore();
   }, []);
   useEffect(() => {
     if (inView) {
@@ -81,7 +95,7 @@ const PlaceReview: React.FC = () => {
           <div className="store_name">{writePlaceData.place_name}</div>
           <div className="store_address flex flex_ai_c">
             <DefaultMarkerIcon />
-            {writePlaceData.address}
+            {writePlaceData.place_address}
           </div>
         </div>
         <div className=" btn_box flex flex_jc_sb flex_ai_c">
@@ -101,16 +115,19 @@ const PlaceReview: React.FC = () => {
         </div>
         <div className="store_status_bar">
           <div className="status_bar relative">
-            <div className="gauge absolute"></div>
+            <div
+              className="gauge absolute"
+              style={{ width: `${placeScore.toFixed(1)}%` }}
+            ></div>
           </div>
           <div className="status_text flex flex_jc_sb flex_ai_c">
             <div className="good flex flex_ai_c">
               <p>긍정적</p>
-              <p className="point">%</p>
+              <p className="point">{placeScore.toFixed(1)}%</p>
             </div>
             <div className="not_good flex flex_ai_c">
               <p>부정적</p>
-              <p className="point">%</p>
+              <p className="point">{(100 - placeScore).toFixed(1)}%</p>
             </div>
           </div>
         </div>
