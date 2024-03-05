@@ -1,8 +1,9 @@
 // MODULE
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 // HOOK
+import { getAllTargetDataFromIndexedDB } from "api/IDBreview";
 // COMPONENT
 import Header from "components/Header";
 import DetailItem from "components/DetailItem";
@@ -21,15 +22,14 @@ const PlaceReview: React.FC = () => {
 
   const [headerVisibility, setHeaderVisibility] = useState<boolean>(false);
   const [reviewData, setReviewData] = useState([]);
-
   const localStorageData: any = localStorage.getItem("pageData");
   const writePlaceData =
     state === null
       ? {
           place_name: JSON.parse(localStorageData).place_name,
           address: JSON.parse(localStorageData).address,
-          location_lat: state.placeData.y,
-          location_lng: state.placeData.x,
+          location_lat: state.placeData.location_lat,
+          location_lon: state.placeData.location_lon,
         }
       : {
           place_name: state.placeData.place_name,
@@ -39,11 +39,27 @@ const PlaceReview: React.FC = () => {
               : state.placeData.road_address_name !== undefined
               ? state.placeData.road_address_name
               : state.placeData.address_name,
-          location_lat: state.placeData.y,
-          location_lng: state.placeData.x,
+          location_lat:
+            state.placeData.location_lat !== undefined
+              ? state.placeData.location_lat
+              : Number(state.placeData.y),
+          location_lon:
+            state.placeData.location_lon !== undefined
+              ? state.placeData.location_lon
+              : Number(state.placeData.x),
         };
   useEffect(() => {
     localStorage.setItem("pageData", JSON.stringify(writePlaceData));
+  }, []);
+  useLayoutEffect(() => {
+    getAllTargetDataFromIndexedDB(state.placeData.place_name)
+      .then((data) => {
+        // console.log("data", data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {});
   }, []);
   useEffect(() => {
     if (inView) {

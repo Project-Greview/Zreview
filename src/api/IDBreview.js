@@ -44,6 +44,10 @@ export const addDataToIndexedDB = (postData) => {
         console.log("error", e);
         reject(e);
       };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
     };
   });
 };
@@ -119,6 +123,10 @@ export const getAllTargetDataFromIndexedDB = (target_name) => {
       request.onerror = (e) => {
         console.log("error", e);
         reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
       };
     };
   });

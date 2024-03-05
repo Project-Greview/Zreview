@@ -18,6 +18,10 @@ export const indexedDBStart = () => {
       keyPath: "id",
       autoIncrement: true,
     });
+    const placeStore = db.createObjectStore("place", {
+      keyPath: "id",
+      autoIncrement: true,
+    });
     console.log("Object stores created successfully");
   };
   request.onsuccess = (event: any) => {

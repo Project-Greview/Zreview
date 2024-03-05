@@ -69,13 +69,6 @@ const DetailItem: React.FC<DetailItemProps> = ({ place }) => {
   const getDummyData = dummyData[0].filter(
     (dummyItem) => dummyItem.id === state
   );
-  const formattedDate = new Date(
-    getDummyData[0]?.updated_at
-  ).toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
   // 임시 데이터
 
   useLayoutEffect(() => {
@@ -92,54 +85,63 @@ const DetailItem: React.FC<DetailItemProps> = ({ place }) => {
       })
       .finally(() => {});
   }, []);
-  // console.log("reviewData", reviewData);
   return (
     <ul>
-      {reviewData.map((item: any) => (
-        <li className="review_item_box" key={item?.id}>
-          <div className="reviewer_info flex flex_jc_sb flex_ai_fs">
-            <div className="user_info flex flex_jc_sb flex_ai_c">
-              <ProfileImage src={Logo} alt={""} size={35} />
-              <div className="txt_box flex flex_dir_c">
-                <div className="user_nickname">{item?.writer}</div>
-                <div className="create_dt">{formattedDate}</div>
+      {reviewData.map((item: any) => {
+        const formattedDate = new Date(item?.created_at).toLocaleDateString(
+          "ko-KR",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }
+        );
+        return (
+          <li className="review_item_box" key={item?.id}>
+            <div className="reviewer_info flex flex_jc_sb flex_ai_fs">
+              <div className="user_info flex flex_jc_sb flex_ai_c">
+                <ProfileImage src={Logo} alt={""} size={35} />
+                <div className="txt_box flex flex_dir_c">
+                  <div className="user_nickname">{item?.writer}</div>
+                  <div className="create_dt">{formattedDate}</div>
+                </div>
+              </div>
+              <div className="review_menu_btn relative">
+                <div className="absolute"></div>
+                <div className="absolute"></div>
+                <div className="absolute"></div>
               </div>
             </div>
-            <div className="review_menu_btn relative">
-              <div className="absolute"></div>
-              <div className="absolute"></div>
-              <div className="absolute"></div>
-            </div>
-          </div>
-          <div className="review_box">
-            <div className="slider">
-              <ImageSlide boxSize={boxWidth} images={item?.images} />
-            </div>
-            <div className="score flex">
-              <StarScore max={5} rating={item?.rating} />
-              <p>{item?.rating}</p>
-            </div>
-            <div className="contents">{item?.content}</div>
-            <ul className="hashtag_list flex">
-              {item?.hashtag.map((txt: any) => (
-                <li key={txt}>
-                  <HashTag tag={txt} />
-                </li>
-              ))}
-            </ul>
-            <div className="icon_box flex flex_ai_c">
-              <div className="like_box flex flex_ai_c">
-                <LikeIcon color={"#e0ddff"} />
-                <p>{item?.likes}</p>
+            <div className="review_box">
+              <div className="slider">
+                <ImageSlide boxSize={boxWidth} images={item?.images} />
               </div>
-              <div className="comment_box flex flex_ai_c">
-                <CommentIcon />
-                <p>{item?.comments}</p>
+              <div className="score flex">
+                <StarScore max={5} rating={item?.score} />
+                <p>{item?.score}</p>
+              </div>
+              <div className="contents">{item?.content}</div>
+              <ul className="hashtag_list flex">
+                {item?.hashtag.map((txt: any) => (
+                  <li key={txt}>
+                    <HashTag tag={txt} />
+                  </li>
+                ))}
+              </ul>
+              <div className="icon_box flex flex_ai_c">
+                <div className="like_box flex flex_ai_c">
+                  <LikeIcon color={"#e0ddff"} />
+                  <p>{item?.likes}</p>
+                </div>
+                <div className="comment_box flex flex_ai_c">
+                  <CommentIcon />
+                  <p>{item?.comments}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </ul>
   );
 };

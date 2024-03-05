@@ -9,7 +9,7 @@
 }
 .inner_section {
   min-height: 100vh;
-  padding-top: 5rem;
+  padding: 5rem 0 8rem;
   background: var(--white-color);
 }
 .bg_section {

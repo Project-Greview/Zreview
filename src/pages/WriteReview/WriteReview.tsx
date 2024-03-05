@@ -4,6 +4,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 // HOOK
 import { addDataToIndexedDB } from "api/IDBreview";
+import {
+  addPlaceDataToIndexedDB,
+  patchPlaceDataFromIndexedDB,
+  getPlaceDataFromIndexedDB,
+} from "api/IDBplace";
+import { getCookie } from "utils/cookies";
+
 // RECOIL STATE
 import { toastPopupState } from "state/commonState";
 import { locationSearchResultState } from "state/searchState";
@@ -25,7 +32,6 @@ import ImageUpload from "components/ImageUpload";
 // SVG
 import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
 import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg";
-import { getCookie } from "utils/cookies";
 // PROPS TYPE
 type WriteReviewProps = {};
 interface ReviewDataType {
@@ -68,6 +74,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const [alarmModal, setAlarmModal] = useState<number>(0);
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
+  const [placeId, setPlaceId] = useState<number>(0);
 
   let maxHashtag = hashtag.length === 3;
   const settingType = locationType === "search";
@@ -89,6 +96,35 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       return "oppose";
     }
   };
+  // IS PLACE IN DB
+  const setPlaceInfo = async (data: any) => {
+    try {
+      const response = await addPlaceDataToIndexedDB(data);
+      console.log(response);
+      setPlaceId(response.target.result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const onBlurPlaceCheck = async () => {
+    const place_info = {
+      place_name: writeLocationData.placeName,
+      location_lat: Number(writeLocationData.placeLatitude),
+      location_lon: Number(writeLocationData.placeLongitude),
+      place_address: writeLocationData.placeAddress,
+    };
+    try {
+      const response = await getPlaceDataFromIndexedDB(place_info);
+      if (response.length === 0) {
+        setPlaceInfo(place_info);
+      } else {
+        setPlaceId(response[0].id);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // STATE REGISTER POSITION
   const handleWritePlacePosition = () => {
     navigator.geolocation.getCurrentPosition((position: any) => {
@@ -129,10 +165,9 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     });
   };
   // POST REVIEW
-  const setAPICode = () => {
-    console.log("리뷰작성 API 발동!");
-  };
   const handleReviewPOST = async () => {
+    console.log(placeId);
+
     const postData: ReviewDataType = {
       title: writeLocationData.placeName,
       place_name: writeLocationData.placeName,
@@ -148,13 +183,38 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       views: 0,
       likes: 0,
       comments: 0,
-      writer: getCookie("dummyNickname"),
+      writer: getCookie("user").nickname,
       profile: "",
     };
     try {
       const response = await addDataToIndexedDB(postData);
+      if (response === "success") {
+        console.log("placeId", placeId);
+        calcPlaceScore();
+        setAlarmModal(2);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // CALC PLACE SCORE
+  const calcPlaceScore = async () => {
+    const calcScore = {
+      score:
+        score === 1
+          ? -1.5
+          : score === 2
+          ? -1
+          : score === 3
+          ? +0
+          : score === 4
+          ? +1
+          : +1.5,
+      key: placeId,
+    };
+    try {
+      const response = await patchPlaceDataFromIndexedDB(calcScore);
       console.log(response);
-      setAlarmModal(2);
     } catch (error) {
       console.log(error);
     }
@@ -191,7 +251,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       setWriteLocationData({
         placeName: state.place_name,
         placeLatitude: state.location_lat,
-        placeLongitude: state.location_lng,
+        placeLongitude: state.location_lon,
         placeAddress: state.address,
       });
     }
@@ -403,7 +463,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
             <Button
               title={"등록하기"}
               width={"100%"}
-              event={() => setAlarmModal(1)}
+              event={() => (setAlarmModal(1), onBlurPlaceCheck())}
               styles={"buttons flex flex_jc_c flex_ai_c width_100p cursor_p"}
             />
           </div>

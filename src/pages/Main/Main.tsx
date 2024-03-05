@@ -8,7 +8,7 @@ import { locationSearchResultState } from "state/searchState";
 import { dummyDateState } from "state/dummyState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
-import { getAllDataFromIndexedDB } from "api/IDBreview";
+import { getAllPlaceDataFromIndexedDB } from "api/IDBplace";
 // COMPONENT
 import LeftMenu from "../../components/LeftMenu";
 import KakaoMap from "../../components/KakaoMap";
@@ -18,7 +18,6 @@ import ToastPopup from "components/ToastPopup";
 type MainProps = {};
 
 const Main: React.FC<MainProps> = () => {
-  console.log("NODE_ENV", process.env.NODE_ENV);
   const isLeftMenu = useRecoilValue(leftMenuState);
   const [data, setData] = useRecoilState(dummyDateState);
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
@@ -50,7 +49,7 @@ const Main: React.FC<MainProps> = () => {
     cleanResult();
   }, [isReady]);
   useEffect(() => {
-    getAllDataFromIndexedDB()
+    getAllPlaceDataFromIndexedDB()
       .then((data) => {
         setData(data);
       })
