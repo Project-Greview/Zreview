@@ -1,16 +1,14 @@
 // MODULE
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // RECOIL STATE
 import { shakeAnimationState } from "state/commonState";
 // HOOK
-import { CheckPasswordText } from "utils/textUtil";
 import { getCookie } from "utils/cookies";
 import { addMemberDataToIndexedDB } from "api/IDBmember";
 import { setModalItem } from "components/Modal/ModalState";
 // COMPONENT
-import Input from "../../components/Common/Input";
 import Header from "../../components/Header";
 import Button from "components/Common/Button";
 import Modal from "components/Modal";
@@ -18,11 +16,14 @@ import Email from "./Email";
 import Phone from "./Phone";
 import Nickname from "./Nickname";
 import Name from "./Name";
+import Password from "./Password";
 
 // PROPS TYPE
-type RegistrationProps = {
+type RegistrationType = {
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
   phone: string;
   setPhone: React.Dispatch<React.SetStateAction<string>>;
   name: string;
@@ -31,7 +32,7 @@ type RegistrationProps = {
   setNickname: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Registration: React.FC<RegistrationProps> = () => {
+const Registration: React.FC<RegistrationType> = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const checkPage = state.type === "modify";
@@ -50,53 +51,16 @@ const Registration: React.FC<RegistrationProps> = () => {
     nickname: "",
     name: "",
   });
-
-  const [resPassword, setResPassword] = useState<string>("");
-  const [pwCheck, setPwCheck] = useState<number>(0);
-  const [resPasswordCheck, setResPasswordCheck] = useState<string>("");
-  const [pwCkCheck, setPwCkCheck] = useState<number>(0);
-  // const [resPhone, setResPhone] = useState<string>(
-  //   checkPage ? loginUserPhone : ""
-  // );
-  // const [resName, setResName] = useState<string>(
-  //   checkPage ? loginUserName : ""
-  // );
-  // const [nameCheck, setNameCheck] = useState<number>(0);
-  const [nicknameCheck, setNicknameCheck] = useState<number>(0);
-
-  const onChangeRegPassword = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setResPassword(e.target.value);
-  };
-  const onCheckResPassWord = () => {
-    if (CheckPasswordText(resPassword) === true) {
-      setPwCheck(2);
-    } else {
-      setPwCheck(1);
-      setShake(true);
-    }
-  };
-  const onChangeRegPasswordCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setResPasswordCheck(e.target.value);
-  };
-  const onCheckResPasswordCheck = () => {
-    if (resPassword !== resPasswordCheck) {
-      setPwCkCheck(1);
-      setShake(true);
-    } else {
-      setPwCkCheck(2);
-    }
-  };
+  const [registerDataCheck, setRegisterDataCheck] = useState<any>({
+    email: 0,
+    password: 0,
+    phone: 0,
+    nickname: 0,
+    name: 0,
+  });
 
   // REGISTRATION
-  const checkValue =
-    pwCheck === 2 &&
-    pwCkCheck === 2 &&
-    nicknameCheck === 3 &&
-    nicknameCheck === 3
-      ? ""
-      : "disable";
+  const checkValue = modalState === 2 ? "" : "disable";
   // CHECKING
 
   const handleRegisterZreview = async () => {
@@ -105,7 +69,7 @@ const Registration: React.FC<RegistrationProps> = () => {
     } else {
       const postData = {
         email: registerData.email,
-        password: resPassword,
+        password: registerData.password,
         phone: registerData.phone,
         name: registerData.name,
         nickname: registerData.nickname,
@@ -121,7 +85,7 @@ const Registration: React.FC<RegistrationProps> = () => {
     }
   };
   // MODIFY
-  const handleStep1UsereModify = () => {
+  const handleStep1UserModify = () => {
     setModalState(1);
   };
   useEffect(() => {
@@ -185,56 +149,21 @@ const Registration: React.FC<RegistrationProps> = () => {
           setEmail={(email: string) =>
             setRegisterData({ ...registerData, email })
           }
+          check={registerDataCheck.email}
+          setCheck={(email: number) =>
+            setRegisterDataCheck({ ...registerData, email })
+          }
         />
-
-        <div className="relative width_100p mar_top_25">
-          <div className="pw_explanation absolute_top">
-            8~16자의 영문과 숫자, 특수문자 조합
-          </div>
-          <Input
-            id={"res_password"}
-            name={"비밀번호"}
-            value={resPassword}
-            onChange={onChangeRegPassword}
-            type={"password"}
-            onBlur={onCheckResPassWord}
-            maxLength={16}
-            placeholder={""}
-            readonly={false}
-            styles={""}
-          />
-          <div
-            className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
-              pwCheck === 2
-            }`}
-          >
-            {pwCheck === 1 ? "비밀번호를 확인해주세요." : ""}
-          </div>
-        </div>
-        <div className="relative width_100p mar_top_25">
-          <div className="pw_explanation absolute_top">
-            8~16자의 영문과 숫자, 특수문자 조합
-          </div>
-          <Input
-            id={"res_password_check"}
-            name={"비밀번호 확인"}
-            value={resPasswordCheck}
-            onChange={onChangeRegPasswordCheck}
-            type={"password"}
-            onBlur={onCheckResPasswordCheck}
-            maxLength={16}
-            placeholder={""}
-            readonly={false}
-            styles={""}
-          />
-          <div
-            className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
-              pwCkCheck === 2
-            }`}
-          >
-            {pwCkCheck === 1 ? "입력한 비밀번호가 다릅니다." : ""}
-          </div>
-        </div>
+        <Password
+          password={registerData.password}
+          setPassword={(password: string) =>
+            setRegisterData({ ...registerData, password })
+          }
+          check={registerDataCheck.password}
+          setCheck={(password: number) =>
+            setRegisterDataCheck({ ...registerData, password })
+          }
+        />
         <Phone
           pageType={checkPage}
           loginUserPhone={loginUserPhone}
@@ -242,12 +171,20 @@ const Registration: React.FC<RegistrationProps> = () => {
           setPhone={(phone: string) =>
             setRegisterData({ ...registerData, phone })
           }
+          check={registerDataCheck.phone}
+          setCheck={(phone: number) =>
+            setRegisterDataCheck({ ...registerData, phone })
+          }
         />
         <Name
           pageType={checkPage}
           loginUserName={loginUserName}
           name={registerData.name}
           setName={(name: string) => setRegisterData({ ...registerData, name })}
+          check={registerDataCheck.name}
+          setCheck={(name: number) =>
+            setRegisterDataCheck({ ...registerData, name })
+          }
         />
         <Nickname
           pageType={checkPage}
@@ -255,13 +192,17 @@ const Registration: React.FC<RegistrationProps> = () => {
           setNickname={(nickname: string) =>
             setRegisterData({ ...registerData, nickname })
           }
+          check={registerDataCheck.nickname}
+          setCheck={(nickname: number) =>
+            setRegisterDataCheck({ ...registerData, nickname })
+          }
         />
         <div className={`btn_box fixed flex ${!checkPage ? checkValue : ""}`}>
           <Button
             title={checkPage ? "수정완료" : "가입하기"}
             event={
               checkPage
-                ? () => handleStep1UsereModify()
+                ? () => handleStep1UserModify()
                 : () => handleRegisterZreview()
             }
             width={"100%"}

@@ -10,18 +10,20 @@ import Input from "components/Common/Input";
 // PROPS TYPE
 type NicknameType = {
   pageType: boolean;
-
   nickname: string;
   setNickname: any;
+  check: number;
+  setCheck: any;
 };
 
 const Nickname: React.FC<NicknameType> = ({
   pageType,
   nickname,
   setNickname,
+  check,
+  setCheck,
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
-  const [nicknameCheck, setNicknameCheck] = useState<number>(0);
 
   const onChangeRegNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -40,13 +42,13 @@ const Nickname: React.FC<NicknameType> = ({
   const onCheckResNickname = () => {
     const isTrue = onDuplicationCheckNickname();
     if (nickname.length < 2) {
-      setNicknameCheck(1);
+      setCheck(1);
       setShake(true);
     } else if (!isTrue) {
-      setNicknameCheck(2);
+      setCheck(2);
       setShake(true);
     } else {
-      setNicknameCheck(3);
+      setCheck(3);
     }
   };
   return (
@@ -69,14 +71,14 @@ const Nickname: React.FC<NicknameType> = ({
           />
           <div
             className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
-              nicknameCheck === 3
+              check === 3
             }`}
           >
-            {nicknameCheck === 1
+            {check === 1
               ? "올바른 닉네임을 입력해주세요."
-              : nicknameCheck === 2
+              : check === 2
               ? "중복된 닉네임 입니다."
-              : nicknameCheck === 3
+              : check === 3
               ? "사용 가능한 닉네임 입니다."
               : ""}
           </div>

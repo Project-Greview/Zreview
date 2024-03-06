@@ -8,21 +8,24 @@ import { shakeAnimationState } from "state/commonState";
 // COMPONENT
 import Input from "components/Common/Input";
 // PROPS TYPE
-type PhoneProps = {
+type PhoneType = {
   pageType: boolean;
   loginUserPhone: string;
   phone: string;
   setPhone: any;
+  check: number;
+  setCheck: any;
 };
 
-const Phone: React.FC<PhoneProps> = ({
+const Phone: React.FC<PhoneType> = ({
   pageType,
   loginUserPhone,
   phone,
   setPhone,
+  check,
+  setCheck,
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
-  const [phoneCheck, setPhoneCheck] = useState<number>(0);
 
   const onChangeRegPhone = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -36,13 +39,13 @@ const Phone: React.FC<PhoneProps> = ({
   const onCheckResPhone = () => {
     const isTrue = onDuplicationCheckPhone();
     if (phone?.length < 10) {
-      setPhoneCheck(1);
+      setCheck(1);
       setShake(true);
     } else if (!isTrue) {
-      setPhoneCheck(2);
+      setCheck(2);
       setShake(true);
     } else {
-      setPhoneCheck(3);
+      setCheck(3);
     }
   };
 
@@ -69,14 +72,14 @@ const Phone: React.FC<PhoneProps> = ({
       />
       <div
         className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
-          phoneCheck === 3
+          check === 3
         }`}
       >
-        {phoneCheck === 1
+        {check === 1
           ? "올바른 전화번호를 입력해주세요."
-          : phoneCheck === 2
+          : check === 2
           ? "가입된 전화번호 입니다."
-          : phoneCheck === 3
+          : check === 3
           ? "사용 가능한 전화번호 입니다."
           : ""}
       </div>

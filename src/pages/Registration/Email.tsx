@@ -10,24 +10,27 @@ import Input from "components/Common/Input";
 // JSON
 import Domain from "../../json/emailDomainCheck.json";
 // PROPS TYPE
-type EmailProps = {
+type EmailType = {
   pageType: boolean;
   loginUserEmail: string;
   email: string;
   setEmail: any;
+  check: number;
+  setCheck: any;
 };
-const Email: React.FC<EmailProps> = ({
+const Email: React.FC<EmailType> = ({
   pageType,
   loginUserEmail,
   email,
   setEmail,
+  check,
+  setCheck,
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [resEmail, setResEmail] = useState<string>(
     pageType ? loginUserEmail : ""
   );
   const [emailDomain, setEmailDomain] = useState<string>("");
-  const [emailCheck, setEmailCheck] = useState<number>(0);
 
   const onDuplicationCheckEmail = async () => {
     try {
@@ -48,22 +51,21 @@ const Email: React.FC<EmailProps> = ({
     setEmail(finallyEmail);
     const resultEmail = email?.split("@")[1];
     const checkDomain = Domain.emailDomainList.some(
-      (domain) => domain.name === resultEmail
+      (domain) => domain.name === emailDomain
     );
-    if (email?.length < 5 || !checkDomain || emailDomain?.length < 0) {
-      setEmailCheck(1);
+    if (!checkDomain || email?.length < 5 || emailDomain?.length < 0) {
+      setCheck(1);
       setShake(true);
     } else if (!isTrue) {
-      setEmailCheck(2);
+      setCheck(2);
       setShake(true);
     } else {
-      setEmailCheck(3);
+      setCheck(3);
     }
   };
   const onChangeRegisterEmailDomain = (e: any) => {
     e.preventDefault();
     setEmailDomain(e.target.value);
-    //  checkUserEmailId();
   };
   return (
     <>
@@ -74,8 +76,8 @@ const Email: React.FC<EmailProps> = ({
             name={"이메일"}
             value={resEmail}
             type={"text"}
-            onChange={onChangeRegEmail}
-            onBlur={undefined}
+            onChange={onCheckResEmail}
+            onBlur={onCheckResEmail}
             maxLength={40}
             placeholder={""}
             readonly={pageType}
@@ -104,7 +106,7 @@ const Email: React.FC<EmailProps> = ({
                 id="mail_domain"
                 onChange={onChangeRegisterEmailDomain}
                 value={emailDomain}
-                onBlur={onCheckResEmail}
+                onBlur={() => onCheckResEmail()}
                 maxLength={15}
               />
               <label htmlFor="mail_domain"></label>
@@ -116,7 +118,7 @@ const Email: React.FC<EmailProps> = ({
               value={emailDomain}
               onChange={(e) => onChangeRegisterEmailDomain(e)}
               className="mar_top_5"
-              onBlur={onCheckResEmail}
+              onBlur={() => onCheckResEmail()}
             >
               <option value="">직접 입력</option>
               <option value="gmail.com">gmail.com</option>
@@ -129,14 +131,14 @@ const Email: React.FC<EmailProps> = ({
         )}
         <div
           className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
-            emailCheck === 3
+            check === 3
           }`}
         >
-          {emailCheck === 1
+          {check === 1
             ? "올바른 이메일 주소를 입력해주세요."
-            : emailCheck === 2
+            : check === 2
             ? "중복된 이메일 입니다."
-            : emailCheck === 3
+            : check === 3
             ? "사용 가능한 이메일 입니다."
             : ""}
         </div>

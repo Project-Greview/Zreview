@@ -11,6 +11,8 @@ type NameType = {
   loginUserName: string;
   name: string;
   setName: any;
+  check: number;
+  setCheck: any;
 };
 
 const Name: React.FC<NameType> = ({
@@ -18,9 +20,10 @@ const Name: React.FC<NameType> = ({
   loginUserName,
   name,
   setName,
+  check,
+  setCheck,
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
-  const [nameCheck, setNameCheck] = useState<number>(0);
   const onChangeRegName = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     let value = e.target.value.replace(/[^\w\sㄱ-ㅎ가-힣\u318D]/g, "");
@@ -28,10 +31,10 @@ const Name: React.FC<NameType> = ({
   };
   const onCheckResName = () => {
     if (name.length < 2) {
-      setNameCheck(1);
+      setCheck(1);
       setShake(true);
     } else {
-      setNameCheck(2);
+      setCheck(2);
     }
   };
   return (
@@ -48,7 +51,13 @@ const Name: React.FC<NameType> = ({
         readonly={pageType}
         styles={""}
       />
-      <div className="event_txt absolute"></div>
+      <div
+        className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
+          check === 2
+        }`}
+      >
+        {check === 1 ? "이름을 정확하게 입력해주세요." : check === 2 ? "" : ""}
+      </div>
     </div>
   );
 };
