@@ -1,0 +1,22 @@
+{
+  "emailDomainList": [
+    {
+      "name": "gmail.com"
+    },
+    {
+      "name": "hanmail.net"
+    },
+    {
+      "name": "naver.com"
+    },
+    {
+      "name": "nate.com"
+    },
+    {
+      "name": "daum.net"
+    },
+    {
+      "name": "kakao.com"
+    }
+  ]
+}
