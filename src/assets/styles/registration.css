@@ -12,6 +12,10 @@
   font-size: 1.2rem;
   font-weight: 500;
 }
+.res_form_section .readonly {
+  background: var(--readonly-background);
+  color: var(--readonly-text);
+}
 .res_form_section .email_form {
 }
 .res_form_section .email_form select {

@@ -83,7 +83,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
         <div className="top_section">
           <div className="header_section flex flex_jc_sb flex_ai_c">
             <div className="close" onClick={() => handleCLoseLeftMenu()}>
-              <CloseBtn />
+              <CloseBtn color={"#959292"} />
             </div>
             <div className="setting" onClick={() => navigate("/setting")}>
               <SettingBtn color={"#959292"} />

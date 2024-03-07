@@ -73,7 +73,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const [hashtag, setHashtag] = useState<any>([]);
   const [alarmModal, setAlarmModal] = useState<number>(0);
   const [lat, setLat] = useState<number>(0);
-  const [lng, setLng] = useState<number>(0);
+  const [lon, setLon] = useState<number>(0);
   const [placeId, setPlaceId] = useState<number>(0);
 
   let maxHashtag = hashtag.length === 3;
@@ -129,13 +129,23 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const handleWritePlacePosition = () => {
     navigator.geolocation.getCurrentPosition((position: any) => {
       setLat(position.coords.latitude);
-      setLng(position.coords.longitude);
-    });
-
-    setWriteLocationData({
-      placeName: writeLocation,
-      placeLatitude: lat,
-      placeLongitude: lng,
+      setLon(position.coords.longitude);
+      let geocoder = new window.kakao.maps.services.Geocoder();
+      let callback = function (result: any, status: any) {
+        if (status === window.kakao.maps.services.Status.OK) {
+          setWriteLocationData({
+            placeName: writeLocation,
+            placeLatitude: position.coords.latitude,
+            placeLongitude: position.coords.longitude,
+            placeAddress: result[1].address_name,
+          });
+        }
+      };
+      geocoder.coord2RegionCode(
+        position.coords.longitude,
+        position.coords.latitude,
+        callback
+      );
     });
   };
 
@@ -166,8 +176,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   };
   // POST REVIEW
   const handleReviewPOST = async () => {
-    console.log(placeId);
-
     const postData: ReviewDataType = {
       title: writeLocationData.placeName,
       place_name: writeLocationData.placeName,

@@ -68,7 +68,7 @@ const Phone: React.FC<PhoneType> = ({
         maxLength={11}
         placeholder={""}
         readonly={pageType}
-        styles={""}
+        styles={pageType ? "readonly" : ""}
       />
       <div
         className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${

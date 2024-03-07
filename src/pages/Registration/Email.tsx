@@ -76,12 +76,12 @@ const Email: React.FC<EmailType> = ({
             name={"이메일"}
             value={resEmail}
             type={"text"}
-            onChange={onCheckResEmail}
-            onBlur={onCheckResEmail}
+            onChange={null}
+            onBlur={null}
             maxLength={40}
             placeholder={""}
             readonly={pageType}
-            styles={""}
+            styles={"readonly"}
           />
         ) : (
           <div className="email_form flex flex_jc_sb flex_ai_c flex_wrap_wrap">
