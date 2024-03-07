@@ -197,7 +197,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     try {
       const response = await addDataToIndexedDB(postData);
       if (response === "success") {
-        console.log("placeId", placeId);
         calcPlaceScore();
         setAlarmModal(2);
       }

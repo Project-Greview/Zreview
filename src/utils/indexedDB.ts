@@ -22,6 +22,10 @@ export const indexedDBStart = () => {
       keyPath: "id",
       autoIncrement: true,
     });
+    const hashtagStore = db.createObjectStore("hashtag", {
+      keyPath: "id",
+      autoIncrement: true,
+    });
     console.log("Object stores created successfully");
   };
   request.onsuccess = (event: any) => {

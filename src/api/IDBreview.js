@@ -131,3 +131,18 @@ export const getAllTargetDataFromIndexedDB = (target_name) => {
     };
   });
 };
+
+// GET HASHTAG RANKING
+export const getHashtagRankingFromIndexedDB = () => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
+
+    dbOpen.onsuccess = () => {
+      let db = dbOpen.result;
+      const transaction = db.transaction("review", "readonly");
+      const objectStore = transaction.objectStore("review");
+
+      const request = objectStore.getAll();
+    };
+  });
+};
