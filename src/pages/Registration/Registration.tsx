@@ -60,11 +60,17 @@ const Registration: React.FC<RegistrationType> = () => {
   });
 
   // REGISTRATION
-  const checkValue = modalState === 2 ? "" : "disable";
+  const checkData =
+    registerDataCheck.email === 3 &&
+    registerDataCheck.password === 2 &&
+    registerDataCheck.phone === 3 &&
+    registerDataCheck.nickname === 3 &&
+    registerDataCheck.name === 2;
+  const checkValue = checkData ? "" : "disable";
   // CHECKING
-
   const handleRegisterZreview = async () => {
-    if (checkValue) {
+    console.log("checkData", checkData);
+    if (!checkData) {
       setModalState(4);
     } else {
       const postData = {
@@ -151,7 +157,7 @@ const Registration: React.FC<RegistrationType> = () => {
           }
           check={registerDataCheck.email}
           setCheck={(email: number) =>
-            setRegisterDataCheck({ ...registerData, email })
+            setRegisterDataCheck({ ...registerDataCheck, email })
           }
         />
         <Password
@@ -161,7 +167,7 @@ const Registration: React.FC<RegistrationType> = () => {
           }
           check={registerDataCheck.password}
           setCheck={(password: number) =>
-            setRegisterDataCheck({ ...registerData, password })
+            setRegisterDataCheck({ ...registerDataCheck, password })
           }
         />
         <Phone
@@ -173,7 +179,7 @@ const Registration: React.FC<RegistrationType> = () => {
           }
           check={registerDataCheck.phone}
           setCheck={(phone: number) =>
-            setRegisterDataCheck({ ...registerData, phone })
+            setRegisterDataCheck({ ...registerDataCheck, phone })
           }
         />
         <Name
@@ -183,7 +189,7 @@ const Registration: React.FC<RegistrationType> = () => {
           setName={(name: string) => setRegisterData({ ...registerData, name })}
           check={registerDataCheck.name}
           setCheck={(name: number) =>
-            setRegisterDataCheck({ ...registerData, name })
+            setRegisterDataCheck({ ...registerDataCheck, name })
           }
         />
         <Nickname
@@ -194,7 +200,7 @@ const Registration: React.FC<RegistrationType> = () => {
           }
           check={registerDataCheck.nickname}
           setCheck={(nickname: number) =>
-            setRegisterDataCheck({ ...registerData, nickname })
+            setRegisterDataCheck({ ...registerDataCheck, nickname })
           }
         />
         <div className={`btn_box fixed flex ${!checkPage ? checkValue : ""}`}>
