@@ -26,7 +26,10 @@ const Name: React.FC<NameType> = ({
   const [shake, setShake] = useRecoilState(shakeAnimationState);
   const onChangeRegName = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    let value = e.target.value.replace(/[^\w\sㄱ-ㅎ가-힣\u318D]/g, "");
+    let value = e.target.value.replace(
+      /^[0-9a-zA-Z가-힣ㆍᆞᆢㄱ-ㅎㅏ-ㅣ\x20]*$/gi,
+      ""
+    );
     setName(value);
   };
   const onCheckResName = () => {

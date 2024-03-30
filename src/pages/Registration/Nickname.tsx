@@ -27,7 +27,10 @@ const Nickname: React.FC<NicknameType> = ({
 
   const onChangeRegNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    let value = e.target.value.replace(/[^\w\sㄱ-ㅎ가-힣\u318D]/g, "");
+    let value = e.target.value.replace(
+      /^[0-9a-zA-Z가-힣ㆍᆞᆢㄱ-ㅎㅏ-ㅣ\x20]*$/gi,
+      ""
+    );
     setNickname(value);
   };
   const onDuplicationCheckNickname = async () => {
