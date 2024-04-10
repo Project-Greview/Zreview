@@ -24,19 +24,15 @@ const Nickname: React.FC<NicknameType> = ({
   setCheck,
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
-
   const onChangeRegNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    // let value = e.target.value.replace(
-    //   /^[0-9a-zA-Z가-힣ㆍᆞᆢㄱ-ㅎㅏ-ㅣ\x20]*$/gi,
-    //   ""
-    // );
     let charArray = e.target.value.split("");
     let filteredValue = charArray.filter(
       (c: string) => !/[~!@#$%^&*()_+=-`{}\[\]\|\\:;'<>,./?]/gi.test(c)
     );
     let value = filteredValue.join("");
-    setNickname(value);
+    // setNickname(value);
+    setNickname(e.target.value);
   };
   const onDuplicationCheckNickname = async () => {
     try {
