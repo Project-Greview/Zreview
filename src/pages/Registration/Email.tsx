@@ -84,7 +84,10 @@ const Email: React.FC<EmailType> = ({
             styles={"readonly"}
           />
         ) : (
-          <div className="email_form flex flex_jc_sb flex_ai_c flex_wrap_wrap">
+          <div
+            className="email_form flex flex_jc_sb flex_ai_c flex_wrap_wrap"
+            onBlur={() => onCheckResEmail()}
+          >
             <label htmlFor="res_email" className="input_name width_100p">
               이메일
             </label>
@@ -106,7 +109,7 @@ const Email: React.FC<EmailType> = ({
                 id="mail_domain"
                 onChange={(e) => onChangeRegisterEmailDomain(e)}
                 value={emailDomain}
-                onBlur={() => onCheckResEmail()}
+                // onBlur={() => onCheckResEmail()}
                 maxLength={15}
               />
               <label htmlFor="mail_domain"></label>
@@ -118,7 +121,7 @@ const Email: React.FC<EmailType> = ({
               value={emailDomain}
               onChange={(e) => onChangeRegisterEmailDomain(e)}
               className="mar_top_5"
-              onBlur={() => onCheckResEmail()}
+              // onBlur={() => onCheckResEmail()}
             >
               <option value="">직접 입력</option>
               <option value="gmail.com">gmail.com</option>
