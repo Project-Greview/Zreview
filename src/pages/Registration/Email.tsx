@@ -104,7 +104,7 @@ const Email: React.FC<EmailType> = ({
                 type="text"
                 name="mail_domain"
                 id="mail_domain"
-                onChange={onChangeRegisterEmailDomain}
+                onChange={(e) => onChangeRegisterEmailDomain(e)}
                 value={emailDomain}
                 onBlur={() => onCheckResEmail()}
                 maxLength={15}
