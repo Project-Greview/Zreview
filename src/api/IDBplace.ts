@@ -1,12 +1,23 @@
-const idb =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB ||
-  window.shimIndexedDB;
+// const idb =
+//   window.indexedDB ||
+//   window.mozIndexedDB ||
+//   window.webkitIndexedDB ||
+//   window.msIndexedDB ||
+//   window.shimIndexedDB;
+const idb = window.indexedDB;
 
+type PostDataType = {
+  place_name: string;
+  location_lat: number;
+  location_lon: number;
+  place_address: string;
+};
+type PatchDataType = {
+  key: string;
+  score: number;
+};
 // POST PLACE
-export const addPlaceDataToIndexedDB = (postData) => {
+export const addPlaceDataToIndexedDB = (postData: PostDataType) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     dbOpen.onsuccess = () => {
@@ -42,7 +53,7 @@ export const addPlaceDataToIndexedDB = (postData) => {
 };
 
 // PATCH TARGET PLACE
-export const patchPlaceDataFromIndexedDB = (patch_data) => {
+export const patchPlaceDataFromIndexedDB = (patch_data: PatchDataType) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     dbOpen.onsuccess = () => {
@@ -52,8 +63,8 @@ export const patchPlaceDataFromIndexedDB = (patch_data) => {
 
       const getRequest = placeDB.get(patch_data.key);
 
-      getRequest.onsuccess = (event) => {
-        const existingPlace = event.target.result;
+      getRequest.onsuccess = (e: any) => {
+        const existingPlace = e.target.result;
 
         if (existingPlace) {
           const updatedScore = existingPlace.place_score + patch_data.score;
@@ -91,7 +102,7 @@ export const getAllPlaceDataFromIndexedDB = () => {
       const placeDB = transaction.objectStore("place");
       const place = placeDB.getAll();
 
-      place.onsuccess = (e) => {
+      place.onsuccess = (e: any) => {
         const data = e.target.result;
         resolve(data);
       };
@@ -108,7 +119,7 @@ export const getAllPlaceDataFromIndexedDB = () => {
 };
 
 // GET TARGET PLACE
-export const getPlaceDataFromIndexedDB = (place_info) => {
+export const getPlaceDataFromIndexedDB = (place_info: PostDataType) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -119,11 +130,11 @@ export const getPlaceDataFromIndexedDB = (place_info) => {
 
       const request = objectStore.getAll();
 
-      request.onsuccess = (e) => {
+      request.onsuccess = (e: any) => {
         const result = e.target.result;
         resolve(
           result.filter(
-            (result) =>
+            (result: PostDataType) =>
               result.place_name === place_info.place_name &&
               result.place_address === place_info.place_address &&
               result.location_lat === place_info.location_lat &&

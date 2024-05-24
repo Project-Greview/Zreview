@@ -14,7 +14,12 @@ import Button from "components/Common/Button";
 import Input from "components/Common/Input";
 import { getCookie, setCookie } from "utils/cookies";
 // PROPS TYPE
-type LoginProps = {};
+type LoginProps = {
+  nickname: string;
+  name: string;
+  phone: number;
+  email: string;
+};
 
 const Login: React.FC<LoginProps> = () => {
   const navigate = useNavigate();
@@ -41,7 +46,7 @@ const Login: React.FC<LoginProps> = () => {
   // LOGIN
   const handleLogin = async () => {
     try {
-      const response = await getLoginMemberFromIndexedDB(loginId, loginPw);
+      const response: any = await getLoginMemberFromIndexedDB(loginId, loginPw);
       if (response) {
         setLoginState(true);
         const userData = {

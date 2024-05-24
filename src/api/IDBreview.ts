@@ -1,12 +1,30 @@
-const idb =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB ||
-  window.shimIndexedDB;
+// const idb =
+//   window.indexedDB ||
+//   window.mozIndexedDB ||
+//   window.webkitIndexedDB ||
+//   window.msIndexedDB ||
+//   window.shimIndexedDB;
+const idb = window.indexedDB;
 
+type PostDataType = {
+  place_name: string;
+  location_lat: number;
+  location_lon: number;
+  place_address: string;
+  content: string;
+  hashtag: string;
+  rating: number;
+  images: unknown;
+  created_at: Date;
+  member: string;
+  views: number;
+  likes: number;
+  comments: string;
+  writer: string;
+  profile: string;
+};
 // POST REVIEW
-export const addDataToIndexedDB = (postData) => {
+export const addDataToIndexedDB = (postData: PostDataType) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     dbOpen.onsuccess = () => {
@@ -62,7 +80,7 @@ export const getAllDataFromIndexedDB = () => {
       const reviewDB = transaction.objectStore("review");
       const review = reviewDB.getAll();
 
-      review.onsuccess = (e) => {
+      review.onsuccess = (e: any) => {
         const data = e.srcElement.result;
         resolve(data);
       };
@@ -104,7 +122,7 @@ export const getDataFromIndexedDB = () => {
 };
 
 // GET TARGET REVIEW
-export const getAllTargetDataFromIndexedDB = (target_name) => {
+export const getAllTargetDataFromIndexedDB = (target_name: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -115,9 +133,11 @@ export const getAllTargetDataFromIndexedDB = (target_name) => {
 
       const request = objectStore.getAll();
 
-      request.onsuccess = (e) => {
+      request.onsuccess = (e: any) => {
         const result = e.target.result;
-        resolve(result.filter((result) => result.place_name === target_name));
+        resolve(
+          result.filter((result: any) => result.place_name === target_name)
+        );
       };
 
       request.onerror = (e) => {
@@ -143,6 +163,35 @@ export const getHashtagRankingFromIndexedDB = () => {
       const objectStore = transaction.objectStore("review");
 
       const request = objectStore.getAll();
+    };
+  });
+};
+
+// GET MY WRITE REVIEW
+export const getMyWriteReviewFromIndexedDB = (id: number, nickname: string) => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
+
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction("review", "readonly");
+      const objectStore = transaction.objectStore("review");
+
+      const request = objectStore.getAll();
+
+      request.onsuccess = (e: any) => {
+        const result = e.target.result;
+        resolve(result.filter((result: any) => result.writer === nickname));
+      };
+
+      request.onerror = (e) => {
+        console.log("error", e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
     };
   });
 };

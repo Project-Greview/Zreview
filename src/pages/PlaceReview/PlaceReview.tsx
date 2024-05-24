@@ -15,8 +15,15 @@ import { ReactComponent as BookMarkIcon } from "../../assets/image/icon/Bookmark
 import { ReactComponent as DefaultMarkerIcon } from "../../assets/image/icon/default_marker.svg";
 
 // PROPS TYPE
+type PlaceReviewType = {
+  place_name: string;
+  place_address: string;
+  address: string;
+  location_lat: number;
+  location_lon: number;
+};
 
-const PlaceReview: React.FC = () => {
+const PlaceReview: React.FC<PlaceReviewType> = () => {
   const [ref, inView] = useInView();
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -26,7 +33,7 @@ const PlaceReview: React.FC = () => {
   const [placeScore, setPlaceScore] = useState<number>(0);
 
   const localStorageData: any = localStorage.getItem("pageData");
-  const writePlaceData =
+  const writePlaceData: any | PlaceReviewType =
     state === null
       ? {
           place_name: JSON.parse(localStorageData).place_name,
@@ -54,7 +61,7 @@ const PlaceReview: React.FC = () => {
 
   const getPlaceScore = async () => {
     try {
-      const response = await getPlaceDataFromIndexedDB(writePlaceData);
+      const response: any = await getPlaceDataFromIndexedDB(writePlaceData);
       const score = (response[0].place_score / 1000) * 100;
       setPlaceScore(score);
     } catch (error) {

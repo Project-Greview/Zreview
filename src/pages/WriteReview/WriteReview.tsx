@@ -34,7 +34,7 @@ import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_se
 import { ReactComponent as LogoIcon } from "../../assets/image/icon/marker_c.svg";
 // PROPS TYPE
 type WriteReviewProps = {};
-interface ReviewDataType {
+type ReviewDataType = {
   place_name: string;
   place_address: string;
   title: string;
@@ -51,7 +51,17 @@ interface ReviewDataType {
   comments: number;
   writer: string;
   profile: string;
-}
+};
+type CalcScoreType = {
+  score: number;
+  key: any | string | number;
+};
+type PlaceInfoType = {
+  place_name: string;
+  location_lat: number;
+  location_lon: number;
+  place_address: string;
+};
 const WriteReview: React.FC<WriteReviewProps> = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -99,7 +109,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   // IS PLACE IN DB
   const setPlaceInfo = async (data: any) => {
     try {
-      const response = await addPlaceDataToIndexedDB(data);
+      const response: any = await addPlaceDataToIndexedDB(data);
       console.log(response);
       setPlaceId(response.target.result);
     } catch (error) {
@@ -107,14 +117,14 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     }
   };
   const onBlurPlaceCheck = async () => {
-    const place_info = {
+    const place_info: PlaceInfoType = {
       place_name: writeLocationData.placeName,
       location_lat: Number(writeLocationData.placeLatitude),
       location_lon: Number(writeLocationData.placeLongitude),
       place_address: writeLocationData.placeAddress,
     };
     try {
-      const response = await getPlaceDataFromIndexedDB(place_info);
+      const response: any = await getPlaceDataFromIndexedDB(place_info);
       if (response.length === 0) {
         setPlaceInfo(place_info);
       } else {
@@ -176,7 +186,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   };
   // POST REVIEW
   const handleReviewPOST = async () => {
-    const postData: ReviewDataType = {
+    const postData: any | ReviewDataType = {
       title: writeLocationData.placeName,
       place_name: writeLocationData.placeName,
       location_lat: Number(writeLocationData.placeLatitude),
@@ -206,7 +216,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   };
   // CALC PLACE SCORE
   const calcPlaceScore = async () => {
-    const calcScore = {
+    const calcScore: CalcScoreType = {
       score:
         score === 1
           ? -2

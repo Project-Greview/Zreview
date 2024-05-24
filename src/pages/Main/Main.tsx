@@ -15,7 +15,17 @@ import KakaoMap from "../../components/KakaoMap";
 import ToastPopup from "components/ToastPopup";
 
 // PROPS TYPE
-type MainProps = {};
+type MainProps = {
+  data: ResponseDataType;
+};
+type ResponseDataType = {
+  id: number;
+  location_lat: number;
+  location_lng: number;
+  place_address: string;
+  place_name: string;
+  place_score: number;
+};
 
 const Main: React.FC<MainProps> = () => {
   const isLeftMenu = useRecoilValue(leftMenuState);
@@ -50,7 +60,7 @@ const Main: React.FC<MainProps> = () => {
   }, [isReady]);
   useEffect(() => {
     getAllPlaceDataFromIndexedDB()
-      .then((data) => {
+      .then((data: any | ResponseDataType) => {
         setData(data);
       })
       .catch((error) => {

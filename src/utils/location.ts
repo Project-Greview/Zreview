@@ -1,4 +1,4 @@
-export function getLocationPathname(path) {
+export function getLocationPathname(path: string) {
   const pathname = window.location.pathname.includes(path);
   if (path === "/main") {
     return 1;

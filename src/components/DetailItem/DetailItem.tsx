@@ -1,6 +1,6 @@
 // MODULE
 import { useEffect, useLayoutEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 // HOOK\
 import { getAllTargetDataFromIndexedDB } from "api/IDBreview";
@@ -9,13 +9,14 @@ import { dummyDateState } from "state/dummyState";
 // COMPONENT
 import ProfileImage from "components/ProfileImage";
 import HashTag from "components/HashTag";
+import ImageSlide from "components/ImageSlide";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
 // SVG
 import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.svg";
 import { ReactComponent as CommentIcon } from "../../assets/image/icon/comment_icon.svg";
 import { ReactComponent as LikeIcon } from "../../assets/image/icon/like_icon.svg";
-import ImageSlide from "components/ImageSlide";
+import { ReactComponent as RightArrow } from "../../assets/image/icon/arrow_right.svg";
 // PROPS TYPE
 type DetailItemProps = {
   place: string;
@@ -111,6 +112,9 @@ const DetailItem: React.FC<DetailItemProps> = ({ place }) => {
                 <div className="absolute"></div>
                 <div className="absolute"></div>
               </div>
+              {/* <Link to={"/detail_review"} state={{ item: item }}>
+                <RightArrow />
+              </Link> */}
             </div>
             <div className="review_box">
               <div className="slider">

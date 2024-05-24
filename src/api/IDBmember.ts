@@ -1,19 +1,29 @@
 import CryptoJS from "crypto-js";
 
-const idb =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB ||
-  window.shimIndexedDB;
+// const idb =
+//   window.indexedDB ||
+//   window.mozIndexedDB ||
+//   window.webkitIndexedDB ||
+//   window.msIndexedDB ||
+//   window.shimIndexedDB;
+const idb = window.indexedDB;
 
+type PostDataType = {
+  password: string;
+  email: string;
+  phone: string;
+  name: string;
+  nickname: string;
+};
 // POST MEMBER
-export const addMemberDataToIndexedDB = (postData) => {
+
+const SecretKey: any | string = process.env.REACT_APP_CRYPTOJS_SECRET_KEY;
+export const addMemberDataToIndexedDB = (postData: PostDataType) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     const encryptedPassword = CryptoJS.AES.encrypt(
       postData.password,
-      process.env.REACT_APP_CRYPTOJS_SECRET_KEY
+      SecretKey
     ).toString();
     dbOpen.onsuccess = () => {
       const db = dbOpen.result;
@@ -44,7 +54,7 @@ export const addMemberDataToIndexedDB = (postData) => {
 };
 
 // GET CHECK EMAIL
-export const getCheckMemberEmailDuplicationIndexedDB = (email) => {
+export const getCheckMemberEmailDuplicationIndexedDB = (email: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -54,9 +64,11 @@ export const getCheckMemberEmailDuplicationIndexedDB = (email) => {
       const objectStore = transaction.objectStore("member");
 
       const request = objectStore.getAll();
-      request.onsuccess = (e) => {
+      request.onsuccess = (e: any) => {
         const result = e.target.result;
-        const matchedMember = result.find((member) => member.email === email);
+        const matchedMember = result.find(
+          (member: any) => member.email === email
+        );
         if (matchedMember) {
           resolve(false);
         } else {
@@ -72,7 +84,7 @@ export const getCheckMemberEmailDuplicationIndexedDB = (email) => {
 };
 
 // GET CHECK PHONE
-export const getCheckMemberPhoneDuplicationIndexedDB = (phone) => {
+export const getCheckMemberPhoneDuplicationIndexedDB = (phone: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -82,9 +94,11 @@ export const getCheckMemberPhoneDuplicationIndexedDB = (phone) => {
       const objectStore = transaction.objectStore("member");
 
       const request = objectStore.getAll();
-      request.onsuccess = (e) => {
+      request.onsuccess = (e: any) => {
         const result = e.target.result;
-        const matchedMember = result.find((member) => member.phone === phone);
+        const matchedMember = result.find(
+          (member: any) => member.phone === phone
+        );
         if (matchedMember) {
           resolve(false);
         } else {
@@ -100,7 +114,9 @@ export const getCheckMemberPhoneDuplicationIndexedDB = (phone) => {
 };
 
 // GET CHECK NICKNAME
-export const getCheckMemberNicknameDuplicationIndexedDB = (nickname) => {
+export const getCheckMemberNicknameDuplicationIndexedDB = (
+  nickname: string
+) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -110,10 +126,10 @@ export const getCheckMemberNicknameDuplicationIndexedDB = (nickname) => {
       const objectStore = transaction.objectStore("member");
 
       const request = objectStore.getAll();
-      request.onsuccess = (e) => {
+      request.onsuccess = (e: any) => {
         const result = e.target.result;
         const matchedMember = result.find(
-          (member) => member.nickname === nickname
+          (member: any) => member.nickname === nickname
         );
         if (matchedMember) {
           resolve(false);
@@ -130,7 +146,7 @@ export const getCheckMemberNicknameDuplicationIndexedDB = (nickname) => {
 };
 
 // GET LOGIN
-export const getLoginMemberFromIndexedDB = (id, pw) => {
+export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -141,12 +157,12 @@ export const getLoginMemberFromIndexedDB = (id, pw) => {
 
       const request = objectStore.getAll();
 
-      request.onsuccess = (e) => {
+      request.onsuccess = (e: any) => {
         const result = e.target.result;
-        const matchedMember = result.find((member) => {
+        const matchedMember = result.find((member: any) => {
           const decryptedPassword = CryptoJS.AES.decrypt(
             member.password,
-            process.env.REACT_APP_CRYPTOJS_SECRET_KEY
+            SecretKey
           ).toString(CryptoJS.enc.Utf8);
           return member.email === id && decryptedPassword === pw;
         });

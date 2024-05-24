@@ -2,18 +2,25 @@
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 // HOOK
-import { getAllDataFromIndexedDB } from "api/IDBreview";
+import {
+  getAllDataFromIndexedDB,
+  getMyWriteReviewFromIndexedDB,
+} from "api/IDBreview";
+import { getCookie } from "utils/cookies";
 // RECOIL STATE
 import { tabMenuTypeState } from "state/mypageTabState";
 // COMPONENT
 import ReviewItem from "components/ReviewItem";
+import DetailItem from "components/DetailItem";
 // PROPS TYPE
 type TabItemProps = {};
 
 const TabItem: React.FC<TabItemProps> = () => {
-  const [data, setData] = useState([]);
+  const [WriteData, setWriteData] = useState([]);
 
   const getType = useRecoilValue(tabMenuTypeState);
+
+  const getNickname = getCookie("user").nickname;
   const box1Height = document
     .querySelector(".scroll_section ")
     ?.getBoundingClientRect().height;
@@ -22,9 +29,9 @@ const TabItem: React.FC<TabItemProps> = () => {
     ?.getBoundingClientRect().height;
 
   useEffect(() => {
-    getAllDataFromIndexedDB()
-      .then((data) => {
-        setData(data);
+    getMyWriteReviewFromIndexedDB(1, getNickname)
+      .then((data: any) => {
+        setWriteData(data);
         console.log(data);
       })
       .catch((error) => {
@@ -49,13 +56,13 @@ const TabItem: React.FC<TabItemProps> = () => {
         </div>
         <div>
           {getType === "review"
-            ? `(${0})`
+            ? `(${WriteData.length})`
             : getType === "comment"
             ? `(${0})`
             : `(${0})`}
         </div>
       </div>
-      <ReviewItem />
+      {getType === "review" && <ReviewItem data={WriteData} />}
     </div>
   );
 };

@@ -1,3 +1,6 @@
+// MODULE
+import { useState, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 // JSON
 import PontAndSolution from "../../../json/pcIntroData.json";
 // STYLE

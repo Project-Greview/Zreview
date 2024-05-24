@@ -1,12 +1,19 @@
-const idb =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB ||
-  window.shimIndexedDB;
+// const idb = window.indexedDB ||
+// window.mozIndexedDB ||
+// window.webkitIndexedDB ||
+// window.msIndexedDB ||
+// window.shimIndexedDB;
+const idb = window.indexedDB;
 
+type hashtagDataType = {
+  hashtag: string;
+  place_name: string;
+  id: number;
+};
 // POST HASHTAG RANKING
-export const getHashtagRankingFromIndexedDB = (hashtagData) => {
+export const getHashtagRankingFromIndexedDB = (
+  hashtagData: hashtagDataType
+) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 

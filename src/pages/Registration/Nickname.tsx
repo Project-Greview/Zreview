@@ -24,6 +24,7 @@ const Nickname: React.FC<NicknameType> = ({
   setCheck,
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
+  const [duplication, setDuplication] = useState<boolean>(true);
   const onChangeRegNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     let charArray = e.target.value.split("");
@@ -34,25 +35,23 @@ const Nickname: React.FC<NicknameType> = ({
     // setNickname(value);
     setNickname(e.target.value);
   };
-  const onDuplicationCheckNickname = async () => {
+
+  const onCheckResNickname = async () => {
     try {
-      const response = await getCheckMemberNicknameDuplicationIndexedDB(
-        nickname
-      );
+      const response: any | boolean =
+        await getCheckMemberNicknameDuplicationIndexedDB(nickname);
+      setDuplication(response);
+      if (nickname.length < 2) {
+        setCheck(1);
+        setShake(true);
+      } else if (!response) {
+        setCheck(2);
+        setShake(true);
+      } else {
+        setCheck(3);
+      }
     } catch (error) {
       console.log(error);
-    }
-  };
-  const onCheckResNickname = () => {
-    const isTrue = onDuplicationCheckNickname();
-    if (nickname.length < 2) {
-      setCheck(1);
-      setShake(true);
-    } else if (!isTrue) {
-      setCheck(2);
-      setShake(true);
-    } else {
-      setCheck(3);
     }
   };
   return (
