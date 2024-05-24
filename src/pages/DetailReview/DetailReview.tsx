@@ -37,41 +37,47 @@ const StarScore: React.FC<StarScoreProps> = ({ max, rating }) => {
 
 const DetailReview: React.FC<DetailReviewProps> = ({}) => {
   const { state } = useLocation();
-  console.log(state);
   const [boxWidth, setBoxWidth] = useState<number | undefined>(0);
   useLayoutEffect(() => {
     let Element = document.querySelector(".review_box");
     setBoxWidth(Element?.clientWidth);
+    window.scrollTo(0, 0);
+    const element = document.querySelector<HTMLElement>(".detail_frame");
+    if (element) {
+      element.style.minHeight = "100%";
+    }
   }, []);
   return (
     <div className="inner_section" style={{ background: "#f6f6f6" }}>
       <Header type={2} title={state.item.place_name} />
       <div className="detail_frame">
-        <div className="review_box">
-          <div className="slider">
-            <ImageSlide boxSize={boxWidth} images={state.item.images} />
-          </div>
-          <div className="score flex">
-            <StarScore max={5} rating={state.item.score} />
-            <p>{state.item.score}</p>
-          </div>
-          <div className="contents">{state.item.content}</div>
-        </div>
-        <ul className="hashtag_list flex">
-          {state.item.hashtag.map((txt: any) => (
-            <li key={txt}>
-              <HashTag tag={txt} />
-            </li>
-          ))}
-        </ul>
-        <div className="icon_box flex flex_ai_c">
-          <div className="like_box flex flex_ai_c">
-            <LikeIcon color={"#e0ddff"} />
-            <p>{state.item.likes}</p>
-          </div>
-          <div className="comment_box flex flex_ai_c">
-            <CommentIcon />
-            <p>{state.item.comments}</p>
+        <div className="review_item_box">
+          <div className="review_box">
+            <div className="slider">
+              <ImageSlide boxSize={boxWidth} images={state.item.images} />
+            </div>
+            <div className="score flex">
+              <StarScore max={5} rating={state.item.score} />
+              <p>{state.item.score}</p>
+            </div>
+            <div className="contents">{state.item.content}</div>
+            <ul className="hashtag_list flex">
+              {state.item.hashtag.map((txt: any) => (
+                <li key={txt}>
+                  <HashTag tag={txt} />
+                </li>
+              ))}
+            </ul>
+            <div className="icon_box flex flex_ai_c">
+              <div className="like_box flex flex_ai_c">
+                <LikeIcon color={"#e0ddff"} />
+                <p>{state.item.likes}</p>
+              </div>
+              <div className="comment_box flex flex_ai_c">
+                <CommentIcon />
+                <p>{state.item.comments}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

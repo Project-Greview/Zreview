@@ -288,7 +288,8 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
         <Modal
           type={"type_2"}
           contents={"리뷰등록이 완료되었습니다!"}
-          conform={() => setAlarmModal(99)}
+          // conform={() => setAlarmModal(99)}
+          conform={() => navigate("/main")}
           conform_txt={"확인"}
           cancel={null}
           cancel_txt={""}

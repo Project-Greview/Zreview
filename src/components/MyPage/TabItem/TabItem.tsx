@@ -2,19 +2,32 @@
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 // HOOK
-import {
-  getAllDataFromIndexedDB,
-  getMyWriteReviewFromIndexedDB,
-} from "api/IDBreview";
+import { getMyWriteReviewFromIndexedDB } from "api/IDBreview";
 import { getCookie } from "utils/cookies";
 // RECOIL STATE
 import { tabMenuTypeState } from "state/mypageTabState";
 // COMPONENT
-import ReviewItem from "components/ReviewItem";
 import DetailItem from "components/DetailItem";
 // PROPS TYPE
 type TabItemProps = {};
-
+type ReviewDataType = {
+  id: number;
+  place_name: string;
+  place_address: string;
+  content: string;
+  location_lat: number;
+  location_lon: number;
+  created_at: string;
+  updated_at: string;
+  hashtag: string[];
+  images: string[];
+  views: number;
+  rating: number;
+  likes: number;
+  comments: number;
+  writer: string;
+  profile: string;
+};
 const TabItem: React.FC<TabItemProps> = () => {
   const [WriteData, setWriteData] = useState([]);
 
@@ -30,9 +43,8 @@ const TabItem: React.FC<TabItemProps> = () => {
 
   useEffect(() => {
     getMyWriteReviewFromIndexedDB(1, getNickname)
-      .then((data: any) => {
+      .then((data: ReviewDataType | any) => {
         setWriteData(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +74,9 @@ const TabItem: React.FC<TabItemProps> = () => {
             : `(${0})`}
         </div>
       </div>
-      {getType === "review" && <ReviewItem data={WriteData} />}
+      {getType === "review" && (
+        <DetailItem resultData={WriteData} place={""} type={"mypage"} />
+      )}
     </div>
   );
 };

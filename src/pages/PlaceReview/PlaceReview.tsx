@@ -22,7 +22,24 @@ type PlaceReviewType = {
   location_lat: number;
   location_lon: number;
 };
-
+type ReviewDataType = {
+  id: number;
+  place_name: string;
+  place_address: string;
+  content: string;
+  location_lat: number;
+  location_lon: number;
+  created_at: string;
+  updated_at: string;
+  hashtag: string[];
+  images: string[];
+  views: number;
+  rating: number;
+  likes: number;
+  comments: number;
+  writer: string;
+  profile: string;
+};
 const PlaceReview: React.FC<PlaceReviewType> = () => {
   const [ref, inView] = useInView();
   const navigate = useNavigate();
@@ -73,8 +90,8 @@ const PlaceReview: React.FC<PlaceReviewType> = () => {
   }, []);
   useLayoutEffect(() => {
     getAllTargetDataFromIndexedDB(state.placeData.place_name)
-      .then((data) => {
-        // console.log("data", data);
+      .then((data: any | ReviewDataType) => {
+        setReviewData(data);
       })
       .catch((error) => {
         console.log(error);
@@ -149,7 +166,11 @@ const PlaceReview: React.FC<PlaceReviewType> = () => {
         )}
         <div className="point_txt">ZReview</div>
         <div className={`${!headerVisibility ? "active" : ""}`}>
-          <DetailItem place={state.placeData.place_name} />
+          <DetailItem
+            place={state.placeData.place_name}
+            resultData={reviewData}
+            type={"review"}
+          />
         </div>
       </div>
     </div>

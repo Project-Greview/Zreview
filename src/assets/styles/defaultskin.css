@@ -581,6 +581,7 @@
   color: var(--disable-text);
   line-height: 1.2;
   word-break: keep-all;
+  white-space: pre-wrap;
 }
 .review_item_box .review_box .hashtag_list {
   margin-top: 1rem;

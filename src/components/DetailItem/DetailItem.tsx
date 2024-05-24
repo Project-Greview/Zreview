@@ -1,11 +1,7 @@
 // MODULE
-import { useEffect, useLayoutEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
-// HOOK\
-import { getAllTargetDataFromIndexedDB } from "api/IDBreview";
+import { useLayoutEffect, useState } from "react";
+import { Link } from "react-router-dom";
 // RECOIL STATE
-import { dummyDateState } from "state/dummyState";
 // COMPONENT
 import ProfileImage from "components/ProfileImage";
 import HashTag from "components/HashTag";
@@ -20,29 +16,14 @@ import { ReactComponent as RightArrow } from "../../assets/image/icon/arrow_righ
 // PROPS TYPE
 type DetailItemProps = {
   place: string;
+  resultData: object[];
+  type: string;
 };
 type StarScoreProps = {
   max: number;
   rating: number;
 };
-interface ReviewDataType {
-  id: number;
-  place_name: string;
-  place_address: string;
-  content: string;
-  location_lat: number;
-  location_lon: number;
-  created_at: string;
-  updated_at: string;
-  hashtag: string[];
-  images: string[];
-  views: number;
-  rating: number;
-  likes: number;
-  comments: number;
-  writer: string;
-  profile: string;
-}
+
 const StarScore: React.FC<StarScoreProps> = ({ max, rating }) => {
   const rendering = () => {
     const stars = [];
@@ -61,34 +42,17 @@ const StarScore: React.FC<StarScoreProps> = ({ max, rating }) => {
   return <>{rendering()}</>;
 };
 
-const DetailItem: React.FC<DetailItemProps> = ({ place }) => {
-  const { state } = useLocation();
+const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
   const [boxWidth, setBoxWidth] = useState<number | undefined>(0);
-  const [reviewData, setReviewData] = useState<ReviewDataType | any>([]);
-  // 임시 데이터
-  const dummyData = useRecoilState(dummyDateState);
-  const getDummyData = dummyData[0].filter(
-    (dummyItem) => dummyItem.id === state
-  );
-  // 임시 데이터
 
   useLayoutEffect(() => {
     let Element = document.querySelector(".review_box");
     setBoxWidth(Element?.clientWidth);
   }, []);
-  useLayoutEffect(() => {
-    getAllTargetDataFromIndexedDB(place)
-      .then((data) => {
-        setReviewData(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {});
-  }, []);
+
   return (
     <ul>
-      {reviewData.map((item: any) => {
+      {resultData.map((item: any) => {
         const formattedDate = new Date(item?.created_at).toLocaleDateString(
           "ko-KR",
           {
@@ -107,14 +71,17 @@ const DetailItem: React.FC<DetailItemProps> = ({ place }) => {
                   <div className="create_dt">{formattedDate}</div>
                 </div>
               </div>
-              <div className="review_menu_btn relative">
-                <div className="absolute"></div>
-                <div className="absolute"></div>
-                <div className="absolute"></div>
-              </div>
-              {/* <Link to={"/detail_review"} state={{ item: item }}>
-                <RightArrow />
-              </Link> */}
+              {type === "review" ? (
+                <div className="review_menu_btn relative">
+                  <div className="absolute"></div>
+                  <div className="absolute"></div>
+                  <div className="absolute"></div>
+                </div>
+              ) : (
+                <Link to={"/detail_review"} state={{ item: item }}>
+                  <RightArrow />
+                </Link>
+              )}
             </div>
             <div className="review_box">
               <div className="slider">
