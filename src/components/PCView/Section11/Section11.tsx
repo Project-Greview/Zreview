@@ -1,6 +1,114 @@
+// MODULE
+import styled from "styled-components";
+// STYLED
+const SectionStyle = styled.div`
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  .sub_tit {
+    * {
+      color: var(--white-color);
+    }
+    h3 {
+      margin-right: 19rem;
+      font-weight: 700;
+      span {
+        font-size: 5rem;
+        font-weight: 400;
+      }
+    }
+  }
+  .ex_txt p {
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--white-color);
+  }
+  .mockup_list {
+    margin-top: 8.5rem;
+    * {
+      color: var(--white-color);
+    }
+    li {
+      &:first-child {
+        margin-right: 7.5rem;
+      }
+      &:nth-child(2) {
+        margin-right: 4.3rem;
+      }
+      &:nth-child(3) {
+        margin-right: 2.5rem;
+      }
+      &.relative {
+        &:first-child {
+          &::after {
+            content: "직접입력";
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 11.5rem;
+            height: 4.4rem;
+            top: 0rem;
+            left: 0;
+            border-radius: 3rem;
+            border: 1px solid var(--white-color);
+            font-size: 2rem;
+            font-weight: 300;
+          }
+          img {
+            border-radius: 3.8rem;
+            box-shadow: 0 25px 24px rgba(0, 0, 0, 0.3);
+          }
+        }
+        &:nth-child(2) {
+          &::after {
+            content: "장소검색";
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 11.5rem;
+            height: 4.4rem;
+            top: 0rem;
+            left: 0;
+            border-radius: 3rem;
+            border: 1px solid var(--white-color);
+            font-size: 2rem;
+            font-weight: 300;
+          }
+          img {
+            border-radius: 3.8rem;
+            box-shadow: 0 25px 24px rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+    }
+    .border_tit {
+      max-width: 11.5rem;
+      padding: 1rem 0;
+      border-radius: 3rem;
+      border: 1px solid var(--white-color);
+      font-size: 2rem;
+      font-weight: 300;
+    }
+    img {
+      margin-top: 7rem;
+      & ~ div {
+        margin-top: 3rem;
+        font-size: 2rem;
+        font-weight: 300;
+        text-align: center;
+        > p {
+          margin-top: 0.5rem;
+          margin-bottom: 1.5rem;
+          font-size: 2.5rem;
+        }
+      }
+    }
+  }
+`;
 const Section11: React.FC = () => {
   return (
-    <div className="pc_section section_11">
+    <SectionStyle className="pc_section section_11">
       <div className="pc_con">
         <div className="section_tit flex flex_ai_fe">
           <div className="sub_tit">
@@ -65,7 +173,7 @@ const Section11: React.FC = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </SectionStyle>
   );
 };
 

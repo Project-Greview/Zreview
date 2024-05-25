@@ -1,10 +1,189 @@
 // MODULE
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import styled from "styled-components";
 // JSON
 import PCData from "../../../json/pcIntroData.json";
 // PROPS TYPE
 interface DataType {}
+// STYLED
+const SectionStyle = styled.div`
+  padding-top: 4.5rem;
+  .secition_tit {
+    font-weight: 800;
+    color: var(--white-color);
+  }
+  .semi_tit {
+    margin-top: 2.5rem;
+    > h6 {
+      font-weight: 600;
+      color: var(--white-color);
+      line-height: 1.5;
+    }
+    ul {
+      text-align: right;
+      li {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  }
+  .chart_list {
+    margin-top: 6rem;
+    .mini_chart {
+      flex-basis: calc(97.5% / 3);
+      max-height: 50rem;
+      height: 50rem;
+      padding: 5rem;
+      background: var(--white-color);
+      border-radius: 5rem;
+      box-shadow: 0 20px 34px rgba(0, 0, 0, 0.3);
+      transform: translateY(-10rem);
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      &:first-child {
+        transition: all 0.3s;
+      }
+      &:nth-child(2) {
+        margin-top: 5.5rem;
+        transition: all 0.3s;
+        transition-delay: 0.5s;
+      }
+      &:nth-child(3) {
+        transition: all 0.3s;
+        transition-delay: 1s;
+      }
+      .chart_body {
+        min-height: 40rem;
+        max-height: 40rem;
+        margin: 0 -1rem;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+          position: relative;
+          height: 10%;
+          background: var(--point-color);
+          border-right: 1px solid var(--point-color);
+          border-left: 1px solid var(--point-color);
+          border-radius: 10px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #dbdbdb;
+          border-right: 1px solid var(--white-color);
+          border-left: 1px solid var(--white-color);
+        }
+      }
+      .chart_tit {
+        font-size: 3rem;
+        font-weight: 600;
+        color: var(--navy-color);
+        line-height: 1.1;
+        span {
+          font-size: 3rem;
+          font-weight: 800;
+          color: var(--navy-color);
+        }
+      }
+      .semi_tit {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--disable-text);
+        letter-spacing: -0.5px;
+      }
+      .contents {
+        min-height: 4rem;
+        margin-top: 4rem;
+        ul li {
+          .bars {
+            width: 0;
+            padding: 1.4rem;
+            margin-right: 1rem;
+            background: #dbdbdb;
+            border-top-right-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white-color);
+            transition: all 0.3s;
+            &.point_bg {
+              background: var(--point-color);
+            }
+          }
+          .key_txt {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #dbdbdb;
+          }
+        }
+        .vertical li:not(:first-child) {
+          margin-top: 2rem;
+        }
+        .horizontal li {
+          .bars {
+            width: 5.8rem;
+            height: 0;
+            margin-right: 0;
+            border-top-left-radius: 2rem;
+            border-bottom-right-radius: 0;
+            text-align: center;
+          }
+          .key_txt {
+            align-items: flex-start;
+            height: 2em;
+            margin-top: 1rem;
+            white-space: pre;
+            text-align: center;
+          }
+        }
+        .custom_table {
+          li li {
+            flex-basis: calc((100% - 1rem) / 3);
+            height: 4.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--point-color);
+            color: var(--point-color);
+          }
+          > li {
+            margin-bottom: 0.5rem;
+            &:first-child {
+              li {
+                background: var(--point-color);
+                border: none;
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: var(--white-color);
+                &:first-child {
+                  border-radius: 0;
+                  border-top-left-radius: 2rem;
+                }
+                &:last-child {
+                  border-radius: 0;
+                  border-top-right-radius: 2rem;
+                }
+              }
+            }
+          }
+        }
+        .end_txt p {
+          margin: 0 0.5rem;
+          font-size: 2rem;
+          font-weight: 600;
+        }
+      }
+    }
+    &.active {
+      .mini_chart {
+        transform: translateY(0rem);
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+`;
 
 const VerticalChart: React.FC<DataType> = () => {
   const [size, setSize] = useState<number>(0);
@@ -75,8 +254,8 @@ const CustomTableChart: React.FC = () => {
         return (
           <li key={data.line}>
             <ul className="flex flex_jc_sb flex_ai_c">
-              {data.data.map((sub_item: any) => (
-                <li key={sub_item.item} className="flex flex_jc_c flex_ai_c">
+              {data.data.map((sub_item: any, index: number) => (
+                <li key={index} className="flex flex_jc_c flex_ai_c">
                   {sub_item.item}
                 </li>
               ))}
@@ -97,7 +276,7 @@ const Section3: React.FC = () => {
     }
   }, [inView]);
   return (
-    <div className="pc_section section_3">
+    <SectionStyle className="pc_section section_3">
       <div className="pc_con">
         <h6 className="section_tit">Research</h6>
         <div className="semi_tit flex flex_jc_sb flex_ai_fe">
@@ -179,7 +358,7 @@ const Section3: React.FC = () => {
           <li className="absolute" style={{ bottom: 50 }} ref={ref}></li>
         </ul>
       </div>
-    </div>
+    </SectionStyle>
   );
 };
 

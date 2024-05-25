@@ -1,6 +1,70 @@
 // MODULE
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import styled from "styled-components";
+// STYLED
+const SectionStyle = styled.div`
+  padding-top: 5rem;
+  background: var(--white-color);
+  h2 {
+    margin-top: 4.5rem;
+    font-weight: 600;
+    color: var(--navy-color);
+    span {
+      font-size: 7rem;
+      font-weight: 800;
+      color: var(--navy-color);
+    }
+  }
+  p {
+    margin-top: 4.5rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--navy-color);
+    text-align: center;
+  }
+  .circle_chart {
+    margin-top: 8.5rem;
+    transform: translateY(-10rem);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    &.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+    .plus_txt {
+      margin: 0 7.5rem;
+      font-size: 10rem;
+      font-weight: 800;
+    }
+    .circle_box {
+      flex-basis: 46rem;
+      width: 46rem;
+      height: 46rem;
+      border-radius: 50%;
+      border: 1px solid var(--point-color);
+    }
+    div {
+      > strong {
+        font-size: 3rem;
+        font-weight: 800;
+      }
+      > div {
+        font-size: 3rem;
+        font-weight: 600;
+      }
+    }
+    p {
+      margin-top: 3rem;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--normal-gray-text);
+    }
+  }
+`;
+
 const Section2: React.FC = () => {
   const [ref, inView] = useInView();
   useEffect(() => {
@@ -9,7 +73,7 @@ const Section2: React.FC = () => {
     }
   }, [inView]);
   return (
-    <div className="pc_section section_2">
+    <SectionStyle className="pc_section section_2">
       <div className="pc_con flex flex_dir_c flex_jc_c flex_ai_c">
         <h6 className="point_txt">Overview</h6>
         <h2>
@@ -55,7 +119,7 @@ const Section2: React.FC = () => {
           <li className="absolute" style={{ bottom: 0 }} ref={ref}></li>
         </ul>
       </div>
-    </div>
+    </SectionStyle>
   );
 };
 

@@ -1,5 +1,141 @@
 // MODULE
 import { useEffect, useLayoutEffect, useState } from "react";
+import styled from "styled-components";
+// STYLED
+const SectionStyle = styled.div`
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  z-index: 1;
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 40rem;
+    top: 0;
+    left: 0;
+    background: var(--white-color);
+    z-index: 2;
+  }
+  * {
+    z-index: 3;
+  }
+  .section_tit * {
+    color: #493dc1;
+  }
+  .sub_tit p {
+    font-size: 3rem;
+    font-weight: 300;
+  }
+  .ex_txt p {
+    margin-right: 5.5rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    font-family: "pretendard" !important;
+  }
+  .sub_tit h3 {
+    font-weight: 700;
+  }
+  .mockup_view {
+    margin-top: 8.5rem;
+    .main_img > img {
+      border-radius: 3.8rem;
+      box-shadow: 0 25px 24px rgba(0, 0, 0, 0.3);
+    }
+    .search_img {
+      .place_mockup .sub_txt {
+        margin-top: 5rem;
+        > * {
+          color: var(--white-color);
+        }
+        p {
+          font-size: 2.5rem;
+          font-weight: 700;
+        }
+        div {
+          margin-top: 1.5rem;
+          font-size: 2rem;
+          font-weight: 400;
+        }
+      }
+      .review_mockup {
+        &::before {
+          content: "리뷰 상세보기";
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          width: inherit;
+          bottom: -98%;
+          right: -15%;
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: var(--white-color);
+        }
+        &::after {
+          content: "다른 사람들이 쓴 리뷰들을 인피니티 스크롤로 전체 목록으로 볼 수 있으며, 작성할 수 있습니다.";
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          width: 65%;
+          bottom: -108%;
+          right: 3%;
+          font-size: 2rem;
+          font-weight: 300;
+          color: var(--white-color);
+          word-break: keep-all;
+          text-align: center;
+        }
+        img {
+          width: 100%;
+          right: -15%;
+        }
+      }
+    }
+  }
+  .marker_icon {
+    margin-left: 4rem;
+    > div {
+      position: absolute;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #958bff;
+      white-space: nowrap;
+    }
+    .top_txt {
+      top: -3.6rem;
+      left: 0;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 2rem;
+        top: 100%;
+        left: 30%;
+        background: #958bff;
+      }
+    }
+    .bottom_txt {
+      bottom: -3.6rem;
+      right: 0;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 2rem;
+        bottom: 100%;
+        right: 30%;
+        background: #958bff;
+      }
+    }
+    .ex_txt {
+      bottom: -12.6rem;
+      left: 0;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--white-color);
+    }
+  }
+`;
 
 const Section10: React.FC = () => {
   const [longImgWidth, setLongImgWidth] = useState<number | undefined>(0);
@@ -26,7 +162,7 @@ const Section10: React.FC = () => {
     }, 1000);
   }, []);
   return (
-    <div className="pc_section section_10 relative">
+    <SectionStyle className="pc_section section_10 relative">
       <div className="pc_con">
         <div className="section_tit flex flex_jc_e flex_ai_fe">
           <div className="ex_txt">
@@ -89,7 +225,7 @@ const Section10: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </SectionStyle>
   );
 };
 

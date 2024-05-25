@@ -1,10 +1,92 @@
-// STYLE
-import "../../../assets/styles/pcstyle.css";
+// MODULE
+import styled from "styled-components";
+// STYLED
+const SectionStyle = styled.div`
+  padding-top: 4.5rem;
+  background: #493dc1;
+  background: linear-gradient(
+    0deg,
+    rgba(141, 130, 254, 1) 0%,
+    rgba(73, 61, 193, 1) 100%
+  );
+  .section_tit {
+    font-weight: 700;
+    color: var(--white-color);
+    text-align: center;
+  }
+  .user_persona_list {
+    > li {
+      margin-top: 4rem;
+    }
+    li {
+      .avatar_img {
+        flex-basis: 31rem;
+      }
+      .txt_box {
+        flex-basis: calc(100% - 35rem);
+        padding: 4rem;
+        background: var(--white-color);
+        border-radius: 3rem;
+        box-shadow: 0 4px 22px rgba(0, 0, 0, 0.05);
+        * {
+          color: var(--navy-color);
+        }
+        .user_info {
+          p {
+            padding-right: 3rem;
+            font-size: 3rem;
+            font-weight: 700;
+            &:first-child::after {
+              content: "";
+              position: absolute;
+              width: 5px;
+              height: 2.5rem;
+              background: #d9d9d9;
+              top: 20%;
+              right: 0;
+            }
+            &.job {
+              padding-left: 3rem;
+              font-weight: 500;
+            }
+          }
+        }
+        strong {
+          font-size: 2rem;
+          font-weight: 700;
+        }
+        p {
+          font-size: 2rem;
+          font-weight: 500;
+          span {
+            font-size: 2rem;
+          }
+        }
+        li li {
+          margin-left: 2rem;
+          font-size: 1.8rem;
+          line-height: 1.5;
+          list-style: disc;
+        }
+        .persona_data {
+          margin-top: 4rem;
+          > li:not(:first-child) {
+            flex-basis: 50%;
+            margin-top: 4rem;
+          }
+        }
+      }
+      .txt_box strong ~ * {
+        margin-top: 2rem;
+      }
+    }
+  }
+`;
 // IMAGE
 
 const Section5: React.FC = () => {
   return (
-    <div className="pc_section section_5">
+    <SectionStyle className="pc_section section_5">
       <div className="pc_con">
         <h6 className="section_tit">User Persona</h6>
 
@@ -110,7 +192,7 @@ const Section5: React.FC = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </SectionStyle>
   );
 };
 

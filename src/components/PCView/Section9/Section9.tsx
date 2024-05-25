@@ -1,6 +1,72 @@
+// MODULE
+import styled from "styled-components";
+// STYLED
+const SectionStyle = styled.div`
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  > .pc_con {
+    padding: 0 10rem;
+  }
+  .sub_tit {
+    * {
+      color: var(--white-color);
+    }
+    h3 {
+      margin-right: 19rem;
+      font-weight: 700;
+    }
+    p {
+      font-size: 3rem;
+      font-weight: 300;
+    }
+  }
+  .ex_txt p {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--white-color);
+  }
+  .mockup_view {
+    margin-top: 9.5rem;
+    .splash_img {
+      margin-right: 10rem;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 60rem;
+        height: 60rem;
+        top: 10%;
+        left: 0;
+        border-radius: 50%;
+        background: #a199f2;
+        z-index: 1;
+      }
+      img {
+        z-index: 2;
+      }
+    }
+    .process_mockup {
+      flex-grow: 1;
+      margin-top: 1rem;
+      li .mockup_txt * {
+        color: var(--white-color);
+        &.step {
+          margin-top: 2.5rem;
+          font-size: 2.5rem;
+          font-weight: 600;
+        }
+        &.step_name {
+          margin-top: 1rem;
+          font-size: 2rem;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+`;
+
 const Section9: React.FC = () => {
   return (
-    <div className="pc_section section_9">
+    <SectionStyle className="pc_section section_9">
       <div className="pc_con">
         <div className="section_tit flex flex_ai_fe">
           <div className="sub_tit">
@@ -56,7 +122,7 @@ const Section9: React.FC = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </SectionStyle>
   );
 };
 
