@@ -49,11 +49,11 @@ const SectionStyle = styled.div`
       &:nth-child(2) {
         margin-top: 5.5rem;
         transition: all 0.3s;
-        transition-delay: 0.5s;
+        transition-delay: 0.4s;
       }
       &:nth-child(3) {
         transition: all 0.3s;
-        transition-delay: 1s;
+        transition-delay: 0.8s;
       }
       .chart_body {
         min-height: 40rem;

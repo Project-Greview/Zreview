@@ -802,3 +802,10 @@
   background: var(--white-color);
   border-bottom: 1px solid var(--border-color);
 }
+/* ERROR */
+.outlet.error {
+  height: 100vh;
+}
+.outlet.error .btn_box .buttons {
+  padding: 1.5rem;
+}

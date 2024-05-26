@@ -1,6 +1,6 @@
 // MODULE
 import styled from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 // JSON
 import PontAndSolution from "../../../json/pcIntroData.json";
@@ -51,6 +51,19 @@ const SectionStyle = styled.div`
       background: var(--dark-gray-color);
     }
   }
+  .right_chart_list,
+  .left_chart_list {
+    transform: translateX(-5rem);
+    opacity: 0;
+    transition: all 1s 0.3s;
+    &.right_chart_list {
+      transition-delay: 0.5s;
+    }
+    &.active {
+      transform: translateX(0rem);
+      opacity: 1;
+    }
+  }
 `;
 
 const Section4: React.FC = () => {
@@ -58,7 +71,8 @@ const Section4: React.FC = () => {
   const [isRightChart, inViewRight] = useInView();
   useEffect(() => {
     if (inViewLeft && inViewRight) {
-      console.log("작동");
+      document.querySelector(".right_chart_list")?.classList.add("active");
+      document.querySelector(".left_chart_list")?.classList.add("active");
     }
   }, [inViewLeft, inViewRight]);
   return (

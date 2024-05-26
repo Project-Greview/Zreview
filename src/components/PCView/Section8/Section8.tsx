@@ -1,5 +1,6 @@
 // MODULE
 import styled from "styled-components";
+import { useInView } from "react-intersection-observer";
 // HOOK
 // SVG
 import { ReactComponent as MapIcon } from "../../../assets/image/icon/Map-icon.svg";
@@ -14,6 +15,7 @@ import { ReactComponent as LikeIcon } from "../../../assets/image/icon/like_icon
 import { ReactComponent as ScoreIcon } from "../../../assets/image/icon/Score_star.svg";
 import { ReactComponent as DarkMarker } from "../../../assets/image/icon/marker_g.svg";
 import { ReactComponent as ColorMarker } from "../../../assets/image/icon/marker_c.svg";
+import { useEffect } from "react";
 // STYLED
 const SectionStyle = styled.div`
   padding-bottom: 16rem;
@@ -34,7 +36,18 @@ const SectionStyle = styled.div`
       width: 100%;
       height: 8.4rem;
       margin-top: 3.5rem;
-      background: linear-gradient(90deg, #6556ff -3.29%, #461cf4 103.76%);
+      /* background: linear-gradient(90deg, #6556ff -3.29%, #461cf4 103.76%); */
+      > span {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, #6556ff -3.29%, #461cf4 103.76%);
+        transition: 0.5s 0.3s;
+      }
+      &.active {
+        > span {
+          width: 100%;
+        }
+      }
       &::before {
         content: "6556FF";
         position: absolute;
@@ -56,32 +69,67 @@ const SectionStyle = styled.div`
     }
     .normal_color_bar {
       margin-top: 2rem;
+      &.active {
+        li {
+          &:first-child {
+            transition-delay: 0.3s;
+          }
+          &:nth-child(2) {
+            transition-delay: 0.6s;
+          }
+          &:nth-child(3) {
+            transition-delay: 0.9s;
+          }
+          &:nth-child(4) {
+            transition-delay: 1.2s;
+          }
+          > span {
+            width: 100%;
+          }
+        }
+      }
       li {
         flex-basis: 100%;
         width: 100%;
         height: 8.4rem;
+        > span {
+          width: 0%;
+          height: 100%;
+          transition: 1s 0.3s;
+        }
         &.white {
           flex-basis: 20.06%;
-          background: var(--white-color);
+          /* background: var(--white-color); */
           border: 1px solid var(--white-color);
+          > span {
+            background: var(--white-color);
+          }
         }
         &.light_gray,
         &.gray {
           flex-basis: 28.93%;
-          background: var(--border-color);
+          /* background: var(--border-color); */
           border: 1px solid var(--border-color);
-          &.light_gray::before {
-            content: "EDEDED";
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            font-size: 2rem;
-            font-weight: 500;
-            color: var(--white-color);
+          &.light_gray {
+            > span {
+              background: var(--border-color);
+            }
+            ::before {
+              content: "EDEDED";
+              position: absolute;
+              bottom: 1rem;
+              right: 1rem;
+              font-size: 2rem;
+              font-weight: 500;
+              color: var(--white-color);
+            }
           }
           &.gray {
-            background: var(--disable-color);
+            /* background: var(--disable-color); */
             border: 1px solid var(--disable-color);
+            > span {
+              background: var(--disable-color);
+            }
             &::before {
               content: "959292";
               position: absolute;
@@ -95,9 +143,12 @@ const SectionStyle = styled.div`
         }
         &.dark_gray {
           flex-basis: calc(100% - 57.92%);
-          background: var(--dark-gray-color);
+          /* background: var(--dark-gray-color); */
           border: 1px solid rgba(255, 255, 255, 0.4);
           border-left: none;
+          > span {
+            background: var(--dark-gray-color);
+          }
           &::before {
             content: "3A3A3A";
             position: absolute;
@@ -171,17 +222,34 @@ const Section8: React.FC = () => {
   const handleRemoveClass = (e: any) => {
     e.currentTarget.classList.remove("move_horizon");
   };
+  const [view, inView] = useInView();
+  useEffect(() => {
+    if (inView) {
+      document.querySelector(".point_color_bar")?.classList.add("active");
+      document.querySelector(".normal_color_bar")?.classList.add("active");
+    }
+  }, [inView]);
   return (
     <SectionStyle className="pc_section section_8">
       <div className="pc_s_con flex flex_jc_sb flex_wrap_wrap">
-        <div className="color_picker">
+        <div className="color_picker" ref={view}>
           <p>COLOR SYSTEM</p>
-          <div className="point_color_bar relative"></div>
+          <div className="point_color_bar relative">
+            <span className="flex"></span>
+          </div>
           <ul className="normal_color_bar flex">
-            <li className="white relative"></li>
-            <li className="light_gray relative"></li>
-            <li className="gray relative"></li>
-            <li className="dark_gray relative"></li>
+            <li className="white relative">
+              <span className="flex"></span>
+            </li>
+            <li className="light_gray relative">
+              <span className="flex"></span>
+            </li>
+            <li className="gray relative">
+              <span className="flex"></span>
+            </li>
+            <li className="dark_gray relative">
+              <span className="flex"></span>
+            </li>
           </ul>
         </div>
         <div className="typhography">

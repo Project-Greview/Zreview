@@ -6,9 +6,9 @@ import Button from "components/Common/Button";
 const Error: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <div className="outlet">
+    <div className="outlet error flex flex_dir_c flex_ai_c flex_jc_c">
       잘못된 요청입니다!
-      <div className="btn_box flex flex_jc_sb">
+      <div className="btn_box flex flex_jc_c">
         <Button
           title={"메인으로 돌아가기"}
           event={() =>

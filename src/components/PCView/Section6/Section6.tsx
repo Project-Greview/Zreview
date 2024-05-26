@@ -1,12 +1,14 @@
 // MODULE
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
+import { useInView } from "react-intersection-observer";
 // JSON
 import PCSlideItem from "../../../json/pcIntroData.json";
 // STYLE
 import "swiper/css";
 import "swiper/css/pagination";
+import { useEffect } from "react";
 const SectionStyle = styled.div`
   padding: 4.5rem 0 16.5rem 0;
   background: #493dc1;
@@ -42,6 +44,40 @@ const SectionStyle = styled.div`
   }
   .section_sub_tit {
     margin-top: 6rem;
+    > * {
+      transform: translateX(-5rem);
+      opacity: 0;
+    }
+    * {
+      transition: all 1s 0.3s;
+      /* &:first-child {
+        transition: all 1s 0.3s;
+      } */
+      &:nth-child(2) {
+        /* transition: all 1s 0.3s; */
+        transition-delay: 0.3s;
+      }
+      &:nth-child(3) {
+        /* transition: all 1s 0.3s; */
+        transition-delay: 0.6s;
+      }
+      &:nth-child(4) {
+        /* transition: all 1s 0.3s; */
+        transition-delay: 0.9s;
+      }
+      &:nth-child(5) {
+        /* transition: all 1s 0.3s; */
+        transition-delay: 1.2s;
+      }
+      &:nth-child(6) {
+        /* transition: all 1s 0.3s; */
+        transition-delay: 1.5s;
+      }
+      &:last-child {
+        /* transition: all 1s 0.3s; */
+        transition-delay: 1.9s;
+      }
+    }
     h6 {
       font-weight: 700;
       color: var(--white-color);
@@ -60,11 +96,23 @@ const SectionStyle = styled.div`
         font-weight: 700;
       }
     }
+    &.active {
+      * {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
   }
 `;
 // IMAGE
 
 const Section6: React.FC = () => {
+  const [view, InView] = useInView();
+  useEffect(() => {
+    if (InView) {
+      document.querySelector(".section_sub_tit")?.classList.add("active");
+    }
+  }, [InView]);
   return (
     <SectionStyle className="pc_section section_6">
       <h6 className="section_tit">Project Goal</h6>
@@ -109,7 +157,10 @@ const Section6: React.FC = () => {
           ))}
         </Swiper>
       </div>
-      <div className="section_sub_tit flex flex_dir_c flex_jc_c flex_ai_c">
+      <div
+        className="section_sub_tit flex flex_dir_c flex_jc_c flex_ai_c"
+        ref={view}
+      >
         <h6>SNS에서 맛집 서치 후 지도앱으로 옮겨 정보 찾고,</h6>
         <h6>검색하면 다 나오는 누구나 아는 그런 곳 말고,</h6>
         <h6>.....</h6>
