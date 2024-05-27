@@ -218,7 +218,7 @@ const KakaoMap: React.FC = () => {
           // LEVEL SIZE CHANGE EVENT
           window.kakao.maps.event.addListener(map, "zoom_changed", function () {
             let level = map.getLevel();
-            console.log("level", level);
+            // console.log("level", level);
             circle.setOptions({
               radius:
                 level === 7

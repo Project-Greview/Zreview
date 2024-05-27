@@ -104,6 +104,7 @@ export const getAllPlaceDataFromIndexedDB = () => {
 
       place.onsuccess = (e: any) => {
         const data = e.target.result;
+        console.log("main", data);
         resolve(data);
       };
 

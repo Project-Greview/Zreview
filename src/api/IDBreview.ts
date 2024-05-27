@@ -152,6 +152,25 @@ export const getAllTargetDataFromIndexedDB = (target_name: string) => {
   });
 };
 
+const generateHashtagRanking = (hashtags: object[]) => {
+  const hashtagCounts: any = {};
+
+  // 해시태그 카운트
+  hashtags.forEach((tag: any) => {
+    if (hashtagCounts[tag]) {
+      hashtagCounts[tag]++;
+    } else {
+      hashtagCounts[tag] = 1;
+    }
+  });
+
+  // 해시태그를 등장 횟수에 따라 정렬
+  const sortedHashtags = Object.keys(hashtagCounts).sort(
+    (a, b) => hashtagCounts[b] - hashtagCounts[a]
+  );
+  const top5Hashtags = sortedHashtags.slice(0, 5);
+  return top5Hashtags;
+};
 // GET HASHTAG RANKING
 export const getHashtagRankingFromIndexedDB = () => {
   return new Promise((resolve, reject) => {
@@ -163,6 +182,22 @@ export const getHashtagRankingFromIndexedDB = () => {
       const objectStore = transaction.objectStore("review");
 
       const request = objectStore.getAll();
+
+      request.onsuccess = (e: any) => {
+        const result = e.target.result;
+        const hashtags = result.map((result: any) => result.hashtag).flat();
+        const top5Hashtags = generateHashtagRanking(hashtags);
+        resolve(top5Hashtags);
+      };
+
+      request.onerror = (e) => {
+        console.log("error", e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
     };
   });
 };
