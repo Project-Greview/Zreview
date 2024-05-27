@@ -403,12 +403,24 @@
   height: 3.7rem;
   font-size: 1.4rem;
 }
+.my_page_section .scroll_section.active ~ .tab_buttons {
+  position: fixed;
+  width: 100%;
+  flex-basis: 100%;
+  top: var(--header-height);
+  left: 0;
+  margin-top: 0;
+  transition: all 0.3s, margin 0s;
+}
 .my_page_section .tab_buttons {
   position: sticky;
-  top: 0;
+  width: 100%;
+  flex-basis: 100%;
+  top: var(--header-height);
   margin-top: 2rem;
   background: var(--white-color);
   border-bottom: 1px solid var(--disable-color);
+  transition: all 0.3s, margin 0s;
 }
 .my_page_section .tab_buttons::after {
   content: "";
@@ -449,7 +461,16 @@
 }
 .my_page_section .item_list .list_section .count {
   position: sticky;
-  top: calc(var(--header-height) + 1.5rem);
+  /* top: calc(var(--header-height) + 1.5rem); */
+  top: calc(var(--header-height) * 2);
+}
+.my_page_section .item_list .list_section .count.active {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  padding: 1rem 2rem;
+  background: #ffffff;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.3);
 }
 .my_page_section .item_list .list_section .count * {
   font-size: 1.4rem;

@@ -15,6 +15,7 @@ const UserInfo: React.FC<UserInfoProps> = () => {
   // DUMMY
   const getNickname = getCookie("user").nickname;
   const getSettingLocation = getCookie("dummyLocation");
+
   return (
     <>
       <div className="my_profile flex flex_jc_s flex_ai_c">
