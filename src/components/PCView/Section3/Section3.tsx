@@ -9,7 +9,7 @@ interface DataType {}
 // STYLED
 const SectionStyle = styled.div`
   padding-top: 4.5rem;
-  .secition_tit {
+  .section_tit {
     font-weight: 800;
     color: var(--white-color);
   }

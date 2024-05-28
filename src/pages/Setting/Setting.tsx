@@ -88,29 +88,41 @@ const Setting: React.FC = () => {
               )}
             </li>
           ))}
-          {/* {isMobile ? (
-          <li
-            onClick={() => setProductModal(true)}
-            className="flex flex_jc_sb flex_ai_c"
-          >
-            <div>모바일용 더미데이터 생성하기</div>
-            <div>
-              <ArrowIcon />
-            </div>
-          </li>
-        ) : (
-          ""
-        )}
-        <li
-          className="flex flex_jc_sb flex_ai_c"
-          onClick={() => navigate("/Dummy_List")}
-        >
-          <div>임시데이터 목록 보기</div>
-          <div>
-            <ArrowIcon />
-          </div>
-        </li> */}
         </ul>
+        {isMobile && process.env.PUBLIC_URL && (
+          <>
+            <div className="flex flex_jc_c flex_ai_c">⬇️임시 메뉴⬇️</div>
+            <ul>
+              <li
+                onClick={() => setProductModal(true)}
+                className="flex flex_jc_sb flex_ai_c"
+              >
+                <div>모바일용 더미데이터 생성하기</div>
+                <div>
+                  <ArrowIcon />
+                </div>
+              </li>
+              <li
+                onClick={() => navigate("/indexedDB-setting")}
+                className="flex flex_jc_sb flex_ai_c"
+              >
+                <div>indexedDB 관리 메뉴</div>
+                <div>
+                  <ArrowIcon />
+                </div>
+              </li>
+              <li
+                className="flex flex_jc_sb flex_ai_c"
+                onClick={() => navigate("/Dummy_List")}
+              >
+                <div>임시데이터 목록 보기</div>
+                <div>
+                  <ArrowIcon />
+                </div>
+              </li>
+            </ul>
+          </>
+        )}
       </div>
     </>
   );

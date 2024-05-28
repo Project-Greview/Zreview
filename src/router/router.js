@@ -18,6 +18,7 @@ import PlaceReview from "pages/PlaceReview";
 import DetailReview from "pages/DetailReview";
 
 import Error from "pages/Error";
+import MobileIndexedDB from "pages/MobileIndexedDB";
 const routes = [
   {
     path: "/",
@@ -121,6 +122,14 @@ const routes = [
         element: (
           <UserRouter>
             <DummyDataList />
+          </UserRouter>
+        ),
+      },
+      {
+        path: "/indexedDB-setting",
+        element: (
+          <UserRouter>
+            <MobileIndexedDB />
           </UserRouter>
         ),
       },
