@@ -230,3 +230,49 @@ export const getMyWriteReviewFromIndexedDB = (id: number, nickname: string) => {
     };
   });
 };
+// POST COMMENT
+export const addCommentFromIndexedDB = (
+  id: number,
+  nickname: string,
+  writerId: number,
+  comment: string,
+  created_dt: Date
+) => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
+
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction("comment", "readwrite");
+      const objectStore = transaction.objectStore("comment");
+
+      const addComment = objectStore.put({
+        reviewId: id,
+        writerId: writerId,
+        writerNickname: nickname,
+        comment: comment,
+        liked: 0,
+        created_dt: created_dt,
+      });
+
+      addComment.onsuccess = (e) => {
+        console.log(e);
+        resolve(e);
+      };
+      addComment.onerror = (e) => {
+        console.log("error", e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    };
+  });
+};
+// POST RECOMMENT
+export const addReCommentFromIndexedDB = () => {
+  return new Promise((resolve, rejcet) => {
+    const dbOpen = idb.open("zreview", 1);
+  });
+};

@@ -1,6 +1,8 @@
 // MODULE
 import { useState, ChangeEvent } from "react";
 import styled from "styled-components";
+// HOOK
+import { addCommentFromIndexedDB } from "api/IDBreview";
 // SVG
 import { ReactComponent as ArrowLeft } from "../../assets/image/icon/arrow-left.svg";
 import { ReactComponent as SendMessage } from "../../assets/image/icon/send_message.svg";
@@ -67,6 +69,8 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen }) => {
     e.preventDefault();
     setCmt(e.target.value);
   };
+
+  const handlePostComment = () => {};
   return (
     <CommentFrame className={`fixed ${isOpen}`}>
       <div className="header_section flex flex_jc_s flex_ai_c">
