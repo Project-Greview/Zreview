@@ -29,6 +29,10 @@ const MobileIndexedDB: React.FC = () => {
         console.log(error);
       });
   };
+
+  const handleViewIndexedDBVolume = () => {
+    checkIndexedDBStorage();
+  };
   const handleDeleteIndexedDB = () => {
     indexedDB.deleteDatabase("zreview");
     removeCookie("user");
@@ -61,10 +65,10 @@ const MobileIndexedDB: React.FC = () => {
           contents={
             "indexedDB를 초기화 하겠습니까?\n 초기화 후 로그인화면으로 이동되며 \n작성된 글, 가입한 계정은 모두 삭제됩니다."
           }
-          conform={() => handleDeleteIndexedDB()}
-          conform_txt={"초기화"}
-          cancel={() => setModalState(0)}
-          cancel_txt={"취소"}
+          conform={() => setModalState(0)}
+          conform_txt={"확인"}
+          cancel={undefined}
+          cancel_txt={""}
         />
       )}
       <IndexedDBSettingFrame>
@@ -86,7 +90,7 @@ const MobileIndexedDB: React.FC = () => {
               <ArrowIcon />
             </li>
             <li className="flex flex_jc_sb flex_ai_c">
-              <button onClick={() => checkIndexedDBStorage()}>
+              <button onClick={() => setModalState(2)}>
                 indexedDB 사용량 확인
               </button>
               <ArrowIcon />
