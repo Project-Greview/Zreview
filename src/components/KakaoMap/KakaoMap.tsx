@@ -55,7 +55,7 @@ const KakaoMap: React.FC = () => {
   const [, setUserLat] = useState(0);
   const [, setUserLng] = useState(0);
 
-  const dummyData = useRecoilValue(dummyDateState);
+  const ReviewData = useRecoilValue(dummyDateState);
   // const keyword = useRecoilValue(searchKeywordState);
   const viewHeight: number = window.innerHeight;
 
@@ -88,7 +88,7 @@ const KakaoMap: React.FC = () => {
 
           // CREATIVE CLUSTER
           const individualMarkers: any[] = [];
-          dummyData?.forEach((position) => {
+          ReviewData?.forEach((position) => {
             // SETTING MARKER
             const MarkerSrc = MapMarkerIcon;
             const MarkerSize = new window.kakao.maps.Size(45, 55);
@@ -107,7 +107,7 @@ const KakaoMap: React.FC = () => {
             window.kakao.maps.event.addListener(marker, "click", function () {
               const tolerance = 0.0001;
               const clickedPosition = marker.getPosition();
-              const clickedData = dummyData.find((data: ReviewDataType) => {
+              const clickedData = ReviewData.find((data: ReviewDataType) => {
                 const latDiff = Math.abs(
                   data.location_lat - clickedPosition.getLat()
                 );
@@ -266,13 +266,13 @@ const KakaoMap: React.FC = () => {
   // }, []);
   useEffect(() => {
     // 실제 데이터인경우 데이터 없는거 체크 필요
-    // if (dummyData.length === 0) {
+    // if (ReviewData.length === 0) {
     //   return;
     // }
 
-    // dummyData가 모두 로딩된 후 실행할 코드
+    // ReviewData가 모두 로딩된 후 실행할 코드
     getKakao();
-  }, [dummyData]);
+  }, [ReviewData]);
   return (
     <>
       <HashTagSlide />
