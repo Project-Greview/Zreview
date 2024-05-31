@@ -34,7 +34,6 @@ const MobileIndexedDB: React.FC = () => {
 
   const handleViewIndexedDBVolume = () => {
     checkIndexedDBStorage();
-    // console.log(VolumeCalc(data?.quota));
     setModalState(2);
   };
   const handleDeleteIndexedDB = () => {
@@ -45,7 +44,9 @@ const MobileIndexedDB: React.FC = () => {
     removeCookie("dummyLocation");
     localStorage.clear();
     setInterval(() => {
-      window.location.href = "/";
+      window.location.href = `${
+        process.env.NODE_ENV === "production" ? process.env.PUBLIC_URL : "/"
+      }`;
     }, 1000);
   };
   useEffect(() => {}, []);
@@ -69,7 +70,7 @@ const MobileIndexedDB: React.FC = () => {
           contents={`🔋현재 기기에서 부여된 총 indexedDB 용량 : ${VolumeCalc(
             data?.quota
           )}\n\n🪫사용중인 indexedDB 용량 : ${VolumeCalc(
-            data?.usageDetails.indexedDB
+            data?.usageDetails?.indexedDB
           )}\n\n✔️indexedDB를 초기화 할 경우 다른 사이트에서도 사용된 indexedDB까지 함께 삭제될 수 있습니다.\nPC의 경우 개발자 환경에서 \n🔹애플리케이션 > indexedDB > zreview🔹\n 에서 데이터베이스 삭제를 진행해주세요!`}
           conform={() => setModalState(0)}
           conform_txt={"확인"}
