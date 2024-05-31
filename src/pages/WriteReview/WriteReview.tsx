@@ -37,6 +37,7 @@ type WriteReviewProps = {};
 type ReviewDataType = {
   place_name: string;
   place_address: string;
+  placeDepth3: string;
   title: string;
   content: string;
   location_lat: number;
@@ -110,7 +111,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const setPlaceInfo = async (data: any) => {
     try {
       const response: any = await addPlaceDataToIndexedDB(data);
-      console.log(response);
       setPlaceId(response.target.result);
     } catch (error) {
       console.log(error);
@@ -136,6 +136,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   };
 
   // STATE REGISTER POSITION
+  // 사용자가 직접 장소명 입력 이벤트
   const handleWritePlacePosition = () => {
     navigator.geolocation.getCurrentPosition((position: any) => {
       setLat(position.coords.latitude);
@@ -148,6 +149,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
             placeLatitude: position.coords.latitude,
             placeLongitude: position.coords.longitude,
             placeAddress: result[1].address_name,
+            placeDepth3: result[0].region_3depth_name,
           });
         }
       };
@@ -192,6 +194,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       location_lat: Number(writeLocationData.placeLatitude),
       location_lon: Number(writeLocationData.placeLongitude),
       place_address: writeLocationData.placeAddress,
+      placeDepth3: writeLocationData.placeDepth3,
       content: content,
       hashtag: hashtag,
       rating: score,
@@ -270,6 +273,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
         placeLatitude: state.location_lat,
         placeLongitude: state.location_lon,
         placeAddress: state.place_address,
+        placeDepth3: state.region_3depth,
       });
     }
   }, []);
@@ -296,23 +300,23 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
         />
       ) : alarmModal === 3 ? (
         ""
-      ) : alarmModal === 99 ? (
-        <Modal
-          type={"type_99"}
-          contents={
-            "리뷰등록이 완료되었다는 말은 사실 거짓입니다!\n" +
-            "아직 백앤드쪽 작업이 완료되지 않아서 실제로 DB에 저장되지 않고 있습니다\n" +
-            "현재 구상중인 작업은 프론트에서 브라우저DB에 저장시켜서 임시로 사용자들에게" +
-            " 보여줄 수 있도록 작업을 진행해볼 예정입니다... ㅠㅠ\n" +
-            " 빠른 시일내에 작업하도록 하겠습니다!"
-          }
-          conform={() => navigate("/main")}
-          conform_txt={"확인"}
-          cancel={null}
-          cancel_txt={""}
-        />
       ) : (
-        ""
+        alarmModal === 99 && (
+          <Modal
+            type={"type_99"}
+            contents={
+              "리뷰등록이 완료되었다는 말은 사실 거짓입니다!\n" +
+              "아직 백앤드쪽 작업이 완료되지 않아서 실제로 DB에 저장되지 않고 있습니다\n" +
+              "현재 구상중인 작업은 프론트에서 브라우저DB에 저장시켜서 임시로 사용자들에게" +
+              " 보여줄 수 있도록 작업을 진행해볼 예정입니다... ㅠㅠ\n" +
+              " 빠른 시일내에 작업하도록 하겠습니다!"
+            }
+            conform={() => navigate("/main")}
+            conform_txt={"확인"}
+            cancel={null}
+            cancel_txt={""}
+          />
+        )
       )}
       <div className={`popup_bg ${toastModal}`}></div>
       <ToastPopup ready={toastModal} popupType={"write"} />
@@ -380,14 +384,14 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
             <label htmlFor="write_location_keyword" className="absolute">
               <SearchIcon color={"#959292"} />
             </label>
-            <div
+            <button
               className={`write_place btn flex flex_jc_c flex_ai_c ${
                 settingType ? "disable" : ""
               } ${onBlurWritePlace()}`}
               onClick={handleWritePlacePosition}
             >
               확인
-            </div>
+            </button>
           </div>
           <div className="line inline_flex"></div>
           <div className="score_section">
@@ -464,13 +468,13 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
                     <div className="img_box relative flex flex_ai_c">
                       <img src={image} alt={`${image}-${id}`} width={75} />
                     </div>
-                    <div
+                    <button
                       className="del_btn absolute flex flex_jc_c flex_ai_c"
                       onClick={() => handleDeleteImage(id)}
                     >
                       <div className="absolute"></div>
                       <div className="absolute"></div>
-                    </div>
+                    </button>
                   </span>
                 </div>
               ))}

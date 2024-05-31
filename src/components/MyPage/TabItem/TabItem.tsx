@@ -51,6 +51,7 @@ const TabItem: React.FC<TabItemProps> = () => {
       })
       .finally(() => {});
   }, []);
+  console.log("WriteData", WriteData);
   return (
     <div
       className="list_section"

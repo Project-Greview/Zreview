@@ -11,6 +11,7 @@ type PostDataType = {
   location_lat: number;
   location_lon: number;
   place_address: string;
+  placeDepth3: string;
   content: string;
   hashtag: string;
   rating: number;
@@ -37,6 +38,7 @@ export const addDataToIndexedDB = (postData: PostDataType) => {
         location_lat: postData.location_lat,
         location_lon: postData.location_lon,
         place_address: postData.place_address,
+        placeDepth3: postData.placeDepth3,
         content: postData.content,
         hashtag: postData.hashtag,
         score: postData.rating,
@@ -186,7 +188,7 @@ export const getHashtagRankingFromIndexedDB = () => {
       request.onsuccess = (e: any) => {
         const result = e.target.result;
         const hashtags = result.map((result: any) => result.hashtag).flat();
-        const top5Hashtags = generateHashtagRanking(hashtags);
+        const top5Hashtags = generateHashtagRanking(hashtags).slice(0, 5);
         resolve(top5Hashtags);
       };
 
@@ -201,7 +203,39 @@ export const getHashtagRankingFromIndexedDB = () => {
     };
   });
 };
+// GET MY LOCATION REVIEW
+export const getMyLocationReviewFromIndexedDB = (location: string) => {
+  // [EDIT] 추후 내가 등록한 동네기준으로만 가져오게 변경
+  // [EDIT] nickname 을 동네이름으로
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
 
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction("review", "readonly");
+      const objectStore = transaction.objectStore("review");
+
+      const request = objectStore.getAll();
+
+      request.onsuccess = (e: any) => {
+        const result = e.target.result;
+        resolve(
+          result.filter((result: any) => result.placeDepth3 === location)
+        );
+        // [EDIT] result.writer 를 글 등록 시 location(depth3)으로 변경 필요
+      };
+
+      request.onerror = (e) => {
+        console.log("error", e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    };
+  });
+};
 // GET MY WRITE REVIEW
 export const getMyWriteReviewFromIndexedDB = (id: number, nickname: string) => {
   return new Promise((resolve, reject) => {

@@ -9,6 +9,7 @@ interface ReviewLocationInfo {
   placeLatitude: number;
   placeLongitude: number;
   placeAddress: string;
+  placeDepth3: string;
 }
 
 // REVIEW SCORE
@@ -40,6 +41,7 @@ export const reviewLocationInfoState = atom<ReviewLocationInfo>({
     placeLatitude: 0,
     placeLongitude: 0,
     placeAddress: "",
+    placeDepth3: "",
   },
 });
 
