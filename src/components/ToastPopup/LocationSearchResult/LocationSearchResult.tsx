@@ -70,13 +70,19 @@ const LocationSearchResult: React.FC<LocationSearchResultType> = ({
           {resultData.map((item: any, index: number) => {
             const distance = getDistanceCalc(lat, lng, item.y, item.x);
             const placeDepth3 = extractNeighborhood(item.address_name);
+            // return { ...item, placeDepth3: placeDepth3, distance: distance };
+            const itemData = {
+              ...item,
+              placeDepth3: placeDepth3,
+              distance: distance,
+            };
             return (
               <li
                 key={item.id}
                 ref={index > resultData.length - 2 ? ref : null}
                 onClick={() =>
                   navigate(`/place_review`, {
-                    state: { placeData: item, placeDepth3: placeDepth3 },
+                    state: { placeData: itemData },
                   })
                 }
               >

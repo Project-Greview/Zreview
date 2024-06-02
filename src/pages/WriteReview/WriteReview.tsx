@@ -1,3 +1,7 @@
+/**
+ * 사용자 리뷰 작성 페이지
+ * Page
+ */
 // MODULE
 import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -13,7 +17,6 @@ import { getCookie } from "utils/cookies";
 
 // RECOIL STATE
 import { toastPopupState } from "state/commonState";
-import { locationSearchResultState } from "state/searchState";
 import {
   reviewLocationInfoState,
   reviewSearchResultState,
@@ -62,6 +65,7 @@ type PlaceInfoType = {
   location_lat: number;
   location_lon: number;
   place_address: string;
+  placeDepth3: string;
 };
 const WriteReview: React.FC<WriteReviewProps> = () => {
   const { state } = useLocation();
@@ -122,7 +126,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       location_lat: Number(writeLocationData.placeLatitude),
       location_lon: Number(writeLocationData.placeLongitude),
       place_address: writeLocationData.placeAddress,
-      // placeDepth3:writeLocationData
+      placeDepth3: writeLocationData.placeDepth3,
     };
     try {
       const response: any = await getPlaceDataFromIndexedDB(place_info);
@@ -274,11 +278,10 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
         placeLatitude: state.location_lat,
         placeLongitude: state.location_lon,
         placeAddress: state.place_address,
-        placeDepth3: state.region_3depth,
+        placeDepth3: state.placeDepth3,
       });
     }
   }, []);
-  console.log(state);
   return (
     <>
       {alarmModal === 1 ? (
@@ -294,7 +297,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
         <Modal
           type={"type_2"}
           contents={"리뷰등록이 완료되었습니다!"}
-          // conform={() => setAlarmModal(99)}
           conform={() => navigate("/main")}
           conform_txt={"확인"}
           cancel={null}

@@ -7,6 +7,8 @@
 }
 .my_location_section .sub_section .hashtag_list {
   margin-top: 1.5rem;
+  overflow: auto;
+  scrollbar-width: none;
 }
 .my_location_section .sub_section .hashtag_list li {
   margin-right: 1rem;

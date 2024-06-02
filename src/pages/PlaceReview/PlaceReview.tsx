@@ -5,6 +5,8 @@ import { useInView } from "react-intersection-observer";
 // HOOK
 import { getAllTargetDataFromIndexedDB } from "api/IDBreview";
 import { getPlaceDataFromIndexedDB } from "api/IDBplace";
+// UTIL
+import { extractNeighborhood } from "utils/location";
 // COMPONENT
 import Header from "components/Header";
 import DetailItem from "components/DetailItem";
@@ -44,7 +46,6 @@ const PlaceReview: React.FC<PlaceReviewType> = () => {
   const [ref, inView] = useInView();
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log("데이터", state);
 
   const [headerVisibility, setHeaderVisibility] = useState<boolean>(false);
   const [reviewData, setReviewData] = useState([]);
@@ -58,6 +59,7 @@ const PlaceReview: React.FC<PlaceReviewType> = () => {
           address: JSON.parse(localStorageData).address,
           location_lat: state.placeData.location_lat,
           location_lon: state.placeData.location_lon,
+          placeDepth3: state.placeData.placeDepth3,
         }
       : {
           place_name: state.placeData.place_name,
@@ -75,6 +77,7 @@ const PlaceReview: React.FC<PlaceReviewType> = () => {
             state.placeData.location_lon !== undefined
               ? state.placeData.location_lon
               : Number(state.placeData.x),
+          placeDepth3: state.placeData.placeDepth3,
         };
 
   const getPlaceScore = async () => {

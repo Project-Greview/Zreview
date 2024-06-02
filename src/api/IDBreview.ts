@@ -27,6 +27,7 @@ type PostDataType = {
 // POST REVIEW
 // 리뷰 등록 API
 export const addDataToIndexedDB = (postData: PostDataType) => {
+  console.log("API 작동", postData);
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     dbOpen.onsuccess = () => {
@@ -126,6 +127,7 @@ export const getDataFromIndexedDB = () => {
 };
 
 // GET TARGET REVIEW
+// 선택된 장소에 대한 리뷰 데이터 가져오기 API
 export const getAllTargetDataFromIndexedDB = (target_name: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
@@ -206,6 +208,7 @@ export const getHashtagRankingFromIndexedDB = () => {
   });
 };
 // GET MY LOCATION REVIEW
+// 내가 설정한 지역에 대한 리뷰 가져오기 API
 export const getMyLocationReviewFromIndexedDB = (location: string) => {
   // [EDIT] 추후 내가 등록한 동네기준으로만 가져오게 변경
   // [EDIT] nickname 을 동네이름으로
@@ -239,6 +242,7 @@ export const getMyLocationReviewFromIndexedDB = (location: string) => {
   });
 };
 // GET MY WRITE REVIEW
+// 내가 작성한 리뷰 가져오기 API
 export const getMyWriteReviewFromIndexedDB = (id: number, nickname: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);

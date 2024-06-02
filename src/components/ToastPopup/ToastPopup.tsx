@@ -32,7 +32,6 @@ import Input from "components/Common/Input";
 import WriteBody from "./WriteBody";
 import LocationSearchResult from "./LocationSearchResult";
 import MarkerBody from "./MarkerBody";
-import HashTag from "components/HashTag";
 // SVG
 import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow-left.svg";
 import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
@@ -168,6 +167,15 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     }
   };
 
+  const handleStateProps = () => {
+    const stateData = {
+      ...markerData[0],
+      placeDepth3: extractNeighborhood(markerData[0].place_address),
+    };
+    navigate("/place_review", {
+      state: { placeData: stateData },
+    });
+  };
   // useEffect(() => {
   //   if (page > 1) {
   //     handleSearchLocation();
@@ -195,7 +203,6 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     }
   }, [markerData]);
 
-  console.log("장소 상세정보 전", markerData);
   return (
     <div
       className={`toast_section fixed ${
@@ -265,7 +272,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
               </div>
               <div className="score flex flex_ai_c">
                 <ScoreIcon width={14} height={14} color={"#6656ff"} />
-                <p>{markerData[0].rating}</p>
+                <p>{markerData[0]?.rating}</p>
               </div>
             </div>
             <div className="place_info flex flex_dir_c flex_jc_s flex_ai_s width_100p">
@@ -291,11 +298,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
               </button>
               <button
                 className="store_review_write"
-                onClick={() =>
-                  navigate("/place_review", {
-                    state: { placeData: markerData[0] },
-                  })
-                }
+                onClick={() => handleStateProps()}
               >
                 리뷰 보러가기
               </button>
