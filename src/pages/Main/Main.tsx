@@ -8,7 +8,10 @@ import { locationSearchResultState } from "state/searchState";
 import { dummyDateState } from "state/dummyState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
-import { getAllPlaceDataFromIndexedDB } from "api/IDBplace";
+import {
+  getAllPlaceDataFromIndexedDB,
+  getCalcPlaceDataFromIndexedDB,
+} from "api/IDBplace";
 // COMPONENT
 import LeftMenu from "../../components/LeftMenu";
 import KakaoMap from "../../components/KakaoMap";
@@ -58,8 +61,21 @@ const Main: React.FC<MainProps> = () => {
   useEffect(() => {
     cleanResult();
   }, [isReady]);
+  // useEffect(() => {
+  //   getAllPlaceDataFromIndexedDB()
+  //     .then((data: any | ResponseDataType) => {
+  //       setData(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  //     .finally(() => {});
+  // }, []);
   useEffect(() => {
-    getAllPlaceDataFromIndexedDB()
+    getCalcPlaceDataFromIndexedDB(
+      Number(getCookie("UserLat")),
+      Number(getCookie("UserLon"))
+    )
       .then((data: any | ResponseDataType) => {
         setData(data);
       })

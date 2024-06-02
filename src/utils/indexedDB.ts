@@ -29,10 +29,10 @@ export const indexedDBStart = () => {
     console.log("Object stores created successfully");
   };
   request.onsuccess = (e: any) => {
-    console.log("Database opened successfully");
-    console.log(
-      navigator.storage.estimate().then((response) => console.log(response))
-    );
+    // console.log("Database opened successfully");
+    // console.log(
+    //   navigator.storage.estimate().then((response) => console.log(response))
+    // );
   };
   request.onerror = (e: any) => {
     console.error("Error opening database:", e.target.error);

@@ -5,6 +5,8 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { useInView } from "react-intersection-observer";
 // HOOK
 import { getDistanceCalc } from "utils/distanceCalc";
+// UTIL
+import { extractNeighborhood } from "utils/location";
 // RECOIL STATE
 import { paginationState } from "state/commonState";
 import {
@@ -67,13 +69,14 @@ const LocationSearchResult: React.FC<LocationSearchResultType> = ({
         <ul>
           {resultData.map((item: any, index: number) => {
             const distance = getDistanceCalc(lat, lng, item.y, item.x);
+            const placeDepth3 = extractNeighborhood(item.address_name);
             return (
               <li
                 key={item.id}
                 ref={index > resultData.length - 2 ? ref : null}
                 onClick={() =>
                   navigate(`/place_review`, {
-                    state: { placeData: item },
+                    state: { placeData: item, placeDepth3: placeDepth3 },
                   })
                 }
               >

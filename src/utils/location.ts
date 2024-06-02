@@ -16,3 +16,14 @@ export function getLocationPathname(path: string) {
     return 0;
   }
 }
+// 주소에서 '동' 기준으로 문자열 추출
+export function extractNeighborhood(address: any | string) {
+  const regex = /(\S+동)\s/;
+  const match = address.match(regex);
+
+  if (match && match.length > 1) {
+    return match[1];
+  } else {
+    return null;
+  }
+}

@@ -7,6 +7,8 @@ import {
   reviewLocationInfoState,
   reviewSearchResultState,
 } from "state/writeState";
+// UTIL
+import { extractNeighborhood } from "utils/location";
 // PROPS TYPE
 type WriteBodyProps = {};
 
@@ -21,18 +23,6 @@ const WriteBody: React.FC<WriteBodyProps> = () => {
   const storeSearchResult = useRecoilValue<any>(reviewSearchResultState);
 
   const handleSelectPlace = (info: any, number: number) => {
-    console.log("info", info);
-    function extractNeighborhood(address: any | string) {
-      const regex = /(\S+동)\s/;
-      const match = address.match(regex);
-
-      if (match && match.length > 1) {
-        return match[1];
-      } else {
-        return null;
-      }
-    }
-
     let neighborhood = extractNeighborhood(info.address_name);
     setLocationData({
       placeName: info.place_name,

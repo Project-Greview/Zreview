@@ -1,3 +1,4 @@
+/** 해시태그 슬라이드 */
 // MODULE
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -33,7 +34,7 @@ const HashTagSlide: React.FC<HashTagSlideProps> = () => {
         spaceBetween={10}
         slidesPerView={4}
         onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper: SwiperCore) => console.log(swiper)}
+        // onSwiper={(swiper: SwiperCore) => console.log(swiper)}
       >
         {topHashtag !== null &&
           topHashtag.map((item: string, index: number) => {

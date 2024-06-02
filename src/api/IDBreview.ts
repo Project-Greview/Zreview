@@ -25,6 +25,7 @@ type PostDataType = {
   profile: string;
 };
 // POST REVIEW
+// 리뷰 등록 API
 export const addDataToIndexedDB = (postData: PostDataType) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
@@ -100,6 +101,7 @@ export const getAllDataFromIndexedDB = () => {
 };
 
 // GET DETAIL REVIEW
+// 선택된 리뷰에 대한 상세 리뷰 가져오기 API
 export const getDataFromIndexedDB = () => {
   const dbOpen = idb.open("zreview", 1);
   const id = 5;

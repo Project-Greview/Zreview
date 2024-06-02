@@ -122,6 +122,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       location_lat: Number(writeLocationData.placeLatitude),
       location_lon: Number(writeLocationData.placeLongitude),
       place_address: writeLocationData.placeAddress,
+      // placeDepth3:writeLocationData
     };
     try {
       const response: any = await getPlaceDataFromIndexedDB(place_info);
@@ -218,6 +219,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     }
   };
   // CALC PLACE SCORE
+  // 해당 장소에 대한 점수 API
   const calcPlaceScore = async () => {
     const calcScore: CalcScoreType = {
       score:
@@ -234,7 +236,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
     };
     try {
       const response = await patchPlaceDataFromIndexedDB(calcScore);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -277,6 +278,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       });
     }
   }, []);
+  console.log(state);
   return (
     <>
       {alarmModal === 1 ? (
@@ -298,25 +300,8 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
           cancel={null}
           cancel_txt={""}
         />
-      ) : alarmModal === 3 ? (
-        ""
       ) : (
-        alarmModal === 99 && (
-          <Modal
-            type={"type_99"}
-            contents={
-              "리뷰등록이 완료되었다는 말은 사실 거짓입니다!\n" +
-              "아직 백앤드쪽 작업이 완료되지 않아서 실제로 DB에 저장되지 않고 있습니다\n" +
-              "현재 구상중인 작업은 프론트에서 브라우저DB에 저장시켜서 임시로 사용자들에게" +
-              " 보여줄 수 있도록 작업을 진행해볼 예정입니다... ㅠㅠ\n" +
-              " 빠른 시일내에 작업하도록 하겠습니다!"
-            }
-            conform={() => navigate("/main")}
-            conform_txt={"확인"}
-            cancel={null}
-            cancel_txt={""}
-          />
-        )
+        alarmModal === 3 && ""
       )}
       <div className={`popup_bg ${toastModal}`}></div>
       <ToastPopup ready={toastModal} popupType={"write"} />

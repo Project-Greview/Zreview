@@ -44,6 +44,7 @@ const PlaceReview: React.FC<PlaceReviewType> = () => {
   const [ref, inView] = useInView();
   const navigate = useNavigate();
   const { state } = useLocation();
+  console.log("데이터", state);
 
   const [headerVisibility, setHeaderVisibility] = useState<boolean>(false);
   const [reviewData, setReviewData] = useState([]);

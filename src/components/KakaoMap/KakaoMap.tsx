@@ -218,7 +218,6 @@ const KakaoMap: React.FC = () => {
           // LEVEL SIZE CHANGE EVENT
           window.kakao.maps.event.addListener(map, "zoom_changed", function () {
             let level = map.getLevel();
-            // console.log("level", level);
             circle.setOptions({
               radius:
                 level === 7
@@ -236,8 +235,16 @@ const KakaoMap: React.FC = () => {
               fillOpacity: 0.05,
             });
           });
-          map.setMinLevel(2);
-          map.setMaxLevel(7);
+          map.setMinLevel(2, {
+            animate: {
+              duration: 500,
+            },
+          });
+          map.setMaxLevel(7, {
+            animate: {
+              duration: 500,
+            },
+          });
           circle.setMap(map);
           map.setDraggable(true);
           setMap(map);
@@ -247,32 +254,9 @@ const KakaoMap: React.FC = () => {
       console.log("내위치 사용 불가");
     }
   };
-
-  /*   useEffect(() => {
-    getAllDataFromIndexedDB()
-      .then((data) => {
-        setData(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        console.log("aaaa", data);
-      });
-  }, []); */
-
-  // useLayoutEffect(() => {
-  //   getKakao();
-  // }, []);
   useEffect(() => {
-    // 실제 데이터인경우 데이터 없는거 체크 필요
-    // if (ReviewData.length === 0) {
-    //   return;
-    // }
-
-    // ReviewData가 모두 로딩된 후 실행할 코드
     getKakao();
-  }, [ReviewData]);
+  }, []);
   return (
     <>
       <HashTagSlide />

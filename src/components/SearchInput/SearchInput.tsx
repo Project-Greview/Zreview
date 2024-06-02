@@ -1,3 +1,4 @@
+/** 검색 (메인) */
 // MODULE
 import { ChangeEvent, KeyboardEvent, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";

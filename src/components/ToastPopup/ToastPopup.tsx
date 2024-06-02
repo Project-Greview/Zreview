@@ -25,6 +25,8 @@ import {
   reviewSearchResultState,
 } from "state/writeState";
 import { mapMarkerState } from "state/mapMarkerState";
+// UTIL
+import { extractNeighborhood } from "utils/location";
 // COMPONENT
 import Input from "components/Common/Input";
 import WriteBody from "./WriteBody";
@@ -192,6 +194,8 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
       );
     }
   }, [markerData]);
+
+  console.log("장소 상세정보 전", markerData);
   return (
     <div
       className={`toast_section fixed ${
