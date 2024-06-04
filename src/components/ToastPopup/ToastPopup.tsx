@@ -32,6 +32,7 @@ import Input from "components/Common/Input";
 import WriteBody from "./WriteBody";
 import LocationSearchResult from "./LocationSearchResult";
 import MarkerBody from "./MarkerBody";
+import HashTag from "components/HashTag";
 // SVG
 import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow-left.svg";
 import { ReactComponent as SearchIcon } from "../../assets/image/icon/keyword_search.svg";
@@ -56,6 +57,7 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
   const [moveSize, setMoveSize] = useState<number>(0);
   const [reviewKeyword, setReviewKeyword] = useState<string>("");
   const [markerDistance, setMarkerDistance] = useState<number>(0);
+  const [hashtagRank, setHashtagRank] = useState<object[]>([]);
   const [reviewStoreList, setReviewStoreList] = useRecoilState<any>(
     reviewSearchResultState
   );
@@ -176,6 +178,32 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
       state: { placeData: stateData },
     });
   };
+
+  const calcScore: any =
+    markerData !== null &&
+    markerData
+      .map((score: any) => score.score)
+      .reduce((length: any, item: any) => length + item, 0) / markerData.length;
+
+  const generateHashtagRanking = (hashtags: object[]) => {
+    const hashtagCounts: any = {};
+
+    // 해시태그 카운트
+    hashtags.forEach((tag: any) => {
+      if (hashtagCounts[tag]) {
+        hashtagCounts[tag]++;
+      } else {
+        hashtagCounts[tag] = 1;
+      }
+    });
+
+    // 해시태그를 등장 횟수에 따라 정렬
+    const sortedHashtags = Object.keys(hashtagCounts).sort(
+      (a, b) => hashtagCounts[b] - hashtagCounts[a]
+    );
+    const top5Hashtags = sortedHashtags.slice(0, 3);
+    return top5Hashtags;
+  };
   // useEffect(() => {
   //   if (page > 1) {
   //     handleSearchLocation();
@@ -200,9 +228,12 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
           lng
         )
       );
+      const tagRank: any = generateHashtagRanking(
+        markerData.map((item: any) => item.hashtag).flat()
+      );
+      setHashtagRank(tagRank);
     }
   }, [markerData]);
-
   return (
     <div
       className={`toast_section fixed ${
@@ -272,7 +303,15 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
               </div>
               <div className="score flex flex_ai_c">
                 <ScoreIcon width={14} height={14} color={"#6656ff"} />
-                <p>{markerData[0]?.rating}</p>
+                <p>
+                  {markerData !== null &&
+                    (
+                      markerData
+                        .map((score: any) => score.score)
+                        .reduce((length: any, item: any) => length + item, 0) /
+                      markerData.length
+                    ).toFixed(1)}
+                </p>
               </div>
             </div>
             <div className="place_info flex flex_dir_c flex_jc_s flex_ai_s width_100p">
@@ -284,12 +323,11 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
             </div>
             <div className="best_hashtag_list flex flex_jc_s flex_ai_fs width_100p">
               <ul className="flex">
-                {/* 현재는 Dummy Data 내에 있는 태그 3개만 보여주지만 추후 가장 많이 작성된 6개까지 미리보여질 예정 */}
-                {/* {markerData.hashtag.map((txt) => (
+                {hashtagRank.map((txt: any) => (
                   <li key={txt}>
                     <HashTag tag={txt} />
                   </li>
-                ))} */}
+                ))}
               </ul>
             </div>
             <div className=" btn_box flex flex_jc_sb flex_ai_c width_100p">
