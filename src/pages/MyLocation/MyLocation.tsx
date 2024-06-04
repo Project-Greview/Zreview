@@ -21,7 +21,10 @@ const MyLocation: React.FC<MyLocationProps> = () => {
 
   // 추후 내 위치 기반 or 내가 등록한 동네 기준으로 변경필요
   useEffect(() => {
-    getHashtagRankingFromIndexedDB()
+    getHashtagRankingFromIndexedDB(
+      Number(getCookie("UserLat")),
+      Number(getCookie("UserLon"))
+    )
       .then((data: any) => {
         setTopHashTag(data);
       })

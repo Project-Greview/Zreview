@@ -16,6 +16,7 @@ type PatchDataType = {
   key: string;
   score: number;
 };
+
 // POST PLACE
 // 리뷰 작성 API
 export const addPlaceDataToIndexedDB = (postData: PostDataType) => {
@@ -158,6 +159,7 @@ export const getCalcPlaceDataFromIndexedDB = (lat: number, lon: number) => {
     };
   });
 };
+// 현재위치 기반 계산하기
 function calculateDistance(
   lat1: number,
   lon1: number,
@@ -182,7 +184,6 @@ function calculateDistance(
 function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
-
 // GET TARGET PLACE
 // 선택된 장소에 대한 리뷰 데이터 가져오기 API
 export const getPlaceDataFromIndexedDB = (place_info: PostDataType) => {

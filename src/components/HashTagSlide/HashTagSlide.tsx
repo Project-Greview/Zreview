@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperCore } from "swiper";
 // HOOK
 import { getHashtagRankingFromIndexedDB } from "api/IDBreview";
+// UTIL
+import { getCookie } from "utils/cookies";
 // STYLE
 import "swiper/css";
 // SVG
@@ -20,7 +22,10 @@ const HashTagSlide: React.FC<HashTagSlideProps> = () => {
   };
 
   useEffect(() => {
-    getHashtagRankingFromIndexedDB()
+    getHashtagRankingFromIndexedDB(
+      Number(getCookie("UserLat")),
+      Number(getCookie("UserLon"))
+    )
       .then((data: any) => {
         setTopHashTag(data);
       })

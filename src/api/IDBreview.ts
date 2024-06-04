@@ -24,6 +24,7 @@ type PostDataType = {
   writer: string;
   profile: string;
 };
+
 // POST REVIEW
 // 리뷰 등록 API
 export const addDataToIndexedDB = (postData: PostDataType) => {
@@ -178,7 +179,7 @@ const generateHashtagRanking = (hashtags: object[]) => {
   return top5Hashtags;
 };
 // GET HASHTAG RANKING
-export const getHashtagRankingFromIndexedDB = () => {
+export const getHashtagRankingFromIndexedDB = (lat: number, lon: number) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -191,7 +192,24 @@ export const getHashtagRankingFromIndexedDB = () => {
 
       request.onsuccess = (e: any) => {
         const result = e.target.result;
-        const hashtags = result.map((result: any) => result.hashtag).flat();
+        // const hashtags = result.map((result: any) => result.hashtag).flat();
+
+        const calcPlaceRange = result.filter((place: any) => {
+          const placeLatitude = place.location_lat;
+          const placeLongitude = place.location_lon;
+
+          const distance = calculateDistance(
+            lat,
+            lon,
+            placeLatitude,
+            placeLongitude
+          );
+          return distance <= 5;
+        });
+
+        const hashtags = calcPlaceRange
+          .map((result: any) => result.hashtag)
+          .flat();
         const top5Hashtags = generateHashtagRanking(hashtags).slice(0, 5);
         resolve(top5Hashtags);
       };
@@ -207,6 +225,32 @@ export const getHashtagRankingFromIndexedDB = () => {
     };
   });
 };
+// 현재위치 기반 계산하기
+function calculateDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) {
+  const R = 6371; // 지구의 반지름 (단위: km)
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c; // km
+  return distance;
+}
+
+// 각도를 라디안으로 변환하는 함수
+function deg2rad(deg: number) {
+  return deg * (Math.PI / 180);
+}
+
 // GET MY LOCATION REVIEW
 // 내가 설정한 지역에 대한 리뷰 가져오기 API
 export const getMyLocationReviewFromIndexedDB = (location: string) => {
