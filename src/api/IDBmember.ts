@@ -14,6 +14,7 @@ type PostDataType = {
   phone: string;
   name: string;
   nickname: string;
+  thumbnail: string;
 };
 // POST MEMBER
 
@@ -36,6 +37,7 @@ export const addMemberDataToIndexedDB = (postData: PostDataType) => {
         phone: postData.phone,
         name: postData.name,
         nickname: postData.nickname,
+        thumbnail: "",
       });
       member.onsuccess = (e) => {
         transaction.oncomplete = () => {

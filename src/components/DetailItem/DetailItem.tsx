@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import ProfileImage from "components/ProfileImage";
 import HashTag from "components/HashTag";
 import ImageSlide from "components/ImageSlide";
+import Comment from "components/Comment";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
 // SVG
@@ -13,7 +14,6 @@ import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.
 import { ReactComponent as CommentIcon } from "../../assets/image/icon/comment_icon.svg";
 import { ReactComponent as LikeIcon } from "../../assets/image/icon/like_icon.svg";
 import { ReactComponent as RightArrow } from "../../assets/image/icon/arrow_right.svg";
-import Comment from "components/Comment";
 // PROPS TYPE
 type DetailItemProps = {
   place: string;
@@ -45,22 +45,26 @@ const StarScore: React.FC<StarScoreProps> = ({ max, rating }) => {
 
 const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
   const [boxWidth, setBoxWidth] = useState<number | undefined>(0);
+  const [reviewId, setReviewId] = useState<number>(-1);
   const [commentModal, setCommentModal] = useState<boolean>(false);
 
-  const handleOpenCommentModal = () => {
+  const handleOpenCommentModal = (id: number) => {
     setCommentModal(true);
+    setReviewId(id);
   };
 
   useLayoutEffect(() => {
     let Element = document.querySelector(".review_box");
     setBoxWidth(Element?.clientWidth);
   }, []);
-
   return (
     <>
-      {/* {commentModal && ( */}
-      <Comment isOpen={commentModal} setIsOpen={setCommentModal} />
-      {/* )} */}
+      <Comment
+        isOpen={commentModal}
+        setIsOpen={setCommentModal}
+        id={reviewId}
+        setId={setReviewId}
+      />
       <ul>
         {resultData.map((item: any) => {
           const formattedDate = new Date(item?.created_at).toLocaleDateString(
@@ -116,7 +120,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
                   </div>
                   <div
                     className="comment_box flex flex_ai_c"
-                    onClick={() => handleOpenCommentModal()}
+                    onClick={() => handleOpenCommentModal(item?.id)}
                   >
                     <CommentIcon />
                     <p>{item?.comments}</p>

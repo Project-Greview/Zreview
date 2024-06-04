@@ -54,6 +54,7 @@ const Login: React.FC<LoginProps> = () => {
           name: response.name,
           phone: response.phone,
           email: response.email,
+          thumbnail: "",
           token: true,
         };
         setCookie("user", JSON.stringify(userData));

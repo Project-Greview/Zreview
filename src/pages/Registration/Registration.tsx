@@ -79,6 +79,7 @@ const Registration: React.FC<RegistrationType> = () => {
         phone: registerData.phone,
         name: registerData.name,
         nickname: registerData.nickname,
+        thumbnail: "",
       };
       try {
         const response = await addMemberDataToIndexedDB(postData);
