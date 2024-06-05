@@ -7,6 +7,8 @@ import ProfileImage from "components/ProfileImage";
 import HashTag from "components/HashTag";
 import ImageSlide from "components/ImageSlide";
 import Comment from "components/Comment";
+// UTIL
+import { formattedDate } from "utils/dateCalc";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
 // SVG
@@ -66,15 +68,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
         setId={setReviewId}
       />
       <ul>
-        {resultData.map((item: any) => {
-          const formattedDate = new Date(item?.created_at).toLocaleDateString(
-            "ko-KR",
-            {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            }
-          );
+        {resultData?.map((item: any) => {
           return (
             <li className="review_item_box" key={item?.id}>
               <div className="reviewer_info flex flex_jc_sb flex_ai_fs">
@@ -82,7 +76,9 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
                   <ProfileImage src={Logo} alt={""} size={35} />
                   <div className="txt_box flex flex_dir_c">
                     <div className="user_nickname">{item?.writer}</div>
-                    <div className="create_dt">{formattedDate}</div>
+                    <div className="create_dt">
+                      {formattedDate(item?.created_at)}
+                    </div>
                   </div>
                 </div>
                 {type === "review" ? (
@@ -107,7 +103,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
                 </div>
                 <div className="contents">{item?.content}</div>
                 <ul className="hashtag_list flex">
-                  {item?.hashtag.map((txt: any) => (
+                  {item?.hashtag?.map((txt: any) => (
                     <li key={txt}>
                       <HashTag tag={txt} />
                     </li>
@@ -118,13 +114,13 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
                     <LikeIcon color={"#e0ddff"} />
                     <p>{item?.likes}</p>
                   </div>
-                  <div
+                  <button
                     className="comment_box flex flex_ai_c"
                     onClick={() => handleOpenCommentModal(item?.id)}
                   >
                     <CommentIcon />
                     <p>{item?.comments}</p>
-                  </div>
+                  </button>
                 </div>
               </div>
             </li>

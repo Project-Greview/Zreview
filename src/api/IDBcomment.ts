@@ -3,10 +3,11 @@ const idb = window.indexedDB;
 type PostCommentType = {};
 
 // POST COMMENT
+// 댓글 작성하기
 export const addCommentFromIndexedDB = (
   id: number,
-  nickname: string,
   writerId: number,
+  nickname: string,
   writerProfile: string,
   comment: string,
   created_dt: Date
@@ -22,7 +23,7 @@ export const addCommentFromIndexedDB = (
       const addComment = objectStore.put({
         reviewId: id,
         writerId: writerId,
-        writerNickname: nickname,
+        writer: nickname,
         comment: comment,
         liked: 0,
         created_dt: created_dt,
@@ -44,12 +45,14 @@ export const addCommentFromIndexedDB = (
   });
 };
 // POST RE-COMMENT
+// 대댓글 작성하기
 export const addReCommentFromIndexedDB = () => {
   return new Promise((resolve, rejcet) => {
     const dbOpen = idb.open("zreview", 1);
   });
 };
 // GET COMMENT
+// 댓글 가져오기
 export const getTargetReviewCommentFromIndexedDB = (id: number) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
@@ -62,7 +65,8 @@ export const getTargetReviewCommentFromIndexedDB = (id: number) => {
 
       comment.onsuccess = (e: any) => {
         const result = e.target.result;
-        resolve(result.filter((result: any) => result.reviewId === id));
+        const getData = result.filter((result: any) => result.reviewId === id);
+        resolve(getData);
       };
       comment.onerror = (e) => {
         console.log(e);

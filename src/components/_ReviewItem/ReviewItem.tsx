@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import ProfileImage from "components/ProfileImage";
 import HashTag from "components/HashTag";
 import ImageSlide from "components/ImageSlide";
+// UTIL
+import { formattedDate } from "utils/dateCalc";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
 // SVG
@@ -66,14 +68,6 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ data }) => {
   return (
     <ul>
       {data.map((item: ItemType) => {
-        const formattedDate = new Date(item?.created_at).toLocaleDateString(
-          "ko-KR",
-          {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }
-        );
         return (
           <li className="review_item_box" key={item.id}>
             <div className="reviewer_info flex flex_jc_sb flex_ai_fs">
@@ -81,7 +75,9 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ data }) => {
                 <ProfileImage src={Logo} alt={""} size={35} />
                 <div className="txt_box flex flex_dir_c">
                   <div className="user_nickname">{item?.writer}</div>
-                  <div className="create_dt">{formattedDate}</div>
+                  <div className="create_dt">
+                    {formattedDate(item?.created_at)}
+                  </div>
                 </div>
               </div>
               {/* <div className="review_menu_btn relative">

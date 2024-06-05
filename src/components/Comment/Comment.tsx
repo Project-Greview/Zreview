@@ -8,6 +8,7 @@ import {
 } from "api/IDBcomment";
 // UTIL
 import { getCookie } from "utils/cookies";
+import { calcDate } from "utils/dateCalc";
 // SVG
 import { ReactComponent as ArrowLeft } from "../../assets/image/icon/arrow-left.svg";
 import { ReactComponent as SendMessage } from "../../assets/image/icon/send_message.svg";
@@ -82,6 +83,7 @@ const CommentItem = styled.li`
     > * {
       font-size: 1.2rem;
       color: var(--disable-text);
+      margin-right: 1rem;
     }
   }
 `;
@@ -117,7 +119,6 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
         cmt,
         created_dt
       );
-      console.log(response);
     } catch (error) {
       console.log(error);
     } finally {
@@ -128,8 +129,16 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
   const getCommentData = async () => {
     try {
       const response: any = await getTargetReviewCommentFromIndexedDB(id);
-      console.log(response);
-      setCmtData(response);
+      setCmtData(
+        response.sort(
+          (a: { created_dt: string }, b: { created_dt: string }) => {
+            return (
+              new Date(b.created_dt).getTime() -
+              new Date(a.created_dt).getTime()
+            );
+          }
+        )
+      );
     } catch (error) {
       console.log(error);
     }
@@ -158,24 +167,18 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
           </li>
         ) : (
           cmtData.map((item: any, index: number) => {
-            const formattedDate = new Date(item?.created_dt).toLocaleDateString(
-              "ko-KR",
-              {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              }
-            );
             return (
               <CommentItem key={"cmt" + index} className="flex">
                 <div className="type_img">
                   <Logo width={35} height={35} />
                 </div>
                 <div>
-                  <div className="nickname">{item.writerId}</div>
+                  <div className="nickname">{item.writer}</div>
                   <div className="comment">{item.comment}</div>
                   <div className="comment_info flex flex_ai_c">
-                    <div className="created_at">{formattedDate}</div>
+                    <div className="created_at">
+                      {calcDate(new Date(item?.created_dt), new Date())}
+                    </div>
                     <button>답글달기</button>
                     <button>
                       <LikeIcon color={"#ededed"} />
@@ -194,6 +197,7 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
           id=""
           placeholder="댓글을 입력하세요"
           value={cmt}
+          maxLength={100}
           onChange={onChangeComment}
         />
         <label htmlFor="" className="flex flex_jc_c flex_ai_c">

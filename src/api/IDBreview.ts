@@ -192,7 +192,6 @@ export const getHashtagRankingFromIndexedDB = (lat: number, lon: number) => {
 
       request.onsuccess = (e: any) => {
         const result = e.target.result;
-        // const hashtags = result.map((result: any) => result.hashtag).flat();
 
         const calcPlaceRange = result.filter((place: any) => {
           const placeLatitude = place.location_lat;
@@ -287,14 +286,18 @@ export const getMyLocationReviewFromIndexedDB = (location: string) => {
 };
 // GET MY WRITE REVIEW
 // 내가 작성한 리뷰 가져오기 API
-export const getMyWriteReviewFromIndexedDB = (id: number, nickname: string) => {
+export const getMyWriteReviewFromIndexedDB = (
+  id: number,
+  nickname: string,
+  type: string
+) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
     dbOpen.onsuccess = () => {
       const db = dbOpen.result;
-      const transaction = db.transaction("review", "readonly");
-      const objectStore = transaction.objectStore("review");
+      const transaction = db.transaction(type, "readonly");
+      const objectStore = transaction.objectStore(type);
 
       const request = objectStore.getAll();
 

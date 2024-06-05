@@ -18,9 +18,9 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ boxSize, images }) => {
   };
   return (
     <>
-      {images.length === 0 ? (
+      {images?.length === 0 ? (
         ""
-      ) : images.length === 1 ? (
+      ) : images?.length === 1 ? (
         <div className="slider">
           <div
             style={{
@@ -43,7 +43,7 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ boxSize, images }) => {
           modules={[Pagination]}
           className="image_slider"
         >
-          {images.map((img: any) => (
+          {images?.map((img: any) => (
             <SwiperSlide
               key={img}
               style={{
