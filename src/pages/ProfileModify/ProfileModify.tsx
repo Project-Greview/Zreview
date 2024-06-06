@@ -8,18 +8,20 @@ import Button from "components/Common/Button";
 import ProfileImage from "components/ProfileImage";
 import Header from "components/Header";
 import Modal from "components/Modal";
+import Setting from "components/MyLocation/Setting/Setting";
 // IMAGE
 import Logo from "../../assets/image/Logo.png";
 const ProfileModify: React.FC = () => {
   // DUMMY
   const getNickname = getCookie("user").nickname;
   const getEmail = getCookie("user").email;
-  const getSettingLocation = getCookie("dummyLocation");
+  const getSettingLocation = getCookie("user").location;
 
   const [modifyModal, setModifyModal] = useState<number>(0);
   const [nickname, setNickname] = useState<string>(getNickname);
   const [email, setEmail] = useState<string>(getEmail);
   const [myLocation, setMyLocation] = useState<string>(getSettingLocation);
+  const [locationSEtting, setLocationSetting] = useState<boolean>(false);
 
   const onChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -35,6 +37,7 @@ const ProfileModify: React.FC = () => {
   };
   return (
     <>
+      {locationSEtting && <Setting close={() => setLocationSetting(false)} />}
       {modifyModal === 1 ? (
         <Modal
           type={"type_2"}
@@ -92,7 +95,10 @@ const ProfileModify: React.FC = () => {
             styles={""}
           />
           <div className="location_box relative">
-            <div className={`location_state absolute flex flex_jc_c flex_ai_c`}>
+            <div
+              className={`location_state absolute flex flex_jc_c flex_ai_c`}
+              onClick={() => setLocationSetting(true)}
+            >
               인증완료
             </div>
             <Input

@@ -24,6 +24,16 @@ export function extractNeighborhood(address: any | string) {
   if (match && match.length > 1) {
     return match[1];
   } else {
-    return null;
+    return address;
+  }
+}
+export function extractNeighborhoodType(address: any | string) {
+  const regex = /(\S+)동(?=\s|$)/;
+  const match = address.match(regex);
+
+  if (match && match.length > 1) {
+    return match[0];
+  } else {
+    return address;
   }
 }

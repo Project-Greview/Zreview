@@ -4,6 +4,8 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 // HOOK
 import { getCookie } from "utils/cookies";
+// UTIl
+import { extractNeighborhoodType } from "utils/location";
 // RECOIL STATE
 import { leftMenuState } from "state/userState";
 // SVG
@@ -67,7 +69,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
   const [contactModal, setContactModal] = useState<boolean>(false);
   // DUMMY DATA
   const myNickname = getCookie("user").nickname;
-  const myLocation = getCookie("dummyLocation");
+  const myLocation = getCookie("user").location;
   // FUNCTION
   const handleCLoseLeftMenu = () => {
     setLeftMenu(false);
@@ -92,7 +94,9 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
           <div className="my_profile flex flex_dir_c flex_ai_c">
             <ProfileImage src={Logo} alt={"프로필"} size={94} />
             <div className="my_nickname">{myNickname}</div>
-            <div className="my_location">{myLocation}</div>
+            <div className="my_location">
+              {extractNeighborhoodType(myLocation)}
+            </div>
           </div>
           <div className="semi_count">
             <ul className="flex flex_jc_sb flex_ai_c">

@@ -15,11 +15,13 @@ type PostDataType = {
   name: string;
   nickname: string;
   thumbnail: string;
+  location: string;
 };
 // POST MEMBER
 
 const SecretKey: any | string = process.env.REACT_APP_CRYPTOJS_SECRET_KEY;
 export const addMemberDataToIndexedDB = (postData: PostDataType) => {
+  console.log(postData);
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     const encryptedPassword = CryptoJS.AES.encrypt(
@@ -38,6 +40,7 @@ export const addMemberDataToIndexedDB = (postData: PostDataType) => {
         name: postData.name,
         nickname: postData.nickname,
         thumbnail: "",
+        location: postData.location,
       });
       member.onsuccess = (e) => {
         transaction.oncomplete = () => {
@@ -169,12 +172,14 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
           return member.email === id && decryptedPassword === pw;
         });
         if (matchedMember) {
+          console.log(matchedMember);
           resolve({
             isLogin: true,
             nickname: matchedMember.nickname,
             name: matchedMember.name,
             email: matchedMember.email,
             phone: matchedMember.phone,
+            location: matchedMember.location,
           });
         } else {
           resolve(false);

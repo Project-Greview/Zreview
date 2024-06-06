@@ -16,7 +16,21 @@
   background: var(--readonly-background);
   color: var(--readonly-text);
 }
-.res_form_section .email_form {
+.res_form_section .location {
+}
+.res_form_section .location .input_name {
+  flex-basis: 100%;
+}
+.res_form_section .location > div:first-child {
+  flex-basis: 69%;
+}
+.res_form_section .location > .btn_box {
+  flex-basis: 29%;
+  width: 100%;
+}
+.res_form_section .location > .btn_box > .buttons {
+  height: 4rem;
+  font-size: 1.4rem;
 }
 .res_form_section .email_form select {
   height: 4rem;
@@ -33,6 +47,7 @@
 .res_form_section input {
   width: 100%;
   margin-top: 0.5rem;
+  color: var(--disable-text);
 }
 .res_form_section .btn_box {
   width: calc(100% - 4rem);
@@ -49,4 +64,33 @@
 }
 .res_form_section .event_txt.true {
   color: var(--point-color);
+}
+/* SELECT MODAL */
+.option_select_modal {
+  width: 80%;
+  top: 45%;
+  left: 10%;
+  border-radius: 0.5rem;
+  z-index: 201;
+  overflow: hidden;
+}
+.option_select_modal ul li:nth-child(2) {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+.option_select_modal ul li:not(.round_close_btn) {
+  padding: 1.5rem 1rem;
+  background: var(--white-color);
+  border-bottom: 0.5px solid var(--disable-color);
+}
+.option_select_modal ul li .buttons {
+  font-size: 1.4rem;
+}
+.option_select_modal ul li.round_close_btn {
+  height: 3rem;
+  margin-top: 2rem;
+}
+.option_select_modal ul li.round_close_btn .buttons {
+  height: 3rem;
+  background: var(--white-color);
+  border-radius: 50%;
 }

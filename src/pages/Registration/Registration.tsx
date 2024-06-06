@@ -17,7 +17,7 @@ import Phone from "./Phone";
 import Nickname from "./Nickname";
 import Name from "./Name";
 import Password from "./Password";
-
+import Location from "./Location";
 // PROPS TYPE
 type RegistrationType = {
   email: string;
@@ -30,8 +30,70 @@ type RegistrationType = {
   setName: React.Dispatch<React.SetStateAction<string>>;
   nickname: string;
   setNickname: React.Dispatch<React.SetStateAction<string>>;
+  location: string;
+  setLocation: React.Dispatch<React.SetStateAction<string>>;
+};
+type OptionType = {
+  modalOpen: () => void;
+  location: string;
+  setLocation: (location: string) => void;
 };
 
+const SelectOptionBox: React.FC<OptionType> = ({
+  modalOpen,
+  location,
+  setLocation,
+}) => {
+  const handleWritePlacePosition = () => {
+    navigator.geolocation.getCurrentPosition((position: any) => {
+      let geocoder = new window.kakao.maps.services.Geocoder();
+      let callback = function (result: any, status: any) {
+        if (status === window.kakao.maps.services.Status.OK) {
+          setLocation(result[0].address_name);
+        }
+      };
+      geocoder.coord2RegionCode(
+        position.coords.longitude,
+        position.coords.latitude,
+        callback
+      );
+    });
+    modalOpen();
+  };
+  return (
+    <>
+      <div className="modal_bg fixed"></div>
+      <div className="option_select_modal fixed">
+        <ul className="flex flex_dir_c">
+          <li>
+            <Button
+              title={"현재위치로 설정하기"}
+              styles={"buttons"}
+              event={() => handleWritePlacePosition()}
+              width={"100%"}
+            />
+          </li>
+          <li>
+            <Button
+              title={"직접 설정하기"}
+              styles={"buttons"}
+              event={() => alert("방법을 고민중입니다!")}
+              width={"100%"}
+            />
+          </li>
+          <li className="round_close_btn flex flex_jc_c flex_ai_c">
+            <Button
+              title={"X"}
+              styles={"buttons absolute flex flex_jc_c flex_ai_c"}
+              event={modalOpen}
+              width={30}
+            />
+          </li>
+        </ul>
+      </div>
+    </>
+  );
+};
 const Registration: React.FC<RegistrationType> = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -41,15 +103,18 @@ const Registration: React.FC<RegistrationType> = () => {
   const loginUserEmail = getCookie("user")?.email;
   const loginUserPhone = getCookie("user")?.phone;
   const loginUserName = getCookie("user")?.name;
+  const loginUserLocation = getCookie("user");
 
   const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [modalState, setModalState] = useState<number>(0);
+  const [selectModal, setSelectModal] = useState<boolean>(false);
   const [registerData, setRegisterData] = useState<any>({
     email: "",
     password: "",
     phone: "",
     nickname: "",
     name: "",
+    location: "",
   });
   const [registerDataCheck, setRegisterDataCheck] = useState<any>({
     email: 0,
@@ -57,6 +122,7 @@ const Registration: React.FC<RegistrationType> = () => {
     phone: 0,
     nickname: 0,
     name: 0,
+    location: 0,
   });
 
   // REGISTRATION
@@ -69,7 +135,6 @@ const Registration: React.FC<RegistrationType> = () => {
   const checkValue = checkData ? "" : "disable";
   // CHECKING
   const handleRegisterZreview = async () => {
-    console.log("checkData", checkData);
     if (!checkData) {
       setModalState(4);
     } else {
@@ -80,6 +145,7 @@ const Registration: React.FC<RegistrationType> = () => {
         name: registerData.name,
         nickname: registerData.nickname,
         thumbnail: "",
+        location: registerData.location,
       };
       try {
         const response = await addMemberDataToIndexedDB(postData);
@@ -103,6 +169,15 @@ const Registration: React.FC<RegistrationType> = () => {
   setModalItem("regist", modalState);
   return (
     <>
+      {selectModal && (
+        <SelectOptionBox
+          modalOpen={() => setSelectModal(false)}
+          location={registerData.location}
+          setLocation={(location: string) =>
+            setRegisterData({ ...registerData, location })
+          }
+        />
+      )}
       {modalState === 1 ? (
         <Modal
           type={"type_2"}
@@ -149,6 +224,12 @@ const Registration: React.FC<RegistrationType> = () => {
       )}
       <Header type={2} title={checkPage ? "개인정보 수정" : "회원가입"} />
       <div className="res_form_section relative">
+        {!checkPage && (
+          <Location
+            location={registerData.location}
+            modalOpen={() => setSelectModal(true)}
+          />
+        )}
         <Email
           pageType={checkPage}
           loginUserEmail={loginUserEmail}

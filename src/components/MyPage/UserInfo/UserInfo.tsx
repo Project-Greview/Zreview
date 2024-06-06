@@ -2,6 +2,8 @@
 import { useNavigate } from "react-router-dom";
 // HOOK
 import { getCookie } from "utils/cookies";
+// UTIL
+import { extractNeighborhoodType } from "utils/location";
 // COMPONENT
 import ProfileImage from "components/ProfileImage";
 // IMAGE
@@ -14,7 +16,7 @@ const UserInfo: React.FC<UserInfoProps> = () => {
   const navigate = useNavigate();
   // DUMMY
   const getNickname = getCookie("user").nickname;
-  const getSettingLocation = getCookie("dummyLocation");
+  const getSettingLocation = getCookie("user").location;
 
   return (
     <>
@@ -22,7 +24,9 @@ const UserInfo: React.FC<UserInfoProps> = () => {
         <ProfileImage src={Logo} alt={"프로필"} size={80} />
         <div className="flex flex_dir_c">
           <div className="my_nickname">{getNickname}</div>
-          <div className="my_location">{getSettingLocation}</div>
+          <div className="my_location">
+            {extractNeighborhoodType(getSettingLocation)}
+          </div>
         </div>
       </div>
       <div className="btn_box flex">

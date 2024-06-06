@@ -7,6 +7,8 @@ import {
   getHashtagRankingFromIndexedDB,
   getMyLocationReviewFromIndexedDB,
 } from "api/IDBreview";
+// UTIL
+import { extractNeighborhoodType } from "utils/location";
 // COMPONENT
 import HashTag from "components/HashTag";
 import MyLocationMap from "components/MyLocation/MyLocationMap";
@@ -17,7 +19,7 @@ type MyLocationProps = {};
 const MyLocation: React.FC<MyLocationProps> = () => {
   const [topHashtag, setTopHashTag] = useState<any>(null);
   const [myLocationReview, setMyLocationReview] = useState<any>(null);
-  const dummyLocation = getCookie("dummyLocation");
+  const myLocation = getCookie("user").location;
 
   // 추후 내 위치 기반 or 내가 등록한 동네 기준으로 변경필요
   useEffect(() => {
@@ -43,7 +45,7 @@ const MyLocation: React.FC<MyLocationProps> = () => {
   return (
     <div className="my_location_section view_section">
       <div className="sub_section">
-        <p className="sub_tit">{dummyLocation}</p>
+        <p className="sub_tit">{extractNeighborhoodType(myLocation)}</p>
         <MyLocationMap />
       </div>
       <div className="sub_section">

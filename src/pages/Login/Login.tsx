@@ -8,6 +8,8 @@ import { isLoginState } from "state/userState";
 import { shakeAnimationState } from "state/commonState";
 // HOOK
 import { getLoginMemberFromIndexedDB } from "api/IDBmember";
+// UTIL
+import { extractNeighborhoodType } from "utils/location";
 // IMAGE
 import { ReactComponent as Logo } from "../../assets/image/Logo.svg";
 import Button from "components/Common/Button";
@@ -19,6 +21,7 @@ type LoginProps = {
   name: string;
   phone: number;
   email: string;
+  location: string;
 };
 
 const Login: React.FC<LoginProps> = () => {
@@ -56,6 +59,7 @@ const Login: React.FC<LoginProps> = () => {
           email: response.email,
           thumbnail: "",
           token: true,
+          location: response.location,
         };
         setCookie("user", JSON.stringify(userData));
         navigate("/main");
