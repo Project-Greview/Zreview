@@ -33,11 +33,10 @@ type RegistrationType = {
   setNickname: React.Dispatch<React.SetStateAction<string>>;
   location: string;
   setLocation: React.Dispatch<React.SetStateAction<string>>;
-};
-type OptionType = {
-  modalOpen: () => void;
-  location: string;
-  setLocation: (location: string) => void;
+  latitude: number;
+  setMyLatitude: React.Dispatch<React.SetStateAction<number>>;
+  longitude: number;
+  setMyLongitude: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const Registration: React.FC<RegistrationType> = () => {
@@ -49,7 +48,6 @@ const Registration: React.FC<RegistrationType> = () => {
   const loginUserEmail = getCookie("user")?.email;
   const loginUserPhone = getCookie("user")?.phone;
   const loginUserName = getCookie("user")?.name;
-  const loginUserLocation = getCookie("user");
 
   const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [modalState, setModalState] = useState<number>(0);
@@ -61,6 +59,8 @@ const Registration: React.FC<RegistrationType> = () => {
     nickname: "",
     name: "",
     location: "",
+    myLatitude: 0,
+    myLongitude: 0,
   });
   const [registerDataCheck, setRegisterDataCheck] = useState<any>({
     email: 0,
@@ -92,6 +92,8 @@ const Registration: React.FC<RegistrationType> = () => {
         nickname: registerData.nickname,
         thumbnail: "",
         location: registerData.location,
+        myLatitude: registerData.myLatitude,
+        myLongitude: registerData.myLongitude,
       };
       try {
         const response = await addMemberDataToIndexedDB(postData);
@@ -120,7 +122,15 @@ const Registration: React.FC<RegistrationType> = () => {
           modalOpen={() => setSelectModal(false)}
           location={registerData.location}
           setLocation={(location: string) =>
-            setRegisterData({ ...registerData, location })
+            setRegisterData((prevData: any) => ({ ...prevData, location }))
+          }
+          myLatitude={registerData.myLatitude}
+          setMyLatitude={(myLatitude: number) =>
+            setRegisterData((prevData: any) => ({ ...prevData, myLatitude }))
+          }
+          myLongitude={registerData.myLongitude}
+          setMyLongitude={(myLongitude: number) =>
+            setRegisterData((prevData: any) => ({ ...prevData, myLongitude }))
           }
         />
       )}

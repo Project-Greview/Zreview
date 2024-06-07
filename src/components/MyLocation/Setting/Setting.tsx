@@ -16,11 +16,19 @@ type OptionType = {
   modalOpen: () => void;
   location: string;
   setLocation: (location: string) => void;
+  myLatitude: number;
+  setMyLatitude: (myLatitude: number) => void;
+  myLongitude: number;
+  setMyLongitude: (myLongitude: number) => void;
 };
 const Setting: React.FC<OptionType> = ({
   modalOpen,
   location,
   setLocation,
+  myLatitude,
+  setMyLatitude,
+  myLongitude,
+  setMyLongitude,
 }) => {
   const handleWritePlacePosition = () => {
     navigator.geolocation.getCurrentPosition((position: any) => {
@@ -28,6 +36,8 @@ const Setting: React.FC<OptionType> = ({
       let callback = function (result: any, status: any) {
         if (status === window.kakao.maps.services.Status.OK) {
           setLocation(result[0].address_name);
+          setMyLatitude(result[0].y);
+          setMyLongitude(result[0].x);
         }
       };
       geocoder.coord2RegionCode(

@@ -109,14 +109,15 @@ const TabItem: React.FC<TabItemProps> = () => {
     ?.getBoundingClientRect().height;
 
   useEffect(() => {
-    getMyWriteReviewFromIndexedDB(1, getNickname, getType)
-      .then((data: ReviewDataType | any) => {
-        setWriteData(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {});
+    getType !== "like" &&
+      getMyWriteReviewFromIndexedDB(1, getNickname, getType)
+        .then((data: ReviewDataType | any) => {
+          setWriteData(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
   }, [getType]);
   return (
     <div

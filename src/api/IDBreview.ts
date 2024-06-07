@@ -28,7 +28,6 @@ type PostDataType = {
 // POST REVIEW
 // 리뷰 등록 API
 export const addDataToIndexedDB = (postData: PostDataType) => {
-  console.log("API 작동", postData);
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     dbOpen.onsuccess = () => {

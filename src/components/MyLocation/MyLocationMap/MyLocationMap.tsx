@@ -3,6 +3,7 @@ import { useState, useRef, useLayoutEffect } from "react";
 import { useRecoilValue } from "recoil";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
+import { getCookie } from "utils/cookies";
 // SVG
 // import { ReactComponent as MapMarkerIcon } from "../../../assets/image/icon/map_marker.svg";
 import MapMarkerIcon from "../../../assets/image/icon/map_marker.svg";
@@ -20,6 +21,8 @@ const MyLocationMap: React.FC = () => {
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
+
+  console.log(getCookie("user"));
 
   const getKakao = () => {
     if (navigator.geolocation) {

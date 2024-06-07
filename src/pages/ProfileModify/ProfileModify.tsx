@@ -16,6 +16,8 @@ const ProfileModify: React.FC = () => {
   const getNickname = getCookie("user").nickname;
   const getEmail = getCookie("user").email;
   const getLocation = getCookie("user").location;
+  const getLat = getCookie("user").myLatitude;
+  const getLon = getCookie("user").longitude;
 
   const [modifyModal, setModifyModal] = useState<number>(0);
   const [nickname, setNickname] = useState<string>(getNickname);
@@ -26,6 +28,8 @@ const ProfileModify: React.FC = () => {
     email: getEmail,
     nickname: getNickname,
     location: getLocation,
+    myLatitude: getLat,
+    myLongitude: getLon,
   });
   const [locationSetting, setLocationSetting] = useState<boolean>(false);
 
@@ -49,6 +53,14 @@ const ProfileModify: React.FC = () => {
           location={modifyData.location}
           setLocation={(location: string) =>
             setModifyData({ ...modifyData, location })
+          }
+          myLatitude={modifyData.myLatitude}
+          setMyLatitude={(myLatitude: number) =>
+            setModifyData({ ...modifyData, myLatitude })
+          }
+          myLongitude={modifyData.myLongitude}
+          setMyLongitude={(myLongitude: number) =>
+            setModifyData({ ...modifyData, myLongitude })
           }
         />
       )}

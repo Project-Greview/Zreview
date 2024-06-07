@@ -60,6 +60,8 @@ const Login: React.FC<LoginProps> = () => {
           thumbnail: "",
           token: true,
           location: response.location,
+          myLatitude: response.myLatitude,
+          myLongitude: response.myLongitude,
         };
         setCookie("user", JSON.stringify(userData));
         navigate("/main");

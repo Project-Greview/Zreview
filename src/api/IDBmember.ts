@@ -16,6 +16,8 @@ type PostDataType = {
   nickname: string;
   thumbnail: string;
   location: string;
+  myLatitude: number;
+  myLongitude: number;
 };
 type PatchDataType = {
   nickname: string;
@@ -45,6 +47,8 @@ export const addMemberDataToIndexedDB = (postData: PostDataType) => {
         nickname: postData.nickname,
         thumbnail: "",
         location: postData.location,
+        myLatitude: postData.myLatitude,
+        myLongitude: postData.myLongitude,
       });
       member.onsuccess = (e) => {
         transaction.oncomplete = () => {
@@ -176,7 +180,6 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
           return member.email === id && decryptedPassword === pw;
         });
         if (matchedMember) {
-          console.log(matchedMember);
           resolve({
             isLogin: true,
             nickname: matchedMember.nickname,
@@ -184,6 +187,8 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
             email: matchedMember.email,
             phone: matchedMember.phone,
             location: matchedMember.location,
+            myLatitude: matchedMember.myLatitude,
+            myLongitude: matchedMember.myLongitude,
           });
         } else {
           resolve(false);
