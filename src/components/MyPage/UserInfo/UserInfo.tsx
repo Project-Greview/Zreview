@@ -15,17 +15,19 @@ type UserInfoProps = {};
 const UserInfo: React.FC<UserInfoProps> = () => {
   const navigate = useNavigate();
   // DUMMY
-  const getNickname = getCookie("user").nickname;
-  const getSettingLocation = getCookie("user").location;
+  const myNickname = getCookie("user").nickname;
+  const myLocation = getCookie("user").location;
 
   return (
     <>
       <div className="my_profile flex flex_jc_s flex_ai_c">
         <ProfileImage src={Logo} alt={"프로필"} size={80} />
         <div className="flex flex_dir_c">
-          <div className="my_nickname">{getNickname}</div>
+          <div className="my_nickname">{myNickname}</div>
           <div className="my_location">
-            {extractNeighborhoodType(getSettingLocation)}
+            {myLocation === ""
+              ? "설정한 지역이 없어요."
+              : extractNeighborhoodType(myLocation)}
           </div>
         </div>
       </div>

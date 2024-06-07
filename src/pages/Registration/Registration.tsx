@@ -18,6 +18,7 @@ import Nickname from "./Nickname";
 import Name from "./Name";
 import Password from "./Password";
 import Location from "./Location";
+import Setting from "components/MyLocation/Setting/Setting";
 // PROPS TYPE
 type RegistrationType = {
   email: string;
@@ -39,61 +40,6 @@ type OptionType = {
   setLocation: (location: string) => void;
 };
 
-const SelectOptionBox: React.FC<OptionType> = ({
-  modalOpen,
-  location,
-  setLocation,
-}) => {
-  const handleWritePlacePosition = () => {
-    navigator.geolocation.getCurrentPosition((position: any) => {
-      let geocoder = new window.kakao.maps.services.Geocoder();
-      let callback = function (result: any, status: any) {
-        if (status === window.kakao.maps.services.Status.OK) {
-          setLocation(result[0].address_name);
-        }
-      };
-      geocoder.coord2RegionCode(
-        position.coords.longitude,
-        position.coords.latitude,
-        callback
-      );
-    });
-    modalOpen();
-  };
-  return (
-    <>
-      <div className="modal_bg fixed"></div>
-      <div className="option_select_modal fixed">
-        <ul className="flex flex_dir_c">
-          <li>
-            <Button
-              title={"현재위치로 설정하기"}
-              styles={"buttons"}
-              event={() => handleWritePlacePosition()}
-              width={"100%"}
-            />
-          </li>
-          <li>
-            <Button
-              title={"직접 설정하기"}
-              styles={"buttons"}
-              event={() => alert("방법을 고민중입니다!")}
-              width={"100%"}
-            />
-          </li>
-          <li className="round_close_btn flex flex_jc_c flex_ai_c">
-            <Button
-              title={"X"}
-              styles={"buttons absolute flex flex_jc_c flex_ai_c"}
-              event={modalOpen}
-              width={30}
-            />
-          </li>
-        </ul>
-      </div>
-    </>
-  );
-};
 const Registration: React.FC<RegistrationType> = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -170,7 +116,7 @@ const Registration: React.FC<RegistrationType> = () => {
   return (
     <>
       {selectModal && (
-        <SelectOptionBox
+        <Setting
           modalOpen={() => setSelectModal(false)}
           location={registerData.location}
           setLocation={(location: string) =>

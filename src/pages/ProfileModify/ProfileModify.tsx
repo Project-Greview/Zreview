@@ -15,13 +15,19 @@ const ProfileModify: React.FC = () => {
   // DUMMY
   const getNickname = getCookie("user").nickname;
   const getEmail = getCookie("user").email;
-  const getSettingLocation = getCookie("user").location;
+  const getLocation = getCookie("user").location;
 
   const [modifyModal, setModifyModal] = useState<number>(0);
   const [nickname, setNickname] = useState<string>(getNickname);
   const [email, setEmail] = useState<string>(getEmail);
-  const [myLocation, setMyLocation] = useState<string>(getSettingLocation);
-  const [locationSEtting, setLocationSetting] = useState<boolean>(false);
+  const [myLocation, setMyLocation] = useState<string>(getLocation);
+
+  const [modifyData, setModifyData] = useState<any>({
+    email: getEmail,
+    nickname: getNickname,
+    location: getLocation,
+  });
+  const [locationSetting, setLocationSetting] = useState<boolean>(false);
 
   const onChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -37,7 +43,15 @@ const ProfileModify: React.FC = () => {
   };
   return (
     <>
-      {locationSEtting && <Setting close={() => setLocationSetting(false)} />}
+      {locationSetting && (
+        <Setting
+          modalOpen={() => setLocationSetting(false)}
+          location={modifyData.location}
+          setLocation={(location: string) =>
+            setModifyData({ ...modifyData, location })
+          }
+        />
+      )}
       {modifyModal === 1 ? (
         <Modal
           type={"type_2"}
@@ -95,16 +109,24 @@ const ProfileModify: React.FC = () => {
             styles={""}
           />
           <div className="location_box relative">
-            <div
-              className={`location_state absolute flex flex_jc_c flex_ai_c`}
-              onClick={() => setLocationSetting(true)}
-            >
-              인증완료
-            </div>
+            {myLocation === "" ? (
+              <button
+                className={`location_state absolute flex flex_jc_c flex_ai_c`}
+                onClick={() => setLocationSetting(true)}
+              >
+                지역설정
+              </button>
+            ) : (
+              <div
+                className={`location_state absolute flex flex_jc_c flex_ai_c`}
+              >
+                인증완료
+              </div>
+            )}
             <Input
               id={"myLocation"}
               name={"활동지역"}
-              value={myLocation}
+              value={modifyData.location}
               onChange={() => console.log("흠")}
               type={"text"}
               onBlur={null}

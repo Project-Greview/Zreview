@@ -1,5 +1,7 @@
 // MODULE
 import styled from "styled-components";
+// COMPONENT
+import Button from "components/Common/Button";
 // SVG
 import { ReactComponent as ArrowLeft } from "../../../assets/image/icon/arrow-left.svg";
 // STYLED
@@ -10,18 +12,64 @@ const SettingFrame = styled.div`
   z-index: 3;
 `;
 // TYPE
-type SettingType = {
-  close: () => void;
+type OptionType = {
+  modalOpen: () => void;
+  location: string;
+  setLocation: (location: string) => void;
 };
-
-const Setting: React.FC<SettingType> = ({ close }) => {
+const Setting: React.FC<OptionType> = ({
+  modalOpen,
+  location,
+  setLocation,
+}) => {
+  const handleWritePlacePosition = () => {
+    navigator.geolocation.getCurrentPosition((position: any) => {
+      let geocoder = new window.kakao.maps.services.Geocoder();
+      let callback = function (result: any, status: any) {
+        if (status === window.kakao.maps.services.Status.OK) {
+          setLocation(result[0].address_name);
+        }
+      };
+      geocoder.coord2RegionCode(
+        position.coords.longitude,
+        position.coords.latitude,
+        callback
+      );
+    });
+    modalOpen();
+  };
   return (
-    <SettingFrame className="fixed flex">
-      <button onClick={close}>
-        <ArrowLeft />
-      </button>
-      <div>내 지역 설정하기</div>
-    </SettingFrame>
+    <>
+      <div className="modal_bg fixed"></div>
+      <div className="option_select_modal fixed">
+        <ul className="flex flex_dir_c">
+          <li>
+            <Button
+              title={"현재위치로 설정하기"}
+              styles={"buttons"}
+              event={() => handleWritePlacePosition()}
+              width={"100%"}
+            />
+          </li>
+          <li>
+            <Button
+              title={"직접 설정하기"}
+              styles={"buttons"}
+              event={() => alert("방법을 고민중입니다!")}
+              width={"100%"}
+            />
+          </li>
+          <li className="round_close_btn flex flex_jc_c flex_ai_c">
+            <Button
+              title={"X"}
+              styles={"buttons absolute flex flex_jc_c flex_ai_c"}
+              event={modalOpen}
+              width={30}
+            />
+          </li>
+        </ul>
+      </div>
+    </>
   );
 };
 

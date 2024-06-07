@@ -17,11 +17,15 @@ type PostDataType = {
   thumbnail: string;
   location: string;
 };
+type PatchDataType = {
+  nickname: string;
+  thumbnail: string;
+  location: string;
+};
 // POST MEMBER
 
 const SecretKey: any | string = process.env.REACT_APP_CRYPTOJS_SECRET_KEY;
 export const addMemberDataToIndexedDB = (postData: PostDataType) => {
-  console.log(postData);
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     const encryptedPassword = CryptoJS.AES.encrypt(
@@ -190,5 +194,11 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
         reject(e);
       };
     };
+  });
+};
+// PATCH MY PROFILE
+export const patchMyProfileFromIndexedDB = (patchData: PatchDataType) => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
   });
 };
