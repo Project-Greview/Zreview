@@ -52,15 +52,15 @@ const ProfileModify: React.FC = () => {
           modalOpen={() => setLocationSetting(false)}
           location={modifyData.location}
           setLocation={(location: string) =>
-            setModifyData({ ...modifyData, location })
+            setModifyData((prevData: any) => ({ ...prevData, location }))
           }
           myLatitude={modifyData.myLatitude}
           setMyLatitude={(myLatitude: number) =>
-            setModifyData({ ...modifyData, myLatitude })
+            setModifyData((prevData: any) => ({ ...prevData, myLatitude }))
           }
           myLongitude={modifyData.myLongitude}
           setMyLongitude={(myLongitude: number) =>
-            setModifyData({ ...modifyData, myLongitude })
+            setModifyData((prevData: any) => ({ ...prevData, myLongitude }))
           }
         />
       )}

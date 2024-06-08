@@ -95,7 +95,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
             <ProfileImage src={Logo} alt={"프로필"} size={94} />
             <div className="my_nickname">{myNickname}</div>
             {myLocation === "" ? (
-              <button className="my_location">내지역 설정하기</button>
+              <button className="my_location">내지역을 설정해주세요.</button>
             ) : (
               <div className="my_location">
                 {extractNeighborhoodType(myLocation)}
