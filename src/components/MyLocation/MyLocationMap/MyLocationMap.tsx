@@ -22,7 +22,8 @@ const MyLocationMap: React.FC = () => {
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
 
-  console.log(getCookie("user"));
+  console.log(getCookie("user").myLatitude);
+  console.log(getCookie("user").myLongitude);
 
   const getKakao = () => {
     if (navigator.geolocation) {
