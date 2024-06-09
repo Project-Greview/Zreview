@@ -33,7 +33,7 @@ const MyLocation: React.FC<MyLocationProps> = () => {
       .catch((error) => {
         console.log(error);
       });
-    getMyLocationReviewFromIndexedDB("")
+    getMyLocationReviewFromIndexedDB(extractNeighborhoodType(myLocation))
       .then((data: any) => {
         console.log(data);
         setMyLocationReview(data);
@@ -64,7 +64,11 @@ const MyLocation: React.FC<MyLocationProps> = () => {
       </div>
       <div className="sub_section">
         <p className="sub_tit">우리동네 실시간 리뷰</p>
-        <ThumbnailItem type={"empty"} data={myLocationReview} />
+        {myLocationReview?.length > 0 ? (
+          <ThumbnailItem type={"empty"} data={myLocationReview} />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

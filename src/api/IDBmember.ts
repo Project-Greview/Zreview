@@ -189,6 +189,7 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
             location: matchedMember.location,
             myLatitude: matchedMember.myLatitude,
             myLongitude: matchedMember.myLongitude,
+            id: matchedMember.id,
           });
         } else {
           resolve(false);
@@ -202,8 +203,55 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
   });
 };
 // PATCH MY PROFILE
-export const patchMyProfileFromIndexedDB = (patchData: PatchDataType) => {
+export const patchMyProfileFromIndexedDB = (id: number, patchData: any) => {
+  console.log(patchData);
   return new Promise((resolve, reject) => {
-    const dbOpen = idb.open("zreview", 1);
+    const dbOpen = indexedDB.open("zreview", 1);
+
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction("member", "readwrite");
+      const memberDB = transaction.objectStore("member");
+
+      const currentUser = memberDB.get(id);
+
+      currentUser.onsuccess = (e: any) => {
+        const data = e.target.result;
+        if (data) {
+          // Update only the fields provided in patchData
+          for (const key in patchData) {
+            if (patchData.hasOwnProperty(key)) {
+              data[key] = patchData[key];
+            }
+          }
+          const updateRequest = memberDB.put(data);
+
+          updateRequest.onsuccess = (e) => {
+            console.log(e);
+            resolve(e);
+          };
+          updateRequest.onerror = (e) => {
+            console.error(e);
+            reject(e);
+          };
+        } else {
+          reject(
+            new Error(
+              "해당 사용자 ID가 일치하는 정보가 없습니다. 관리자에게 문의해주세요."
+            )
+          );
+        }
+      };
+
+      currentUser.onerror = (e) => {
+        console.error(e);
+        reject(e);
+      };
+    };
+
+    dbOpen.onerror = (e) => {
+      console.error(e);
+      reject(e);
+    };
   });
 };

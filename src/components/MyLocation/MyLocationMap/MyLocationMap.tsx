@@ -1,11 +1,10 @@
 // MODULE
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 // RECOIL STATE
 import { dummyDateState } from "state/dummyState";
 import { getCookie } from "utils/cookies";
 // SVG
-// import { ReactComponent as MapMarkerIcon } from "../../../assets/image/icon/map_marker.svg";
 import MapMarkerIcon from "../../../assets/image/icon/map_marker.svg";
 import MyMarkerIcon from "../../../assets/image/icon/my_marker.svg";
 // PROPS TYPE
@@ -17,17 +16,15 @@ declare global {
 
 const MyLocationMap: React.FC = () => {
   const myKakaoMaps = useRef(null);
-  const dummyData = useRecoilValue(dummyDateState);
+  const ReviewData = useRecoilValue(dummyDateState);
   const [map, setMap] = useState(null);
   const [userLat, setUserLat] = useState(0);
   const [userLng, setUserLng] = useState(0);
 
   const getKakao = () => {
-    setUserLat(getCookie("user").myLatitude);
-    setUserLng(getCookie("user").myLongitude);
-    if (userLat === 0 && userLng === 0) {
-    } else {
-      const mapContainer = document.getElementById("map");
+    const mapContainer = document.getElementById("map");
+
+    if (!map) {
       let locPosition = new window.kakao.maps.LatLng(
         Number(getCookie("user").myLatitude),
         Number(getCookie("user").myLongitude)
@@ -41,19 +38,45 @@ const MyLocationMap: React.FC = () => {
       };
 
       const map = new window.kakao.maps.Map(mapContainer, mapOptions);
-      // CURRENT USER MARKER
-      let imageSrc = MyMarkerIcon,
-        imageSize = new window.kakao.maps.Size(20, 20),
-        imageOption = { offset: new window.kakao.maps.Point(20, 20) };
-      let markerImage = new window.kakao.maps.MarkerImage(
-        imageSrc,
-        imageSize,
-        imageOption
-      );
-      const marker = new window.kakao.maps.Marker({
-        map: map,
-        image: markerImage,
-        position: locPosition,
+
+      // CURRENT MARKER
+      const individualMarkers: any = [];
+      // CREATIVE CLUSTER
+      ReviewData?.forEach((position) => {
+        // SETTING MARKER
+        const MarkerSrc = MapMarkerIcon;
+        const MarkerSize = new window.kakao.maps.Size(45, 55);
+        const MarkerInfo = new window.kakao.maps.MarkerImage(
+          MarkerSrc,
+          MarkerSize
+        );
+        const marker = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(
+            position.location_lat,
+            position.location_lon
+          ),
+          image: MarkerInfo,
+        });
+        // ONCLICK MARKER EVENT
+        window.kakao.maps.event.addListener(marker, "click", function () {
+          const tolerance = 0.0001;
+          const clickedPosition = marker.getPosition();
+          const clickedData = ReviewData.find((data) => {
+            const latDiff = Math.abs(
+              data.location_lat - clickedPosition.getLat()
+            );
+            const lngDiff = Math.abs(
+              data.location_lon - clickedPosition.getLng()
+            );
+            return latDiff < tolerance && lngDiff < tolerance;
+          });
+          if (clickedData) {
+            console.log(clickedData);
+          } else {
+            console.log("데이터 로드 실패 오류");
+          }
+        });
+        individualMarkers.push(marker);
       });
       // CLUSTER OPTION
       const clusterer = new window.kakao.maps.MarkerClusterer({
@@ -104,45 +127,21 @@ const MyLocationMap: React.FC = () => {
           },
         ],
       });
-      // CURRENT MARKER
-      const individualMarkers: any = [];
-      // CREATIVE CLUSTER
-      dummyData?.forEach((position) => {
-        // SETTING MARKER
-        const MarkerSrc = MapMarkerIcon;
-        const MarkerSize = new window.kakao.maps.Size(45, 55);
-        const MarkerInfo = new window.kakao.maps.MarkerImage(
-          MarkerSrc,
-          MarkerSize
-        );
-        const marker = new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(
-            position.location_lat,
-            position.location_lon
-          ),
-          image: MarkerInfo,
-        });
-        // ONCLICK MARKER EVENT
-        window.kakao.maps.event.addListener(marker, "click", function () {
-          const tolerance = 0.0001;
-          const clickedPosition = marker.getPosition();
-          const clickedData = dummyData.find((data) => {
-            const latDiff = Math.abs(
-              data.location_lat - clickedPosition.getLat()
-            );
-            const lngDiff = Math.abs(
-              data.location_lon - clickedPosition.getLng()
-            );
-            return latDiff < tolerance && lngDiff < tolerance;
-          });
-          if (clickedData) {
-            console.log(clickedData);
-          } else {
-            console.log("데이터 로드 실패 오류");
-          }
-        });
-        individualMarkers.push(marker);
+      // CURRENT USER MARKER
+      let imageSrc = MyMarkerIcon,
+        imageSize = new window.kakao.maps.Size(20, 20),
+        imageOption = { offset: new window.kakao.maps.Point(20, 20) };
+      let markerImage = new window.kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
+      const marker = new window.kakao.maps.Marker({
+        map: map,
+        image: markerImage,
+        position: locPosition,
       });
+
       clusterer.addMarkers(individualMarkers);
       marker.setMap(map);
       map.setMinLevel(2);
@@ -152,12 +151,17 @@ const MyLocationMap: React.FC = () => {
     }
   };
 
-  useLayoutEffect(() => {
-    getKakao();
+  useEffect(() => {
+    setUserLat(getCookie("user").myLatitude);
+    setUserLng(getCookie("user").myLongitude);
+    setTimeout(() => {
+      getKakao();
+    }, 0);
   }, []);
   return (
     <>
-      {userLat === 0 && userLng === 0 ? (
+      {(userLat === 0 || userLat === undefined) &&
+      (userLng === 0 || userLng === undefined) ? (
         <div
           className="flex flex_jc_c flex_ai_c"
           style={{

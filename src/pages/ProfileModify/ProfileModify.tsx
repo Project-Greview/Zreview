@@ -1,7 +1,9 @@
 // MODULE
 import { useState, ChangeEvent } from "react";
+// API
+import { patchMyProfileFromIndexedDB } from "api/IDBmember";
 // HOOK
-import { getCookie } from "utils/cookies";
+import { getCookie, setCookie } from "utils/cookies";
 // COMPONENT
 import Input from "components/Common/Input";
 import Button from "components/Common/Button";
@@ -17,13 +19,9 @@ const ProfileModify: React.FC = () => {
   const getEmail = getCookie("user").email;
   const getLocation = getCookie("user").location;
   const getLat = getCookie("user").myLatitude;
-  const getLon = getCookie("user").longitude;
+  const getLon = getCookie("user").myLongitude;
 
   const [modifyModal, setModifyModal] = useState<number>(0);
-  const [nickname, setNickname] = useState<string>(getNickname);
-  const [email, setEmail] = useState<string>(getEmail);
-  const [myLocation, setMyLocation] = useState<string>(getLocation);
-
   const [modifyData, setModifyData] = useState<any>({
     email: getEmail,
     nickname: getNickname,
@@ -32,18 +30,52 @@ const ProfileModify: React.FC = () => {
     myLongitude: getLon,
   });
   const [locationSetting, setLocationSetting] = useState<boolean>(false);
-
   const onChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setNickname(e.target.value);
+    setModifyData((prevState: any) => ({
+      ...prevState,
+      nickname: e.target.value,
+    }));
   };
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setEmail(e.target.value);
+    setModifyData((prevState: any) => ({
+      ...prevState,
+      email: e.target.value,
+    }));
   };
 
   const handleStep1ProfileModify = () => {
     setModifyModal(1);
+  };
+
+  const PatchMyProfile = async () => {
+    try {
+      const response: any = await patchMyProfileFromIndexedDB(
+        getCookie("user").id,
+        modifyData
+      );
+      if (response.isTrusted) {
+        setModifyModal(2);
+        const userCookie = getCookie("user");
+        if (userCookie) {
+          const time = 3600;
+          const expiration = new Date(Date.now() + time * 720000);
+          let CookiArray = JSON.parse(userCookie);
+          CookiArray.nickname = modifyData.nickname;
+          CookiArray.location = modifyData.location;
+          CookiArray.myLatitude = modifyData.myLatitude;
+          CookiArray.myLongitude = modifyData.myLongitude;
+          const updatedCookieValue = JSON.stringify(CookiArray);
+
+          setCookie("user", updatedCookieValue, { expires: expiration });
+        } else {
+          console.log("Cookie not found");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -68,12 +100,7 @@ const ProfileModify: React.FC = () => {
         <Modal
           type={"type_2"}
           contents={"수정하시겠습니까?"}
-          conform={() => (
-            console.log(
-              "여기에는 수정 API를 태우세요. 끝에는 setModifyModal(2)"
-            ),
-            setModifyModal(2)
-          )}
+          conform={() => PatchMyProfile()}
           conform_txt={"확인"}
           cancel={() => setModifyModal(0)}
           cancel_txt={"취소"}
@@ -99,7 +126,7 @@ const ProfileModify: React.FC = () => {
           <Input
             id={"nickname"}
             name={"닉네임"}
-            value={nickname}
+            value={modifyData.nickname}
             onChange={onChangeNickname}
             type={"text"}
             onBlur={null}
@@ -111,7 +138,7 @@ const ProfileModify: React.FC = () => {
           <Input
             id={"email"}
             name={"이메일"}
-            value={email}
+            value={modifyData.email}
             onChange={onChangeEmail}
             type={"text"}
             onBlur={null}
@@ -121,7 +148,7 @@ const ProfileModify: React.FC = () => {
             styles={""}
           />
           <div className="location_box relative">
-            {myLocation === "" ? (
+            {modifyData.location === "" ? (
               <button
                 className={`location_state absolute flex flex_jc_c flex_ai_c`}
                 onClick={() => setLocationSetting(true)}

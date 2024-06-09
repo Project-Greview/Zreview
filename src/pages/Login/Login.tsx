@@ -62,6 +62,7 @@ const Login: React.FC<LoginProps> = () => {
           location: response.location,
           myLatitude: response.myLatitude,
           myLongitude: response.myLongitude,
+          id: response.id,
         };
         setCookie("user", JSON.stringify(userData));
         navigate("/main");
