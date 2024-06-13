@@ -30,8 +30,13 @@ export const addCommentFromIndexedDB = (
       });
 
       addComment.onsuccess = (e) => {
-        console.log(e);
-        resolve(e);
+        incrementLikesInIndexedDB(id)
+          .then(() => {
+            resolve(e);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       };
       addComment.onerror = (e) => {
         console.log("error", e);
@@ -41,6 +46,60 @@ export const addCommentFromIndexedDB = (
       transaction.oncomplete = () => {
         db.close();
       };
+    };
+  });
+};
+
+const incrementLikesInIndexedDB = (reviewId: number) => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction("review", "readwrite");
+      const reviewDB = transaction.objectStore("review");
+
+      // reviewId에 해당하는 리뷰를 가져옴
+      const getRequest = reviewDB.get(reviewId);
+
+      getRequest.onsuccess = (e: any) => {
+        const review = e.target.result;
+
+        if (review) {
+          // comments 값을 1 증가시킴
+          review.comments += 1;
+
+          // 업데이트된 리뷰를 저장
+          const updateRequest = reviewDB.put(review);
+
+          updateRequest.onsuccess = (e) => {
+            transaction.oncomplete = () => {
+              db.close();
+            };
+            resolve(e.type);
+          };
+
+          updateRequest.onerror = (e) => {
+            console.log("error", e);
+            reject(e);
+          };
+        } else {
+          reject(new Error("Review not found"));
+        }
+      };
+
+      getRequest.onerror = (e) => {
+        console.log("error", e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    };
+
+    dbOpen.onerror = (e) => {
+      console.log("error", e);
+      reject(e);
     };
   });
 };

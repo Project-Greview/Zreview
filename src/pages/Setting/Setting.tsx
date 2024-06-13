@@ -12,6 +12,7 @@ import menuList from "../../json/settingMenu.json";
 import { ReactComponent as ArrowIcon } from "../../assets/image/icon/arrow_right.svg";
 import { useState } from "react";
 import { removeCookie } from "utils/cookies";
+import ContactTeam from "components/ContactTeam";
 
 const Setting: React.FC = () => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Setting: React.FC = () => {
       process.env.NODE_ENV === "production" ? process.env.PUBLIC_URL : "/"
     }`;
   };
+
   return (
     <>
       {modalState === 1 ? (
@@ -36,7 +38,7 @@ const Setting: React.FC = () => {
           cancel_txt={"취소"}
         />
       ) : modalState === 2 ? (
-        ""
+        <ContactTeam close={() => setModalState(0)} />
       ) : (
         ""
       )}
@@ -47,8 +49,8 @@ const Setting: React.FC = () => {
               key={item.name}
               className="flex flex_jc_sb flex_ai_c"
               onClick={() =>
-                item.event !== ""
-                  ? console.log("aaaa")
+                item.event === "contact"
+                  ? setModalState(2)
                   : navigate(`${item.url}`, {
                       state: {
                         type: item.url === "/user-modify" ? "modify" : "normal",

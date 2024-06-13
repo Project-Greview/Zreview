@@ -50,14 +50,14 @@ const Name: React.FC<NameType> = ({
       <Input
         id={"res_name"}
         name={"이름"}
-        value={name}
+        value={pageType ? loginUserName : name}
         onChange={onChangeRegName}
         type={"text"}
-        onBlur={onCheckResName}
+        onBlur={pageType ? undefined : onCheckResName}
         maxLength={10}
         placeholder={""}
         readonly={pageType}
-        styles={""}
+        styles={pageType ? "readonly" : ""}
       />
       <div
         className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${

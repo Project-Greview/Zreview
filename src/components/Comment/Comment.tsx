@@ -65,6 +65,7 @@ const CommentFrame = styled.div`
   }
 `;
 const CommentItem = styled.li`
+  margin-top: 1rem;
   .type_img {
     flex-basis: 3.5rem;
     height: 3.5rem;

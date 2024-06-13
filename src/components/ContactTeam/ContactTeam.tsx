@@ -28,6 +28,7 @@ const ContactTeam: React.FC<ContactTeamProps> = ({ close }) => {
         <div className="contact">연락방법은 저희도 모르겠어요... </div>
         <div className="mar_top_20">Issue Register</div>
         <a
+          className="contact_btn flex flex_jc_c flex_ai_c"
           href="https://github.com/Project-Greview/Zreview/issues"
           target={"_blank"}
           rel="noreferrer"

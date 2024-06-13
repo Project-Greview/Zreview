@@ -26,6 +26,10 @@ export const indexedDBStart = () => {
       keyPath: "id",
       autoIncrement: true,
     });
+    const likeStore = db.createObjectStore("like", {
+      keyPath: "id",
+      autoIncrement: true,
+    });
     console.log("Object stores created successfully");
   };
   request.onsuccess = (e: any) => {

@@ -40,6 +40,7 @@ import { ReactComponent as CloseIcon } from "../../assets/image/icon/close_btn.s
 import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.svg";
 import { ReactComponent as DefaultMarkerIcon } from "../../assets/image/icon/default_marker.svg";
 import { ReactComponent as BookMarkIcon } from "../../assets/image/icon/Bookmark-icon.svg";
+import MenuBox from "./MenuBox";
 // PROPS TYPE
 type ToastPopupProps = {
   ready: boolean;
@@ -153,10 +154,8 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
         totalCount: pagination.totalCount,
         maxPage: pagination.last,
       });
-      console.log(pagination);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
       // return status;
-      console.log(data);
     } else if (status === window.kakao.maps.services.Status.ERROR) {
       return status;
     }
@@ -235,135 +234,144 @@ const ToastPopup: React.FC<ToastPopupProps> = ({ ready, popupType }) => {
     }
   }, [markerData]);
   return (
-    <div
-      className={`toast_section fixed ${
-        toastModal && loading ? "active" : ""
-      } ${popupType}`}
-    >
+    <>
       <div
-        className="toast_header flex flex_dir_c flex_jc_c flex_ai_c"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
+        className={`toast_section fixed ${
+          toastModal && loading ? "active" : ""
+        } ${popupType}`}
       >
-        <div className="drag_icon"></div>
-        {popupType === "write" ? (
-          <div className="review_store_search_header width_100p">
-            <div className="title flex flex_jc_sb flex_ai_c">
-              <ArrowIcon
-                onClick={() => setToastModal(false)}
-                style={{ zIndex: 1 }}
-              />
-              <div className="page_title flex flex_jc_c flex_ai_c">
-                장소검색
+        <div
+          className="toast_header flex flex_dir_c flex_jc_c flex_ai_c"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+        >
+          <div className="drag_icon"></div>
+          {popupType === "write" ? (
+            <div className="review_store_search_header width_100p">
+              <div className="title flex flex_jc_sb flex_ai_c">
+                <ArrowIcon
+                  onClick={() => setToastModal(false)}
+                  style={{ zIndex: 1 }}
+                />
+                <div className="page_title flex flex_jc_c flex_ai_c">
+                  장소검색
+                </div>
+              </div>
+              <div className="keyword_input relative">
+                <SearchIcon
+                  color={"#D0CFCF"}
+                  onClick={() => (writeResetResult(), handleSearchLocation())}
+                  onKeyDown={handleMobileBrowsersEnterKey}
+                />
+                <Input
+                  id={"keyword"}
+                  name={""}
+                  value={reviewKeyword}
+                  onChange={onChangeReviewKeyword}
+                  onBlur={null}
+                  type={"text"}
+                  maxLength={25}
+                  placeholder={"지번,도로명,건물명으로 검색"}
+                  readonly={false}
+                  styles={""}
+                />
+                {reviewKeyword.length > 0 && (
+                  <div
+                    className="clear_keyword_btn absolute"
+                    onClick={() => setReviewKeyword("")}
+                  >
+                    <CloseIcon color={"#D0CFCF"} />
+                  </div>
+                )}
               </div>
             </div>
-            <div className="keyword_input relative">
-              <SearchIcon
-                color={"#D0CFCF"}
-                onClick={() => (writeResetResult(), handleSearchLocation())}
-                onKeyDown={handleMobileBrowsersEnterKey}
-              />
-              <Input
-                id={"keyword"}
-                name={""}
-                value={reviewKeyword}
-                onChange={onChangeReviewKeyword}
-                onBlur={null}
-                type={"text"}
-                maxLength={25}
-                placeholder={"지번,도로명,건물명으로 검색"}
-                readonly={false}
-                styles={""}
-              />
-              {reviewKeyword.length > 0 ? (
-                <div
-                  className="clear_keyword_btn absolute"
-                  onClick={() => setReviewKeyword("")}
+          ) : popupType === "comment_menu" ? (
+            ""
+          ) : markerData !== null ? (
+            <div className="marker_result_header flex flex_dir_c flex_jc_sb flex_ai_c flex_wrap_wrap width_100p">
+              <div className="flex flex_jc_sb flex_ai_c width_100p">
+                <div className="distance flex">
+                  <div>
+                    {markerDistance / 1000 > 1
+                      ? markerDistance + "km"
+                      : markerDistance + "m"}
+                  </div>
+                  <div className="review_count relative flex flex_ai_c">
+                    <p>리뷰</p>
+                    <p>{markerData.length}</p>
+                  </div>
+                </div>
+                <div className="score flex flex_ai_c">
+                  <ScoreIcon width={14} height={14} color={"#6656ff"} />
+                  <p>
+                    {markerData !== null &&
+                      (
+                        markerData
+                          .map((score: any) => score.score)
+                          .reduce(
+                            (length: any, item: any) => length + item,
+                            0
+                          ) / markerData.length
+                      ).toFixed(1)}
+                  </p>
+                </div>
+              </div>
+              <div className="place_info flex flex_dir_c flex_jc_s flex_ai_s width_100p">
+                <p className="place_name">{markerData[0].place_name}</p>
+                <div className="place_address flex">
+                  <DefaultMarkerIcon />
+                  <div>{markerData[0].place_address}</div>
+                </div>
+              </div>
+              <div className="best_hashtag_list flex flex_jc_s flex_ai_fs width_100p">
+                <ul className="flex">
+                  {hashtagRank.map((txt: any) => (
+                    <li key={txt}>
+                      <HashTag tag={txt} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className=" btn_box flex flex_jc_sb flex_ai_c width_100p">
+                <button className="store_bookmark">
+                  <BookMarkIcon color={"#ffffff"} />
+                </button>
+                <button
+                  className="store_review_write"
+                  onClick={() => handleStateProps()}
                 >
-                  <CloseIcon color={"#D0CFCF"} />
-                </div>
-              ) : (
-                ""
-              )}
+                  리뷰 보러가기
+                </button>
+              </div>
             </div>
-          </div>
+          ) : searchType ? (
+            "ㅁㅁㅁ"
+          ) : (
+            <div className="keyword_result_header flex flex_jc_s flex_ai_c flex_as_s">
+              <p>{locationResult.totalCount}개</p>&nbsp;의 가게가 있어요!
+            </div>
+          )}
+        </div>
+        {popupType === "write" ? (
+          <WriteBody />
+        ) : popupType === "comment_menu" ? (
+          <MenuBox popupType={popupType} />
         ) : markerData !== null ? (
-          <div className="marker_result_header flex flex_dir_c flex_jc_sb flex_ai_c flex_wrap_wrap width_100p">
-            <div className="flex flex_jc_sb flex_ai_c width_100p">
-              <div className="distance flex">
-                <div>
-                  {markerDistance / 1000 > 1
-                    ? markerDistance + "km"
-                    : markerDistance + "m"}
-                </div>
-                <div className="review_count relative flex flex_ai_c">
-                  <p>리뷰</p>
-                  <p>{markerData.length}</p>
-                </div>
-              </div>
-              <div className="score flex flex_ai_c">
-                <ScoreIcon width={14} height={14} color={"#6656ff"} />
-                <p>
-                  {markerData !== null &&
-                    (
-                      markerData
-                        .map((score: any) => score.score)
-                        .reduce((length: any, item: any) => length + item, 0) /
-                      markerData.length
-                    ).toFixed(1)}
-                </p>
-              </div>
-            </div>
-            <div className="place_info flex flex_dir_c flex_jc_s flex_ai_s width_100p">
-              <p className="place_name">{markerData[0].place_name}</p>
-              <div className="place_address flex">
-                <DefaultMarkerIcon />
-                <div>{markerData[0].place_address}</div>
-              </div>
-            </div>
-            <div className="best_hashtag_list flex flex_jc_s flex_ai_fs width_100p">
-              <ul className="flex">
-                {hashtagRank.map((txt: any) => (
-                  <li key={txt}>
-                    <HashTag tag={txt} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className=" btn_box flex flex_jc_sb flex_ai_c width_100p">
-              <button className="store_bookmark">
-                <BookMarkIcon color={"#ffffff"} />
-              </button>
-              <button
-                className="store_review_write"
-                onClick={() => handleStateProps()}
-              >
-                리뷰 보러가기
-              </button>
-            </div>
-          </div>
-        ) : searchType ? (
-          "ㅁㅁㅁ"
+          <MarkerBody data={markerData} />
         ) : (
-          <div className="keyword_result_header flex flex_jc_s flex_ai_c flex_as_s">
-            <p>{locationResult.totalCount}개</p>&nbsp;의 가게가 있어요!
-          </div>
+          <LocationSearchResult
+            popupType={popupType}
+            BodyHeight={BodyHeight}
+            moveSize={moveSize}
+            lat={lat}
+            lng={lng}
+          />
         )}
       </div>
-      {popupType === "write" ? (
-        <WriteBody />
-      ) : markerData !== null ? (
-        <MarkerBody data={markerData} />
-      ) : (
-        <LocationSearchResult
-          popupType={popupType}
-          BodyHeight={BodyHeight}
-          moveSize={moveSize}
-          lat={lat}
-          lng={lng}
-        />
+      {popupType === "comment_menu" && ready && (
+        <div className="toast_modal_bg modal_bg fixed"></div>
       )}
-    </div>
+    </>
   );
 };
 

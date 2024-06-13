@@ -29,7 +29,7 @@ const MyPage: React.FC<MyPageProps> = () => {
         <UserInfo />
       </div>
       <TabMenu />
-      <div className="item_list">
+      <div className="item_list" style={{ paddingBottom: 75 }}>
         <TabItem />
       </div>
     </div>

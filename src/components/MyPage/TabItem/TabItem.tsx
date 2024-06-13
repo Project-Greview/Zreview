@@ -1,6 +1,6 @@
 // MODULE
 import { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import styled from "styled-components";
 // HOOK
 import { getMyWriteReviewFromIndexedDB } from "api/IDBreview";
@@ -9,8 +9,10 @@ import { getCookie } from "utils/cookies";
 import { calcDate } from "utils/dateCalc";
 // RECOIL STATE
 import { tabMenuTypeState } from "state/mypageTabState";
+import { toastPopupState } from "state/commonState";
 // COMPONENT
 import DetailItem from "components/DetailItem";
+import ToastPopup from "components/ToastPopup";
 // SVG
 import { ReactComponent as Logo } from "../../../assets/image/icon/marker_c.svg";
 import { ReactComponent as LikeIcon } from "../../../assets/image/icon/like_icon.svg";
@@ -37,6 +39,7 @@ type ReviewDataType = {
 type CommentDataType = {
   resultData: object[];
   type: string;
+  openMenu: any;
 };
 // STYLED
 const CommentBoxFrame = styled.li`
@@ -45,12 +48,13 @@ const CommentBoxFrame = styled.li`
   background: var(--white-color);
   border-radius: 5px;
   border: 1px solid var(--border-color);
+  z-index: 1;
   .type_img {
     flex-basis: 3.5rem;
     height: 3.5rem;
     margin-right: 1rem;
     border-radius: 50%;
-    border: 1px solid var(--disable-color);
+    border: 1px solid var(--border-color);
     overflow: hidden;
   }
   .comment {
@@ -66,13 +70,47 @@ const CommentBoxFrame = styled.li`
       margin-right: 1rem;
     }
   }
+  .menu_btn {
+    width: 1.6rem;
+    height: 1.6rem;
+    top: 2rem;
+    right: 2rem;
+    > div {
+      position: absolute;
+      width: 0.4rem;
+      height: 0.4rem;
+      background: var(--disable-color);
+      border-radius: 50%;
+      &:first-child {
+        top: 0;
+      }
+      &:nth-child(2) {
+        top: 40%;
+      }
+      &:last-child {
+        top: 80%;
+      }
+    }
+  }
 `;
 
-const CommentBox: React.FC<CommentDataType> = ({ resultData, type }) => {
+const CommentBox: React.FC<CommentDataType> = ({
+  resultData,
+  type,
+  openMenu,
+}) => {
   return (
     <ul>
       {resultData.map((item: any) => (
-        <CommentBoxFrame key={item.id} className="flex">
+        <CommentBoxFrame key={item.id} className="relative flex">
+          <div
+            className="menu_btn absolute flex flex_jc_c flex_ai_c"
+            onClick={openMenu}
+          >
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <div className="type_img">
             <Logo width={35} height={35} />
           </div>
@@ -97,7 +135,7 @@ const CommentBox: React.FC<CommentDataType> = ({ resultData, type }) => {
 
 const TabItem: React.FC<TabItemProps> = () => {
   const [WriteData, setWriteData] = useState([]);
-
+  const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const getType = useRecoilValue(tabMenuTypeState);
 
   const getNickname = getCookie("user").nickname;
@@ -109,41 +147,47 @@ const TabItem: React.FC<TabItemProps> = () => {
     ?.getBoundingClientRect().height;
 
   useEffect(() => {
-    getType !== "like" &&
-      getMyWriteReviewFromIndexedDB(1, getNickname, getType)
-        .then((data: ReviewDataType | any) => {
-          setWriteData(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {});
+    getMyWriteReviewFromIndexedDB(1, getNickname, getType)
+      .then((data: ReviewDataType | any) => {
+        setWriteData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {});
   }, [getType]);
   return (
-    <div
-      className="list_section"
-      style={{
-        minHeight: `calc(100vh - ((${box1Height}px + ${box2Height}px) + 69px))`,
-      }}
-    >
-      <div className="count flex flex_jc_s flex_ai_c">
-        <div>
-          {getType === "review"
-            ? "내가 작성한 리뷰"
-            : getType === "comment"
-            ? "내가 작성한 댓글"
-            : "내가 좋아요 한 리뷰"}
+    <>
+      <ToastPopup popupType={"comment_menu"} ready={toastModal} />
+      <div
+        className="list_section"
+        style={{
+          minHeight: `calc(100vh - ((${box1Height}px + ${box2Height}px) + 69px))`,
+        }}
+      >
+        <div className="count flex flex_jc_s flex_ai_c">
+          <div>
+            {getType === "review"
+              ? "내가 작성한 리뷰"
+              : getType === "comment"
+              ? "내가 작성한 댓글"
+              : "내가 좋아요 한 리뷰"}
+          </div>
+          <div>({WriteData.length})</div>
         </div>
-        <div>({WriteData.length})</div>
-      </div>
-      {getType === "review" && (
-        <DetailItem resultData={WriteData} place={""} type={"mypage"} />
-      )}
+        {getType === "review" && (
+          <DetailItem resultData={WriteData} place={""} type={"mypage"} />
+        )}
 
-      {getType === "comment" && (
-        <CommentBox resultData={WriteData} type={"comment"} />
-      )}
-    </div>
+        {getType === "comment" && (
+          <CommentBox
+            resultData={WriteData}
+            type={"comment"}
+            openMenu={() => setToastModal(true)}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

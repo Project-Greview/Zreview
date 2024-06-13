@@ -31,6 +31,7 @@
   --navy-color: #4b4a70;
   --normal-gray-color: #353535;
   --normal-gray-text: #353535;
+  --delete-color: #d05858;
   /* SIZE */
   --header-height: 4.9rem;
   --bottom-navigation: 6rem;
@@ -116,4 +117,11 @@
 .contact_team .contact {
   margin-top: 2rem;
   font-size: 1.7rem;
+}
+.contact_team .contact_btn {
+  padding: 1rem;
+  margin-top: 1rem;
+  background: var(--point-color);
+  border-radius: 5px;
+  color: var(--white-color);
 }
