@@ -211,6 +211,7 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       comments: 0,
       writer: getCookie("user").nickname,
       profile: "",
+      member_id: Number(getCookie("user").id),
     };
     try {
       const response = await addDataToIndexedDB(postData);

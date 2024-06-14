@@ -52,6 +52,8 @@ const Login: React.FC<LoginProps> = () => {
       const response: any = await getLoginMemberFromIndexedDB(loginId, loginPw);
       if (response) {
         setLoginState(true);
+        const time = 3600;
+        const expiration = new Date(Date.now() + time * 720000);
         const userData = {
           nickname: response.nickname,
           name: response.name,
@@ -64,7 +66,7 @@ const Login: React.FC<LoginProps> = () => {
           myLongitude: response.myLongitude,
           id: response.id,
         };
-        setCookie("user", JSON.stringify(userData));
+        setCookie("user", JSON.stringify(userData), { expires: expiration });
         navigate("/main");
       } else {
         setError(true);

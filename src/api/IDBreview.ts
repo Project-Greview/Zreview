@@ -3,6 +3,9 @@
 //   window.mozIndexedDB ||
 //   window.webkitIndexedDB ||
 //   window.msIndexedDB ||
+
+import { getMemberInfoFromIndexeDB } from "./IDBmember";
+
 //   window.shimIndexedDB;
 const idb = window.indexedDB;
 
@@ -17,7 +20,7 @@ type PostDataType = {
   rating: number;
   images: unknown;
   created_at: Date;
-  member: string;
+  member_id: number;
   views: number;
   likes: number;
   comments: string;
@@ -46,7 +49,7 @@ export const addDataToIndexedDB = (postData: PostDataType) => {
         score: postData.rating,
         images: postData.images,
         created_at: postData.created_at,
-        member: postData.member,
+        member: postData.member_id,
         views: postData.views,
         likes: postData.likes,
         comments: postData.comments,
@@ -139,8 +142,17 @@ export const getAllTargetDataFromIndexedDB = (target_name: string) => {
 
       const request = objectStore.getAll();
 
-      request.onsuccess = (e: any) => {
+      request.onsuccess = async (e: any) => {
         const result = e.target.result;
+        console.log("데이터", result);
+        // 수정필요
+        // getMemberInfoFromIndexeDB(result.id)
+        //   .then((response) => {
+        //     console.log(response);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
         resolve(
           result.filter((result: any) => result.place_name === target_name)
         );

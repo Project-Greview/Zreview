@@ -255,3 +255,30 @@ export const patchMyProfileFromIndexedDB = (id: number, patchData: any) => {
     };
   });
 };
+// GET MEMBER MINIMUN INFO
+export const getMemberInfoFromIndexeDB = (id: number) => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
+
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction("member", "readonly");
+      const objectStore = transaction.objectStore("member");
+
+      const request = objectStore.getAll();
+
+      request.onsuccess = (e: any) => {
+        console.log("성공?", e);
+        resolve(e);
+      };
+
+      request.onerror = (e) => {
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    };
+  });
+};
