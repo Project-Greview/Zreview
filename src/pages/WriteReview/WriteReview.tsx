@@ -41,7 +41,6 @@ type ReviewDataType = {
   place_name: string;
   place_address: string;
   placeDepth3: string;
-  title: string;
   content: string;
   location_lat: number;
   location_lon: number;
@@ -53,8 +52,6 @@ type ReviewDataType = {
   rating: number;
   likes: number;
   comments: number;
-  writer: string;
-  profile: string;
 };
 type CalcScoreType = {
   score: number;
@@ -194,7 +191,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   // POST REVIEW
   const handleReviewPOST = async () => {
     const postData: any | ReviewDataType = {
-      title: writeLocationData.placeName,
       place_name: writeLocationData.placeName,
       location_lat: Number(writeLocationData.placeLatitude),
       location_lon: Number(writeLocationData.placeLongitude),
@@ -209,8 +205,6 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
       views: 0,
       likes: 0,
       comments: 0,
-      writer: getCookie("user").nickname,
-      profile: "",
       member_id: Number(getCookie("user").id),
     };
     try {

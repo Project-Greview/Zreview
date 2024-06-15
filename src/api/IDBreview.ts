@@ -4,6 +4,7 @@
 //   window.webkitIndexedDB ||
 //   window.msIndexedDB ||
 
+import { resolve } from "path";
 import { getMemberInfoFromIndexeDB } from "./IDBmember";
 
 //   window.shimIndexedDB;
@@ -53,8 +54,6 @@ export const addDataToIndexedDB = (postData: PostDataType) => {
         views: postData.views,
         likes: postData.likes,
         comments: postData.comments,
-        writer: postData.writer,
-        profile: postData.profile,
       });
 
       review.onsuccess = (e) => {
@@ -144,18 +143,25 @@ export const getAllTargetDataFromIndexedDB = (target_name: string) => {
 
       request.onsuccess = async (e: any) => {
         const result = e.target.result;
-        console.log("데이터", result);
-        // 수정필요
-        // getMemberInfoFromIndexeDB(result.id)
-        //   .then((response) => {
-        //     console.log(response);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-        resolve(
-          result.filter((result: any) => result.place_name === target_name)
-        );
+        try {
+          const filterData = result.filter(
+            (result: any) => result.place_name === target_name
+          );
+          // 게시글 작성 시 작성자의 고유 ID를 사용하여 사용자 정보 데이터 가져오기
+          const getWriter = filterData.map((item: any) =>
+            getMemberInfoFromIndexeDB(item.member)
+          );
+          const memberInfos: any = await Promise.all(getWriter);
+          resolve(
+            filterData.map((item: any, index: number) => ({
+              ...item,
+              writer: memberInfos[index].nickname,
+              profile: memberInfos[index].thumbnail,
+            }))
+          );
+        } catch (error) {
+          console.log(error);
+        }
       };
 
       request.onerror = (e) => {
@@ -319,6 +325,39 @@ export const getMyWriteReviewFromIndexedDB = (
 
       request.onerror = (e) => {
         console.log("error", e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    };
+  });
+};
+// POST REVIEW LIKE
+// 리뷰 좋아요
+export const postReviewLikeFromIndexedDB = (id: number, memberId: number) => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction("like", "readwrite");
+      const objectStroe = transaction.objectStore("like");
+      const like = objectStroe.put({
+        review: id,
+        member: memberId,
+      });
+
+      like.onsuccess = (e) => {
+        transaction.oncomplete = () => {
+          db.close();
+        };
+        resolve(e.type);
+        console.log(e);
+      };
+
+      like.onerror = (e) => {
+        console.log(e);
         reject(e);
       };
 
