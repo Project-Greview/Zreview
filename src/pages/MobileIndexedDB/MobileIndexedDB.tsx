@@ -85,7 +85,7 @@ const MobileIndexedDB: React.FC = () => {
           <ul>
             <li className="flex flex_jc_sb flex_ai_c">
               <Link
-                className="flex"
+                className="flex flex_jc_s width_100p"
                 to="https://developer.mozilla.org/ko/docs/Web/API/IndexedDB_API"
                 target="_blank"
               >
@@ -94,12 +94,20 @@ const MobileIndexedDB: React.FC = () => {
               <ArrowIcon />
             </li>
             <li className="flex flex_jc_sb flex_ai_c">
-              <button onClick={() => setModalState(1)}>indexedDB 삭제</button>
+              <button
+                onClick={() => setModalState(1)}
+                className="flex flex_jc_s width_100p"
+              >
+                indexedDB 삭제
+              </button>
               <ArrowIcon />
             </li>
             <li className="flex flex_jc_sb flex_ai_c">
               {/* <button onClick={() => setModalState(2)}> */}
-              <button onClick={() => handleViewIndexedDBVolume()}>
+              <button
+                onClick={() => handleViewIndexedDBVolume()}
+                className="flex flex_jc_s width_100p"
+              >
                 indexedDB 사용량 확인
               </button>
               <ArrowIcon />
