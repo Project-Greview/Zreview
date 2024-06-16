@@ -1,7 +1,10 @@
 // MODULE
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 // API
-import { patchMyProfileFromIndexedDB } from "api/IDBmember";
+import {
+  getMemberInfoFromIndexeDB,
+  patchMyProfileFromIndexedDB,
+} from "api/IDBmember";
 // HOOK
 import { getCookie, setCookie } from "utils/cookies";
 // COMPONENT
@@ -77,6 +80,8 @@ const ProfileModify: React.FC = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {}, []);
   return (
     <>
       {locationSetting && (

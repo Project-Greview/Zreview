@@ -2,11 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import reportWebVitals from "./reportWebVitals";
 

@@ -1,4 +1,5 @@
 import CryptoJS from "crypto-js";
+import { getMyWriteReviewFromIndexedDB } from "./IDBreview";
 
 // const idb =
 //   window.indexedDB ||
@@ -23,6 +24,19 @@ type PatchDataType = {
   nickname: string;
   thumbnail: string;
   location: string;
+};
+type getData = {
+  isLogin: boolean;
+  nickname: string;
+  name: string;
+  email: string;
+  phone: string;
+  location: string;
+  myLatitude: number;
+  myLongitude: number;
+  id: number;
+  writeReview: number;
+  writeComment: number;
 };
 // POST MEMBER
 
@@ -170,28 +184,36 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
 
       const request = objectStore.getAll();
 
-      request.onsuccess = (e: any) => {
+      request.onsuccess = async (e: any) => {
         const result = e.target.result;
-        const matchedMember = result.find((member: any) => {
-          const decryptedPassword = CryptoJS.AES.decrypt(
-            member.password,
-            SecretKey
-          ).toString(CryptoJS.enc.Utf8);
-          return member.email === id && decryptedPassword === pw;
-        });
-        if (matchedMember) {
-          resolve({
-            isLogin: true,
-            nickname: matchedMember.nickname,
-            name: matchedMember.name,
-            email: matchedMember.email,
-            phone: matchedMember.phone,
-            location: matchedMember.location,
-            myLatitude: matchedMember.myLatitude,
-            myLongitude: matchedMember.myLongitude,
-            id: matchedMember.id,
+
+        try {
+          const matchedMember = result.find((member: any) => {
+            const decryptedPassword = CryptoJS.AES.decrypt(
+              member.password,
+              SecretKey
+            ).toString(CryptoJS.enc.Utf8);
+            return member.email === id && decryptedPassword === pw;
           });
-        } else {
+          if (matchedMember) {
+            const getMyinfo: any | getData = await getMemberInfoFromIndexeDB(
+              matchedMember.id
+            );
+            resolve({
+              isLogin: true,
+              nickname: getMyinfo.nickname,
+              name: getMyinfo.name,
+              email: getMyinfo.email,
+              phone: getMyinfo.phone,
+              location: getMyinfo.location,
+              myLatitude: getMyinfo.myLatitude,
+              myLongitude: getMyinfo.myLongitude,
+              id: getMyinfo.id,
+              writeReview: getMyinfo.writeReview,
+              writeComment: getMyinfo.writeComment,
+            });
+          }
+        } catch (error) {
           resolve(false);
         }
       };
@@ -204,7 +226,6 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
 };
 // PATCH MY PROFILE
 export const patchMyProfileFromIndexedDB = (id: number, patchData: any) => {
-  console.log(patchData);
   return new Promise((resolve, reject) => {
     const dbOpen = indexedDB.open("zreview", 1);
 
@@ -266,9 +287,23 @@ export const getMemberInfoFromIndexeDB = (id: number) => {
 
       const request = objectStore.get(id);
 
-      request.onsuccess = (e: any) => {
-        const resultData = e.target.result;
-        resolve(resultData);
+      request.onsuccess = async (e: any) => {
+        const result = e.target.result;
+        try {
+          const writerReview: any = await getMyWriteReviewFromIndexedDB(
+            result.id,
+            "review"
+          );
+          const commentReview: any = await getMyWriteReviewFromIndexedDB(
+            result.id,
+            "comment"
+          );
+          resolve({
+            ...result,
+            writeReview: writerReview.length,
+            writeComment: commentReview.length,
+          });
+        } catch (error) {}
       };
 
       request.onerror = (e) => {

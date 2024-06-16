@@ -70,6 +70,8 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
   // DUMMY DATA
   const myNickname = getCookie("user").nickname;
   const myLocation = getCookie("user").location;
+  const myReviewCount = getCookie("user").review;
+  const myCommontCount = getCookie("user").comment;
   // FUNCTION
   const handleCLoseLeftMenu = () => {
     setLeftMenu(false);
@@ -106,11 +108,11 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
             <ul className="flex flex_jc_sb flex_ai_c">
               <li>
                 <div className="key_tit">리뷰</div>
-                <div className="count">00</div>
+                <div className="count flex flex_jc_c">{myReviewCount}</div>
               </li>
               <li>
                 <div className="key_tit">댓글</div>
-                <div className="count">00</div>
+                <div className="count flex flex_jc_c">{myCommontCount}</div>
               </li>
             </ul>
           </div>

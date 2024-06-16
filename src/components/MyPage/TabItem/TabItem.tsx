@@ -139,6 +139,7 @@ const TabItem: React.FC<TabItemProps> = () => {
   const getType = useRecoilValue(tabMenuTypeState);
 
   const getNickname = getCookie("user").nickname;
+  const getId = getCookie("user").id;
   const box1Height = document
     .querySelector(".scroll_section ")
     ?.getBoundingClientRect().height;
@@ -147,7 +148,7 @@ const TabItem: React.FC<TabItemProps> = () => {
     ?.getBoundingClientRect().height;
 
   useEffect(() => {
-    getMyWriteReviewFromIndexedDB(1, getNickname, getType)
+    getMyWriteReviewFromIndexedDB(getId, getType)
       .then((data: ReviewDataType | any) => {
         setWriteData(data);
       })

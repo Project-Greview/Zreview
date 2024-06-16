@@ -303,11 +303,7 @@ export const getMyLocationReviewFromIndexedDB = (location: string) => {
 };
 // GET MY WRITE REVIEW
 // 내가 작성한 리뷰 가져오기 API
-export const getMyWriteReviewFromIndexedDB = (
-  id: number,
-  nickname: string,
-  type: string
-) => {
+export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -320,7 +316,7 @@ export const getMyWriteReviewFromIndexedDB = (
 
       request.onsuccess = (e: any) => {
         const result = e.target.result;
-        resolve(result.filter((result: any) => result.writer === nickname));
+        resolve(result.filter((result: any) => result.id === id));
       };
 
       request.onerror = (e) => {
