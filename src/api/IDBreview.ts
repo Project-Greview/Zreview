@@ -4,7 +4,6 @@
 //   window.webkitIndexedDB ||
 //   window.msIndexedDB ||
 
-import { resolve } from "path";
 import { getMemberInfoFromIndexeDB } from "./IDBmember";
 
 //   window.shimIndexedDB;
@@ -321,39 +320,6 @@ export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
 
       request.onerror = (e) => {
         console.log("error", e);
-        reject(e);
-      };
-
-      transaction.oncomplete = () => {
-        db.close();
-      };
-    };
-  });
-};
-// POST REVIEW LIKE
-// 리뷰 좋아요
-export const postReviewLikeFromIndexedDB = (id: number, memberId: number) => {
-  return new Promise((resolve, reject) => {
-    const dbOpen = idb.open("zreview", 1);
-    dbOpen.onsuccess = () => {
-      const db = dbOpen.result;
-      const transaction = db.transaction("like", "readwrite");
-      const objectStroe = transaction.objectStore("like");
-      const like = objectStroe.put({
-        review: id,
-        member: memberId,
-      });
-
-      like.onsuccess = (e) => {
-        transaction.oncomplete = () => {
-          db.close();
-        };
-        resolve(e.type);
-        console.log(e);
-      };
-
-      like.onerror = (e) => {
-        console.log(e);
         reject(e);
       };
 
