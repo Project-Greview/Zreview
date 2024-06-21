@@ -3,6 +3,8 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 // RECOIL STATE
 import { tabMenuTypeState } from "state/mypageTabState";
+import { postReviewLikeFromIndexedDB } from "api/IDBlike";
+import { getCookie } from "utils/cookies";
 // PROPS TYPE
 type TabMenuProps = {};
 
@@ -25,6 +27,13 @@ const TabMenu: React.FC<TabMenuProps> = () => {
 
   useEffect(() => {
     setActiveType("review");
+    postReviewLikeFromIndexedDB(1, 2)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
   useLayoutEffect(() => {
     const position = document

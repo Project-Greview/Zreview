@@ -196,7 +196,7 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
             return member.email === id && decryptedPassword === pw;
           });
           if (matchedMember) {
-            const getMyinfo: any | getData = await getMemberInfoFromIndexeDB(
+            const getMyinfo: any | getData = await getMemberInfoFromIndexedDB(
               matchedMember.id
             );
             resolve({
@@ -276,8 +276,8 @@ export const patchMyProfileFromIndexedDB = (id: number, patchData: any) => {
     };
   });
 };
-// GET MEMBER MINIMUN INFO
-export const getMemberInfoFromIndexeDB = (id: number) => {
+// GET MEMBER MINIMUM INFO
+export const getMemberInfoFromIndexedDB = (id: number) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     dbOpen.onsuccess = () => {

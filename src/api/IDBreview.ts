@@ -4,7 +4,7 @@
 //   window.webkitIndexedDB ||
 //   window.msIndexedDB ||
 
-import { getMemberInfoFromIndexeDB } from "./IDBmember";
+import { getMemberInfoFromIndexedDB } from "./IDBmember";
 
 //   window.shimIndexedDB;
 const idb = window.indexedDB;
@@ -148,7 +148,7 @@ export const getAllTargetDataFromIndexedDB = (target_name: string) => {
           );
           // 게시글 작성 시 작성자의 고유 ID를 사용하여 사용자 정보 데이터 가져오기
           const getWriter = filterData.map((item: any) =>
-            getMemberInfoFromIndexeDB(item.member)
+            getMemberInfoFromIndexedDB(item.member)
           );
           const memberInfos: any = await Promise.all(getWriter);
           resolve(

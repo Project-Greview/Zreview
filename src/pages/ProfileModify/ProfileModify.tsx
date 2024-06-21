@@ -2,7 +2,7 @@
 import { useState, ChangeEvent, useEffect } from "react";
 // API
 import {
-  getMemberInfoFromIndexeDB,
+  getMemberInfoFromIndexedDB,
   patchMyProfileFromIndexedDB,
 } from "api/IDBmember";
 // HOOK
