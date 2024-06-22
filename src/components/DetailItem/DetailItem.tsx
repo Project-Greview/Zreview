@@ -7,6 +7,7 @@ import ProfileImage from "components/ProfileImage";
 import HashTag from "components/HashTag";
 import ImageSlide from "components/ImageSlide";
 import Comment from "components/Comment";
+import { Like } from "components/Common/Like/Like";
 // UTIL
 import { formattedDate } from "utils/dateCalc";
 // IMAGE
@@ -110,10 +111,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
                   ))}
                 </ul>
                 <div className="icon_box flex flex_ai_c">
-                  <div className="like_box flex flex_ai_c">
-                    <LikeIcon color={"#e0ddff"} />
-                    <p>{item?.likes}</p>
-                  </div>
+                  <Like count={item?.likes} reviewId={item?.id} />
                   <button
                     className="comment_box flex flex_ai_c"
                     onClick={() => handleOpenCommentModal(item?.id)}

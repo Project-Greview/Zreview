@@ -65,6 +65,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ data }) => {
     let Element = document.querySelector(".review_box");
     setBoxWidth(Element?.clientWidth);
   }, []);
+  console.log("data : ", data);
   return (
     <ul>
       {data.map((item: ItemType) => {

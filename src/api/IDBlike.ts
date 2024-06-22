@@ -3,127 +3,119 @@
 //   window.mozIndexedDB ||
 //   window.webkitIndexedDB ||
 //   window.msIndexedDB ||
-
-import { getMemberInfoFromIndexedDB } from "./IDBmember";
-
-//   window.shimIndexedDB;
 const idb = window.indexedDB;
 
-// POST REVIEW LIKE
-// 리뷰 좋아요
-// export const postReviewLikeFromIndexedDB = (id: number, memberId: number) => {
-//   return new Promise((resolve, reject) => {
-//     const dbOpen = idb.open("zreview", 1);
-//     dbOpen.onsuccess = () => {
-//       const db = dbOpen.result;
-//       const transaction = db.transaction("like", "readwrite");
-//       const objectStore = transaction.objectStore("like");
-//       const getLike = objectStore.get(id);
-//       // const like = objectStore.put({
-//       //   review: id,
-//       //   member: [memberId],
-//       // });
-
-//       getLike.onsuccess = (e: any) => {
-//         console.log(e:any);
-//         resolve(e:any);
-//       };
-//       getLike.onerror = (e: any) => {
-//         console.log(e:any);
-//         reject(e:any);
-//       };
-
-//       // like.onsuccess = (e:any) => {
-//       //   transaction.oncomplete = () => {
-//       //     db.close();
-//       //   };
-//       //   resolve(e.type);
-//       //   console.log(e:any);
-//       // };
-
-//       // like.onerror = (e:any) => {
-//       //   console.log(e:any);
-//       //   reject(e:any);
-//       // };
-
-//       transaction.oncomplete = () => {
-//         db.close();
-//       };
-//     };
-//   });
-// };
-
+/**
+ * 게시물 좋아요 API
+ * @param id 게시물 고유 ID
+ * @param memberId 좋아요 누르는 사용자 고유 ID
+ * @returns 해당 게시물 좋아요
+ */
 export const postReviewLikeFromIndexedDB = (id: number, memberId: number) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
-    dbOpen.onupgradeneeded = (e: any) => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains("like")) {
-        db.createObjectStore("like", { keyPath: "review" });
-      }
-    };
-
     dbOpen.onsuccess = () => {
       const db = dbOpen.result;
-      const transaction = db.transaction("like", "readwrite");
-      const objectStore = transaction.objectStore("like");
+      const transaction = db.transaction(["like", "review"], "readwrite");
+      const likeStore = transaction.objectStore("like");
+      const reviewStore = transaction.objectStore("review");
 
-      const getRequest = objectStore.get(id);
+      const getLikeRequest = likeStore.get(id);
 
-      getRequest.onsuccess = (e: any) => {
-        const existingEntry = e.target.result;
+      getLikeRequest.onsuccess = (e: any) => {
+        const existingLike = e.target.result;
+        let updateLikes = false;
+        let liked = false;
 
-        if (existingEntry) {
-          const memberIndex = existingEntry.member.indexOf(memberId);
+        if (existingLike) {
+          const memberIndex = existingLike.member.indexOf(memberId);
           if (memberIndex > -1) {
-            existingEntry.member.splice(memberIndex, 1); // memberId가 있으면 삭제
+            existingLike.member.splice(memberIndex, 1); // memberId가 있으면 삭제
+            liked = false; // 좋아요를 취소했으므로 false
           } else {
-            existingEntry.member.push(memberId); // memberId가 없으면 추가
+            existingLike.member.push(memberId); // memberId가 없으면 추가
+            liked = true; // 좋아요를 추가했으므로 true
           }
-          const updateRequest = objectStore.put(existingEntry);
-
-          updateRequest.onsuccess = (e: any) => {
-            resolve(e.type);
-            console.log(e);
-          };
-
-          updateRequest.onerror = (e: any) => {
-            console.log(e);
-            reject(e);
-          };
+          updateLikes = true;
+          likeStore.put(existingLike);
         } else {
-          const newEntry = {
+          const newLike = {
             review: id,
             member: [memberId],
           };
-          const addRequest = objectStore.add(newEntry);
+          likeStore.add(newLike);
+          updateLikes = true;
+          liked = true; // 새로운 좋아요이므로 true
+        }
 
-          addRequest.onsuccess = (e: any) => {
-            resolve(e.type);
-            console.log(e);
+        if (updateLikes) {
+          const getReviewRequest = reviewStore.get(id);
+
+          getReviewRequest.onsuccess = (e: any) => {
+            const review = e.target.result;
+            if (review) {
+              if (liked) {
+                review.likes += 1; // 새로운 좋아요를 추가한 경우
+              } else {
+                review.likes -= 1; // 기존에 있었던 좋아요를 삭제한 경우
+              }
+              reviewStore.put(review);
+            }
           };
 
-          addRequest.onerror = (e: any) => {
-            console.log(e);
+          getReviewRequest.onerror = (e) => {
+            console.log("Error updating likes in review", e);
             reject(e);
           };
         }
 
         transaction.oncomplete = () => {
           db.close();
+          resolve(liked); // 좋아요 상태 반환
         };
       };
 
-      getRequest.onerror = (e: any) => {
-        console.log(e);
+      getLikeRequest.onerror = (e) => {
+        console.log("Error fetching like", e);
         reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
       };
     };
 
-    dbOpen.onerror = (e: any) => {
-      console.log(e);
+    dbOpen.onerror = (e) => {
+      console.log("Error opening database", e);
       reject(e);
+    };
+  });
+};
+
+// 좋아요 가져오기
+export const getReviewLikeFromIndexedDB = (memberId: number) => {
+  return new Promise((resolve, reject) => {
+    const dbopen = idb.open("zreview", 1);
+    dbopen.onsuccess = () => {
+      const db = dbopen.result;
+      const transaction = db.transaction("like", "readonly");
+      const objectStore = transaction.objectStore("like");
+
+      const request = objectStore.getAll();
+
+      request.onsuccess = (e: any) => {
+        const result = e.target.result;
+      };
+
+      request.onerror = (e) => {
+        console.log(e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
     };
   });
 };

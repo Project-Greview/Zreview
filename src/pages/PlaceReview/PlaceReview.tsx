@@ -102,7 +102,7 @@ const PlaceReview: React.FC<PlaceReviewType> = () => {
       })
       .finally(() => {});
     getPlaceScore();
-  }, []);
+  }, [reviewData]);
   useEffect(() => {
     if (inView) {
       setHeaderVisibility(true);

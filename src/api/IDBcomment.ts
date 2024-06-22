@@ -1,7 +1,5 @@
 const idb = window.indexedDB;
 
-type PostCommentType = {};
-
 // POST COMMENT
 // 댓글 작성하기
 export const addCommentFromIndexedDB = (

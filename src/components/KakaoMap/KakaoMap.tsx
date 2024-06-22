@@ -63,7 +63,6 @@ const KakaoMap: React.FC = () => {
     try {
       const response: any | ReviewDataType =
         await getAllTargetDataFromIndexedDB(name);
-      console.log("테스트", response);
       setMapMarkerData(response);
     } catch (error) {
       console.log(error);

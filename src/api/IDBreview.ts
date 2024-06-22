@@ -29,7 +29,26 @@ type PostDataType = {
 };
 
 // POST REVIEW
-// 리뷰 등록 API
+//
+/**
+ * 리뷰 등록 API
+ * @param postData 리뷰 등록 시 저장되는 데이터
+ *      place_name: 장소명,
+        location_lat: 해당 장소 위도,
+        location_lon: 해당 장소 경도,
+        place_address: 해당 장소 주소,
+        placeDepth3: 해당 장소에 대한 동 이름,
+        content: 리뷰 내용,
+        hashtag: 해시태그 (최대3개),
+        score: 별점,
+        images: 사진,
+        created_at: 리뷰 작성일,
+        member: 리뷰 작성자 고유 ID,
+        views: 조회수,
+        likes: 좋아요 수,
+        comments: 댓글 수,
+ * @returns 
+ */
 export const addDataToIndexedDB = (postData: PostDataType) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
@@ -74,7 +93,10 @@ export const addDataToIndexedDB = (postData: PostDataType) => {
     };
   });
 };
-// GET REVIEW
+/**
+ * 전체 리뷰 가져오기
+ * @returns review data
+ */
 export const getAllDataFromIndexedDB = () => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
@@ -102,8 +124,10 @@ export const getAllDataFromIndexedDB = () => {
   });
 };
 
-// GET DETAIL REVIEW
-// 선택된 리뷰에 대한 상세 리뷰 가져오기 API
+/**
+ * 선택된 리뷰에 대한 상세 리뷰 가져오기 API
+ * 현재 미사용
+ */
 export const getDataFromIndexedDB = () => {
   const dbOpen = idb.open("zreview", 1);
   const id = 5;
@@ -127,8 +151,11 @@ export const getDataFromIndexedDB = () => {
   };
 };
 
-// GET TARGET REVIEW
-// 선택된 장소에 대한 리뷰 데이터 가져오기 API
+/**
+ * 선택된 장소에 대한 리뷰 데이터 가져오기 API
+ * @param target_name
+ * @returns
+ */
 export const getAllTargetDataFromIndexedDB = (target_name: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
@@ -175,6 +202,12 @@ export const getAllTargetDataFromIndexedDB = (target_name: string) => {
   });
 };
 
+/**
+ * 현재 위치 기반의 해시태그 랭킹
+ * @param lat 사용자의 현재 위치 위도
+ * @param lon 사용자의 현재 위치 경도
+ * @returns 현재 접속한 위치 기반에서 작성된 게시글에 추가된 해시태그 랭킹
+ */
 const generateHashtagRanking = (hashtags: object[]) => {
   const hashtagCounts: any = {};
 
@@ -194,7 +227,6 @@ const generateHashtagRanking = (hashtags: object[]) => {
   const top5Hashtags = sortedHashtags.slice(0, 5);
   return top5Hashtags;
 };
-// GET HASHTAG RANKING
 export const getHashtagRankingFromIndexedDB = (lat: number, lon: number) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
@@ -266,8 +298,11 @@ function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
 
-// GET MY LOCATION REVIEW
-// 내가 설정한 지역에 대한 리뷰 가져오기 API
+/**
+ * 내가 설정한 지역에 대한 리뷰 가져오기 API
+ * @param location 사용자가 등록한 내 동네명
+ * @returns 해당 동네에서 작성된 리뷰 가져오기
+ */
 export const getMyLocationReviewFromIndexedDB = (location: string) => {
   // [EDIT] 추후 내가 등록한 동네기준으로만 가져오게 변경
   // [EDIT] nickname 을 동네이름으로
@@ -300,32 +335,37 @@ export const getMyLocationReviewFromIndexedDB = (location: string) => {
     };
   });
 };
-// GET MY WRITE REVIEW
-// 내가 작성한 리뷰 가져오기 API
+/**
+ * 내가 작성한 리뷰 가져오기 API
+ * @param id 사용자 고유 ID
+ * @param type 마이페이지 내 탭메뉴 타입 (review, comment, like)
+ * @returns 해당 사용자가 작성한 리뷰, 댓글, 좋아요 리턴
+ */
 export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
+    setTimeout(() => {
+      dbOpen.onsuccess = () => {
+        const db = dbOpen.result;
+        const transaction = db.transaction(type, "readonly");
+        const objectStore = transaction.objectStore(type);
 
-    dbOpen.onsuccess = () => {
-      const db = dbOpen.result;
-      const transaction = db.transaction(type, "readonly");
-      const objectStore = transaction.objectStore(type);
+        const request = objectStore.getAll();
 
-      const request = objectStore.getAll();
+        request.onsuccess = (e: any) => {
+          const result = e.target.result;
+          resolve(result.filter((result: any) => result.id === id));
+        };
 
-      request.onsuccess = (e: any) => {
-        const result = e.target.result;
-        resolve(result.filter((result: any) => result.id === id));
+        request.onerror = (e) => {
+          console.log("error", e);
+          reject(e);
+        };
+
+        transaction.oncomplete = () => {
+          db.close();
+        };
       };
-
-      request.onerror = (e) => {
-        console.log("error", e);
-        reject(e);
-      };
-
-      transaction.oncomplete = () => {
-        db.close();
-      };
-    };
+    }, 10);
   });
 };
