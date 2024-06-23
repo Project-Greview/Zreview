@@ -25,6 +25,7 @@ const Nickname: React.FC<NicknameType> = ({
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
   const [duplication, setDuplication] = useState<boolean>(true);
+
   const onChangeRegNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     let charArray = e.target.value.split("");

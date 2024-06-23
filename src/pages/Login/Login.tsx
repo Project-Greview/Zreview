@@ -82,7 +82,7 @@ const Login: React.FC<LoginProps> = () => {
   useEffect(() => {
     setTimeout(() => {
       setShake(false);
-    }, 1000);
+    }, 100);
   }, [shake]);
 
   useEffect(() => {

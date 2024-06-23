@@ -15,7 +15,6 @@ import Logo from "../../assets/image/Logo.png";
 // SVG
 import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.svg";
 import { ReactComponent as CommentIcon } from "../../assets/image/icon/comment_icon.svg";
-import { ReactComponent as LikeIcon } from "../../assets/image/icon/like_icon.svg";
 import { ReactComponent as RightArrow } from "../../assets/image/icon/arrow_right.svg";
 // PROPS TYPE
 type DetailItemProps = {

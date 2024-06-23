@@ -206,7 +206,6 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
 
       request.onsuccess = async (e: any) => {
         const result = e.target.result;
-
         try {
           const matchedMember = result.find((member: any) => {
             const decryptedPassword = CryptoJS.AES.decrypt(
@@ -215,24 +214,25 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
             ).toString(CryptoJS.enc.Utf8);
             return member.email === id && decryptedPassword === pw;
           });
-          if (matchedMember) {
-            const getMyinfo: any | getData = await getMemberInfoFromIndexedDB(
-              matchedMember.id
-            );
-            resolve({
-              isLogin: true,
-              nickname: getMyinfo.nickname,
-              name: getMyinfo.name,
-              email: getMyinfo.email,
-              phone: getMyinfo.phone,
-              location: getMyinfo.location,
-              myLatitude: getMyinfo.myLatitude,
-              myLongitude: getMyinfo.myLongitude,
-              id: getMyinfo.id,
-              writeReview: getMyinfo.writeReview,
-              writeComment: getMyinfo.writeComment,
-            });
-          }
+          resolve(matchedMember);
+          // if (matchedMember) {
+          //   const getMyinfo: any | getData = await getMemberInfoFromIndexedDB(
+          //     matchedMember.id
+          //   );
+          //   resolve({
+          //     isLogin: true,
+          //     nickname: getMyinfo.nickname,
+          //     name: getMyinfo.name,
+          //     email: getMyinfo.email,
+          //     phone: getMyinfo.phone,
+          //     location: getMyinfo.location,
+          //     myLatitude: getMyinfo.myLatitude,
+          //     myLongitude: getMyinfo.myLongitude,
+          //     id: getMyinfo.id,
+          //     writeReview: getMyinfo.writeReview,
+          //     writeComment: getMyinfo.writeComment,
+          //   });
+          // }
         } catch (error) {
           resolve(false);
         }
@@ -244,6 +244,7 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
     };
   });
 };
+
 // PATCH MY PROFILE
 export const patchMyProfileFromIndexedDB = (id: number, patchData: any) => {
   return new Promise((resolve, reject) => {
