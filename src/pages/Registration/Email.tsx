@@ -31,11 +31,15 @@ const Email: React.FC<EmailType> = ({
     pageType ? loginUserEmail : ""
   );
   const [emailDomain, setEmailDomain] = useState<string>("");
+  const [checkEmail, setCheckEmail] = useState<boolean | unknown>(null);
 
   const onDuplicationCheckEmail = async () => {
     try {
-      const response = await getCheckMemberEmailDuplicationIndexedDB(resEmail);
-      console.log("checkEmail", response);
+      const response = await getCheckMemberEmailDuplicationIndexedDB(
+        resEmail,
+        emailDomain
+      );
+      setCheckEmail(response);
     } catch (error) {
       console.log(error);
     }
@@ -45,18 +49,17 @@ const Email: React.FC<EmailType> = ({
     setResEmail(e.target.value);
   };
 
-  const onCheckResEmail = () => {
-    const isTrue = onDuplicationCheckEmail();
+  const onCheckResEmail = async () => {
+    onDuplicationCheckEmail();
     const finallyEmail = resEmail + "@" + emailDomain;
     setEmail(finallyEmail);
-    const resultEmail = email?.split("@")[1];
     const checkDomain = Domain.emailDomainList.some(
       (domain) => domain.name === emailDomain
     );
     if (!checkDomain || email?.length < 5 || emailDomain?.length < 0) {
       setCheck(1);
       setShake(true);
-    } else if (!isTrue) {
+    } else if (!checkEmail) {
       setCheck(2);
       setShake(true);
     } else {
@@ -99,6 +102,7 @@ const Email: React.FC<EmailType> = ({
               style={{ width: "49%" }}
               onChange={onChangeRegEmail}
               value={resEmail}
+              onBlur={() => onCheckResEmail()}
             />
             <span style={{ width: "5%" }}>@</span>
             <div className="mail_domain" style={{ width: "44%" }}>
@@ -109,7 +113,7 @@ const Email: React.FC<EmailType> = ({
                 id="mail_domain"
                 onChange={(e) => onChangeRegisterEmailDomain(e)}
                 value={emailDomain}
-                // onBlur={() => onCheckResEmail()}
+                onBlur={() => onCheckResEmail()}
                 maxLength={15}
               />
               <label htmlFor="mail_domain"></label>
@@ -121,7 +125,7 @@ const Email: React.FC<EmailType> = ({
               value={emailDomain}
               onChange={(e) => onChangeRegisterEmailDomain(e)}
               className="mar_top_5"
-              // onBlur={() => onCheckResEmail()}
+              onBlur={() => onCheckResEmail()}
             >
               <option value="">직접 입력</option>
               <option value="gmail.com">gmail.com</option>

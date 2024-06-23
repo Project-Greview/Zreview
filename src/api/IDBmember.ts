@@ -20,11 +20,6 @@ type PostDataType = {
   myLatitude: number;
   myLongitude: number;
 };
-type PatchDataType = {
-  nickname: string;
-  thumbnail: string;
-  location: string;
-};
 type getData = {
   isLogin: boolean;
   nickname: string;
@@ -38,8 +33,20 @@ type getData = {
   writeReview: number;
   writeComment: number;
 };
-// POST MEMBER
 
+/**
+ * 회원가입 API
+ * @param postData 회원가입 시 해당 사용자 데이터
+ *      email: 사용자 이메일(로그인 아이디),
+        password: 사용자 패스워드,
+        phone: 사용자 휴대폰 번호,
+        name: 사용자 성함,
+        nickname: 사용자 닉네임,
+        thumbnail: 사용자 프로필 이미지,
+        location: 사용자가 지정한 동네명,
+        myLatitude: 사용자가 지정한 동네명에대한 위도,
+        myLongitude: 사용자가 지정한 동네명에대한 경도,
+ */
 const SecretKey: any | string = process.env.REACT_APP_CRYPTOJS_SECRET_KEY;
 export const addMemberDataToIndexedDB = (postData: PostDataType) => {
   return new Promise((resolve, reject) => {
@@ -81,10 +88,18 @@ export const addMemberDataToIndexedDB = (postData: PostDataType) => {
 };
 
 // GET CHECK EMAIL
-export const getCheckMemberEmailDuplicationIndexedDB = (email: string) => {
+/**
+ * 회원가입 시 이메일(아이디) 중복 체크
+ * @param email 사용자가 입력한 이메일 주소
+ * @param emailDomain 사용자가 입력한 이메일 도메인
+ * @returns 중복이면 false 중복이 아니면 true
+ */
+export const getCheckMemberEmailDuplicationIndexedDB = (
+  email: string,
+  emailDomain: string
+) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
-
     dbOpen.onsuccess = () => {
       let db = dbOpen.result;
       const transaction = db.transaction("member", "readonly");
@@ -94,7 +109,7 @@ export const getCheckMemberEmailDuplicationIndexedDB = (email: string) => {
       request.onsuccess = (e: any) => {
         const result = e.target.result;
         const matchedMember = result.find(
-          (member: any) => member.email === email
+          (member: any) => member.email === email + "@" + emailDomain
         );
         if (matchedMember) {
           resolve(false);
@@ -111,10 +126,15 @@ export const getCheckMemberEmailDuplicationIndexedDB = (email: string) => {
 };
 
 // GET CHECK PHONE
+/**
+ * 회원가입 시 휴대폰번호 중복 체크
+ * @param phone  사용자가 입력한 휴대폰 번호
+ * @returns 중복이면 false 중복이 아니면 true
+ */
 export const getCheckMemberPhoneDuplicationIndexedDB = (phone: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
-
+    console.log("입력받은 번호", phone);
     dbOpen.onsuccess = () => {
       let db = dbOpen.result;
       const transaction = db.transaction("member", "readonly");

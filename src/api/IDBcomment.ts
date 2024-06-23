@@ -1,7 +1,8 @@
 const idb = window.indexedDB;
 
-// POST COMMENT
-// 댓글 작성하기
+/**
+ * 댓글 작성하기 API
+ */
 export const addCommentFromIndexedDB = (
   id: number,
   writerId: number,
@@ -47,7 +48,11 @@ export const addCommentFromIndexedDB = (
     };
   });
 };
-
+/**
+ * 댓글 작성 시 리뷰에 댓글 수 Counter
+ * @param reviewId 댓글이 작성 된 리뷰 ID
+ * @returns
+ */
 const incrementLikesInIndexedDB = (reviewId: number) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
@@ -108,8 +113,12 @@ export const addReCommentFromIndexedDB = () => {
     const dbOpen = idb.open("zreview", 1);
   });
 };
-// GET COMMENT
-// 댓글 가져오기
+
+/**
+ * 댓글 가져오기 API
+ * @param id 해당 리뷰 ID
+ * @returns
+ */
 export const getTargetReviewCommentFromIndexedDB = (id: number) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);

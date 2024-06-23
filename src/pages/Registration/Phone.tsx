@@ -26,6 +26,7 @@ const Phone: React.FC<PhoneType> = ({
   setCheck,
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
+  const [checkPhone, setCheckPhone] = useState<boolean | unknown>(null);
 
   const onChangeRegPhone = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -36,12 +37,12 @@ const Phone: React.FC<PhoneType> = ({
     }
     setPhone(value);
   };
-  const onCheckResPhone = () => {
-    const isTrue = onDuplicationCheckPhone();
+  const onCheckResPhone = async () => {
+    onDuplicationCheckPhone();
     if (phone?.length < 10) {
       setCheck(1);
       setShake(true);
-    } else if (!isTrue) {
+    } else if (!checkPhone) {
       setCheck(2);
       setShake(true);
     } else {
@@ -52,6 +53,7 @@ const Phone: React.FC<PhoneType> = ({
   const onDuplicationCheckPhone = async () => {
     try {
       const response = await getCheckMemberPhoneDuplicationIndexedDB(phone);
+      setCheckPhone(response);
     } catch (error) {
       console.log(error);
     }
