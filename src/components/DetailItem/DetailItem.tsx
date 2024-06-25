@@ -69,6 +69,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
       />
       <ul>
         {resultData?.map((item: any) => {
+          const likeCount = item.likes;
           return (
             <li className="review_item_box" key={item?.id}>
               <div className="reviewer_info flex flex_jc_sb flex_ai_fs">
@@ -110,7 +111,7 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
                   ))}
                 </ul>
                 <div className="icon_box flex flex_ai_c">
-                  <Like count={item?.likes} reviewId={item?.id} />
+                  <Like count={likeCount} reviewId={item?.id} />
                   <button
                     className="comment_box flex flex_ai_c"
                     onClick={() => handleOpenCommentModal(item?.id)}

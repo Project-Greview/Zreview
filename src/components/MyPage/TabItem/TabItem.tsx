@@ -167,14 +167,21 @@ const TabItem: React.FC<TabItemProps> = () => {
         }}
       >
         <div className="count flex flex_jc_s flex_ai_c">
-          <div>
-            {getType === "review"
-              ? "내가 작성한 리뷰"
-              : getType === "comment"
-              ? "내가 작성한 댓글"
-              : "내가 좋아요 한 리뷰"}
-          </div>
-          <div>({WriteData.length})</div>
+          {getType === "like" ? (
+            <div className="like_type flex flex_ai_c">
+              <div>리뷰 ({WriteData.length})</div>
+              <div>댓글 ({WriteData.length})</div>
+            </div>
+          ) : (
+            <>
+              <div>
+                {getType === "review"
+                  ? "내가 작성한 리뷰"
+                  : getType === "comment" && "내가 작성한 댓글"}
+              </div>
+              <div>({WriteData.length})</div>
+            </>
+          )}
         </div>
         {getType === "review" && (
           <DetailItem resultData={WriteData} place={""} type={"mypage"} />

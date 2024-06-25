@@ -1,5 +1,5 @@
 // MODULE
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 // RECOIL STATE
 import { tabMenuTypeState } from "state/mypageTabState";
@@ -29,6 +29,10 @@ const TabMenu: React.FC<TabMenuProps> = () => {
       ?.getBoundingClientRect().left;
     setLinePosition(position || 0);
   }, [activeType]);
+
+  useEffect(() => {
+    setActiveType("review");
+  }, []);
   return (
     <ul className="tab_buttons relative flex flex_jc_s flex_ai_c">
       {MenuName.map((menu) => (
