@@ -344,28 +344,26 @@ export const getMyLocationReviewFromIndexedDB = (location: string) => {
 export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
-    setTimeout(() => {
-      dbOpen.onsuccess = () => {
-        const db = dbOpen.result;
-        const transaction = db.transaction(type, "readonly");
-        const objectStore = transaction.objectStore(type);
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction(type, "readonly");
+      const objectStore = transaction.objectStore(type);
 
-        const request = objectStore.getAll();
+      const request = objectStore.getAll();
 
-        request.onsuccess = (e: any) => {
-          const result = e.target.result;
-          resolve(result.filter((result: any) => result.id === id));
-        };
-
-        request.onerror = (e) => {
-          console.log("error", e);
-          reject(e);
-        };
-
-        transaction.oncomplete = () => {
-          db.close();
-        };
+      request.onsuccess = (e: any) => {
+        const result = e.target.result;
+        resolve(result.filter((result: any) => result.id === id));
       };
-    }, 10);
+
+      request.onerror = (e) => {
+        console.log("error", e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    };
   });
 };
