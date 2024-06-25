@@ -10,11 +10,9 @@ type ButtonProps = {
 
 const Button: React.FC<ButtonProps> = ({ title, event, styles, width }) => {
   return (
-    <>
-      <div className={styles} onClick={event} style={{ width: width }}>
-        {title}
-      </div>
-    </>
+    <div className={styles} onClick={event} style={{ width: width }}>
+      {title}
+    </div>
   );
 };
 

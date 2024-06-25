@@ -115,6 +115,7 @@ const Registration: React.FC<RegistrationType> = () => {
     }, 1000);
   }, [shake]);
   setModalItem("regist", modalState);
+  console.log("aaaa", registerDataCheck);
   return (
     <>
       {selectModal && (

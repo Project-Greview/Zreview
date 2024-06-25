@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 // HOOK
 import { getCookie } from "utils/cookies";
+import { getMyWriteReviewFromIndexedDB } from "api/IDBreview";
 // UTIl
 import { extractNeighborhoodType } from "utils/location";
 // RECOIL STATE
@@ -24,7 +25,7 @@ import Logo from "../../assets/image/Logo.png";
 const MiddleMenu: React.FC = () => {
   const navigate = useNavigate();
   // STATE
-  const [, setLeftMenu] = useRecoilState(leftMenuState);
+  const [leftMenu, setLeftMenu] = useRecoilState(leftMenuState);
   const handleMovePage = (url: string) => {
     navigate(url);
     setLeftMenu(false);
@@ -71,7 +72,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
   const myNickname = getCookie("user").nickname;
   const myLocation = getCookie("user").location;
   const myReviewCount = getCookie("user").review;
-  const myCommontCount = getCookie("user").comment;
+  const myCommentCount = getCookie("user").comment;
   // FUNCTION
   const handleCLoseLeftMenu = () => {
     setLeftMenu(false);
@@ -112,7 +113,7 @@ const LeftMenu: React.FC<LeftMenuProps> = () => {
               </li>
               <li>
                 <div className="key_tit">댓글</div>
-                <div className="count flex flex_jc_c">{myCommontCount}</div>
+                <div className="count flex flex_jc_c">{myCommentCount}</div>
               </li>
             </ul>
           </div>

@@ -134,19 +134,18 @@ export const getCheckMemberEmailDuplicationIndexedDB = (
 export const getCheckMemberPhoneDuplicationIndexedDB = (phone: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
-    console.log("입력받은 번호", phone);
     dbOpen.onsuccess = () => {
       let db = dbOpen.result;
       const transaction = db.transaction("member", "readonly");
       const objectStore = transaction.objectStore("member");
 
       const request = objectStore.getAll();
-      request.onsuccess = (e: any) => {
+      request.onsuccess = async (e: any) => {
         const result = e.target.result;
         const matchedMember = result.find(
           (member: any) => member.phone === phone
         );
-        if (matchedMember) {
+        if (matchedMember !== undefined) {
           resolve(false);
         } else {
           resolve(true);
@@ -193,7 +192,7 @@ export const getCheckMemberNicknameDuplicationIndexedDB = (
 };
 
 // GET LOGIN
-export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
+export const getLoginMemberFromIndexedDB = async (id: string, pw: string) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
 
@@ -206,38 +205,40 @@ export const getLoginMemberFromIndexedDB = (id: string, pw: string) => {
 
       request.onsuccess = async (e: any) => {
         const result = e.target.result;
-        try {
-          const matchedMember = result.find((member: any) => {
-            const decryptedPassword = CryptoJS.AES.decrypt(
-              member.password,
-              SecretKey
-            ).toString(CryptoJS.enc.Utf8);
-            return member.email === id && decryptedPassword === pw;
-          });
-          resolve(matchedMember);
-          // if (matchedMember) {
-          //   const getMyinfo: any | getData = await getMemberInfoFromIndexedDB(
-          //     matchedMember.id
-          //   );
-          //   resolve({
-          //     isLogin: true,
-          //     nickname: getMyinfo.nickname,
-          //     name: getMyinfo.name,
-          //     email: getMyinfo.email,
-          //     phone: getMyinfo.phone,
-          //     location: getMyinfo.location,
-          //     myLatitude: getMyinfo.myLatitude,
-          //     myLongitude: getMyinfo.myLongitude,
-          //     id: getMyinfo.id,
-          //     writeReview: getMyinfo.writeReview,
-          //     writeComment: getMyinfo.writeComment,
-          //   });
-          // }
-        } catch (error) {
-          resolve(false);
+        const matchedMember = result.find((member: any) => {
+          const decryptedPassword = CryptoJS.AES.decrypt(
+            member.password,
+            SecretKey
+          ).toString(CryptoJS.enc.Utf8);
+          return member.email === id && decryptedPassword === pw;
+        });
+
+        if (matchedMember) {
+          try {
+            const getMyInfo: any | getData = await getMemberInfoFromIndexedDB(
+              matchedMember.id
+            );
+            resolve({
+              isLogin: true,
+              nickname: getMyInfo.nickname,
+              name: getMyInfo.name,
+              email: getMyInfo.email,
+              phone: getMyInfo.phone,
+              location: getMyInfo.location,
+              myLatitude: getMyInfo.myLatitude,
+              myLongitude: getMyInfo.myLongitude,
+              id: getMyInfo.id,
+              writeReview: getMyInfo.writeReview,
+              writeComment: getMyInfo.writeComment,
+            });
+          } catch (error) {
+            console.log(error);
+            reject(error);
+          }
+        } else {
+          resolve(null);
         }
       };
-
       request.onerror = (e) => {
         reject(e);
       };
@@ -298,7 +299,7 @@ export const patchMyProfileFromIndexedDB = (id: number, patchData: any) => {
   });
 };
 // GET MEMBER MINIMUM INFO
-export const getMemberInfoFromIndexedDB = (id: number) => {
+export const getMemberInfoFromIndexedDB = async (id: number) => {
   return new Promise((resolve, reject) => {
     const dbOpen = idb.open("zreview", 1);
     dbOpen.onsuccess = () => {
@@ -307,24 +308,20 @@ export const getMemberInfoFromIndexedDB = (id: number) => {
       const objectStore = transaction.objectStore("member");
 
       const request = objectStore.get(id);
-
-      request.onsuccess = async (e: any) => {
+      request.onsuccess = (e: any) => {
         const result = e.target.result;
-        try {
-          const writerReview: any = await getMyWriteReviewFromIndexedDB(
-            result.id,
-            "review"
-          );
-          const commentReview: any = await getMyWriteReviewFromIndexedDB(
-            result.id,
-            "comment"
-          );
-          resolve({
-            ...result,
-            writeReview: writerReview.length,
-            writeComment: commentReview.length,
-          });
-        } catch (error) {}
+        const writerReview = () => {
+          return getMyWriteReviewFromIndexedDB(result.id, "review");
+        };
+        const commentReview = () => {
+          return getMyWriteReviewFromIndexedDB(result.id, "comment");
+        };
+
+        resolve({
+          ...result,
+          writeReview: writerReview.length,
+          writeComment: commentReview.length,
+        });
       };
 
       request.onerror = (e) => {

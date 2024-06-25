@@ -9,8 +9,8 @@ import { dummyDateState } from "state/dummyState";
 // HOOK
 import { setCookie, getCookie } from "utils/cookies";
 import {
-  getAllPlaceDataFromIndexedDB,
   getCalcPlaceDataFromIndexedDB,
+  getAllPlaceDataFromIndexedDB,
 } from "api/IDBplace";
 // COMPONENT
 import LeftMenu from "../../components/LeftMenu";

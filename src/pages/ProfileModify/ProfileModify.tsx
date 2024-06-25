@@ -1,10 +1,7 @@
 // MODULE
 import { useState, ChangeEvent, useEffect } from "react";
 // API
-import {
-  getMemberInfoFromIndexedDB,
-  patchMyProfileFromIndexedDB,
-} from "api/IDBmember";
+import { patchMyProfileFromIndexedDB } from "api/IDBmember";
 // HOOK
 import { getCookie, setCookie } from "utils/cookies";
 // COMPONENT

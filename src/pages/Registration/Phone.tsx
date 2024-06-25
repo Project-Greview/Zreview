@@ -26,7 +26,6 @@ const Phone: React.FC<PhoneType> = ({
   setCheck,
 }) => {
   const [shake, setShake] = useRecoilState(shakeAnimationState);
-  const [checkPhone, setCheckPhone] = useState<boolean | unknown>(null);
 
   const onChangeRegPhone = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -38,26 +37,22 @@ const Phone: React.FC<PhoneType> = ({
     setPhone(value);
   };
   const onCheckResPhone = async () => {
-    onDuplicationCheckPhone();
-    if (phone?.length < 10) {
-      setCheck(1);
-      setShake(true);
-    } else if (!checkPhone) {
-      setCheck(2);
-      setShake(true);
-    } else {
-      setCheck(3);
-    }
-  };
-
-  const onDuplicationCheckPhone = async () => {
     try {
       const response = await getCheckMemberPhoneDuplicationIndexedDB(phone);
-      setCheckPhone(response);
+      if (phone?.length < 10) {
+        setCheck(1);
+        setShake(true);
+      } else if (!response) {
+        setCheck(2);
+        setShake(true);
+      } else {
+        setCheck(3);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div className="relative width_100p mar_top_25">
       <Input
@@ -81,9 +76,7 @@ const Phone: React.FC<PhoneType> = ({
           ? "올바른 전화번호를 입력해주세요."
           : check === 2
           ? "가입된 전화번호 입니다."
-          : check === 3
-          ? "사용 가능한 전화번호 입니다."
-          : ""}
+          : check === 3 && "사용 가능한 전화번호 입니다."}
       </div>
     </div>
   );
