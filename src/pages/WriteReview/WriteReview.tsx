@@ -84,9 +84,10 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   const [writeHashTag, setWriteHashTag] = useState<string>("");
   const [hashtag, setHashtag] = useState<any>([]);
   const [alarmModal, setAlarmModal] = useState<number>(0);
-  const [lat, setLat] = useState<number>(0);
-  const [lon, setLon] = useState<number>(0);
+  const [, setLat] = useState<number>(0);
+  const [, setLon] = useState<number>(0);
   const [placeId, setPlaceId] = useState<number>(0);
+  const [hashCheck, setHashCheck] = useState<number>(0);
 
   let maxHashtag = hashtag.length === 3;
   const settingType = locationType === "search";
@@ -241,9 +242,20 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
   };
   // ADD HASHTAG
   const handleAddWriteHashtag = () => {
-    if (!maxHashtag) {
+    if (writeHashTag.length <= 0) {
+      setHashCheck(1);
+    } else if (
+      hashtag.some((element: any) => {
+        if (element === writeHashTag) {
+          return true;
+        }
+      })
+    ) {
+      setHashCheck(2);
+    } else if (!maxHashtag) {
       setHashtag((prevTag: any) => [...prevTag, writeHashTag]);
       setWriteHashTag("");
+      setHashCheck(0);
     }
   };
   // REMOVE HASHTAG
@@ -408,6 +420,11 @@ const WriteReview: React.FC<WriteReviewProps> = () => {
                 readonly={false}
                 styles={maxHashtag ? "disable" : ""}
               />
+              <div className={`event_txt absolute`}>
+                {hashCheck === 1
+                  ? "해시태그를 입력해주세요."
+                  : hashCheck === 2 && "동일한 태그가 있어요."}
+              </div>
             </div>
             <div className="btn_box">
               <Button

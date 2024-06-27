@@ -9,10 +9,11 @@ import {
 // UTIL
 import { getCookie } from "utils/cookies";
 import { calcDate } from "utils/dateCalc";
+// COMPONENT
+import { Like } from "components/Common/Like/Like";
 // SVG
 import { ReactComponent as ArrowLeft } from "../../assets/image/icon/arrow-left.svg";
 import { ReactComponent as SendMessage } from "../../assets/image/icon/send_message.svg";
-import { ReactComponent as LikeIcon } from "../../assets/image/icon/like_icon.svg";
 import { ReactComponent as Logo } from "../../assets/image/icon/marker_c.svg";
 // STYLED
 const CommentFrame = styled.div`
@@ -99,6 +100,8 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
   const [cmtData, setCmtData] = useState<any[]>([]);
   const [cmt, setCmt] = useState<string>("");
 
+  const reviewId: number = id;
+
   const onChangeComment = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setCmt(e.target.value);
@@ -113,7 +116,7 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
     const created_dt: any = new Date().toISOString();
     try {
       const response = await addCommentFromIndexedDB(
-        id,
+        reviewId,
         getCookie("user").name,
         getCookie("user").nickname,
         getCookie("user").thumbnail,
@@ -149,7 +152,7 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
       getCommentData();
     }
   }, [id]);
-
+  console.log(cmtData);
   return (
     <CommentFrame className={`fixed ${isOpen}`}>
       <div className="header_section flex flex_jc_s flex_ai_c">
@@ -182,7 +185,12 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
                     </div>
                     <button>답글달기</button>
                     <button>
-                      <LikeIcon color={"#ededed"} />
+                      <Like
+                        count={0}
+                        commentId={`${String(reviewId)}-${String(item.id)}`}
+                        reviewId={null}
+                        type={"comment"}
+                      />
                     </button>
                   </div>
                 </div>

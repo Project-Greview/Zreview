@@ -157,6 +157,7 @@ const TabItem: React.FC<TabItemProps> = () => {
       })
       .finally(() => {});
   }, [getType]);
+  console.log("WriteData", WriteData);
   return (
     <>
       <ToastPopup popupType={"comment_menu"} ready={toastModal} />

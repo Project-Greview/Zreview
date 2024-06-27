@@ -8,14 +8,22 @@ import { ReactComponent as LikeIcon } from "../../../assets/image/icon/like_icon
 // TYPE
 type LikeType = {
   count: number;
-  reviewId: number;
+  reviewId: string | any;
+  commentId: string | any;
+  type: string;
 };
-export const Like: React.FC<LikeType> = ({ count, reviewId }) => {
+export const Like: React.FC<LikeType> = ({
+  count,
+  reviewId,
+  commentId,
+  type,
+}) => {
   const handleLikeToggle = async () => {
     try {
       const response = await postReviewLikeFromIndexedDB(
-        reviewId,
-        Number(getCookie("user").id)
+        reviewId !== null ? String(reviewId) : commentId,
+        Number(getCookie("user").id),
+        type
       );
       console.log(response);
     } catch (error) {
@@ -25,7 +33,7 @@ export const Like: React.FC<LikeType> = ({ count, reviewId }) => {
   return (
     <div className="like_box flex flex_ai_c" onClick={() => handleLikeToggle()}>
       <LikeIcon color={"#e0ddff"} />
-      <p>{count}</p>
+      {commentId === null && <p>{count}</p>}
     </div>
   );
 };

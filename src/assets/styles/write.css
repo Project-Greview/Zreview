@@ -128,6 +128,10 @@
   color: var(--placeholder-color);
   letter-spacing: -0.3px;
 }
+.write_form .hashtag_section .event_txt {
+  font-size: 1.1rem;
+  color: var(--false-text);
+}
 .write_form .hashtag_section .btn_box {
   width: 22%;
 }

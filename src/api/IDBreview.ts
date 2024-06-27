@@ -354,6 +354,44 @@ export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
       request.onsuccess = (e: any) => {
         const result = e.target.result;
         resolve(result.filter((result: any) => result.id === id));
+        // const filtering =
+        //   type === "like"
+        //     ? result.map((typeFilter: any) =>
+        //         typeFilter.member.filter((item: any) => item === id)
+        //       )
+        //     : result.filter((result: any) => result.id === id);
+        // resolve(filtering);
+        if (type === "like") {
+          console.log(
+            "과연?",
+            // result.map((test: any) =>
+            //   test.member.filter((item: any) => item === id)
+            // )
+            "comment : ",
+            result
+              .filter((type: any) => type.type === "comment")
+              .map((members: any) =>
+                members.member
+                  .map((number: any) => number === id && true)
+              ),
+            //   .map((member: any) =>
+            //     member.member
+            //       .filter((memberFilter: any) => memberFilter === id)
+            //       .map((item: any) => item)
+            // ),
+            "\nreview : ",
+            result
+              .filter((type: any) => type.type === "review")
+              .map((members: any) =>
+                members.member.map((number: any) => number === id && true)
+              )
+            // .map((member: any) =>
+            //   member.member
+            //     .filter((memberFilter: any) => memberFilter === id)
+            //     .map((item: any) => item)
+            // )
+          );
+        }
       };
 
       request.onerror = (e) => {

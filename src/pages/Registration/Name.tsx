@@ -1,5 +1,5 @@
 // MODULE
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
 // REOIL PROPS
 import { shakeAnimationState } from "state/commonState";
@@ -60,11 +60,11 @@ const Name: React.FC<NameType> = ({
         styles={pageType ? "readonly" : ""}
       />
       <div
-        className={`event_txt absolute ${shake ? "shake_rotate" : ""} ${
+        className={`event_txt absolute ${shake && "shake_rotate"} ${
           check === 2
         }`}
       >
-        {check === 1 ? "이름을 정확하게 입력해주세요." : check === 2 ? "" : ""}
+        {check === 1 ? "이름을 정확하게 입력해주세요." : check === 2 && ""}
       </div>
     </div>
   );

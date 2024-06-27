@@ -111,7 +111,12 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
                   ))}
                 </ul>
                 <div className="icon_box flex flex_ai_c">
-                  <Like count={likeCount} reviewId={item?.id} />
+                  <Like
+                    count={likeCount}
+                    reviewId={item?.id}
+                    commentId={null}
+                    type={"review"}
+                  />
                   <button
                     className="comment_box flex flex_ai_c"
                     onClick={() => handleOpenCommentModal(item?.id)}

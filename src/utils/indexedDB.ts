@@ -87,3 +87,27 @@ export const indexedDBStart = () => {
 //     console.error("Error opening database:", e.target.error);
 //   };
 // };
+
+// TEST
+// export const indexedDBStart = () => {
+//   const indexedDB = window.indexedDB;
+//   const dbName = "tableName";
+//   const request = indexedDB.open(dbName, 1);
+//   request.onupgradeneeded = (e: any) => {
+//     const db = e.target.result;
+//     const articleStore = db.createObjectStore("article", {
+//       keyPath: "id",
+//       autoIncrement: true,
+//     });
+//     const memberStore = db.createObjectStore("member", {
+//       keyPath: "id",
+//       autoIncrement: true,
+//     });
+//   };
+//   request.onsuccess = (e: any) => {
+//     console.log("성공");
+//   };
+//   request.onerror = (e: any) => {
+//     console.error("실패 : ", e.target.error);
+//   };
+// };
