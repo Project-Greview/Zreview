@@ -101,7 +101,7 @@ const CommentBox: React.FC<CommentDataType> = ({
 }) => {
   return (
     <ul>
-      {resultData.map((item: any) => (
+      {resultData?.map((item: any) => (
         <CommentBoxFrame key={item.id} className="relative flex">
           <div
             className="menu_btn absolute flex flex_jc_c flex_ai_c"
@@ -134,7 +134,8 @@ const CommentBox: React.FC<CommentDataType> = ({
 };
 
 const TabItem: React.FC<TabItemProps> = () => {
-  const [WriteData, setWriteData] = useState([]);
+  const [writeData, setWriteData] = useState<any>([]);
+  const [likeData, setLikeData] = useState<any>([]);
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const getType = useRecoilValue(tabMenuTypeState);
 
@@ -150,14 +151,17 @@ const TabItem: React.FC<TabItemProps> = () => {
   useEffect(() => {
     getMyWriteReviewFromIndexedDB(getId, getType)
       .then((data: ReviewDataType | any) => {
-        setWriteData(data);
+        if (getType !== "like") {
+          setWriteData(data);
+        } else {
+          setLikeData(data);
+        }
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {});
   }, [getType]);
-  console.log("WriteData", getType, WriteData);
   return (
     <>
       <ToastPopup popupType={"comment_menu"} ready={toastModal} />
@@ -170,8 +174,8 @@ const TabItem: React.FC<TabItemProps> = () => {
         <div className="count flex flex_jc_s flex_ai_c">
           {getType === "like" ? (
             <div className="like_type flex flex_ai_c">
-              <div>리뷰 ({WriteData.length})</div>
-              <div>댓글 ({WriteData.length})</div>
+              <div>리뷰 ({likeData.review?.length})</div>
+              <div>댓글 ({likeData.comment?.length})</div>
             </div>
           ) : (
             <>
@@ -180,17 +184,17 @@ const TabItem: React.FC<TabItemProps> = () => {
                   ? "내가 작성한 리뷰"
                   : getType === "comment" && "내가 작성한 댓글"}
               </div>
-              <div>({WriteData.length})</div>
+              <div>({writeData.length})</div>
             </>
           )}
         </div>
         {getType === "review" && (
-          <DetailItem resultData={WriteData} place={""} type={"mypage"} />
+          <DetailItem resultData={writeData} place={""} type={"mypage"} />
         )}
 
         {getType === "comment" && (
           <CommentBox
-            resultData={WriteData}
+            resultData={writeData}
             type={"comment"}
             openMenu={() => setToastModal(true)}
           />

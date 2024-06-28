@@ -338,7 +338,7 @@ export const getMyLocationReviewFromIndexedDB = (location: string) => {
 /**
  * 내가 작성한 리뷰 가져오기 API
  * @param id 사용자 고유 ID
- * @param type 마이페이지 내 탭메뉴 타입 (review, comment, like)
+ * @param type 마이페이지 내 탭메뉴 타입 (review, comment)
  * @returns 해당 사용자가 작성한 리뷰, 댓글, 좋아요 리턴
  */
 export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
@@ -351,41 +351,96 @@ export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
 
       const request = objectStore.getAll();
 
+      if (type !== "like") {
+        request.onsuccess = (e: any) => {
+          const result = e.target.result;
+          resolve(result.filter((result: any) => result.member === id));
+        };
+      } else {
+        request.onsuccess = (e: any) => {
+          const result = e.target.result;
+          resolve({
+            review: result
+              .filter((item: any) => item.type === "review")
+              .map((item: any) => {
+                const filteredMembers = item.member.filter(
+                  (memberId: any) => memberId === id
+                );
+                return filteredMembers.length > 0
+                  ? { ...item, member: filteredMembers }
+                  : null;
+              })
+              .filter((item: any) => item !== null),
+
+            comment: result
+              .filter((item: any) => item.type === "comment")
+              .map((item: any) => {
+                const filteredMembers = item.member.filter(
+                  (memberId: any) => memberId === id
+                );
+                return filteredMembers.length > 0
+                  ? { ...item, member: filteredMembers }
+                  : null;
+              })
+              .filter((item: any) => item !== null),
+          });
+        };
+      }
+
+      request.onerror = (e) => {
+        console.log("error", e);
+        reject(e);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    };
+  });
+};
+
+/**
+ * @param id 사용자 고유 ID
+ * @param type 마이페이지 내 탭메뉴 타입 (like)
+ * @returns 해당 사용자가 작성한 리뷰, 댓글, 좋아요 리턴
+ */
+export const getMyLikeItemFromIndexedDB = (id: number, type: string) => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
+    dbOpen.onsuccess = () => {
+      const db = dbOpen.result;
+      const transaction = db.transaction(type, "readonly");
+      const objectStore = transaction.objectStore(type);
+
+      const request = objectStore.getAll();
+
       request.onsuccess = (e: any) => {
         const result = e.target.result;
-        // [EDIT] type 이 바뀔 때 수정이 필요함
-        if (type !== "like") {
-          resolve(result.filter((result: any) => result.id === id));
-        } else {
-          resolve([
-            {
-              comment: result
-                .filter((item: any) => item.type === "comment")
-                .map((item: any) => {
-                  const filteredMembers = item.member.filter(
-                    (memberId: any) => memberId === id
-                  );
-                  return filteredMembers.length > 0
-                    ? { ...item, member: filteredMembers }
-                    : null;
-                })
-                .filter((item: any) => item !== null),
-            },
-            {
-              review: result
-                .filter((item: any) => item.type === "review")
-                .map((item: any) => {
-                  const filteredMembers = item.member.filter(
-                    (memberId: any) => memberId === id
-                  );
-                  return filteredMembers.length > 0
-                    ? { ...item, member: filteredMembers }
-                    : null;
-                })
-                .filter((item: any) => item !== null),
-            },
-          ]);
-        }
+        resolve({
+          review: result
+            .filter((item: any) => item.type === "review")
+            .map((item: any) => {
+              const filteredMembers = item.member.filter(
+                (memberId: any) => memberId === id
+              );
+              return filteredMembers.length > 0
+                ? { ...item, member: filteredMembers }
+                : null;
+            })
+            .filter((item: any) => item !== null),
+
+          comment: result
+            .filter((item: any) => item.type === "comment")
+            .map((item: any) => {
+              const filteredMembers = item.member.filter(
+                (memberId: any) => memberId === id
+              );
+              return filteredMembers.length > 0
+                ? { ...item, member: filteredMembers }
+                : null;
+            })
+            .filter((item: any) => item !== null),
+        });
       };
 
       request.onerror = (e) => {

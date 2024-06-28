@@ -111,13 +111,12 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
     setId(-1);
     setCmt("");
   };
-
   const handlePostComment = async () => {
     const created_dt: any = new Date().toISOString();
     try {
       const response = await addCommentFromIndexedDB(
         reviewId,
-        getCookie("user").name,
+        getCookie("user").id,
         getCookie("user").nickname,
         getCookie("user").thumbnail,
         cmt,
@@ -152,7 +151,6 @@ const Comment: React.FC<CommentType> = ({ isOpen, setIsOpen, id, setId }) => {
       getCommentData();
     }
   }, [id]);
-  console.log(cmtData);
   return (
     <CommentFrame className={`fixed ${isOpen}`}>
       <div className="header_section flex flex_jc_s flex_ai_c">

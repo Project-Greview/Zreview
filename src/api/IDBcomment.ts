@@ -5,7 +5,7 @@ const idb = window.indexedDB;
  */
 export const addCommentFromIndexedDB = (
   id: number,
-  writerId: number,
+  member: number,
   nickname: string,
   writerProfile: string,
   comment: string,
@@ -21,7 +21,7 @@ export const addCommentFromIndexedDB = (
 
       const addComment = objectStore.put({
         reviewId: id,
-        writerId: writerId,
+        member: member,
         writer: nickname,
         comment: comment,
         liked: 0,
