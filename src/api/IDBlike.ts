@@ -60,7 +60,7 @@ export const postReviewLikeFromIndexedDB = (
         }
 
         if (updateLikes) {
-          const getReviewRequest = reviewStore.get(uniqueKey);
+          const getReviewRequest = reviewStore.get(Number(id));
 
           getReviewRequest.onsuccess = (e: any) => {
             const review = e.target.result;
@@ -70,8 +70,8 @@ export const postReviewLikeFromIndexedDB = (
               } else {
                 review.likes -= 1; // 기존에 있었던 좋아요를 삭제한 경우
               }
-              review.type = type; // review 객체에 type 업데이트
-              review.id = uniqueKey; // 유니크 키 추가
+              // review.type = type; // review 객체에 type 업데이트
+              // review.id = uniqueKey; // 유니크 키 추가
               reviewStore.put(review);
             }
           };
