@@ -22,7 +22,7 @@ const ContactTeam: React.FC<ContactTeamProps> = ({ close }) => {
         <div className="team_name flex flex_jc_c mar_top_30">Team ZReview</div>
         <ul>
           <li>🖌️Designer : 👩‍🎨심예진</li>
-          <li>🛠️Backend : 👨‍💻신재원, 👩‍💻김예린</li>
+          <li>🛠️Backend : 👩‍💻김예린,👨‍💻신재원</li>
           <li>💻Frontend : 👨‍💻김기태, 👩‍💻이수아</li>
         </ul>
         <div className="contact">연락방법은 저희도 모르겠어요... </div>
