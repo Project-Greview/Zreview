@@ -182,7 +182,6 @@ const TabItem: React.FC<TabItemProps> = () => {
         if (getType !== "like") {
           setWriteData(data);
         } else {
-          console.log("adsasdasdasadasdasdd", data);
           setLikeData(data);
         }
       })
