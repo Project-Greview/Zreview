@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Zreview/static/css/main.9d35ee87.css",
-    "main.js": "/Zreview/static/js/main.5c643bea.js",
+    "main.js": "/Zreview/static/js/main.99f8d102.js",
     "static/js/27.e140b8a2.chunk.js": "/Zreview/static/js/27.e140b8a2.chunk.js",
     "static/media/Pretendard-Thin.ttf": "/Zreview/static/media/Pretendard-Thin.23965237737042c7c087.ttf",
     "static/media/Pretendard-ExtraLight.ttf": "/Zreview/static/media/Pretendard-ExtraLight.3a1f8545bfb6498f1f14.ttf",
@@ -43,6 +43,6 @@
   },
   "entrypoints": [
     "static/css/main.9d35ee87.css",
-    "static/js/main.5c643bea.js"
+    "static/js/main.99f8d102.js"
   ]
 }
