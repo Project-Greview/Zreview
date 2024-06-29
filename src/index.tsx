@@ -21,7 +21,7 @@ root.render(
     <CookiesProvider>
       <RecoilRoot>
         {/* <React.StrictMode> */}
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
         <RouterProvider router={Routers} />
         {/* </React.StrictMode> */}
       </RecoilRoot>

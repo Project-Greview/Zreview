@@ -359,23 +359,68 @@ export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
           const result = e.target.result;
           resolve(result.filter((result: any) => result.member === id));
         };
-      } else {
-        request.onsuccess = (e: any) => {
-          const result = e.target.result;
-          resolve({
-            review: result
-              .filter((item: any) => item.type === "review")
-              .map((item: any) => {
-                const filteredMembers = item.member.filter(
-                  (memberId: any) => memberId === id
-                );
-                return filteredMembers.length > 0
-                  ? { ...item, member: filteredMembers }
-                  : null;
-              })
-              .filter((item: any) => item !== null),
+      }
+      // else {
+      //   request.onsuccess = (e: any) => {
+      //     const result = e.target.result;
+      //     resolve({
+      //       review: result
+      //         .filter((item: any) => item.type === "review")
+      //         .map((item: any) => {
+      //           const filteredMembers = item.member.filter(
+      //             (memberId: any) => memberId === id
+      //           );
+      //           // getDataFromIndexedDB(Number(item.id.replace("-review", "")))
+      //           //   .then((res: any) => {
+      //           //     return res;
+      //           //   })
+      //           //   .catch((error) => {
+      //           //     console.error(error);
+      //           //   });
 
-            comment: result
+      //           return filteredMembers.length > 0
+      //             ? { ...item, member: filteredMembers }
+      //             : null;
+      //         })
+      //         .filter((item: any) => item !== null),
+
+      //       comment: result
+      //         .filter((item: any) => item.type === "comment")
+      //         .map((item: any) => {
+      //           const filteredMembers = item.member.filter(
+      //             (memberId: any) => memberId === id
+      //           );
+      //           console.log("filteredMembers", item);
+      //           return filteredMembers.length > 0
+      //             ? { ...item, member: filteredMembers }
+      //             : null;
+      //         })
+      //         .filter((item: any) => item !== null),
+      //     });
+      //   };
+      // }
+      else {
+        request.onsuccess = async (e: any) => {
+          const result = e.target.result;
+          try {
+            const reviewResults = await Promise.all(
+              result
+                .filter((item: any) => item.type === "review")
+                .map(async (item: any) => {
+                  const filteredMembers = item.member.filter(
+                    (memberId: any) => memberId === id
+                  );
+                  const additionalData = await getDataFromIndexedDB(
+                    Number(item.id.replace("-review", ""))
+                  );
+                  return filteredMembers.length > 0
+                    ? { ...item, member: filteredMembers, additionalData }
+                    : null;
+                })
+                .filter((item: any) => item !== null)
+            );
+
+            const commentResults = result
               .filter((item: any) => item.type === "comment")
               .map((item: any) => {
                 const filteredMembers = item.member.filter(
@@ -385,8 +430,16 @@ export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
                   ? { ...item, member: filteredMembers }
                   : null;
               })
-              .filter((item: any) => item !== null),
-          });
+              .filter((item: any) => item !== null);
+
+            resolve({
+              review: reviewResults,
+              comment: commentResults,
+            });
+          } catch (error) {
+            console.error(error);
+            reject(error);
+          }
         };
       }
 

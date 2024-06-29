@@ -17,7 +17,7 @@ import { ReactComponent as ScoreIcon } from "../../assets/image/icon/Score_star.
 import { ReactComponent as CommentIcon } from "../../assets/image/icon/comment_icon.svg";
 import { ReactComponent as RightArrow } from "../../assets/image/icon/arrow_right.svg";
 // PROPS TYPE
-type DetailItemProps = {
+type DetailItemsProps = {
   place: string;
   resultData: object[];
   type: string;
@@ -45,7 +45,7 @@ const StarScore: React.FC<StarScoreProps> = ({ max, rating }) => {
   return <>{rendering()}</>;
 };
 
-const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
+const DetailItems: React.FC<DetailItemsProps> = ({ resultData, type }) => {
   const [boxWidth, setBoxWidth] = useState<number | undefined>(0);
   const [reviewId, setReviewId] = useState<number>(-1);
   const [commentModal, setCommentModal] = useState<boolean>(false);
@@ -134,4 +134,4 @@ const DetailItem: React.FC<DetailItemProps> = ({ resultData, type }) => {
   );
 };
 
-export default DetailItem;
+export default DetailItems;

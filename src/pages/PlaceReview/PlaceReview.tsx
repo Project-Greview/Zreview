@@ -9,7 +9,7 @@ import { getPlaceDataFromIndexedDB } from "api/IDBplace";
 import { extractNeighborhood } from "utils/location";
 // COMPONENT
 import Header from "components/Header";
-import DetailItem from "components/DetailItem";
+import DetailItem from "components/DetailItems";
 import HashTag from "components/HashTag";
 // SVG
 import { ReactComponent as Logo } from "../../assets/image/icon/marker_c.svg";

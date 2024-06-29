@@ -15,7 +15,7 @@ import { calcDate } from "utils/dateCalc";
 import { tabMenuTypeState } from "state/mypageTabState";
 import { toastPopupState } from "state/commonState";
 // COMPONENT
-import DetailItem from "components/DetailItem";
+import DetailItem from "components/DetailItems";
 import ToastPopup from "components/ToastPopup";
 // SVG
 import { ReactComponent as Logo } from "../../../assets/image/icon/marker_c.svg";
@@ -141,6 +141,7 @@ const TabItem: React.FC<TabItemProps> = () => {
   const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const [writeData, setWriteData] = useState<any>([]);
   const [likeData, setLikeData] = useState<any>([]);
+  const [likeReviewNum, setLikeReviewNum] = useState<any>([]);
   const [subTab, setSubTab] = useState<string>("likeReview");
 
   const getType = useRecoilValue(tabMenuTypeState);
@@ -155,25 +156,27 @@ const TabItem: React.FC<TabItemProps> = () => {
 
   const handleSelectSubTabItem = (e: any) => {
     setSubTab(e.currentTarget.classList[0]);
-    console.log(e.currentTarget.classList[0]);
   };
 
-  const { data, fetchNextPage, isFetching, isFetchingNextPage, hasNextPage } =
-    useInfiniteQuery({
-      queryKey: ["likeReview"],
-      queryFn: ({ pageParam = 1 }) => getDataFromIndexedDB(1),
-      initialPageParam: 2,
-      getNextPageParam: (lastPage: any, allPages, lastPageParam) => {
-        if (lastPage?.data?.length === 0 || lastPage === undefined) {
-          return undefined;
-        } else {
-          return lastPageParam + 1;
-        }
-      },
-    });
-  console.log(
-    "data",
-    data
+  // console.log("likeReviewNum", likeReviewNum);
+
+  // const { data, fetchNextPage, isFetching, isFetchingNextPage, hasNextPage } =
+  //   useInfiniteQuery({
+  //     queryKey: ["likeReview", likeReviewNum],
+  //     queryFn: ({ pageParam = 1 }) => getDataFromIndexedDB(2),
+  //     initialPageParam: 2,
+  //     getNextPageParam: (lastPage: any, allPages, lastPageParam) => {
+  //       if (lastPage?.data?.length === 0 || lastPage === undefined) {
+  //         return undefined;
+  //       } else {
+  //         return lastPageParam + 1;
+  //       }
+  //     },
+  //   });
+  console
+    .log
+    // "data",
+    // data
     // "\nfetchNextPage",
     // fetchNextPage,
     // "\nisFetching",
@@ -182,7 +185,7 @@ const TabItem: React.FC<TabItemProps> = () => {
     // isFetchingNextPage,
     // "\nhasNextPage",
     // hasNextPage
-  );
+    ();
 
   useEffect(() => {
     getMyWriteReviewFromIndexedDB(getId, getType)
@@ -197,11 +200,9 @@ const TabItem: React.FC<TabItemProps> = () => {
         console.log(error);
       })
       .finally(() => {});
-    // if (getType === "like") {
-    //   getDataFromIndexedDB();
-    // }
   }, [getType]);
   // console.log("likeData", likeData);
+  // console.log("writeData", writeData);
   return (
     <>
       <ToastPopup popupType={"comment_menu"} ready={toastModal} />
@@ -254,27 +255,11 @@ const TabItem: React.FC<TabItemProps> = () => {
         {getType === "like" && (
           <>
             {subTab === "likeReview" ? (
-              <>
+              <ul>
                 {likeData?.review?.map((item: any) => {
-                  const getItem = Number(item.id.replace("-review", ""));
-                  getDataFromIndexedDB(getItem);
-                  // .then((item: any) => {})
-                  // .catch((error) => {
-                  //   console.log(error);
-                  // });
-                  console.log(
-                    "result",
-                    getDataFromIndexedDB(getItem).then((res: any) => {
-                      return res;
-                    })
-                  );
-                  return (
-                    <div key={item.id}>
-                      {Number(item.id.replace("-review", ""))}
-                    </div>
-                  );
+                  return <li key={item?.id}></li>;
                 })}
-              </>
+              </ul>
             ) : (
               "bbbbb"
             )}

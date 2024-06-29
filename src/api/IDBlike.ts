@@ -60,7 +60,10 @@ export const postReviewLikeFromIndexedDB = (
         }
 
         if (updateLikes) {
-          const getReviewRequest = reviewStore.get(Number(id));
+          const getReviewRequest =
+            type === "review "
+              ? reviewStore.get(Number(id))
+              : reviewStore.get(uniqueKey);
 
           getReviewRequest.onsuccess = (e: any) => {
             const review = e.target.result;
@@ -104,94 +107,6 @@ export const postReviewLikeFromIndexedDB = (
     };
   });
 };
-// export const postReviewLikeFromIndexedDB = (
-//   id: string,
-//   memberId: number,
-//   type: string
-// ) => {
-//   return new Promise((resolve, reject) => {
-//     const dbOpen = idb.open("zreview", 1);
-
-//     dbOpen.onsuccess = () => {
-//       const db = dbOpen.result;
-//       const transaction = db.transaction(["like", "review"], "readwrite");
-//       const likeStore = transaction.objectStore("like");
-//       const reviewStore = transaction.objectStore("review");
-
-//       const getLikeRequest = likeStore.get(id);
-
-//       getLikeRequest.onsuccess = (e: any) => {
-//         const existingLike = e.target.result;
-//         let updateLikes = false;
-//         let liked = false;
-
-//         if (existingLike) {
-//           const memberIndex = existingLike.member.indexOf(memberId);
-//           if (memberIndex > -1) {
-//             existingLike.member.splice(memberIndex, 1); // memberId가 있으면 삭제
-//             liked = false; // 좋아요를 취소했으므로 false
-//           } else {
-//             existingLike.member.push(memberId); // memberId가 없으면 추가
-//             liked = true; // 좋아요를 추가했으므로 true
-//           }
-//           updateLikes = true;
-//           existingLike.type = type; // type 업데이트
-//           likeStore.put(existingLike);
-//         } else {
-//           const newLike = {
-//             review: id,
-//             member: [memberId],
-//             type: type, // 새로운 like 객체에 type 추가
-//           };
-//           likeStore.add(newLike);
-//           updateLikes = true;
-//           liked = true; // 새로운 좋아요이므로 true
-//         }
-
-//         if (updateLikes) {
-//           const getReviewRequest = reviewStore.get(id);
-
-//           getReviewRequest.onsuccess = (e: any) => {
-//             const review = e.target.result;
-//             if (review) {
-//               if (liked) {
-//                 review.likes += 1; // 새로운 좋아요를 추가한 경우
-//               } else {
-//                 review.likes -= 1; // 기존에 있었던 좋아요를 삭제한 경우
-//               }
-//               review.type = type; // review 객체에 type 업데이트
-//               reviewStore.put(review);
-//             }
-//           };
-
-//           getReviewRequest.onerror = (e) => {
-//             console.log("Error updating likes in review", e);
-//             reject(e);
-//           };
-//         }
-
-//         transaction.oncomplete = () => {
-//           db.close();
-//           resolve(liked); // 좋아요 상태 반환
-//         };
-//       };
-
-//       getLikeRequest.onerror = (e) => {
-//         console.log("Error fetching like", e);
-//         reject(e);
-//       };
-
-//       transaction.oncomplete = () => {
-//         db.close();
-//       };
-//     };
-
-//     dbOpen.onerror = (e) => {
-//       console.log("Error opening database", e);
-//       reject(e);
-//     };
-//   });
-// };
 
 // 좋아요 가져오기
 export const getReviewLikeFromIndexedDB = (memberId: number) => {
