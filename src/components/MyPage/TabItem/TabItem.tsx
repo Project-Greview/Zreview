@@ -1,9 +1,13 @@
 // MODULE
 import { useState, useEffect } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 // HOOK
-import { getMyWriteReviewFromIndexedDB } from "api/IDBreview";
+import {
+  getMyWriteReviewFromIndexedDB,
+  getDataFromIndexedDB,
+} from "api/IDBreview";
 import { getCookie } from "utils/cookies";
 // UTIL
 import { calcDate } from "utils/dateCalc";
@@ -134,12 +138,13 @@ const CommentBox: React.FC<CommentDataType> = ({
 };
 
 const TabItem: React.FC<TabItemProps> = () => {
+  const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
   const [writeData, setWriteData] = useState<any>([]);
   const [likeData, setLikeData] = useState<any>([]);
-  const [toastModal, setToastModal] = useRecoilState<boolean>(toastPopupState);
+  const [subTab, setSubTab] = useState<string>("likeReview");
+
   const getType = useRecoilValue(tabMenuTypeState);
 
-  const getNickname = getCookie("user").nickname;
   const getId = getCookie("user").id;
   const box1Height = document
     .querySelector(".scroll_section ")
@@ -147,6 +152,37 @@ const TabItem: React.FC<TabItemProps> = () => {
   const box2Height = document
     .querySelector(".tab_buttons ")
     ?.getBoundingClientRect().height;
+
+  const handleSelectSubTabItem = (e: any) => {
+    setSubTab(e.currentTarget.classList[0]);
+    console.log(e.currentTarget.classList[0]);
+  };
+
+  const { data, fetchNextPage, isFetching, isFetchingNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ["likeReview"],
+      queryFn: ({ pageParam = 1 }) => getDataFromIndexedDB(1),
+      initialPageParam: 2,
+      getNextPageParam: (lastPage: any, allPages, lastPageParam) => {
+        if (lastPage?.data?.length === 0 || lastPage === undefined) {
+          return undefined;
+        } else {
+          return lastPageParam + 1;
+        }
+      },
+    });
+  console.log(
+    "data",
+    data
+    // "\nfetchNextPage",
+    // fetchNextPage,
+    // "\nisFetching",
+    // isFetching,
+    // "\nisFetchingNextPage",
+    // isFetchingNextPage,
+    // "\nhasNextPage",
+    // hasNextPage
+  );
 
   useEffect(() => {
     getMyWriteReviewFromIndexedDB(getId, getType)
@@ -161,8 +197,11 @@ const TabItem: React.FC<TabItemProps> = () => {
         console.log(error);
       })
       .finally(() => {});
+    // if (getType === "like") {
+    //   getDataFromIndexedDB();
+    // }
   }, [getType]);
-  console.log("likeData", likeData);
+  // console.log("likeData", likeData);
   return (
     <>
       <ToastPopup popupType={"comment_menu"} ready={toastModal} />
@@ -175,8 +214,20 @@ const TabItem: React.FC<TabItemProps> = () => {
         <div className="count flex flex_jc_s flex_ai_c">
           {getType === "like" ? (
             <div className="like_type flex flex_ai_c">
-              <div>리뷰 ({likeData.review?.length})</div>
-              <div>댓글 ({likeData.comment?.length})</div>
+              <div
+                className={`likeReview ${"likeReview" === subTab && "active"}`}
+                onClick={(e) => handleSelectSubTabItem(e)}
+              >
+                리뷰 ({likeData.review?.length})
+              </div>
+              <div
+                className={`commentReview ${
+                  "commentReview" === subTab && "active"
+                }`}
+                onClick={(e) => handleSelectSubTabItem(e)}
+              >
+                댓글 ({likeData.comment?.length})
+              </div>
             </div>
           ) : (
             <>
@@ -199,6 +250,35 @@ const TabItem: React.FC<TabItemProps> = () => {
             type={"comment"}
             openMenu={() => setToastModal(true)}
           />
+        )}
+        {getType === "like" && (
+          <>
+            {subTab === "likeReview" ? (
+              <>
+                {likeData?.review?.map((item: any) => {
+                  const getItem = Number(item.id.replace("-review", ""));
+                  getDataFromIndexedDB(getItem);
+                  // .then((item: any) => {})
+                  // .catch((error) => {
+                  //   console.log(error);
+                  // });
+                  console.log(
+                    "result",
+                    getDataFromIndexedDB(getItem).then((res: any) => {
+                      return res;
+                    })
+                  );
+                  return (
+                    <div key={item.id}>
+                      {Number(item.id.replace("-review", ""))}
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              "bbbbb"
+            )}
+          </>
         )}
       </div>
     </>

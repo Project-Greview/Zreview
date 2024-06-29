@@ -506,6 +506,9 @@
   font-weight: 600;
   color: var(--disable-color);
 }
+.my_page_section .item_list .list_section .count .like_type .active {
+  color: var(--dark-gray-text);
+}
 /* MYPAGE TOAST POPUP */
 .toast_section.comment_menu.active {
   bottom: 0;

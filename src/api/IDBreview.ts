@@ -128,27 +128,30 @@ export const getAllDataFromIndexedDB = () => {
  * 선택된 리뷰에 대한 상세 리뷰 가져오기 API
  * 현재 미사용
  */
-export const getDataFromIndexedDB = () => {
-  const dbOpen = idb.open("zreview", 1);
-  const id = 5;
-  dbOpen.onsuccess = () => {
-    let db = dbOpen.result;
-    const transaction = db.transaction("review", "readonly");
-    const reviewDB = transaction.objectStore("review");
-    const review = reviewDB.get(id);
+export const getDataFromIndexedDB = (id: number) => {
+  return new Promise((resolve, reject) => {
+    const dbOpen = idb.open("zreview", 1);
+    dbOpen.onsuccess = () => {
+      let db = dbOpen.result;
+      const transaction = db.transaction("review", "readonly");
+      const reviewDB = transaction.objectStore("review");
+      const review = reviewDB.get(id);
 
-    review.onsuccess = (e) => {
-      console.log(e);
-    };
+      review.onsuccess = (e: any) => {
+        const result = e.target.result;
+        resolve(result);
+      };
 
-    review.onerror = (e) => {
-      console.log("error", e);
-    };
+      review.onerror = (e) => {
+        console.log("error", e);
+        reject(e);
+      };
 
-    transaction.oncomplete = () => {
-      db.close();
+      transaction.oncomplete = () => {
+        db.close();
+      };
     };
-  };
+  });
 };
 
 /**
