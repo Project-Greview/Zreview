@@ -9,7 +9,7 @@ import { getPlaceDataFromIndexedDB } from "api/IDBplace";
 import { extractNeighborhood } from "utils/location";
 // COMPONENT
 import Header from "components/Header";
-import DetailItem from "components/DetailItems";
+import DetailItems from "components/DetailItems";
 import HashTag from "components/HashTag";
 // SVG
 import { ReactComponent as Logo } from "../../assets/image/icon/marker_c.svg";
@@ -170,7 +170,7 @@ const PlaceReview: React.FC<PlaceReviewType> = () => {
         )}
         <div className="point_txt">ZReview</div>
         <div className={`${!headerVisibility ? "active" : ""}`}>
-          <DetailItem
+          <DetailItems
             place={state.placeData.place_name}
             resultData={reviewData}
             type={"review"}

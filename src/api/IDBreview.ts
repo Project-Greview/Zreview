@@ -126,7 +126,6 @@ export const getAllDataFromIndexedDB = () => {
 
 /**
  * 선택된 리뷰에 대한 상세 리뷰 가져오기 API
- * 현재 미사용
  */
 export const getDataFromIndexedDB = (id: number) => {
   return new Promise((resolve, reject) => {
@@ -359,47 +358,7 @@ export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
           const result = e.target.result;
           resolve(result.filter((result: any) => result.member === id));
         };
-      }
-      // else {
-      //   request.onsuccess = (e: any) => {
-      //     const result = e.target.result;
-      //     resolve({
-      //       review: result
-      //         .filter((item: any) => item.type === "review")
-      //         .map((item: any) => {
-      //           const filteredMembers = item.member.filter(
-      //             (memberId: any) => memberId === id
-      //           );
-      //           // getDataFromIndexedDB(Number(item.id.replace("-review", "")))
-      //           //   .then((res: any) => {
-      //           //     return res;
-      //           //   })
-      //           //   .catch((error) => {
-      //           //     console.error(error);
-      //           //   });
-
-      //           return filteredMembers.length > 0
-      //             ? { ...item, member: filteredMembers }
-      //             : null;
-      //         })
-      //         .filter((item: any) => item !== null),
-
-      //       comment: result
-      //         .filter((item: any) => item.type === "comment")
-      //         .map((item: any) => {
-      //           const filteredMembers = item.member.filter(
-      //             (memberId: any) => memberId === id
-      //           );
-      //           console.log("filteredMembers", item);
-      //           return filteredMembers.length > 0
-      //             ? { ...item, member: filteredMembers }
-      //             : null;
-      //         })
-      //         .filter((item: any) => item !== null),
-      //     });
-      //   };
-      // }
-      else {
+      } else {
         request.onsuccess = async (e: any) => {
           const result = e.target.result;
           try {
@@ -410,14 +369,25 @@ export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
                   const filteredMembers = item.member.filter(
                     (memberId: any) => memberId === id
                   );
-                  const additionalData = await getDataFromIndexedDB(
+                  const additionalData: any = await getDataFromIndexedDB(
                     Number(item.id.replace("-review", ""))
                   );
+                  const getWriter: any = await getMemberInfoFromIndexedDB(
+                    additionalData?.member
+                  );
                   return filteredMembers.length > 0
-                    ? { ...item, member: filteredMembers, additionalData }
+                    ? {
+                        ...item,
+                        member: filteredMembers,
+                        additionalData,
+                        writer: getWriter.nickname,
+                        profile: getWriter.thumbnail,
+                      }
                     : null;
                 })
-                .filter((item: any) => item !== null)
+            );
+            const filteredReviewResults = reviewResults.filter(
+              (item: any) => item !== null
             );
 
             const commentResults = result
@@ -433,7 +403,7 @@ export const getMyWriteReviewFromIndexedDB = (id: number, type: string) => {
               .filter((item: any) => item !== null);
 
             resolve({
-              review: reviewResults,
+              review: filteredReviewResults,
               comment: commentResults,
             });
           } catch (error) {

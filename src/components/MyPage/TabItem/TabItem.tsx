@@ -15,7 +15,8 @@ import { calcDate } from "utils/dateCalc";
 import { tabMenuTypeState } from "state/mypageTabState";
 import { toastPopupState } from "state/commonState";
 // COMPONENT
-import DetailItem from "components/DetailItems";
+import DetailItem from "components/DetailItem";
+import DetailItems from "components/DetailItems";
 import ToastPopup from "components/ToastPopup";
 // SVG
 import { ReactComponent as Logo } from "../../../assets/image/icon/marker_c.svg";
@@ -173,19 +174,7 @@ const TabItem: React.FC<TabItemProps> = () => {
   //       }
   //     },
   //   });
-  console
-    .log
-    // "data",
-    // data
-    // "\nfetchNextPage",
-    // fetchNextPage,
-    // "\nisFetching",
-    // isFetching,
-    // "\nisFetchingNextPage",
-    // isFetchingNextPage,
-    // "\nhasNextPage",
-    // hasNextPage
-    ();
+  console.log();
 
   useEffect(() => {
     getMyWriteReviewFromIndexedDB(getId, getType)
@@ -193,6 +182,7 @@ const TabItem: React.FC<TabItemProps> = () => {
         if (getType !== "like") {
           setWriteData(data);
         } else {
+          console.log("adsasdasdasadasdasdd", data);
           setLikeData(data);
         }
       })
@@ -201,8 +191,7 @@ const TabItem: React.FC<TabItemProps> = () => {
       })
       .finally(() => {});
   }, [getType]);
-  // console.log("likeData", likeData);
-  // console.log("writeData", writeData);
+
   return (
     <>
       <ToastPopup popupType={"comment_menu"} ready={toastModal} />
@@ -242,7 +231,7 @@ const TabItem: React.FC<TabItemProps> = () => {
           )}
         </div>
         {getType === "review" && (
-          <DetailItem resultData={writeData} place={""} type={"mypage"} />
+          <DetailItems resultData={writeData} place={""} type={"mypage"} />
         )}
 
         {getType === "comment" && (
@@ -256,9 +245,23 @@ const TabItem: React.FC<TabItemProps> = () => {
           <>
             {subTab === "likeReview" ? (
               <ul>
-                {likeData?.review?.map((item: any) => {
-                  return <li key={item?.id}></li>;
-                })}
+                {likeData !== null &&
+                  likeData?.review?.map((item: any) => {
+                    const likeReviewData = {
+                      ...item?.additionalData,
+                      writer: item?.writer,
+                      thumbnail: item?.profile,
+                    };
+                    return (
+                      <li key={item?.id}>
+                        <DetailItem
+                          resultData={likeReviewData}
+                          place={""}
+                          type={"mypage"}
+                        />
+                      </li>
+                    );
+                  })}
               </ul>
             ) : (
               "bbbbb"
